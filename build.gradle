@@ -1,3 +1,4 @@
+// Add Plugins
 apply plugin: 'java' 
 apply plugin: 'application'
 mainClassName = 'com.monkeyStomp.spirelands.Game'
@@ -8,3 +9,49 @@ jar {
     attributes 'SplashScreen-Image' : 'splashScreen/splash_screen.png'
   }
 }
+
+/**
+*   Custom Tasks
+*/
+task copyArchive(type: Copy) {
+  description 'Copies archive file into distribution folder.'
+  
+  from file("${buildDir}/libs/Spirelands.jar")
+  into file("${rootDir}/distributions")
+}
+
+task copyRes(type: Copy) {
+  description 'Copies resource files into distribution folder.'
+  
+  from("${rootDir}") {
+    include "resources/**"
+  }
+  into "${rootDir}/distributions"
+}
+
+task packDist(type: Zip) {
+  description 'Creates a zip archive of the distribution folder'
+  
+  archiveName = 'distributions.zip'
+  destinationDir = file("${rootDir}")
+  
+  from  "${rootDir}/distributions"
+}
+
+task cleanRoot(type: Delete) {
+  description 'Cleans the root directory of the leftover distribution folder'
+  
+  delete "${rootDir}/distributions"
+}
+
+task createDist(dependsOn: ['assembleDist', 'cleanRoot']) {
+  description 'Creates the distribution folder with archive file and resources then cleans up left over folders.'
+  
+  println 'Creating distribution folder'
+}
+
+// Dependency Chain
+createDist.dependsOn assembleDist
+cleanRoot.dependsOn packDist
+packDist.dependsOn copyRes
+copyRes.dependsOn copyArchive

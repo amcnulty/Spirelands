@@ -1,5 +1,6 @@
 .gradle
 /build/
+/distributions/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -15,3 +16,6 @@ gradle-app.setting
 
 # Ignore NetBeans project folders
 .nb-gradle
+
+# Ignore zip archive files
+*.zip

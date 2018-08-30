@@ -2,6 +2,10 @@ package com.monkeyStomp.spirelands;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 /**
  *
@@ -11,7 +15,7 @@ public class Game extends Canvas implements Runnable {
   
   private JFrame frame;
   private String  title = "Spirelands";
-  private int width = 640,
+  private int width = 940,
               height = 450;
 
   public Game() {
@@ -19,6 +23,18 @@ public class Game extends Canvas implements Runnable {
     Dimension size = new Dimension(width, height);
     setPreferredSize(size);
     frame = new JFrame();
+    // Test to see if we can pull an external image from both development and distribution
+    BufferedImage img = null;
+    try {
+      img = ImageIO.read(new File("./resources/test.png"));
+      if (img != null) {
+        System.out.println("File Exists");
+      }
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Could not find file!!");
+    }
     frame.setTitle(title);
   }
 
