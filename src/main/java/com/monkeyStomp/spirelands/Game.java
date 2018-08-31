@@ -1,6 +1,8 @@
 package com.monkeyStomp.spirelands;
 
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.view.TitleScreen;
+import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,6 +29,7 @@ public class Game extends Canvas implements Runnable {
   private BufferStrategy bufferStrategy;
   private Graphics graphics;
   private Screen screen;
+  private ViewManager view = new ViewManager();
 
   private Game() {
     // Create the window.
@@ -40,6 +43,8 @@ public class Game extends Canvas implements Runnable {
     pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     // Create the screen
     screen = new Screen(width, height);
+    // Start the title screen.
+    new TitleScreen(view);
   }
   
   private synchronized void start() {
@@ -92,11 +97,16 @@ public class Game extends Canvas implements Runnable {
     }
     stop();
   }
-  
+  /**
+   * Updates the game state.
+   */
   private void update() {
     // Update the view.
+    view.update();
   }
-  
+  /**
+   * Handles rendering to the window.
+   */
   private void render() {
     bufferStrategy = getBufferStrategy();
     if (bufferStrategy == null) {
@@ -107,8 +117,7 @@ public class Game extends Canvas implements Runnable {
     screen.clear();
     
     // Render the view.
-    screen.renderColor(0xFF00FF);
-    
+    view.render(screen);
     
     // Copy pixels from screen class.
     System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);

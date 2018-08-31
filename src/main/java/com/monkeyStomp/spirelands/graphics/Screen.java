@@ -33,6 +33,18 @@ public class Screen {
     }
   }
   
+  public void renderSprite(int xp, int yp, Sprite sprite) {
+    int renderY,
+        renderX;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = yp + y;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = xp + x;
+        pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+      }
+    }
+  }
+  
   /**
    * Sets the offset variables.
    * @param xOffset The horizontal offset in pixels.
@@ -41,6 +53,14 @@ public class Screen {
   public void setOffset(int xOffset, int yOffset) {
       this.xOffset = xOffset;
       this.yOffset = yOffset;
+  }
+  
+  public int getWidth() {
+    return width;
+  }
+  
+  public int getHeight() {
+    return height;
   }
   
   public int[] getPixels() {
