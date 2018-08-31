@@ -1,6 +1,8 @@
 package com.monkeyStomp.spirelands;
 
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.Canvas;
@@ -29,6 +31,9 @@ public class Game extends Canvas implements Runnable {
   private BufferStrategy bufferStrategy;
   private Graphics graphics;
   private Screen screen;
+  private Keyboard key = new Keyboard();
+  private Mouse mouse = new Mouse();
+  
   private ViewManager view = new ViewManager();
 
   private Game() {
@@ -45,6 +50,9 @@ public class Game extends Canvas implements Runnable {
     screen = new Screen(width, height);
     // Start the title screen.
     new TitleScreen(view);
+    
+    addKeyListener(key);
+    addMouseListener(mouse);
   }
   
   private synchronized void start() {
