@@ -6,11 +6,11 @@ package com.monkeystomp.spirelands.graphics;
  */
 public class Screen {
   
-  private int width,
-              height,
-              xOffset,
-              yOffset;
-  private int[] pixels;
+  private static int  width,
+                      height,
+                      xOffset,
+                      yOffset;
+  private static int[] pixels;
   
   public Screen(int width, int height) {
     this.width = width;
@@ -55,15 +55,15 @@ public class Screen {
       this.yOffset = yOffset;
   }
   
-  public int getWidth() {
+  public static int getWidth() {
     return width;
   }
   
-  public int getHeight() {
+  public static int getHeight() {
     return height;
   }
   
-  public int[] getPixels() {
+  public static int[] getPixels() {
     return pixels;
   }
 

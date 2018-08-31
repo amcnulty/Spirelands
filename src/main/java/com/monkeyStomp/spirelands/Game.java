@@ -53,6 +53,7 @@ public class Game extends Canvas implements Runnable {
     
     addKeyListener(key);
     addMouseListener(mouse);
+    addMouseMotionListener(mouse);
   }
   
   private synchronized void start() {
