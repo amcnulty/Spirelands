@@ -50,6 +50,10 @@ task createDist(dependsOn: ['assembleDist', 'cleanRoot']) {
   println 'Creating distribution folder'
 }
 
+task cleanRun(dependsOn: ['clean', 'run']) {
+  description 'Cleans then runs';
+}
+
 // Dependency Chain
 createDist.dependsOn assembleDist
 cleanRoot.dependsOn packDist

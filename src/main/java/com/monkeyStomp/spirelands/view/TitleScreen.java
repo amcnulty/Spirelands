@@ -25,7 +25,7 @@ public class TitleScreen extends GameView {
   }
 
   private void handleStartButtonClick() {
-    viewManager.setCurrentView(new SpawnLevel(viewManager));
+    viewManager.setCurrentView(new SpawnLevelView(viewManager));
   }
   
   @Override
