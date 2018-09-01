@@ -45,6 +45,20 @@ public class Screen {
     }
   }
   
+  public void renderTile(int xp, int yp, Sprite sprite) {
+    int renderY,
+        renderX;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = y + yp;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = x + xp;
+        if (renderX < -sprite.getWidth() || renderX > width - 1 || renderY < 0 || renderY > height - 1) break;
+        if (renderX < 0) renderX = 0;
+        pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+      }
+    }
+  }
+  
   /**
    * Sets the offset variables.
    * @param xOffset The horizontal offset in pixels.

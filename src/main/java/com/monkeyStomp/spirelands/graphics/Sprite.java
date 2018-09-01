@@ -1,17 +1,10 @@
 package com.monkeystomp.spirelands.graphics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-
 /**
  *
  * @author Aaron Michael McNulty
  */
 public class Sprite {
-  
-  public static HashMap<Integer, ArrayList<Object>> tileData = new HashMap<>();
-  
   
   private int width,
               height,
@@ -45,13 +38,6 @@ public class Sprite {
         pixels[x + y * width] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
       }
     }
-  }
-  
-  public static void setTileData() {
-    tileData.put(0xFF57D357, new ArrayList<>(Arrays.asList(SpriteSheet.testSheet, 0, 0)));
-    tileData.put(0xFFC8814F, new ArrayList<>(Arrays.asList(SpriteSheet.testSheet, 0, 1)));
-    tileData.put(0xFFF3E191, new ArrayList<>(Arrays.asList(SpriteSheet.testSheet, 1, 0)));
-    tileData.put(0xFF00E6E6, new ArrayList<>(Arrays.asList(SpriteSheet.testSheet, 1, 1)));
   }
   
   public int getWidth() {

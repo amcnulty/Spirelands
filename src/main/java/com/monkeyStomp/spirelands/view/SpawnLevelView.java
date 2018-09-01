@@ -20,12 +20,6 @@ public class SpawnLevelView extends GameView {
   
   @Override
   public void update() {
-//    if (ticks == 60 * 4) {
-//      viewManager.setCurrentView(new TitleScreen(viewManager));
-//    }
-//    ticks++;
-//    renderColor++;
-//    if (ticks % 20 == 0);
     level.update();
   }
 

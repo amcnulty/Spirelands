@@ -1,7 +1,6 @@
 package com.monkeyStomp.spirelands;
 
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.view.TitleScreen;
@@ -49,8 +48,6 @@ public class Game extends Canvas implements Runnable {
     pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     // Create the screen
     screen = new Screen(width, height);
-    // Create the tile library
-    Sprite.setTileData();
     // Start the title screen.
     new TitleScreen(view);
     
