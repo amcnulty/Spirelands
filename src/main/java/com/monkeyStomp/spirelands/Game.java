@@ -129,7 +129,7 @@ public class Game extends Canvas implements Runnable {
     view.render(screen);
     
     // Copy pixels from screen class.
-    System.arraycopy(screen.getPixels(), 0, pixels, 0, pixels.length);
+    System.arraycopy(Screen.getPixels(), 0, pixels, 0, pixels.length);
     // Display the pixels to the window.
     graphics = bufferStrategy.getDrawGraphics();
     graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
