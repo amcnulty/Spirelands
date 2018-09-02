@@ -9,6 +9,9 @@ import com.monkeystomp.spirelands.graphics.Sprite;
  */
 public class Tile {
   
+  public static final int TILE_SIZE = 64;
+  public static final Tile VOID_TILE = new Tile(Sprite.VOID_SPRITE, true);
+  
   private Sprite sprite;
   private boolean solid;
   

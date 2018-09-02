@@ -13,6 +13,8 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   
+  public static final Sprite VOID_SPRITE = new Sprite(64, 64, 0x161616);
+  
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;
     this.height = size;

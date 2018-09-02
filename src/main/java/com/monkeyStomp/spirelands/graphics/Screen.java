@@ -33,19 +33,27 @@ public class Screen {
     }
   }
   
-  public void renderSprite(int xp, int yp, Sprite sprite) {
+  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
     int renderY,
         renderX;
     for (int y = 0; y < sprite.getHeight(); y++) {
       renderY = yp + y;
       for (int x = 0; x < sprite.getWidth(); x++) {
         renderX = xp + x;
-        pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+          pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+        }
       }
     }
   }
   
   public void renderTile(int xp, int yp, Sprite sprite) {
+    xp -= xOffset;
+    yp -= yOffset;
     int renderY,
         renderX;
     for (int y = 0; y < sprite.getHeight(); y++) {

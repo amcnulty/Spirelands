@@ -22,8 +22,8 @@ public class Game extends Canvas implements Runnable {
   private boolean running;
   private Thread thread;
   private String  title = "Spirelands";
-  private int width = 940,
-              height = 450,
+  private int width = 1024,
+              height = width * 9 / 16,
               updatesPerSecond = 60,
               framesPerSecond = 90;
   private BufferedImage image;

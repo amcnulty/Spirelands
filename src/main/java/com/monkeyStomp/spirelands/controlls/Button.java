@@ -70,6 +70,6 @@ public class Button {
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(x, y, currentButton);
+    screen.renderSprite(x, y, currentButton, true);
   }
 }

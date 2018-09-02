@@ -1,5 +1,6 @@
 package com.monkeyStomp.spirelands.level;
 
+import com.monkeyStomp.spirelands.level.entity.mob.Player;
 import com.monkeyStomp.spirelands.level.tile.Tile;
 import com.monkeyStomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -17,13 +18,16 @@ import javax.imageio.ImageIO;
  */
 public class Level implements Runnable {
 
-  private Thread loadingThread = new Thread(this, "Tile Loader");
+  protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
   private int levelTileWidth,
-              levelTileHeight;
+              levelTileHeight,
+              xScroll,
+              yScroll;
   private String path;
+  protected Player player;
 
   public Level(String path) {
     this.path = path;
@@ -62,7 +66,7 @@ public class Level implements Runnable {
       tiles.add(
         new Tile(
           new Sprite(
-            64,
+            Tile.TILE_SIZE,
             (int) TileData.library.get(bitmap[i]).get(0),
             (int) TileData.library.get(bitmap[i]).get(1),
             (SpriteSheet) TileData.library.get(bitmap[i]).get(2)
@@ -76,8 +80,17 @@ public class Level implements Runnable {
   protected void generateLevel(){
   }
   
+  public Tile getTile(int x, int y) {
+    if (x < 0 || y < 0 || x >= levelTileWidth || y >= levelTileHeight) return Tile.VOID_TILE;
+    return tiles.get(x + y * getLevelTileWidth());
+  }
+  
   protected int getLevelTileWidth() {
     return levelTileWidth;
+  }
+  
+  protected int getLevelPixelWidth() {
+    return levelTileWidth * Tile.TILE_SIZE;
   }
   
   protected void setLevelTileWidth(int width) {
@@ -88,19 +101,46 @@ public class Level implements Runnable {
     return levelTileHeight;
   }
   
+  protected int getLevelPixelHeight() {
+    return levelTileHeight * Tile.TILE_SIZE;
+  }
+  
   protected void setLevelTileHeight(int height) {
     this.levelTileHeight = height;
   }
   
-  public void update(){}
+  private void setScreenOffset(Screen screen) {
+    xScroll = player.getX() - Screen.getWidth() / 2;
+    yScroll = player.getY() - Screen.getHeight() / 2;
+    if (Screen.getWidth() < getLevelPixelWidth()) {
+      if (player.getX() <= Screen.getWidth() / 2) xScroll = 0;
+      else if (player.getX() >= getLevelPixelWidth() - Screen.getWidth() / 2) xScroll = getLevelPixelWidth() - Screen.getWidth();
+    }
+    if (Screen.getHeight() < getLevelPixelHeight()) {
+      if (player.getY() <= Screen.getHeight() / 2) yScroll = 0;
+      else if (player.getY() >= getLevelPixelHeight() - Screen.getHeight() / 2) yScroll = getLevelPixelHeight() - Screen.getHeight();
+    }
+    screen.setOffset(xScroll, yScroll);
+  }
+  
+  public void update(){
+    if (!loadingThread.isAlive()) {
+      player.update();
+    }
+  }
   
   public void render(Screen screen){
     if (!loadingThread.isAlive()) {
-      for (int y = 0; y < Screen.getHeight() + 64 >> 6; y++) {
-        for (int x = 0; x < Screen.getWidth() + 64 >> 6; x++) {
-          tiles.get(x + y * getLevelTileWidth()).render(x, y, screen);
+      // Set screen offset
+      setScreenOffset(screen);
+      // Render the tiles.
+      for (int y = yScroll >> 6; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 6; y++) {
+        for (int x = xScroll >> 6; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 6; x++) {
+          getTile(x, y).render(x, y, screen);
         }
       }
+      // Render the player.
+      player.render(screen);
     }
   }
 }
