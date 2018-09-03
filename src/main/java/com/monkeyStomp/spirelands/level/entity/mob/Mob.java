@@ -9,8 +9,8 @@ import com.monkeyStomp.spirelands.level.entity.Entity;
  */
 public class Mob extends Entity {
 
-  private boolean walking = false;
-  protected int direction = 0;
+  protected boolean walking = false;
+  protected int direction = 2;
   
   protected void move(int xDir, int yDir) {
     if (xDir != 0 && yDir != 0) {
