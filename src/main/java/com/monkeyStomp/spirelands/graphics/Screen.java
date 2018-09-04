@@ -44,6 +44,7 @@ public class Screen {
       renderY = yp + y;
       for (int x = 0; x < sprite.getWidth(); x++) {
         renderX = xp + x;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
         if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
           pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
         }

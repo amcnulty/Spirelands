@@ -97,7 +97,6 @@ public class GoblinPlayer extends Player {
         currentAction = "WALKING_" + direction + "_" + anim / framesPerStep;
       }
     }
-    System.out.println(currentAction);
   }
   
   @Override

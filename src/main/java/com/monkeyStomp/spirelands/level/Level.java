@@ -1,5 +1,6 @@
 package com.monkeyStomp.spirelands.level;
 
+import com.monkeyStomp.spirelands.graphics.Font;
 import com.monkeyStomp.spirelands.level.entity.mob.Player;
 import com.monkeyStomp.spirelands.level.tile.Tile;
 import com.monkeyStomp.spirelands.level.tile.TileData;
@@ -17,6 +18,8 @@ import javax.imageio.ImageIO;
  * @author Aaron Michael McNulty
  */
 public class Level implements Runnable {
+  
+  protected Font font = new Font();
 
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;

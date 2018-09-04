@@ -25,6 +25,7 @@ public class Player extends Mob {
   
   protected void setupCharacterActions() {}
   
+  @Override
   public void update() {}
   
   public void render(Screen screen) {}

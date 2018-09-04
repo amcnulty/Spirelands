@@ -2,12 +2,15 @@ package com.monkeyStomp.spirelands.level;
 
 import com.monkeyStomp.spirelands.level.entity.mob.GoblinPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.graphics.Sprite;
 
 /**
  *
  * @author Aaron Michael McNulty
  */
 public class SpawnLevel extends Level {
+  
+  private Sprite letterHeight = new Sprite(6, 24, 0xFFFFFF);
   
   public SpawnLevel(String path) {
     super(path);
@@ -28,5 +31,7 @@ public class SpawnLevel extends Level {
   @Override
   public void render(Screen screen) {
     super.render(screen);
+    font.renderText(200, 200, "This is a test!", screen);
+    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }
 }

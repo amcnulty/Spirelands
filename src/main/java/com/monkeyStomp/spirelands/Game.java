@@ -3,7 +3,7 @@ package com.monkeyStomp.spirelands;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
-import com.monkeystomp.spirelands.view.TitleScreen;
+import com.monkeystomp.spirelands.view.SpawnLevelView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -49,7 +49,8 @@ public class Game extends Canvas implements Runnable {
     // Create the screen
     screen = new Screen(width, height);
     // Start the title screen.
-    new TitleScreen(view);
+//    new TitleScreen(view);
+    new SpawnLevelView(view);
     
     addKeyListener(key);
     addMouseListener(mouse);
