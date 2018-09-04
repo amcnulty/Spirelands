@@ -8,6 +8,15 @@ import java.awt.event.KeyListener;
  * @author Aaron Michael McNulty
  */
 public class Keyboard implements KeyListener {
+
+  private static Keyboard instance = new Keyboard();
+  public INotify pauseNotifier;
+
+  private Keyboard() {}
+
+  public static Keyboard getKeyboard() {
+    return instance;
+  }
   
   public static final int W_KEY = 87,
                           A_KEY = 65,
@@ -21,7 +30,7 @@ public class Keyboard implements KeyListener {
                           LEFT_SHIFT_KEY = 16,
                           ESCAPE_KEY = 27;
   
-  private static boolean[] keys = new boolean[120];
+  private static boolean[] keys = new boolean[220];
 
   @Override
   public void keyTyped(KeyEvent e) {
@@ -35,6 +44,9 @@ public class Keyboard implements KeyListener {
   @Override
   public void keyReleased(KeyEvent e) {
     keys[e.getKeyCode()] = false;
+    if (e.getKeyCode() == 27) {
+      pauseNotifier.notify(e);
+    }
   }
 
   public static boolean isKeyPressed(int keyCode) {

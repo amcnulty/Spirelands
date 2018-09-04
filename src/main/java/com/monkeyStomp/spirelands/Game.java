@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
   private BufferStrategy bufferStrategy;
   private Graphics graphics;
   private Screen screen;
-  private Keyboard key = new Keyboard();
+  private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = new Mouse();
   
   private ViewManager view = new ViewManager();
