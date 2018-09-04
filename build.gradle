@@ -1,11 +1,11 @@
 // Add Plugins
 apply plugin: 'java' 
 apply plugin: 'application'
-mainClassName = 'com.monkeyStomp.spirelands.Game'
+mainClassName = 'com.monkeystomp.spirelands.Game'
 
 jar {
   manifest {
-    attributes 'Main-Class' : 'com.monkeyStomp.spirelands.Game'
+    attributes 'Main-Class' : 'com.monkeystomp.spirelands.Game'
     attributes 'SplashScreen-Image' : 'splashScreen/splash_screen.png'
   }
 }

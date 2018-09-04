@@ -1,7 +1,7 @@
-package com.monkeyStomp.spirelands.level.entity.mob;
+package com.monkeystomp.spirelands.level.entity.mob;
 
 
-import com.monkeyStomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.Entity;
 
 /**
  *

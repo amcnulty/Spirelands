@@ -1,6 +1,7 @@
-package com.monkeyStomp.spirelands.level;
+package com.monkeystomp.spirelands.level;
 
-import com.monkeyStomp.spirelands.level.entity.mob.GoblinPlayer;
+import com.monkeystomp.spirelands.level.entity.mob.GoblinPlayer;
+import com.monkeystomp.spirelands.level.entity.mob.DarkSuitPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 
@@ -18,8 +19,8 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void generateLevel() {
-//    player = new DarkSuitPlayer(64, 1050);
-    player = new GoblinPlayer(64, 1050);
+   player = new DarkSuitPlayer(64, 1050);
+    // player = new GoblinPlayer(64, 1050);
     player.initLevel(this);
   }
   

@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands.level.tile;
+package com.monkeystomp.spirelands.level.tile;
 
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import java.util.ArrayList;

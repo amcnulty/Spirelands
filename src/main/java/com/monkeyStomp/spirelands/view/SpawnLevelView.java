@@ -1,7 +1,7 @@
 package com.monkeystomp.spirelands.view;
 
-import com.monkeyStomp.spirelands.level.Level;
-import com.monkeyStomp.spirelands.level.SpawnLevel;
+import com.monkeystomp.spirelands.level.Level;
+import com.monkeystomp.spirelands.level.SpawnLevel;
 import com.monkeystomp.spirelands.graphics.Screen;
 
 /**

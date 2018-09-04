@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands;
+package com.monkeystomp.spirelands;
 
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;

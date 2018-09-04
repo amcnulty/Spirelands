@@ -1,6 +1,6 @@
-package com.monkeyStomp.spirelands.level.entity;
+package com.monkeystomp.spirelands.level.entity;
 
-import com.monkeyStomp.spirelands.level.Level;
+import com.monkeystomp.spirelands.level.Level;
 
 /**
  *

@@ -1,9 +1,9 @@
-package com.monkeyStomp.spirelands.level;
+package com.monkeystomp.spirelands.level;
 
-import com.monkeyStomp.spirelands.graphics.Font;
-import com.monkeyStomp.spirelands.level.entity.mob.Player;
-import com.monkeyStomp.spirelands.level.tile.Tile;
-import com.monkeyStomp.spirelands.level.tile.TileData;
+import com.monkeystomp.spirelands.graphics.Font;
+import com.monkeystomp.spirelands.level.entity.mob.Player;
+import com.monkeystomp.spirelands.level.tile.Tile;
+import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;

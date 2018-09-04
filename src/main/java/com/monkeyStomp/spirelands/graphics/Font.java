@@ -1,8 +1,4 @@
-package com.monkeyStomp.spirelands.graphics;
-
-import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import com.monkeystomp.spirelands.graphics.Screen;
+package com.monkeystomp.spirelands.graphics;
 
 /**
  *
