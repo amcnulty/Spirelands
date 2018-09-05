@@ -98,6 +98,8 @@ public class Game extends Canvas implements Runnable {
         frames++;
         renderDelta--;
       }
+      // render();
+      // frames++;
 
       if (System.currentTimeMillis() - timer >= 1000) {
         timer = System.currentTimeMillis();
@@ -129,6 +131,9 @@ public class Game extends Canvas implements Runnable {
     
     // Render the view.
     view.render(screen);
+
+    // Overlay the light map.
+    screen.overlayLightMap();
     
     // Copy pixels from screen class.
     System.arraycopy(Screen.getPixels(), 0, pixels, 0, pixels.length);
