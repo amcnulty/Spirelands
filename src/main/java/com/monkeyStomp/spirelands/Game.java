@@ -22,8 +22,9 @@ public class Game extends Canvas implements Runnable {
   private boolean running;
   private Thread thread;
   private String  title = "Spirelands";
-  private int width = 1024,
+  private int width = 420,
               height = width * 9 / 16,
+              scale = 3,
               updatesPerSecond = 60,
               framesPerSecond = 90;
   private BufferedImage image;
@@ -38,7 +39,7 @@ public class Game extends Canvas implements Runnable {
 
   private Game() {
     // Create the window.
-    Dimension size = new Dimension(width, height);
+    Dimension size = new Dimension(width * scale, height * scale);
     setPreferredSize(size);
     frame = new JFrame();
     // Set the title

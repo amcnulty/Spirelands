@@ -9,7 +9,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
  */
 public class Tile {
   
-  public static final int TILE_SIZE = 64;
+  public static final int TILE_SIZE = 16;
   public static final Tile VOID_TILE = new Tile(Sprite.VOID_SPRITE, true);
   
   private Sprite sprite;
@@ -29,6 +29,6 @@ public class Tile {
   }
   
   public void render(int x, int y, Screen screen) {
-    screen.renderTile(x << 6, y << 6, sprite);
+    screen.renderTile(x << 4, y << 4, sprite);
   }
 }

@@ -19,7 +19,7 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void generateLevel() {
-   player = new DarkSuitPlayer(64, 1050);
+   player = new DarkSuitPlayer(128, 128);
     // player = new GoblinPlayer(64, 1050);
     player.initLevel(this);
   }
@@ -32,7 +32,7 @@ public class SpawnLevel extends Level {
   @Override
   public void render(Screen screen) {
     super.render(screen);
-    font.renderText(200, 200, "This is a test!", screen);
-    font.renderText(200, 300, "Demo version no. #1234567890", screen);
+//    font.renderText(200, 200, "This is a test!", screen);
+//    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }
 }

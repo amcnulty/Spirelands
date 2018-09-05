@@ -15,7 +15,7 @@ public class SpriteSheet {
               height;
   private int[] pixels;
   
-  public static SpriteSheet testSheet = new SpriteSheet("./resources/textures/sheets/testSheet.png");
+  public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
   
   public SpriteSheet(String path) {
     this.path = path;

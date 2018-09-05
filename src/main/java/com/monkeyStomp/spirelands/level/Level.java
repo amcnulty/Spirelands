@@ -137,8 +137,8 @@ public class Level implements Runnable {
       // Set screen offset
       setScreenOffset(screen);
       // Render the tiles.
-      for (int y = yScroll >> 6; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 6; y++) {
-        for (int x = xScroll >> 6; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 6; x++) {
+      for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
+        for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
           getTile(x, y).render(x, y, screen);
         }
       }

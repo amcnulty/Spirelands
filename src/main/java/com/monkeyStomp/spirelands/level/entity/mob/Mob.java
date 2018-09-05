@@ -34,9 +34,9 @@ public class Mob extends Entity {
   
   protected boolean collision(int xDir, int yDir) {
     for (int c = 0; c < 4; c++) {
-      int xt = ((x + xDir) + c % 2 * 48 - 24) >> 6;
+      int xt = ((x + xDir) + c % 2 * 48 - 24) >> 4;
       int nx = (x + xDir) + c % 2 * 48 - 24;
-      int yt = ((y + yDir) + c / 2 * 66 - 4) >> 6;
+      int yt = ((y + yDir) + c / 2 * 66 - 4) >> 4;
       int ny = (y + yDir) + c / 2 * 66 - 4;
       if (level.getTile(xt, yt).isSolid()) return true;
     }
