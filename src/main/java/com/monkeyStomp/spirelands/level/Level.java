@@ -7,11 +7,7 @@ import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import javax.imageio.ImageIO;
 
 /**
  *
@@ -29,11 +25,10 @@ public class Level implements Runnable {
               levelTileHeight,
               xScroll,
               yScroll;
-  private String path;
   protected Player player;
+  protected ILevelChanger IChanger;
 
-  public Level(String path) {
-    this.path = path;
+  public Level() {
     loadLevel();
   }
   /**
@@ -45,24 +40,12 @@ public class Level implements Runnable {
 
   @Override
   public void run() {
-    loadBitmap(path);
+    loadBitmap();
     createTiles();
     generateLevel();
   }
-  
-  private void loadBitmap(String path) {
-    try {
-      BufferedImage image = ImageIO.read(new File(path));
-      setLevelTileWidth(image.getWidth());
-      setLevelTileHeight(image.getHeight());
-      bitmap = new int[getLevelTileWidth() * getLevelTileHeight()];
-      image.getRGB(0, 0, getLevelTileWidth(), getLevelTileHeight(), bitmap, 0, getLevelTileWidth());
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-      System.out.println("Could not upload file at path: " + path);
-    }
-  }
+
+  protected void loadBitmap() {}
   
   private void createTiles() {
     for (int i = 0; i < bitmap.length; i++) {
@@ -110,6 +93,10 @@ public class Level implements Runnable {
   
   protected void setLevelTileHeight(int height) {
     this.levelTileHeight = height;
+  }
+
+  public void setLevelChanger(ILevelChanger IChanger) {
+    this.IChanger = IChanger;
   }
   
   private void setScreenOffset(Screen screen) {

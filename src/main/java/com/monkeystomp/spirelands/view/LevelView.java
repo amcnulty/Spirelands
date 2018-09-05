@@ -5,22 +5,33 @@ import com.monkeystomp.spirelands.level.SpawnLevel;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.level.ILevelChanger;
 import java.awt.event.KeyEvent;
 
 /**
  *
  * @author Aaron Michael McNulty
  */
-public class SpawnLevelView extends GameView {
+public class LevelView extends GameView {
   
   private int ticks = 0,
               renderColor = 0x0079CC;
-  private Level level = new SpawnLevel("./resources/textures/worlds/beach.png");
+  // private Level level = new SpawnLevel("./resources/textures/worlds/beach.png");
+  private Level level;
   private boolean gamePaused = false;
 
-  public SpawnLevelView(ViewManager viewManager) {
-    super(viewManager);
+  public LevelView(Level level) {
+    initLevel(level);
     setupNotifiers();
+  }
+
+  private void initLevel(Level level) {
+    this.level = level;
+    this.level.setLevelChanger((Level newLevel) -> changeLevel(newLevel));
+  }
+
+  private void changeLevel(Level level) {
+    initLevel(level);
   }
 
   private void setupNotifiers() {
@@ -28,7 +39,7 @@ public class SpawnLevelView extends GameView {
   }
 
   private void handleEscapeKey(KeyEvent e) {
-    System.out.println("Escape Key Pressed here in spawn level view.");
+    System.out.println("Escape Key Pressed here in level view.");
     gamePaused = !gamePaused;
   }
   

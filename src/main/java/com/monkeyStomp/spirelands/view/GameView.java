@@ -8,11 +8,10 @@ import com.monkeystomp.spirelands.graphics.Screen;
  */
 public class GameView {
   
-  protected ViewManager viewManager;
-  
-  public GameView(ViewManager viewManager) {
-    this.viewManager = viewManager;
-    this.viewManager.setCurrentView(this);
+  protected ViewManager viewManager = ViewManager.getViewManager();
+
+  public GameView() {
+    viewManager.setCurrentView(this);
   }
   
   public void update() {
