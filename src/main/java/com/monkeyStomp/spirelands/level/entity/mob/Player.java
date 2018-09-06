@@ -21,6 +21,10 @@ public class Player extends Mob {
     setupCharacterActions();
   }
   
+  public void setDirection(int direction) {
+    this.direction = direction;
+  }
+  
   protected void loadSpriteSheet() {}
   
   protected void setupCharacterActions() {}

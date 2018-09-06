@@ -1,13 +1,13 @@
 package com.monkeystomp.spirelands.level;
 
-import com.monkeystomp.spirelands.level.entity.mob.GoblinPlayer;
-import com.monkeystomp.spirelands.level.entity.mob.DarkSuitPlayer;
+import com.monkeyStomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeyStomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
 /**
@@ -15,13 +15,18 @@ import javax.imageio.ImageIO;
  * @author Aaron Michael McNulty
  */
 public class SpawnLevel extends Level {
-  
-  private Sprite letterHeight = new Sprite(6, 24, 0xFFFFFF);
 
   private final String bitmapPath = "./resources/textures/worlds/beach.png";
-
+  private ArrayList<Portal> portals = new ArrayList<>();
+  private SpawnCoordinate spawnCoordinate;
   private int time = 0,
               shadowLevel = 0;
+  
+  public static SpawnCoordinate eastEntrance = new SpawnCoordinate(608, 272, 3);
+  
+  public SpawnLevel(SpawnCoordinate coordinate) {
+    this.spawnCoordinate = coordinate;
+  }
   
   @Override
   protected void loadBitmap() {
@@ -42,13 +47,31 @@ public class SpawnLevel extends Level {
   protected void generateLevel() {
   //  player = new DarkSuitPlayer(128, 128);
     // player = new GoblinPlayer(64, 1050);
-    player = new GuardPlayer(64, 64);
+    player = new GuardPlayer(spawnCoordinate.getX(), spawnCoordinate.getY());
+    player.setDirection(spawnCoordinate.getDirection());
     player.initLevel(this);
+    addPortals();
+  }
+  
+  private void addPortals() {
+    portals.add(new Portal(624, 240, TestLevel.westEntrance, "TEST_LEVEL"));
+    portals.add(new Portal(624, 256, TestLevel.westEntrance, "TEST_LEVEL"));
+    portals.add(new Portal(624, 272, TestLevel.westEntrance, "TEST_LEVEL"));
+    
+    for (int i = 0; i < portals.size(); i++) {
+      portals.get(i).initLevel(this);
+    }
+  }
+  
+  private void checkForPortals() {
+    for (int i = 0; i < portals.size(); i++) {
+      if (portals.get(i).portalHere(player.getX(), player.getY())) portals.get(i).enterPortal();
+    }
   }
   
   @Override
-  public void update() {
-    super.update();
+  public void levelUpdate() {
+    checkForPortals();
     // 7 pm
     if (time == 420) shadowLevel = 1;
     // 7:30 pm
@@ -88,14 +111,13 @@ public class SpawnLevel extends Level {
 
     if (time == 1440) {
       time = 0;
-      IChanger.change(new TestLevel());
+//      IChanger.change(new TestLevel());
     }
     else time++;
   }
   
   @Override
-  public void render(Screen screen) {
-    super.render(screen);
+  public void levelRender(Screen screen) {
     screen.fillLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);

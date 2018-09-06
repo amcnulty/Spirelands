@@ -26,7 +26,7 @@ public class Level implements Runnable {
               xScroll,
               yScroll;
   protected Player player;
-  protected ILevelChanger IChanger;
+  private ILevelChanger IChanger;
 
   public Level() {
     loadLevel();
@@ -99,6 +99,10 @@ public class Level implements Runnable {
     this.IChanger = IChanger;
   }
   
+  public ILevelChanger getLevelChanger() {
+    return IChanger;
+  }
+  
   private void setScreenOffset(Screen screen) {
     xScroll = player.getX() - Screen.getWidth() / 2;
     yScroll = player.getY() - Screen.getHeight() / 2;
@@ -113,9 +117,14 @@ public class Level implements Runnable {
     screen.setOffset(xScroll, yScroll);
   }
   
+  public void levelUpdate() {}
+  
+  public void levelRender(Screen screen) {}
+  
   public void update(){
     if (!loadingThread.isAlive()) {
       player.update();
+      levelUpdate();
     }
   }
   
@@ -131,6 +140,7 @@ public class Level implements Runnable {
       }
       // Render the player.
       player.render(screen);
+      levelRender(screen);
     }
   }
 }

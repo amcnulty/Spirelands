@@ -1,8 +1,9 @@
 package com.monkeystomp.spirelands.view;
 
+import com.monkeyStomp.spirelands.level.LevelFactory;
+import com.monkeyStomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.controlls.Button;
-import com.monkeystomp.spirelands.level.SpawnLevel;
 
 /**
  *
@@ -11,6 +12,8 @@ import com.monkeystomp.spirelands.level.SpawnLevel;
 public class TitleScreen extends GameView {
 
   private Button startButton;
+  
+//  private LevelFactory levelFactory = new LevelFactory();
   
   public TitleScreen() {
     loadAssets();
@@ -22,7 +25,7 @@ public class TitleScreen extends GameView {
   }
 
   private void handleStartButtonClick() {
-    viewManager.setCurrentView(new LevelView(new SpawnLevel()));
+    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
   }
   
   @Override
