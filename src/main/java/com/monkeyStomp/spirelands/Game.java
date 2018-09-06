@@ -3,7 +3,8 @@ package com.monkeystomp.spirelands;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
-import com.monkeystomp.spirelands.view.SpawnLevelView;
+import com.monkeystomp.spirelands.view.LevelView;
+import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.Canvas;
 import java.awt.Dimension;
@@ -35,7 +36,7 @@ public class Game extends Canvas implements Runnable {
   private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = new Mouse();
   
-  private ViewManager view = new ViewManager();
+  private ViewManager view = ViewManager.getViewManager();
 
   private Game() {
     // Create the window.
@@ -50,8 +51,8 @@ public class Game extends Canvas implements Runnable {
     // Create the screen
     screen = new Screen(width, height);
     // Start the title screen.
-//    new TitleScreen(view);
-    new SpawnLevelView(view);
+    new TitleScreen();
+    // new LevelView();
     
     addKeyListener(key);
     addMouseListener(mouse);
@@ -98,6 +99,8 @@ public class Game extends Canvas implements Runnable {
         frames++;
         renderDelta--;
       }
+      // render();
+      // frames++;
 
       if (System.currentTimeMillis() - timer >= 1000) {
         timer = System.currentTimeMillis();
@@ -129,6 +132,9 @@ public class Game extends Canvas implements Runnable {
     
     // Render the view.
     view.render(screen);
+
+    // Overlay the light map.
+    screen.overlayLightMap();
     
     // Copy pixels from screen class.
     System.arraycopy(Screen.getPixels(), 0, pixels, 0, pixels.length);

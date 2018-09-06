@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.view;
 
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.controlls.Button;
+import com.monkeystomp.spirelands.level.SpawnLevel;
 
 /**
  *
@@ -11,8 +12,7 @@ public class TitleScreen extends GameView {
 
   private Button startButton;
   
-  public TitleScreen(ViewManager viewManager) {
-    super(viewManager);
+  public TitleScreen() {
     loadAssets();
   }
   
@@ -22,7 +22,7 @@ public class TitleScreen extends GameView {
   }
 
   private void handleStartButtonClick() {
-    viewManager.setCurrentView(new SpawnLevelView(viewManager));
+    viewManager.setCurrentView(new LevelView(new SpawnLevel()));
   }
   
   @Override

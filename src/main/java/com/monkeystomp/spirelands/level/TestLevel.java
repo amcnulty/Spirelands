@@ -1,7 +1,5 @@
 package com.monkeystomp.spirelands.level;
 
-import com.monkeystomp.spirelands.level.entity.mob.GoblinPlayer;
-import com.monkeystomp.spirelands.level.entity.mob.DarkSuitPlayer;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -14,7 +12,7 @@ import javax.imageio.ImageIO;
  *
  * @author Aaron Michael McNulty
  */
-public class SpawnLevel extends Level {
+public class TestLevel extends Level {
   
   private Sprite letterHeight = new Sprite(6, 24, 0xFFFFFF);
 
@@ -42,7 +40,7 @@ public class SpawnLevel extends Level {
   protected void generateLevel() {
   //  player = new DarkSuitPlayer(128, 128);
     // player = new GoblinPlayer(64, 1050);
-    player = new GuardPlayer(64, 64);
+    player = new GuardPlayer(250, 250);
     player.initLevel(this);
   }
   
@@ -88,7 +86,7 @@ public class SpawnLevel extends Level {
 
     if (time == 1440) {
       time = 0;
-      IChanger.change(new TestLevel());
+      IChanger.change(new SpawnLevel());
     }
     else time++;
   }

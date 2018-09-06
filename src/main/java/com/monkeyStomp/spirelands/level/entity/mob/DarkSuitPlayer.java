@@ -16,7 +16,7 @@ public class DarkSuitPlayer extends Player {
   
   private final int PLAYER_WALKING_SPEED = 3,
                     PLAYER_RUNNING_SPEED = 6,
-                    SPRITE_SIZE = 128;
+                    SPRITE_SIZE = 32;
     
   private int xDir,
               yDir,
@@ -28,7 +28,7 @@ public class DarkSuitPlayer extends Player {
   
   @Override
   protected void loadSpriteSheet() {
-    characterSheet = new SpriteSheet("./resources/characters/darkSuit.png");
+    characterSheet = new SpriteSheet("./resources/characters/darksuitSmall.png");
   }
   
   @Override
