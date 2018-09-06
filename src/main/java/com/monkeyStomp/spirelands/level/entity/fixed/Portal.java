@@ -1,7 +1,7 @@
-package com.monkeyStomp.spirelands.level.entity.fixed;
+package com.monkeystomp.spirelands.level.entity.fixed;
 
-import com.monkeyStomp.spirelands.level.LevelFactory;
-import com.monkeyStomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.LevelFactory;
+import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.tile.Tile;
 
@@ -22,7 +22,11 @@ public class Portal extends Entity {
   }
   
   public boolean portalHere(int xp, int yp) {
-    return (xp > x && xp < x + Tile.TILE_SIZE && yp > y && yp < y + Tile.TILE_SIZE);
+    System.out.println("\nxp: " + xp + " > x: " + x);
+    System.out.println("xp: " + xp + " < x + TILE_SIZE: " + (x + Tile.TILE_SIZE));
+    System.out.println("yp: " + yp + " > y: " + y);
+    System.out.println("yp: " + yp + " < y + TILE_SIZE: " + (y + Tile.TILE_SIZE));
+    return (xp > x - 1 && xp < x + Tile.TILE_SIZE + 1 && yp > y - 1 && yp < y + Tile.TILE_SIZE + 1);
   }
   
   public void enterPortal() {

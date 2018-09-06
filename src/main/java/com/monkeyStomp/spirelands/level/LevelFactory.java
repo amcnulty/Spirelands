@@ -1,6 +1,6 @@
-package com.monkeyStomp.spirelands.level;
+package com.monkeystomp.spirelands.level;
 
-import com.monkeyStomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.level.SpawnLevel;
 import com.monkeystomp.spirelands.level.TestLevel;

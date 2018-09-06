@@ -82,7 +82,7 @@ public class GoblinPlayer extends Player {
     if (Keyboard.isKeyPressed(Keyboard.W_KEY) || Keyboard.isKeyPressed(Keyboard.UP_KEY)) yDir -= playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.S_KEY) || Keyboard.isKeyPressed(Keyboard.DOWN_KEY)) yDir += playerVelocity;
     // If moving call move method.
-    if (xDir != 0 || yDir != 0) move(xDir, yDir);
+    // if (xDir != 0 || yDir != 0) move(xDir, yDir);
     // Else not moving.
     else walking = false;
   }

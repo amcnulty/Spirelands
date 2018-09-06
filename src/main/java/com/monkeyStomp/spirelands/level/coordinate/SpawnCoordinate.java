@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands.level.coordinate;
+package com.monkeystomp.spirelands.level.coordinate;
 
 /**
  *

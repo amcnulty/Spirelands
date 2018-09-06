@@ -1,7 +1,7 @@
 package com.monkeystomp.spirelands.view;
 
-import com.monkeyStomp.spirelands.level.LevelFactory;
-import com.monkeyStomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.LevelFactory;
+import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.controlls.Button;
 

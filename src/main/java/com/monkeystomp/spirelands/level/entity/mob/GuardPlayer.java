@@ -13,6 +13,7 @@ public class GuardPlayer extends Player {
   
   private String currentAction = "STANDING_2";
   private short anim = 0;
+  private int[] bounds = {0, 10, 15, 10};
   
   private final int PLAYER_WALKING_SPEED = 1,
                     PLAYER_RUNNING_SPEED = 2,
@@ -66,7 +67,7 @@ public class GuardPlayer extends Player {
     if (Keyboard.isKeyPressed(Keyboard.W_KEY) || Keyboard.isKeyPressed(Keyboard.UP_KEY)) yDir -= playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.S_KEY) || Keyboard.isKeyPressed(Keyboard.DOWN_KEY)) yDir += playerVelocity;
     // If moving call move method.
-    if (xDir != 0 || yDir != 0) move(xDir, yDir);
+    if (xDir != 0 || yDir != 0) move(xDir, yDir, bounds);
     // Else not moving.
     else walking = false;
   }
@@ -82,6 +83,12 @@ public class GuardPlayer extends Player {
       }
     }
   }
+
+  private void checkForPortals() {
+    for (int i = 0; i < level.getPortals().size(); i++) {
+      if (level.getPortals().get(i).portalHere(getX(), getY())) level.getPortals().get(i).enterPortal();
+    }
+  }
   
   @Override
   public void update() {
@@ -89,6 +96,7 @@ public class GuardPlayer extends Player {
     else anim++;
     checkMovementInput();
     setCurrentSprite();
+    checkForPortals();
   }
   
   @Override
