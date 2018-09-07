@@ -1,8 +1,8 @@
-package com.monkeystomp.spirelands.controlls;
+package com.monkeystomp.spirelands.gui.controlls;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.input.IClickable;
+import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.input.Mouse;
 
 /**
@@ -11,12 +11,12 @@ import com.monkeystomp.spirelands.input.Mouse;
  */
 public class Button {
   private int x, y, right, bottom,
-              width = 200,
-              height = 50;
-  private IClickable IClick;
-  private Sprite  button = new Sprite(width, height, 0x0079cc),
-                  buttonHover = new Sprite(width, height, 0x004E9A),
-                  buttonDown = new Sprite(width, height, 0x001366),
+              width,
+              height;
+  private ICallback callback;
+  private Sprite  button,
+                  buttonHover,
+                  buttonDown,
                   currentButton;
 
   private Mouse mouse;
@@ -26,12 +26,21 @@ public class Button {
   private boolean startedOffButton = false,
                   startedOnButton = false;
 
-  public Button(int x, int y, IClickable IClick) {
+  public Button(int x, int y, int width, int height, ICallback callback) {
+    this.width = width;
+    this.height = height;
     this.x = x - width / 2;
     this.y = y - height / 2;
-    this.IClick = IClick;
+    this.callback = callback;
     right = x + width / 2;
     bottom = y + height / 2;
+    createButtonSprites();
+  }
+
+  private void createButtonSprites() {
+    button = new Sprite(width, height, 0x0079cc);
+    buttonHover = new Sprite(width, height, 0x004E9A);
+    buttonDown = new Sprite(width, height, 0x001366);
     currentButton = button;
   }
 
@@ -42,7 +51,7 @@ public class Button {
     if (mouseB != 1) {
       if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
         currentButton = buttonHover;
-        if (startedOnButton) IClick.onClick();
+        if (startedOnButton) callback.execute();
       }
       else {
         currentButton = button;
@@ -70,6 +79,6 @@ public class Button {
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(x, y, currentButton, true);
+    screen.renderSprite(x, y, currentButton, false);
   }
 }

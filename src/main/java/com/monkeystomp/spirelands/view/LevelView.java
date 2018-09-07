@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.ILevelChanger;
+import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import java.awt.event.KeyEvent;
 
 /**
@@ -19,6 +20,7 @@ public class LevelView extends GameView {
   // private Level level = new SpawnLevel("./resources/textures/worlds/beach.png");
   private Level level;
   private boolean gamePaused = false;
+  private PauseMenu pauseMenu = new PauseMenu();
 
   public LevelView(Level level) {
     initLevel(level);
@@ -36,10 +38,10 @@ public class LevelView extends GameView {
 
   private void setupNotifiers() {
     Keyboard.getKeyboard().pauseNotifier = (KeyEvent e) -> handleEscapeKey(e);
+    pauseMenu.setCloseCommand(() -> gamePaused = false);
   }
 
   private void handleEscapeKey(KeyEvent e) {
-    System.out.println("Escape Key Pressed here in level view.");
     gamePaused = !gamePaused;
   }
   
@@ -50,6 +52,7 @@ public class LevelView extends GameView {
     }
     else if (gamePaused) {
       // update pause menu
+      pauseMenu.update();
     }
   }
 
@@ -57,6 +60,7 @@ public class LevelView extends GameView {
   public void render(Screen screen) {
     level.render(screen);
     if (gamePaused) {
+      pauseMenu.render(screen);
     }
   }
 }

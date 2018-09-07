@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.view;
 import com.monkeystomp.spirelands.level.LevelFactory;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.controlls.Button;
+import com.monkeystomp.spirelands.gui.controlls.Button;
 
 /**
  *
@@ -21,7 +21,7 @@ public class TitleScreen extends GameView {
   
   private void loadAssets() {
     // Using this to set the button temporarily
-    startButton = new Button(Screen.getWidth() / 2, Screen.getHeight() / 2, () -> handleStartButtonClick());
+    startButton = new Button(Screen.getWidth() / 2, Screen.getHeight() / 2, 50, 25, () -> handleStartButtonClick());
   }
 
   private void handleStartButtonClick() {
