@@ -39,7 +39,7 @@ public class PauseMenu {
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(x, y, background, false);
+    screen.renderSprite(x, y, background, 8, false);
     continueButton.render(screen);
     exitButton.render(screen);
   }

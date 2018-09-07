@@ -53,7 +53,7 @@ public class Game extends Canvas implements Runnable {
     // Start the title screen.
     new TitleScreen();
     // new LevelView();
-    
+
     addKeyListener(key);
     addMouseListener(mouse);
     addMouseMotionListener(mouse);
@@ -132,9 +132,6 @@ public class Game extends Canvas implements Runnable {
     
     // Render the view.
     view.render(screen);
-
-    // Overlay the light map.
-    screen.overlayLightMap();
     
     // Copy pixels from screen class.
     System.arraycopy(Screen.getPixels(), 0, pixels, 0, pixels.length);
@@ -149,6 +146,7 @@ public class Game extends Canvas implements Runnable {
    */
   public static void main(String[] args) {
     Game game = new Game();
+    game.frame.setUndecorated(true);
     game.frame.setResizable(false);
     game.frame.add(game);
     game.frame.pack();

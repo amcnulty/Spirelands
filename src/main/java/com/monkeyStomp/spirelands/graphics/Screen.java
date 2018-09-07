@@ -54,6 +54,29 @@ public class Screen {
     }
   }
 
+  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    int renderY,
+        renderX;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = yp + y;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = xp + x;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+          pixels[renderX + renderY * width] = blend(
+            pixels[renderX + renderY * width],
+            sprite.getPixels()[x + y * sprite.getWidth()],
+            alpha
+          );
+        }
+      }
+    }
+  }
+
   // Temporary way of dealing with a bad spritesheet
   public void renderPlayer(int xp, int yp, Sprite sprite, boolean fixed) {
     if (fixed) {
@@ -99,20 +122,24 @@ public class Screen {
 
   public void overlayLightMap() {
     for (int i = 0; i < pixels.length; i++) {
-      int oldR = (pixels[i] & 0xff0000) >> 16;
-      int oldG = (pixels[i] & 0xff00) >> 8;
-      int oldB = pixels[i] & 0xff;
-
-      int newR = (lightMap[i][0] & 0xff0000) >> 16;
-      int newG = (lightMap[i][0] & 0xff00) >> 8;
-      int newB = lightMap[i][0] & 0xff;
-
-      int r = (int)(oldR * ((10 - (float)lightMap[i][1]) / 10) + newR * (((float)lightMap[i][1]) / 10));
-      int g = (int)(oldG * ((10 - (float)lightMap[i][1]) / 10) + newG * (((float)lightMap[i][1]) / 10));
-      int b = (int)(oldB * ((10 - (float)lightMap[i][1]) / 10) + newB * (((float)lightMap[i][1]) / 10));
-
-      pixels[i] = (r << 16) | (g << 8) | b;
+      pixels[i] = blend(pixels[i], lightMap[i][0], lightMap[i][1]);
     }
+  }
+
+  private int blend(int background, int foreground, int alpha) {
+    int oldR = (background & 0xff0000) >> 16;
+    int oldG = (background & 0xff00) >> 8;
+    int oldB = background & 0xff;
+
+    int newR = (foreground & 0xff0000) >> 16;
+    int newG = (foreground & 0xff00) >> 8;
+    int newB = foreground & 0xff;
+
+    int r = (int)(oldR * ((10 - (float)alpha) / 10) + newR * (((float)alpha) / 10));
+    int g = (int)(oldG * ((10 - (float)alpha) / 10) + newG * (((float)alpha) / 10));
+    int b = (int)(oldB * ((10 - (float)alpha) / 10) + newB * (((float)alpha) / 10));
+
+    return (r << 16) | (g << 8) | b;
   }
   
   /**

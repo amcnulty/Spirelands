@@ -174,7 +174,10 @@ public class Level implements Runnable {
       }
       // Render the player.
       player.render(screen);
+      // Call the subclass hook for rendering.
       levelRender(screen);
+      // Overlay the lightmap on the level.
+      screen.overlayLightMap();
     }
   }
 }
