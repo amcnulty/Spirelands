@@ -2,11 +2,16 @@ package com.monkeystomp.spirelands.gui.controlls;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.input.Mouse;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
 
 /**
- * Buttons to be used on the ui.
+ * Buttons to be used on the UI.
  * @author Aaron Michael McNulty
  */
 public class Button {
@@ -18,15 +23,16 @@ public class Button {
                   buttonHover,
                   buttonDown,
                   currentButton;
-
-  private Mouse mouse;
+  private FontInfo fontInfo;
+  private String buttonText;
   private int mouseB,
               mouseX,
               mouseY;
   private boolean startedOffButton = false,
                   startedOnButton = false;
 
-  public Button(int x, int y, int width, int height, ICallback callback) {
+  public Button(String text, int x, int y, int width, int height, ICallback callback) {
+    this.buttonText = text;
     this.width = width;
     this.height = height;
     this.x = x - width / 2;
@@ -34,7 +40,17 @@ public class Button {
     this.callback = callback;
     right = x + width / 2;
     bottom = y + height / 2;
+    setFontInfo();
     createButtonSprites();
+  }
+  
+  private void setFontInfo() {
+    Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+    Rectangle2D rect = font.getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    int textWidth = (int)rect.getWidth();
+    int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
+    int fontY = y + this.height / 2;
+    fontInfo = new FontInfo(Color.WHITE, buttonText, fontX, fontY);
   }
 
   private void createButtonSprites() {
@@ -80,5 +96,6 @@ public class Button {
 
   public void render(Screen screen) {
     screen.renderSprite(x, y, currentButton, false);
+    screen.addText(fontInfo);
   }
 }

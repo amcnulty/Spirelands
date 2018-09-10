@@ -21,7 +21,7 @@ public class TitleScreen extends GameView {
   
   private void loadAssets() {
     // Using this to set the button temporarily
-    startButton = new Button(Screen.getWidth() / 2, Screen.getHeight() / 2, 50, 25, () -> handleStartButtonClick());
+    startButton = new Button("Start Game", Screen.getWidth() / 2, Screen.getHeight() / 2, 50, 25, () -> handleStartButtonClick());
   }
 
   private void handleStartButtonClick() {

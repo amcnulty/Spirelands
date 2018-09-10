@@ -3,7 +3,6 @@ package com.monkeystomp.spirelands;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
-import com.monkeystomp.spirelands.view.LevelView;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.Canvas;
@@ -25,9 +24,10 @@ public class Game extends Canvas implements Runnable {
   private String  title = "Spirelands";
   private int width = 420,
               height = width * 9 / 16,
-              scale = 3,
               updatesPerSecond = 60,
               framesPerSecond = 90;
+  private double  scaleX = 3.0,
+                  scaleY = 3.0;
   private BufferedImage image;
   private int[] pixels;
   private BufferStrategy bufferStrategy;
@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 
   private Game() {
     // Create the window.
-    Dimension size = new Dimension(width * scale, height * scale);
+    Dimension size = new Dimension((int)(width * scaleX), (int)(height * scaleY));
     setPreferredSize(size);
     frame = new JFrame();
     // Set the title
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable {
     image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
     pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     // Create the screen
-    screen = new Screen(width, height);
+    screen = new Screen(width, height, scaleX, scaleY);
     // Start the title screen.
     new TitleScreen();
     // new LevelView();
@@ -138,6 +138,7 @@ public class Game extends Canvas implements Runnable {
     // Display the pixels to the window.
     graphics = bufferStrategy.getDrawGraphics();
     graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+    screen.renderFonts(graphics);
     graphics.dispose();
     bufferStrategy.show();
   }

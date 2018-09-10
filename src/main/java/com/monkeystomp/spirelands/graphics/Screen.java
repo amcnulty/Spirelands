@@ -1,5 +1,10 @@
 package com.monkeystomp.spirelands.graphics;
 
+import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.awt.Font;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -10,12 +15,17 @@ public class Screen {
                       height,
                       xOffset,
                       yOffset;
+  private static double scaleX,
+                        scaleY;
   private static int[]  pixels;
   private static int[][] lightMap;
+  private ArrayList<FontInfo> fontInfo = new ArrayList<>();
   
-  public Screen(int width, int height) {
+  public Screen(int width, int height, double scaleX, double scaleY) {
     this.width = width;
     this.height = height;
+    this.scaleX = scaleX;
+    this.scaleY = scaleY;
     this.pixels = new int[width * height];
     this.lightMap = new int[width * height][2];
   }
@@ -142,6 +152,21 @@ public class Screen {
     return (r << 16) | (g << 8) | b;
   }
   
+  public void addText(FontInfo info) {
+    fontInfo.add(info);
+  }
+  
+  public void renderFonts(Graphics graphics) {
+    for (int i = 0; i < fontInfo.size(); i++) {
+      Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
+      graphics.setFont(font);
+      graphics.setColor(fontInfo.get(i).getColor());
+      int verticalAdjustment = graphics.getFontMetrics().getAscent() / 2;
+      graphics.drawString(fontInfo.get(i).getText(), (int)(fontInfo.get(i).getX() * scaleX), (int)(fontInfo.get(i).getY() * scaleY) + verticalAdjustment);
+    }
+    fontInfo.clear();
+  }
+  
   /**
    * Sets the offset variables.
    * @param xOffset The horizontal offset in pixels.
@@ -150,6 +175,14 @@ public class Screen {
   public void setOffset(int xOffset, int yOffset) {
       this.xOffset = xOffset;
       this.yOffset = yOffset;
+  }
+  
+  public static double getScaleX() {
+    return scaleX;
+  }
+  
+  public static double getScaleY() {
+    return scaleY;
   }
   
   public static int getWidth() {
