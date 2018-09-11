@@ -1,5 +1,7 @@
 package com.monkeystomp.spirelands.graphics;
 
+import com.monkeystomp.spirelands.level.tile.Tile;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -13,7 +15,7 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   
-  public static final Sprite VOID_SPRITE = new Sprite(64, 64, 0x161616);
+  public static final Sprite VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0x161616);
   
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;

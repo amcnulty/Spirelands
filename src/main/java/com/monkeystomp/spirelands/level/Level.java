@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,6 +27,7 @@ public class Level implements Runnable {
   private String path;
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;
+  protected DialogBox dialogBox = new DialogBox();
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
   protected ArrayList<Portal> portals = new ArrayList<>();

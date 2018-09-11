@@ -6,41 +6,55 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.font.FontRenderContext;
+import java.util.ArrayList;
 
 public class DialogBox {
 
-  private final int DIALOG_WIDTH = 240;
-
+  private final int DIALOG_WIDTH = 240,
+                    DIALOG_LEFT = 16,
+                    DIALOG_TOP = 16,
+                    DIALOG_PADDING_TOP = 10,
+                    DIALOG_PADDING_SIDES = 6,
+                    DIALOG_PADDING_BOTTOM = 12,
+                    MESSAGE_SPEED = 3,
+                    BACKGROUND_COLOR = 0xEFEFEF;
+                    
+  
+  private final Color TEXT_COLOR = new Color(0x323232);
   private String[]  messages,
                     words;
-  private String[] lineMessages = new String[3];
+  private ArrayList<String> lineMessages = new ArrayList<>(),
+                            displayLineMessages = new ArrayList<>();
   private boolean messageBuilding = false;
-  private Sprite background = new Sprite(DIALOG_WIDTH, 80, 0xEFEFEF);
-  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 20);
+  private Sprite background;
+  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 22);
   private FontRenderContext frc = new FontRenderContext(null, true, true);
-  private int x = 20,
-              line1Y = 22,
-              line2Y = 44,
-              line3Y = 66,
-              dialogLineHeight = 20,
-              timer = 0,
-              messageIndex = 1,
-              substringIndex = 0;
-  private FontInfo  line1 = new FontInfo(font, new Color(0x323232), lineMessages[0], x, line1Y),
-                    line2 = new FontInfo(font, new Color(0x323232), lineMessages[1], x, line2Y),
-                    line3 = new FontInfo(font, new Color(0x323232), lineMessages[2], x, line3Y);
-
-  public DialogBox(String[] messages) {
+  private int timer = 0,
+              messageIndex = 2,
+              substringIndex = 0,
+              renderLineIndex = 0,
+              dialogLineHeight;
+  private ArrayList<FontInfo> lines = new ArrayList<>();
+  
+  public void openDialog(String[] messages) {
     this.messages = messages;
-    words = messages[1].split(" ");
+    displayMessage(messageIndex);
+  }
+  
+  private void displayMessage(int messageIndex) {
+    words = messages[messageIndex].split(" ");
     setLines(0, 0);
+    createBackground();
   }
 
   private void setLines(int lineIndex, int wordIndex) {
+    lines.add(new FontInfo(font, TEXT_COLOR, "", DIALOG_LEFT + DIALOG_PADDING_SIDES, DIALOG_TOP + DIALOG_PADDING_TOP));
+    lineMessages.add("");
+    displayLineMessages.add("");
     double lineTotal = 0;
     String  testString = "";
     for (int i = wordIndex; i < words.length; i++) {
-      if (i == 0) {
+      if (lineMessages.get(lineIndex).length() == 0) {
         testString += words[i];
         lineTotal += font.getStringBounds(words[i], frc).getWidth() / Screen.getScaleX();
       }
@@ -48,46 +62,73 @@ public class DialogBox {
         testString += " " + words[i];
         lineTotal += font.getStringBounds(" " + words[i], frc).getWidth() / Screen.getScaleX();
       }
-      if (lineTotal < (DIALOG_WIDTH)) {
-        lineMessages[lineIndex] = testString;
+      if (lineTotal < DIALOG_WIDTH) {
+        lineMessages.set(lineIndex, testString);
       }
       else {
-        if (++lineIndex < lineMessages.length) {
-          setLines(lineIndex++, i);
+        if (i < words.length) {
+          setLines(++lineIndex, i);
         }
+        break;
       }
     }
     updateFontInfo();
     messageBuilding = true;
+    renderLineIndex = 0;
+  }
+  
+  private void createBackground() {
+    dialogLineHeight = (int)(font.getStringBounds("random string", frc).getHeight() / Screen.getScaleY());
+    background = new Sprite(
+      DIALOG_WIDTH,
+      dialogLineHeight * lineMessages.size() + DIALOG_PADDING_TOP + DIALOG_PADDING_BOTTOM,
+      BACKGROUND_COLOR
+    );
   }
 
   private void updateFontInfo() {
-    line1 = new FontInfo(font, new Color(0x323232), lineMessages[0], x, line1Y);
-    line2 = new FontInfo(font, new Color(0x323232), lineMessages[1], x, line2Y);
-    line3 = new FontInfo(font, new Color(0x323232), lineMessages[2], x, line3Y);
+    for (int i = 0; i < lines.size(); i++) {
+      lines.set(
+        i,
+        new FontInfo(
+          font,
+          TEXT_COLOR,
+          displayLineMessages.get(i),
+          DIALOG_LEFT + DIALOG_PADDING_SIDES,
+          DIALOG_TOP + DIALOG_PADDING_TOP + dialogLineHeight * i + (dialogLineHeight / 2)
+        )
+      );
+    }
   }
 
   private void buildCurrentMessage() {
-    // if (timer % 3 == 0) {
-    //   if (substringIndex < this.messages[messageIndex].length() + 1) {
-    //     line1Message = this.messages[messageIndex].substring(0, substringIndex++);
-    //     updateFontInfo();
-    //   }
-    // }
-    // timer++;
+    if (timer % MESSAGE_SPEED == 0) {
+      if (substringIndex < lineMessages.get(renderLineIndex).length()) {
+        displayLineMessages.set(renderLineIndex, lineMessages.get(renderLineIndex).substring(0, ++substringIndex));
+        updateFontInfo();
+      }
+      else {
+        if (++renderLineIndex < lineMessages.size()) {
+          substringIndex = 0;
+          buildCurrentMessage();
+        }
+        else messageBuilding = false;
+      }
+    }
+    timer++;
   }
 
   public void update() {
     if (messageBuilding) {
-      // buildCurrentMessage();
+       buildCurrentMessage();
     }
     else timer = 0;
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(16, 16, background, 8, false);
-    screen.addText(line1);
-    screen.addText(line2);
-    screen.addText(line3);
+    screen.renderSprite(DIALOG_TOP, DIALOG_LEFT, background, 8, false);
+    for (int i = 0; i < lines.size(); i++) {
+      screen.addText(lines.get(i));
+    }
   }
 }
