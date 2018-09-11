@@ -35,6 +35,7 @@ public class Level implements Runnable {
               xScroll,
               yScroll;
   protected Player player;
+  protected boolean dialogOpen = false;
   private ILevelChanger IChanger;
 
   /**
@@ -86,6 +87,7 @@ public class Level implements Runnable {
     addPlayer();
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
+    finalLevelSetup();
   }
 
   protected void addPlayer() {
@@ -95,6 +97,8 @@ public class Level implements Runnable {
   }
 
   protected void addPortals() {}
+
+  protected void finalLevelSetup() {}
 
   public ArrayList<Portal> getPortals() {
     return portals;
@@ -151,13 +155,15 @@ public class Level implements Runnable {
     screen.setOffset(xScroll, yScroll);
   }
   
-  public void levelUpdate() {}
+  protected void levelUpdate() {}
   
-  public void levelRender(Screen screen) {}
+  protected void levelRender(Screen screen) {}
+
+  protected void levelRenderOverLightMap(Screen screen) {}
   
   public void update(){
     if (!loadingThread.isAlive()) {
-      player.update();
+      if (!dialogOpen) player.update();
       levelUpdate();
     }
   }
@@ -178,6 +184,8 @@ public class Level implements Runnable {
       levelRender(screen);
       // Overlay the lightmap on the level.
       screen.overlayLightMap();
+      // Call the subclass hook for rendering over the light map.
+      levelRenderOverLightMap(screen);
     }
   }
 }

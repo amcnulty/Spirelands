@@ -158,8 +158,7 @@ public class Screen {
   
   public void renderFonts(Graphics graphics) {
     for (int i = 0; i < fontInfo.size(); i++) {
-      Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
-      graphics.setFont(font);
+      graphics.setFont(fontInfo.get(i).getFont());
       graphics.setColor(fontInfo.get(i).getColor());
       int verticalAdjustment = graphics.getFontMetrics().getAscent() / 2;
       graphics.drawString(fontInfo.get(i).getText(), (int)(fontInfo.get(i).getX() * scaleX), (int)(fontInfo.get(i).getY() * scaleY) + verticalAdjustment);

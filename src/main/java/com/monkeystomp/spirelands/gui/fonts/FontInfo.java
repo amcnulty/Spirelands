@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.fonts;
 
 import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
@@ -8,16 +9,23 @@ import java.awt.Color;
  */
 public class FontInfo {
 
+  private Font font;
   private Color color;
   private String text;
   private int x,
               y;
   
-  public FontInfo(Color color, String text, int x, int y) {
+  public FontInfo(Font font, Color color, String text, int x, int y) {
+    this.font = font;
     this.color = color;
     this.text = text;
+    if (this.text == null) this.text = "";
     this.x = x;
     this.y = y;
+  }
+
+  public Font getFont() {
+    return font;
   }
 
   public String getText() {

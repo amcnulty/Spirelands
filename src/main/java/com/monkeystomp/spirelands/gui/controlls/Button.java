@@ -19,6 +19,7 @@ public class Button {
               width,
               height;
   private ICallback callback;
+  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
   private Sprite  button,
                   buttonHover,
                   buttonDown,
@@ -50,7 +51,7 @@ public class Button {
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = new FontInfo(Color.WHITE, buttonText, fontX, fontY);
+    fontInfo = new FontInfo(font, Color.WHITE, buttonText, fontX, fontY);
   }
 
   private void createButtonSprites() {

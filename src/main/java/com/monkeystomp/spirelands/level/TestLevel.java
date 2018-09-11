@@ -35,7 +35,7 @@ public class TestLevel extends Level {
   }
   
   @Override
-  public void levelUpdate() {
+  protected void levelUpdate() {
     // 7 pm
     if (time == 420) shadowLevel = 1;
     // 7:30 pm
@@ -81,9 +81,14 @@ public class TestLevel extends Level {
   }
   
   @Override
-  public void levelRender(Screen screen) {
+  protected void levelRender(Screen screen) {
     screen.fillLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
+  }
+
+  @Override
+  protected void levelRenderOverLightMap(Screen screen) {
+    
   }
 }
