@@ -40,6 +40,10 @@ public class Level implements Runnable {
   protected boolean dialogOpen = false;
   private ILevelChanger IChanger;
 
+  public Level() {
+    dialogBox.setCloseCommand(() -> dialogOpen = false);
+  }
+
   /**
    * Begins the level loading process on a separate thread.
    */

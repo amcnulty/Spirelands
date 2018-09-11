@@ -2,9 +2,12 @@ package com.monkeystomp.spirelands.level;
 
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
+import com.monkeystomp.spirelands.gui.dialog.DialogBox;
+import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -17,6 +20,7 @@ public class TestLevel extends Level {
               shadowLevel = 0;
   
   public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1);
+  private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi Steph! How are you doing? I think the laundry is almost done. I've been programing this whole time working on adding dialog boxes to the game. Love You! <3"};
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
@@ -35,7 +39,14 @@ public class TestLevel extends Level {
   }
   
   @Override
+  protected void finalLevelSetup() {
+    dialogOpen = true;
+    dialogBox.openDialog(welcomeText);
+  }
+
+  @Override
   protected void levelUpdate() {
+    dialogBox.update();
     // 7 pm
     if (time == 420) shadowLevel = 1;
     // 7:30 pm
@@ -89,6 +100,6 @@ public class TestLevel extends Level {
 
   @Override
   protected void levelRenderOverLightMap(Screen screen) {
-    
+    if (dialogOpen) dialogBox.render(screen);
   }
 }

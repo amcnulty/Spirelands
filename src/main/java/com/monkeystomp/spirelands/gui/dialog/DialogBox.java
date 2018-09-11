@@ -2,11 +2,15 @@ package com.monkeystomp.spirelands.gui.dialog;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.input.INotify;
+import com.monkeystomp.spirelands.input.ICallback;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
+import java.awt.event.KeyEvent;
 
 public class DialogBox {
 
@@ -30,15 +34,44 @@ public class DialogBox {
   private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 22);
   private FontRenderContext frc = new FontRenderContext(null, true, true);
   private int timer = 0,
-              messageIndex = 2,
+              messageIndex = 0,
               substringIndex = 0,
               renderLineIndex = 0,
               dialogLineHeight;
   private ArrayList<FontInfo> lines = new ArrayList<>();
+  private INotify notifier = (KeyEvent e) -> handleSpaceKey(e);
+  private ICallback callback;
+
+  public void setCloseCommand(ICallback callback) {
+    this.callback = callback;
+  }
+
+  private void handleSpaceKey(KeyEvent e) {
+    if (e.getKeyCode() == Keyboard.SPACE_KEY) {
+      if (++messageIndex < messages.length) {
+        advanceDialog();
+      }
+      else closeDialog();
+    }
+  }
+
+  private void closeDialog() {
+    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
+    callback.execute();
+  }
+
+  private void advanceDialog() {
+    lines.clear();
+    lineMessages.clear();
+    displayLineMessages.clear();
+    substringIndex = 0;
+    displayMessage(messageIndex);
+  }
   
   public void openDialog(String[] messages) {
     this.messages = messages;
     displayMessage(messageIndex);
+    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
   }
   
   private void displayMessage(int messageIndex) {
@@ -62,7 +95,7 @@ public class DialogBox {
         testString += " " + words[i];
         lineTotal += font.getStringBounds(" " + words[i], frc).getWidth() / Screen.getScaleX();
       }
-      if (lineTotal < DIALOG_WIDTH) {
+      if (lineTotal < (DIALOG_WIDTH - (DIALOG_PADDING_SIDES * 2))) {
         lineMessages.set(lineIndex, testString);
       }
       else {

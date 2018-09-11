@@ -87,9 +87,9 @@ public class SpawnLevel extends Level {
 
       if (time == 1440) {
         time = 0;
-  //      IChanger.change(new TestLevel());
+      //  super.getLevelChanger().change(LevelFactory.createLevel("TEST_LEVEL", TestLevel.westEntrance));
       }
-      else time++;
+      else time += 2;
     }
   }
   

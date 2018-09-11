@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -11,6 +12,7 @@ public class Keyboard implements KeyListener {
 
   private static Keyboard instance = new Keyboard();
   public INotify pauseNotifier;
+  private ArrayList<INotify> keyPressedNotifiers = new ArrayList<>();
 
   private Keyboard() {}
 
@@ -39,6 +41,7 @@ public class Keyboard implements KeyListener {
   @Override
   public void keyPressed(KeyEvent e) {
     keys[e.getKeyCode()] = true;
+    callKeyPressedNotifiers(e);
   }
 
   @Override
@@ -51,5 +54,19 @@ public class Keyboard implements KeyListener {
 
   public static boolean isKeyPressed(int keyCode) {
     return keys[keyCode];
+  }
+
+  public void addKeyPressNotifier(INotify notifier) {
+    keyPressedNotifiers.add(notifier);
+  }
+
+  public void removeKeyPressNotifier(INotify notifier) {
+    keyPressedNotifiers.remove(notifier);
+  }
+
+  private void callKeyPressedNotifiers(KeyEvent e) {
+    for (int i = 0; i < keyPressedNotifiers.size(); i++) {
+      keyPressedNotifiers.get(i).notify(e);
+    }
   }
 }
