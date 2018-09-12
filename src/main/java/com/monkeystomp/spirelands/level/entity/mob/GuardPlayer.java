@@ -101,6 +101,6 @@ public class GuardPlayer extends Player {
   
   @Override
   public void render(Screen screen) {
-    screen.renderPlayer(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
+    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
   }
 }

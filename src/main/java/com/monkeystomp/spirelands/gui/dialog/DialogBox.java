@@ -22,22 +22,30 @@ public class DialogBox {
                     DIALOG_PADDING_BOTTOM = 12,
                     MESSAGE_SPEED = 3,
                     BACKGROUND_COLOR = 0xEFEFEF;
-                    
-  
   private final Color TEXT_COLOR = new Color(0x323232);
+  private final String  DOWN_TRIANGLE = "\u25BE",
+                        TIMES = "\u2A2F";
+  private String currentSymbol = TIMES;
   private String[]  messages,
                     words;
   private ArrayList<String> lineMessages = new ArrayList<>(),
                             displayLineMessages = new ArrayList<>();
-  private boolean messageBuilding = false;
+  private boolean messageBuilding = false,
+                  dialogReady = false;
   private Sprite background;
   private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 22);
+  private Font symbolFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
   private FontRenderContext frc = new FontRenderContext(null, true, true);
   private int timer = 0,
+              symbolAnim = 0,
               messageIndex = 0,
               substringIndex = 0,
               renderLineIndex = 0,
-              dialogLineHeight;
+              dialogLineHeight,
+              dialogCurrentHeight,
+              symbolX = DIALOG_WIDTH + 4,
+              symbolY = 0;
+  private FontInfo symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
   private ArrayList<FontInfo> lines = new ArrayList<>();
   private INotify notifier = (KeyEvent e) -> handleSpaceKey(e);
   private ICallback callback;
@@ -61,23 +69,29 @@ public class DialogBox {
   }
 
   private void advanceDialog() {
-    lines.clear();
-    lineMessages.clear();
-    displayLineMessages.clear();
-    substringIndex = 0;
     displayMessage(messageIndex);
   }
   
   public void openDialog(String[] messages) {
+    dialogReady = false;
     this.messages = messages;
     displayMessage(messageIndex);
     Keyboard.getKeyboard().addKeyPressNotifier(notifier);
+    dialogReady = true;
   }
   
   private void displayMessage(int messageIndex) {
+    lines.clear();
+    lineMessages.clear();
+    displayLineMessages.clear();
+    substringIndex = 0;
+    renderLineIndex = 0;
     words = messages[messageIndex].split(" ");
     setLines(0, 0);
     createBackground();
+    setSymbol();
+    updateFontInfo();
+    messageBuilding = true;
   }
 
   private void setLines(int lineIndex, int wordIndex) {
@@ -105,18 +119,23 @@ public class DialogBox {
         break;
       }
     }
-    updateFontInfo();
-    messageBuilding = true;
-    renderLineIndex = 0;
   }
   
   private void createBackground() {
     dialogLineHeight = (int)(font.getStringBounds("random string", frc).getHeight() / Screen.getScaleY());
+    dialogCurrentHeight = dialogLineHeight * lineMessages.size() + DIALOG_PADDING_TOP + DIALOG_PADDING_BOTTOM;
     background = new Sprite(
       DIALOG_WIDTH,
-      dialogLineHeight * lineMessages.size() + DIALOG_PADDING_TOP + DIALOG_PADDING_BOTTOM,
+      dialogCurrentHeight,
       BACKGROUND_COLOR
     );
+  }
+  
+  private void setSymbol() {
+    if (messageIndex < messages.length - 1) currentSymbol = DOWN_TRIANGLE;
+    else currentSymbol = TIMES;
+    symbolY = DIALOG_TOP + dialogCurrentHeight - 8;
+    symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
   }
 
   private void updateFontInfo() {
@@ -145,23 +164,50 @@ public class DialogBox {
           substringIndex = 0;
           buildCurrentMessage();
         }
-        else messageBuilding = false;
+        else {
+          messageBuilding = false;
+          timer = 0;
+        }
       }
     }
     timer++;
+  }
+  
+  private void animateSymbol() {
+    switch (symbolAnim % 48) {
+      case 0:
+        symbolY++;
+      break;
+      case 12:
+        symbolY--;
+      break;
+      case 24:
+        symbolY--;
+      break;
+      case 36:
+        symbolY++;
+      break;
+    }
+    symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
+    symbolAnim++;
   }
 
   public void update() {
     if (messageBuilding) {
        buildCurrentMessage();
     }
-    else timer = 0;
+    if (messageIndex < messages.length - 1) {
+      animateSymbol();
+    }
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(DIALOG_TOP, DIALOG_LEFT, background, 8, false);
-    for (int i = 0; i < lines.size(); i++) {
-      screen.addText(lines.get(i));
+    if (dialogReady) {
+      screen.renderSprite(DIALOG_LEFT, DIALOG_TOP, background, 8, false);
+      for (int i = 0; i < lines.size(); i++) {
+        screen.addText(lines.get(i));
+      }
+      screen.addText(symbolFontInfo);
     }
   }
 }
