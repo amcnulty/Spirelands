@@ -2,12 +2,8 @@ package com.monkeystomp.spirelands.level;
 
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
-import com.monkeystomp.spirelands.gui.dialog.DialogBox;
-import com.monkeystomp.spirelands.input.Keyboard;
-import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.graphics.Screen;
-import java.util.ArrayList;
-import java.awt.event.KeyEvent;
+import com.monkeystomp.spirelands.level.entity.mob.NPC;
 
 /**
  *
@@ -39,14 +35,25 @@ public class TestLevel extends Level {
   }
   
   @Override
+  protected void addNpcs() {
+    NPC npc;
+    for (int i = 0; i < 14; i++) {
+      npc = new NPC(32 + i * 32, 64);
+      npcs.add(npc);
+      solidEntities.add(npc);
+      npc.initLevel(this);
+    }
+  }
+  
+  @Override
   protected void finalLevelSetup() {
-    dialogOpen = true;
-    dialogBox.openDialog(welcomeText);
   }
 
   @Override
   protected void levelUpdate() {
-    dialogBox.update();
+    if (getDialogOpen()) {
+      dialogBox.update();
+    }
     // 7 pm
     if (time == 420) shadowLevel = 1;
     // 7:30 pm
@@ -92,7 +99,7 @@ public class TestLevel extends Level {
   }
   
   @Override
-  protected void levelRender(Screen screen) {
+  protected void renderUnderPlayer(Screen screen) {
     screen.fillLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
@@ -100,6 +107,6 @@ public class TestLevel extends Level {
 
   @Override
   protected void levelRenderOverLightMap(Screen screen) {
-    if (dialogOpen) dialogBox.render(screen);
+    if (getDialogOpen()) dialogBox.render(screen);
   }
 }

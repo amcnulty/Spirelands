@@ -11,6 +11,8 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
+import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.mob.NPC;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -30,14 +32,18 @@ public class Level implements Runnable {
   protected DialogBox dialogBox = new DialogBox();
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
+  // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
+  protected ArrayList<NPC> npcs = new ArrayList<>();
+    // Solid Entities
+    protected ArrayList<Entity> solidEntities = new ArrayList<>();
   protected SpawnCoordinate spawnCoordinate;
   private int levelTileWidth,
               levelTileHeight,
               xScroll,
               yScroll;
   protected Player player;
-  protected boolean dialogOpen = false;
+  private boolean dialogOpen = false;
   private ILevelChanger IChanger;
 
   public Level() {
@@ -93,6 +99,7 @@ public class Level implements Runnable {
     addPlayer();
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
+    addNpcs();
     finalLevelSetup();
   }
 
@@ -103,11 +110,29 @@ public class Level implements Runnable {
   }
 
   protected void addPortals() {}
+  
+  protected void addNpcs() {}
 
   protected void finalLevelSetup() {}
 
   public ArrayList<Portal> getPortals() {
     return portals;
+  }
+  
+  public ArrayList<Entity> getSolidEntities() {
+    return solidEntities;
+  }
+  
+  public boolean getDialogOpen() {
+    return dialogOpen;
+  }
+  
+  public void setDialogOpen(Boolean bool) {
+    dialogOpen = bool;
+  }
+  
+  public DialogBox getDialogBox() {
+    return dialogBox;
   }
   
   public Tile getTile(int x, int y) {
@@ -163,14 +188,20 @@ public class Level implements Runnable {
   
   protected void levelUpdate() {}
   
-  protected void levelRender(Screen screen) {}
+  protected void renderUnderPlayer(Screen screen) {}
 
   protected void levelRenderOverLightMap(Screen screen) {}
   
   public void update(){
     if (!loadingThread.isAlive()) {
+      // Update player if dialog is closed.
       if (!dialogOpen) player.update();
+      // Call the subclass hook for updating.
       levelUpdate();
+      // Update the npcs.
+      for (int i = 0; i < npcs.size(); i++) {
+        npcs.get(i).update();
+      }
     }
   }
   
@@ -184,10 +215,14 @@ public class Level implements Runnable {
           getTile(x, y).render(x, y, screen);
         }
       }
+      // Render the npcs.
+      for (int i = 0; i < npcs.size(); i++) {
+        npcs.get(i).render(screen);
+      }
+      // Call the subclass hook for rendering under player.
+      renderUnderPlayer(screen);
       // Render the player.
       player.render(screen);
-      // Call the subclass hook for rendering.
-      levelRender(screen);
       // Overlay the lightmap on the level.
       screen.overlayLightMap();
       // Call the subclass hook for rendering over the light map.

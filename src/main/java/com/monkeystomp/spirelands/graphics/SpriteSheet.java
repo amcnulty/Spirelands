@@ -16,7 +16,10 @@ public class SpriteSheet {
   private int[] pixels;
   
   public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
-  
+  /**
+   * Creates a SpriteSheet of the given path.
+   * @param path - Path to the sprite sheet resource.
+   */
   public SpriteSheet(String path) {
     this.path = path;
     load();

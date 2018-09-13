@@ -28,6 +28,14 @@ public class GuardPlayer extends Player {
   
   public GuardPlayer(int x, int y) {
     super(x, y);
+    setBounds();
+  }
+  
+  private void setBounds() {
+    moveBounds[0] = 0;
+    moveBounds[1] = 10;
+    moveBounds[2] = 15;
+    moveBounds[3] = 10;
   }
   
   @Override
@@ -55,7 +63,7 @@ public class GuardPlayer extends Player {
     characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, 8, 4, characterSheet));
     // Left
     characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, 6, 5, characterSheet));
-    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, 7, 5, characterSheet));
+    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, 8, 5, characterSheet));
   }
   
   private void checkMovementInput() {
@@ -67,7 +75,7 @@ public class GuardPlayer extends Player {
     if (Keyboard.isKeyPressed(Keyboard.W_KEY) || Keyboard.isKeyPressed(Keyboard.UP_KEY)) yDir -= playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.S_KEY) || Keyboard.isKeyPressed(Keyboard.DOWN_KEY)) yDir += playerVelocity;
     // If moving call move method.
-    if (xDir != 0 || yDir != 0) move(xDir, yDir, bounds);
+    if (xDir != 0 || yDir != 0) move(xDir, yDir, moveBounds);
     // Else not moving.
     else walking = false;
   }
@@ -86,7 +94,7 @@ public class GuardPlayer extends Player {
 
   private void checkForPortals() {
     for (int i = 0; i < level.getPortals().size(); i++) {
-      if (level.getPortals().get(i).portalHere(getX(), getY())) level.getPortals().get(i).enterPortal();
+      if (level.getPortals().get(i).entityHere(getX(), getY())) level.getPortals().get(i).enterPortal();
     }
   }
   

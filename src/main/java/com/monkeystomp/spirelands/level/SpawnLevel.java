@@ -2,11 +2,7 @@ package com.monkeystomp.spirelands.level;
 
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
-import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
-import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.graphics.Sprite;
-import java.util.ArrayList;
 
 /**
  *
@@ -38,13 +34,15 @@ public class SpawnLevel extends Level {
 
   @Override
   protected void finalLevelSetup() {
-    dialogOpen = true;
-    dialogBox.openDialog(welcomeText);
+    
+// Example of how to open a dialog box.
+//    dialogOpen = true;
+//    dialogBox.openDialog(welcomeText);
   }
   
   @Override
   protected void levelUpdate() {
-    if (dialogOpen) {
+    if (getDialogOpen()) {
       dialogBox.update();
     }
     else {
@@ -94,7 +92,7 @@ public class SpawnLevel extends Level {
   }
   
   @Override
-  protected void levelRender(Screen screen) {
+  protected void renderUnderPlayer(Screen screen) {
     screen.fillLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
@@ -102,6 +100,6 @@ public class SpawnLevel extends Level {
 
   @Override
   protected void levelRenderOverLightMap(Screen screen) {
-    if (dialogOpen) dialogBox.render(screen);
+    if (getDialogOpen()) dialogBox.render(screen);
   }
 }

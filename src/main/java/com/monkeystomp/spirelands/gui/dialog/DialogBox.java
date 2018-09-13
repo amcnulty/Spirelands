@@ -64,6 +64,7 @@ public class DialogBox {
   }
 
   private void closeDialog() {
+    messageIndex = 0;
     Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
     callback.execute();
   }

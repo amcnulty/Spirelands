@@ -19,10 +19,14 @@ public class Portal extends Entity {
     this.y = y;
     this.coordinate = coordinate;
     this.levelKey = levelKey;
+    setBounds();
   }
   
-  public boolean portalHere(int xp, int yp) {
-    return (xp > x - 1 && xp < x + Tile.TILE_SIZE + 1 && yp > y - 1 && yp < y + Tile.TILE_SIZE + 1);
+  private void setBounds() {
+    bounds[0] = y - 1;
+    bounds[1] = x + Tile.TILE_SIZE;
+    bounds[2] = y + Tile.TILE_SIZE;
+    bounds[3] = x - 1;
   }
   
   public void enterPortal() {
