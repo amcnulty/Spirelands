@@ -12,7 +12,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import com.monkeystomp.spirelands.level.entity.mob.NPC;
+import com.monkeyStomp.spirelands.level.entity.mob.npc.NPC;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;

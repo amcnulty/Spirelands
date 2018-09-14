@@ -75,6 +75,10 @@ public class DialogBox {
   
   public void openDialog(String[] messages) {
     dialogReady = false;
+    if (messages == null) {
+      closeDialog();
+      return;
+    }
     this.messages = messages;
     displayMessage(messageIndex);
     Keyboard.getKeyboard().addKeyPressNotifier(notifier);

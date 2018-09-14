@@ -1,6 +1,10 @@
 package com.monkeystomp.spirelands.graphics;
 
 import com.monkeystomp.spirelands.level.tile.Tile;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -42,6 +46,19 @@ public class Sprite {
     this.pixels = new int[width * height];
     for (int i = 0; i < pixels.length; i++) {
       this.pixels[i] = pixels[i];
+    }
+  }
+  
+  public Sprite(String path) {
+    try {
+      BufferedImage image = ImageIO.read(new File(path));
+      this.width = image.getWidth();
+      this.height = image.getHeight();
+      this.pixels = new int[width * height];
+      image.getRGB(0, 0, width, height, pixels, 0, width);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
     }
   }
   

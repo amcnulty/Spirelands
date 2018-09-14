@@ -1,9 +1,11 @@
 package com.monkeystomp.spirelands.level;
 
+import com.monkeyStomp.spirelands.level.entity.mob.npc.BasicNPC;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.level.entity.mob.NPC;
+import com.monkeyStomp.spirelands.level.entity.mob.npc.NPC;
+import com.monkeyStomp.spirelands.level.entity.mob.npc.NPCConfig;
 
 /**
  *
@@ -14,9 +16,10 @@ public class TestLevel extends Level {
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0,
               shadowLevel = 0;
-  
   public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1);
-  private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi Steph! How are you doing? I think the laundry is almost done. I've been programing this whole time working on adding dialog boxes to the game. Love You! <3"};
+  
+  private NPCConfig lonelyMaleElf = new NPCConfig();
+  
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
@@ -37,12 +40,14 @@ public class TestLevel extends Level {
   @Override
   protected void addNpcs() {
     NPC npc;
-    for (int i = 0; i < 14; i++) {
-      npc = new NPC(32 + i * 32, 64);
-      npcs.add(npc);
-      solidEntities.add(npc);
-      npc.initLevel(this);
-    }
+    // Lonely Male Elf setup
+    lonelyMaleElf.setX(64);
+    lonelyMaleElf.setY(64);
+    lonelyMaleElf.setMessages(new String[] {"Hi how are you? I'm all alone up here.. I haven't seen anyone around for quite some time.", "Not many people come this way, so I'm guessing that you're a traveler!", "My wife and I used to be travelers until one day she left on what she said was an important adventure. I haven't seen her since she left several months ago. I'm lonely without her."});
+    npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_YELLOWJACKET);
+    npcs.add(npc);
+    solidEntities.add(npc);
+    npc.initLevel(this);
   }
   
   @Override

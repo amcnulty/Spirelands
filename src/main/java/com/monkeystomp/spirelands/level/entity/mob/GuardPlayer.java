@@ -25,6 +25,7 @@ public class GuardPlayer extends Player {
               walkingSteps = 2,
               framesPerStep = 12,
               animMax = walkingSteps * framesPerStep - 2;
+  private Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
   
   public GuardPlayer(int x, int y) {
     super(x, y);
@@ -109,6 +110,7 @@ public class GuardPlayer extends Player {
   
   @Override
   public void render(Screen screen) {
+    screen.renderTransparentSprite(x - shadow.getWidth() / 2, y + SPRITE_SIZE / 2 - shadow.getHeight() / 2, shadow, true);
     screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
   }
 }

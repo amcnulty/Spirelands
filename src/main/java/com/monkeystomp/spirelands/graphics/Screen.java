@@ -3,7 +3,6 @@ package com.monkeystomp.spirelands.graphics;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import java.awt.Graphics;
 import java.util.ArrayList;
-import java.awt.Font;
 
 /**
  *
@@ -87,26 +86,6 @@ public class Screen {
     }
   }
 
-  // Temporary way of dealing with a bad spritesheet
-  public void renderPlayer(int xp, int yp, Sprite sprite, boolean fixed) {
-    if (fixed) {
-      xp -= xOffset;
-      yp -= yOffset;
-    }
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0xffff00ff) {
-          pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-        }
-      }
-    }
-  }
-  
   public void renderTile(int xp, int yp, Sprite sprite) {
     xp -= xOffset;
     yp -= yOffset;
@@ -127,6 +106,32 @@ public class Screen {
     for (int i = 0; i < lightMap.length; i++) {
       lightMap[i][0] = color;
       lightMap[i][1] = alpha;
+    }
+  }
+  
+  public void renderTransparentSprite(int xp, int yp, Sprite sprite, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    int renderY,
+        renderX,
+        alpha;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = yp + y;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = xp + x;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+          if ((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) < 0) {
+            alpha = (int)(((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) + 256) / 25.5);
+          }
+          else alpha = (int)((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) / 25.5);
+          pixels[renderX + renderY * width] = blend(
+            pixels[renderX + renderY * width],
+            sprite.getPixels()[x + y * sprite.getWidth()],
+            alpha
+          );
+      }
     }
   }
 
