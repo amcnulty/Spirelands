@@ -107,6 +107,7 @@ public class Level implements Runnable {
     player = new GuardPlayer(spawnCoordinate.getX(), spawnCoordinate.getY());
     player.setDirection(spawnCoordinate.getDirection());
     player.initLevel(this);
+    solidEntities.add(player);
   }
 
   protected void addPortals() {}

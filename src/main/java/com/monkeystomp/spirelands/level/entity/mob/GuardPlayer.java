@@ -13,7 +13,6 @@ public class GuardPlayer extends Player {
   
   private String currentAction = "STANDING_2";
   private short anim = 0;
-  private int[] bounds = {0, 10, 15, 10};
   
   private final int PLAYER_WALKING_SPEED = 1,
                     PLAYER_RUNNING_SPEED = 2,
@@ -33,6 +32,10 @@ public class GuardPlayer extends Player {
   }
   
   private void setBounds() {
+    bounds[0] = y - 0;
+    bounds[1] = x + 10;
+    bounds[2] = y + 15;
+    bounds[3] = x - 10;
     moveBounds[0] = 0;
     moveBounds[1] = 10;
     moveBounds[2] = 15;
@@ -80,15 +83,17 @@ public class GuardPlayer extends Player {
     // Else not moving.
     else walking = false;
   }
-  
-  private void setCurrentSprite() { 
-    // Sets the currentAction string based on action requirements. Movement, fighting, injured etc.
+  /**
+   * Sets the currentAction string based on action requirements. Movement, fighting, injured etc.
+   */
+  private void setCurrentAction() { 
     if (!walking) {
       currentAction = "STANDING_" + direction;
     }
     else {
+      currentAction = "WALKING_" + direction + "_" + stepIndex;
       if (anim % framesPerStep == 0) {
-        currentAction = "WALKING_" + direction + "_" + anim / framesPerStep;
+        stepIndex = anim / framesPerStep;
       }
     }
   }
@@ -104,8 +109,9 @@ public class GuardPlayer extends Player {
     if (anim > animMax) anim = 0;
     else anim++;
     checkMovementInput();
-    setCurrentSprite();
+    setCurrentAction();
     checkForPortals();
+    setBounds();
   }
   
   @Override

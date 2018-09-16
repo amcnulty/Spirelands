@@ -27,7 +27,8 @@ public class BasicNPC extends NPC {
   
   private SpriteSheet characterSheet = new SpriteSheet("./resources/characters/basicNpcs.png");
   private int randTime = random.nextInt(240),
-              anim = 0;
+              walkingSteps = 2,
+              framesPerStep = 12;
 
   public BasicNPC(NPCConfig config, int character) {
     super(config);
@@ -41,46 +42,51 @@ public class BasicNPC extends NPC {
     
     // Fill the characterActions hashmap with all the sprites associated with various string action keys.
     // Standing sprites.
-    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 3, characterSheet));
-    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 2, characterSheet));
-    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY, characterSheet));
-    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 1, characterSheet));
+    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY, characterSheet));
+    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 1, characterSheet));
+    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 2, characterSheet));
+    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 3, characterSheet));
     // Walking sprites.
     // Up
-    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 3, characterSheet));
-    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 3, characterSheet));
+    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, sheetX, sheetY, characterSheet));
+    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY, characterSheet));
     // Right
-    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 2, characterSheet));
-    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 2, characterSheet));
+    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 1, characterSheet));
+    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 1, characterSheet));
     // Down
-    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, sheetX, sheetY, characterSheet));
-    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY, characterSheet));
+    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 2, characterSheet));
+    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 2, characterSheet));
     // Left
-    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 1, characterSheet));
-    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 1, characterSheet));
+    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 3, characterSheet));
+    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 3, characterSheet));
     setBounds();
   }
     
-  private void setBounds() {
+  protected void setBounds() {
     bounds[0] = y - SPRITE_SIZE / 2;
     bounds[1] = x + SPRITE_SIZE / 2;
     bounds[2] = y + SPRITE_SIZE / 2;
     bounds[3] = x - SPRITE_SIZE / 2;
-    moveBounds[0] = y;
-    moveBounds[1] = x + 10;
-    moveBounds[2] = y + 15;
-    moveBounds[3] = x - 10;
+    moveBounds[0] = SPRITE_SIZE / 2;
+    moveBounds[1] = SPRITE_SIZE / 2;
+    moveBounds[2] = SPRITE_SIZE / 2;
+    moveBounds[3] = SPRITE_SIZE / 2;
   }
   
-  @Override
-  public void update() {
-    if (!fixedDirection) {
+  protected void setCurrentAction() { 
+    if (!walking) {
+      currentAction = "STANDING_" + direction;
       if (anim > 120 + randTime) {
         anim = 0;
         randTime = random.nextInt(240);
-        currentAction = "STANDING_" + random.nextInt(4);
+        direction = random.nextInt(4);
       }
-      anim++;
+    }
+    else {
+      currentAction = "WALKING_" + direction + "_" + stepIndex;
+      if (anim % framesPerStep == 0) {
+        stepIndex = (anim % (walkingSteps * framesPerStep)) / framesPerStep;
+      }
     }
   }
 }

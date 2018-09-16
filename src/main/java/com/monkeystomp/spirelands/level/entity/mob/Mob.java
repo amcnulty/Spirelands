@@ -10,7 +10,8 @@ import com.monkeystomp.spirelands.level.entity.Entity;
 public class Mob extends Entity {
 
   protected boolean walking = false;
-  protected int direction = 2;
+  protected int direction = 2,
+                stepIndex = 0;
   protected int[] moveBounds = new int[4];
   
   protected void move(int xDir, int yDir, int[] bounds) {
@@ -19,6 +20,7 @@ public class Mob extends Entity {
       move(0, yDir, bounds);
       return;
     }
+    else if (xDir == 0 && yDir == 0) return;
     
     if (xDir > 0)       direction = 1;
     else if (xDir < 0)  direction = 3;
@@ -55,13 +57,16 @@ public class Mob extends Entity {
   
   private boolean checkEntities(int xDir, int yDir, int[] bounds) {
     for (int i = 0; i < level.getSolidEntities().size(); i++) {
-      if (yDir < 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) - bounds[0])) return true;
-      if (xDir > 0 && level.getSolidEntities().get(i).entityHere((x + xDir) + bounds[1], y)) return true;
-      if (yDir > 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) + bounds[2])) return true;
-      if (xDir < 0 && level.getSolidEntities().get(i).entityHere((x + xDir) - bounds[3], y)) return true;
-      // Check corner pins
-      for (int c = 0; c < 4; c++) {
-        if (level.getSolidEntities().get(i).entityHere((x + xDir) + c % 2 * (bounds[1] + bounds[3]) - bounds[3], (y + yDir) + c / 2 * (bounds[2] + bounds[0]) - bounds[0])) return true;
+      // Make sure entity is not running into itself
+      if (!level.getSolidEntities().get(i).equals(this)) {
+        if (yDir < 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) - bounds[0])) return true;
+        if (xDir > 0 && level.getSolidEntities().get(i).entityHere((x + xDir) + bounds[1], y)) return true;
+        if (yDir > 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) + bounds[2])) return true;
+        if (xDir < 0 && level.getSolidEntities().get(i).entityHere((x + xDir) - bounds[3], y)) return true;
+        // Check corner pins
+        for (int c = 0; c < 4; c++) {
+          if (level.getSolidEntities().get(i).entityHere((x + xDir) + c % 2 * (bounds[1] + bounds[3]) - bounds[3], (y + yDir) + c / 2 * (bounds[2] + bounds[0]) - bounds[0])) return true;
+        }
       }
     }
     return false;

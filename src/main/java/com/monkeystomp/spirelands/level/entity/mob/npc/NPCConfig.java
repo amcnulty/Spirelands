@@ -1,5 +1,7 @@
 package com.monkeyStomp.spirelands.level.entity.mob.npc;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -8,9 +10,22 @@ public class NPCConfig {
   
   private int x,
               y,
-              direction = 2;
+              direction = 2,
+              routeIndex = 0;
   private boolean fixedDirection = false;
   private String[] messages;
+  private ArrayList<Integer[]> routes = new ArrayList<>();
+
+  public void setRoutePoint(int x, int y, int delay) {
+    routes.add(new Integer[]{x, y, delay});
+  }
+  
+  public Integer[] getNextRoutePoint() {
+    if (!(routeIndex < routes.size())) {
+      routeIndex = 0;
+    }
+    return routes.get(routeIndex++);
+  }
 
   public int getX() {
     return x;

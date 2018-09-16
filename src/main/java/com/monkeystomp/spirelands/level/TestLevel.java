@@ -41,13 +41,18 @@ public class TestLevel extends Level {
   protected void addNpcs() {
     NPC npc;
     // Lonely Male Elf setup
-    lonelyMaleElf.setX(64);
-    lonelyMaleElf.setY(64);
+    lonelyMaleElf.setX(160);
+    lonelyMaleElf.setY(160);
+    lonelyMaleElf.setRoutePoint(200, 160, 2);
+    lonelyMaleElf.setRoutePoint(200, 250, 1);
+    lonelyMaleElf.setRoutePoint(190, 130, 4);
+    lonelyMaleElf.setRoutePoint(160, 160, 1);
     lonelyMaleElf.setMessages(new String[] {"Hi how are you? I'm all alone up here.. I haven't seen anyone around for quite some time.", "Not many people come this way, so I'm guessing that you're a traveler!", "My wife and I used to be travelers until one day she left on what she said was an important adventure. I haven't seen her since she left several months ago. I'm lonely without her."});
-    npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_YELLOWJACKET);
+    npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_ELF);
     npcs.add(npc);
     solidEntities.add(npc);
     npc.initLevel(this);
+    npc.startAtRandomRoutePoint();
   }
   
   @Override
@@ -100,7 +105,7 @@ public class TestLevel extends Level {
       time = 0;
 //      IChanger.change(new SpawnLevel());
     }
-    else time++;
+//    else time++;
   }
   
   @Override
