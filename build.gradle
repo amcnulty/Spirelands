@@ -3,11 +3,28 @@ apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = 'com.monkeystomp.spirelands.Game'
 
+// Repositories
+repositories {
+  mavenCentral();
+}
+
+// Dependencies
+dependencies {
+    testImplementation 'junit:junit:4.12'
+}
+
+// Task configurations
 jar {
   manifest {
     attributes 'Main-Class' : 'com.monkeystomp.spirelands.Game'
     attributes 'SplashScreen-Image' : 'splashScreen/splash_screen.png'
   }
+}
+
+test {
+    useJUnit()
+
+    maxHeapSize = '1G'
 }
 
 /**

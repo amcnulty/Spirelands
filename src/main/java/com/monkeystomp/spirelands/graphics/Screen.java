@@ -162,7 +162,6 @@ public class Screen {
       xp = (int)lightMapEntities.get(i).get(0) - xOffset;
       yp = (int)lightMapEntities.get(i).get(1) - yOffset;
       Sprite mySprite = (Sprite)lightMapEntities.get(i).get(2);
-//      System.out.println((int)(((mySprite.getPixels()[64 + 64 * mySprite.getWidth()] >> 24) + 256) / 25.5));
       for (int y = 0; y < mySprite.getHeight(); y++) {
         renderY = yp + y;
         for (int x = 0; x < mySprite.getWidth(); x++) {
@@ -171,21 +170,14 @@ public class Screen {
           // Subtract the alpha of the sprite by the current value of the lightMap alpha and
           // don't let alpha be less than 0.
           currentAlpha = lightMap[renderX + renderY * width][1];
-//          System.out.println("\n Current Alpha: " + currentAlpha);
-//          System.out.println(x + y * mySprite.getWidth());
-//          System.out.println(mySprite.getPixels()[x + y * mySprite.getWidth()]);
-//          System.out.println(mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24);
           if ((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) < 0) {
             subtractiveAlpha = (int)(((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) + 256) / 25.5);
-//            System.out.println(subtractiveAlpha);
           }
           else {
             subtractiveAlpha = (int)((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) / 25.5);
           }
-//          System.out.println("Subtractive Alpha: " + subtractiveAlpha);
           currentAlpha -= subtractiveAlpha;
           if (currentAlpha < 0) currentAlpha = 0;
-//          System.out.println("New Value For Current Alpha: " + currentAlpha);
           lightMap[renderX + renderY * width][1] = currentAlpha;
         }
       }

@@ -19,7 +19,16 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   
-  public static final Sprite VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0x161616);
+  public static final Sprite  VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0x161616),
+                              GRASS = new Sprite(Tile.TILE_SIZE, 0, 0, SpriteSheet.smallTestSheet),
+                              DIRT = new Sprite(Tile.TILE_SIZE, 1, 0, SpriteSheet.smallTestSheet),
+                              FLOWER = new Sprite(Tile.TILE_SIZE, 2, 0, SpriteSheet.smallTestSheet),
+                              SAND = new Sprite(Tile.TILE_SIZE, 0, 1, SpriteSheet.smallTestSheet),
+                              WATER = new Sprite(Tile.TILE_SIZE, 1, 1, SpriteSheet.smallTestSheet),
+                              GRASS_ROCK = new Sprite(Tile.TILE_SIZE, 2, 1, SpriteSheet.smallTestSheet),
+                              COBBLESTONE = new Sprite(Tile.TILE_SIZE, 0, 2, SpriteSheet.smallTestSheet),
+                              BRICK = new Sprite(Tile.TILE_SIZE, 1, 2, SpriteSheet.smallTestSheet),
+                              DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet);
   
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;

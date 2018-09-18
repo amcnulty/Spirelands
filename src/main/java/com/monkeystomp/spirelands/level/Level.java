@@ -83,13 +83,8 @@ public class Level implements Runnable {
     for (int i = 0; i < bitmap.length; i++) {
       tiles.add(
         new Tile(
-          new Sprite(
-            Tile.TILE_SIZE,
-            (int) TileData.library.get(bitmap[i]).get(0),
-            (int) TileData.library.get(bitmap[i]).get(1),
-            (SpriteSheet) TileData.library.get(bitmap[i]).get(2)
-          ),
-          (boolean) TileData.library.get(bitmap[i]).get(3)
+          (Sprite) TileData.library.get(bitmap[i]).get(0),
+          (boolean) TileData.library.get(bitmap[i]).get(1)
         )
       );
     }

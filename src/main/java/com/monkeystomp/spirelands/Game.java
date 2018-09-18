@@ -52,7 +52,6 @@ public class Game extends Canvas implements Runnable {
     screen = new Screen(width, height, scaleX, scaleY);
     // Start the title screen.
     new TitleScreen();
-    // new LevelView();
 
     addKeyListener(key);
     addMouseListener(mouse);
