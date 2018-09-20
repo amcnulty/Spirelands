@@ -1,12 +1,12 @@
 package com.monkeystomp.spirelands.level;
 
-import com.monkeyStomp.spirelands.level.entity.fixed.StreetLamp;
-import com.monkeyStomp.spirelands.level.entity.mob.npc.BasicNPC;
+import com.monkeystomp.spirelands.level.entity.fixed.StreetLamp;
+import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeyStomp.spirelands.level.entity.mob.npc.NPC;
-import com.monkeyStomp.spirelands.level.entity.mob.npc.NPCConfig;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import java.util.ArrayList;
 

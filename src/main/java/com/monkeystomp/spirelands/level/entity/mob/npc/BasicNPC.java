@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands.level.entity.mob.npc;
+package com.monkeystomp.spirelands.level.entity.mob.npc;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;

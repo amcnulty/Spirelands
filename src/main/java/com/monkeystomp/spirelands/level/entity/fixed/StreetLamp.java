@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands.level.entity.fixed;
+package com.monkeystomp.spirelands.level.entity.fixed;
 
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;

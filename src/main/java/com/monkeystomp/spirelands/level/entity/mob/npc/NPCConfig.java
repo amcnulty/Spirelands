@@ -1,4 +1,4 @@
-package com.monkeyStomp.spirelands.level.entity.mob.npc;
+package com.monkeystomp.spirelands.level.entity.mob.npc;
 
 import java.util.ArrayList;
 
