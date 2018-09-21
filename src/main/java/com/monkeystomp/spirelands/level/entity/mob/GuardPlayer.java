@@ -36,7 +36,7 @@ public class GuardPlayer extends Player {
   }
   
   private void setBounds() {
-    bounds[0] = y - 0;
+    bounds[0] = y - 2;
     bounds[1] = x + 10;
     bounds[2] = y + 15;
     bounds[3] = x - 10;
