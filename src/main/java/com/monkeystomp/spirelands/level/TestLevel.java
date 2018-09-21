@@ -59,7 +59,7 @@ public class TestLevel extends Level {
     npcs.add(npc);
     solidEntities.add(npc);
     npc.initLevel(this);
-    npc.startAtRandomRoutePoint();
+//    npc.startAtRandomRoutePoint();
   }
   
   @Override

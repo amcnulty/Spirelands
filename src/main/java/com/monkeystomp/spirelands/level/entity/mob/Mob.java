@@ -71,4 +71,8 @@ public class Mob extends Entity {
     }
     return false;
   }
+
+  public int getDirection() {
+    return direction;
+  }
 }

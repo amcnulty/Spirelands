@@ -25,7 +25,8 @@ public class NPC extends Mob {
                 anim = 0;
   protected HashMap<String, Sprite> characterActions = new HashMap<>();
   protected Random random = new Random();
-  protected boolean fixedDirection;
+  protected boolean fixedDirection,
+                    speaking = false;
 
   public NPC(NPCConfig config) {
     this.config = config;
@@ -37,8 +38,17 @@ public class NPC extends Mob {
   }
   
   public void speak() {
-    level.getDialogBox().openDialog(messages);
-    level.setDialogOpen(true);
+    if (messages != null) {
+      level.getDialogBox().setCloseCommand(() -> finishSpeaking());
+      level.getDialogBox().openDialog(messages);
+      level.setDialogOpen(true);
+      speaking = true;
+    }
+  }
+  
+  private void finishSpeaking() {
+    speaking = false;
+    level.setDialogOpen(false);
   }
   
   public void startAtRandomRoutePoint() {
@@ -91,7 +101,7 @@ public class NPC extends Mob {
   
   @Override
   public void update() {
-    if (!fixedDirection) {
+    if (!fixedDirection && !speaking) {
       if (movingToPoint) {
         moveToPoint();
       }

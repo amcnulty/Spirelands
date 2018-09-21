@@ -3,7 +3,9 @@ package com.monkeystomp.spirelands.level.entity.mob;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
+import java.awt.event.KeyEvent;
 
 /**
  *
@@ -25,10 +27,12 @@ public class GuardPlayer extends Player {
               framesPerStep = 12,
               animMax = walkingSteps * framesPerStep - 2;
   private Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
+  private INotify notifier = (KeyEvent e) -> handleSpaceKeyPress(e);
   
   public GuardPlayer(int x, int y) {
     super(x, y);
     setBounds();
+    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
   }
   
   private void setBounds() {
@@ -70,6 +74,44 @@ public class GuardPlayer extends Player {
     characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, 8, 5, characterSheet));
   }
   
+  private void handleSpaceKeyPress(KeyEvent e) {
+    if (e.getKeyCode() == Keyboard.SPACE_KEY && !level.getDialogOpen()) {
+      checkForInteractableEntities();
+    }
+    else if (level.getDialogOpen()) level.getDialogBox().handleSpaceKey();
+  }
+  
+  private void checkForInteractableEntities() {
+    int dy = 0,
+        dx = 0;
+    switch (direction) {
+      case 0:
+        dy = -2;
+        dx = 0;
+      break;
+      case 1:
+        dy = 0;
+        dx = 2;
+      break;
+      case 2:
+        dy = 2;
+        dx = 0;
+      break;
+      case 3:
+        dy = 0;
+        dx = -2;
+      break;
+    }
+    for (int i = 0; i < level.getSolidEntities().size(); i++) {
+      for (int j = 0; j < 10; j++) {
+        if (level.getSolidEntities().get(i).entityHere(x + dx * j, y + dy * j) && !level.getSolidEntities().get(i).equals(this)) {
+          level.getSolidEntities().get(i).interact();
+          return;
+        }
+      }
+    }
+  }
+  
   private void checkMovementInput() {
     xDir = 0;
     yDir = 0;
@@ -100,8 +142,17 @@ public class GuardPlayer extends Player {
 
   private void checkForPortals() {
     for (int i = 0; i < level.getPortals().size(); i++) {
-      if (level.getPortals().get(i).entityHere(getX(), getY())) level.getPortals().get(i).enterPortal();
+      if (level.getPortals().get(i).entityHere(getX(), getY())) {
+        level.setExitPortal(level.getPortals().get(i));
+        enteringPortal();
+      }
     }
+  }
+  
+  private void enteringPortal() {
+    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
+    // Show some cool animation that you are leaving the map
+    level.exitLevel();
   }
   
   @Override

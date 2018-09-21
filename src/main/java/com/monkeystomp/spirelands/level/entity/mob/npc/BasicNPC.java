@@ -36,6 +36,18 @@ public class BasicNPC extends NPC {
     generateCharacter(character);
   }
   
+  @Override
+  public void interact() {
+    setDirection();
+    speak();
+  }
+  
+  private void setDirection() {
+    direction = (level.getPlayer().getDirection() + 2) % 4;
+    currentAction = "STANDING_" + direction;
+    // May have to call render one time to show the correct image.
+  }
+  
   private void generateCharacter(int character) {
     int sheetX = character % 7 * 3,
         sheetY = (character / 7) * 4;

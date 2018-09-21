@@ -15,6 +15,7 @@ public class StreetLamp extends Entity {
                   lightMap = new Sprite("./resources/objects/lamp_lightMap.png"),
                   currentSprite;
   private final int SPRITE_SIZE = 32;
+  private boolean lampIsOn = false;
   
   public StreetLamp(int x, int y) {
     this.x = x;
@@ -30,6 +31,18 @@ public class StreetLamp extends Entity {
     bounds[3] = x - SPRITE_SIZE / 2;
   }
   
+  @Override
+  public void interact() {
+    if (lampIsOn) {
+      turnLightOff();
+      lampIsOn = false;
+    }
+    else {
+      turnLightOn();
+      lampIsOn = true;
+    }
+  }
+  
   public void turnLightOn() {
     currentSprite = lampOn;
   }
@@ -41,6 +54,8 @@ public class StreetLamp extends Entity {
   @Override
   public void render(Screen screen) {
     screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);
-    screen.addLightMapEntity(x - lightMap.getWidth() / 2, y - lightMap.getHeight() / 2, lightMap);
+    if (lampIsOn) {
+      screen.addLightMapEntity(x - lightMap.getWidth() / 2, y - lightMap.getHeight() / 2, lightMap);
+    }
   }
 }

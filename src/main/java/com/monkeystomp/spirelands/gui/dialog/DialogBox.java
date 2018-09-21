@@ -47,15 +47,15 @@ public class DialogBox {
               symbolY = 0;
   private FontInfo symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
   private ArrayList<FontInfo> lines = new ArrayList<>();
-  private INotify notifier = (KeyEvent e) -> handleSpaceKey(e);
+//  private INotify notifier = (KeyEvent e) -> handleSpaceKey(e);
   private ICallback callback;
 
   public void setCloseCommand(ICallback callback) {
     this.callback = callback;
   }
 
-  private void handleSpaceKey(KeyEvent e) {
-    if (e.getKeyCode() == Keyboard.SPACE_KEY) {
+  public void handleSpaceKey() {
+    if (dialogReady) {
       if (++messageIndex < messages.length) {
         advanceDialog();
       }
@@ -64,8 +64,9 @@ public class DialogBox {
   }
 
   private void closeDialog() {
+    dialogReady = false;
     messageIndex = 0;
-    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
+//    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
     callback.execute();
   }
 
@@ -74,6 +75,7 @@ public class DialogBox {
   }
   
   public void openDialog(String[] messages) {
+    System.out.println("Open Dialog");
     dialogReady = false;
     if (messages == null) {
       closeDialog();
@@ -81,7 +83,7 @@ public class DialogBox {
     }
     this.messages = messages;
     displayMessage(messageIndex);
-    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
+//    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
     dialogReady = true;
   }
   

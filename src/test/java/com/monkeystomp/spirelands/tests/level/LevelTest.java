@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.level;
+package com.monkeystomp.spirelands.tests.level;
 
 import static org.junit.Assert.*;
 import org.junit.Test;

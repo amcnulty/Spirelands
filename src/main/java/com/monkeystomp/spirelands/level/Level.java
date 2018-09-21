@@ -44,6 +44,8 @@ public class Level implements Runnable {
               yScroll;
   protected Player player;
   private boolean dialogOpen = false;
+  private Portal exitPortal;
+
   private ILevelChanger IChanger;
 
   public Level() {
@@ -126,6 +128,10 @@ public class Level implements Runnable {
   public void setDialogOpen(Boolean bool) {
     dialogOpen = bool;
   }
+
+  public Player getPlayer() {
+    return player;
+  }
   
   public DialogBox getDialogBox() {
     return dialogBox;
@@ -159,6 +165,10 @@ public class Level implements Runnable {
   protected void setLevelTileHeight(int height) {
     this.levelTileHeight = height;
   }
+  
+  public void setExitPortal(Portal exitPortal) {
+    this.exitPortal = exitPortal;
+  }
 
   public void setLevelChanger(ILevelChanger IChanger) {
     this.IChanger = IChanger;
@@ -166,6 +176,10 @@ public class Level implements Runnable {
   
   public ILevelChanger getLevelChanger() {
     return IChanger;
+  }
+  
+  public void exitLevel() {
+    exitPortal.enterPortal();
   }
   
   private void setScreenOffset(Screen screen) {

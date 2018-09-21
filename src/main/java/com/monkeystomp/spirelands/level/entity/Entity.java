@@ -39,6 +39,8 @@ public abstract class Entity {
     this.y = y;
   }
   
+  public void interact() {}
+  
   public boolean entityHere(int xp, int yp) {
     return (xp > bounds[3] && xp < bounds[1] + 1 && yp > bounds[0] && yp < bounds[2]);
   }
