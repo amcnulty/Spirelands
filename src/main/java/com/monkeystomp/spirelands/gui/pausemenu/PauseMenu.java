@@ -17,10 +17,6 @@ public class PauseMenu {
   private final Button continueButton = new Button("Continue", Screen.getWidth() / 2, Screen.getHeight() / 2 - 6, 41, 11, () -> handleContinueButtonClick());
   private final Button exitButton = new Button("Exit", Screen.getWidth() / 2, Screen.getHeight() / 2 + 6, 41, 11, () -> handleExitButtonClick());
 
-  public PauseMenu() {
-
-  }
-
   public void setCloseCommand(ICallback callback) {
     this.callback = callback;
   }
