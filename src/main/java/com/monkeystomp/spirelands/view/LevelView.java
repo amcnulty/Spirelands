@@ -36,7 +36,7 @@ public class LevelView extends GameView {
   private void setupNotifiers() {
     Keyboard.getKeyboard().setEscapeNotifier((KeyEvent e) -> handleEscapeKey(e));
     pauseMenu.setCloseCommand(() -> resumeLevel());
-    pauseMenu.setQuitToMenuCommand(() -> leaveThisView());
+    pauseMenu.setQuitToMenuCommand(() -> ViewManager.getViewManager().changeView(new TitleScreen()));
   }
 
   private void handleEscapeKey(KeyEvent e) {
@@ -56,10 +56,10 @@ public class LevelView extends GameView {
     gamePaused = false;
   }
   
-  public void leaveThisView() {
+  @Override
+  public void leaveView() {
     Keyboard.getKeyboard().removeEscapeNotifier();
     level.exitLevel();
-    ViewManager.getViewManager().changeView(new TitleScreen());
   }
   
   @Override
