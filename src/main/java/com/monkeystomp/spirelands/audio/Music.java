@@ -13,9 +13,11 @@ import javax.sound.sampled.LineEvent;
 public class Music {
 
   public static File  SAD_PIANO_SONG = new File("./resources/audio/music/sad_piano_song.wav");
+  
+  private Clip clip;
+  private long trackTime;
 
-  public void playMusic(File file) {
-    Clip clip;
+  public void play(File file) {
     try {
       AudioInputStream ais = AudioSystem.getAudioInputStream(file);
       clip = AudioSystem.getClip();
@@ -24,12 +26,35 @@ public class Music {
       clip.start();
       clip.addLineListener((LineEvent e) -> {
         if (e.getType() == LineEvent.Type.STOP){
-          e.getLine().close();
+//          e.getLine().close();
         }
       });
     }
     catch (Exception e) {
       e.printStackTrace();
+    }
+  }
+  
+  public void stop() {
+    if (clip != null) {
+      clip.stop();
+      clip.flush();
+      clip.close();
+    }
+  }
+  
+  public void pause() {
+    if (clip != null) {
+      trackTime = clip.getMicrosecondPosition();
+      clip.stop();
+      clip.flush();
+    }
+  }
+  
+  public void resume() {
+    if (clip != null) {
+      clip.setMicrosecondPosition(trackTime);
+      clip.start();
     }
   }
 }

@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import java.awt.event.KeyEvent;
 
 /**
@@ -125,16 +126,21 @@ public class GuardPlayer extends Player {
   private void checkForPortals() {
     for (int i = 0; i < level.getPortals().size(); i++) {
       if (level.getPortals().get(i).entityHere(getX(), getY())) {
-        level.setExitPortal(level.getPortals().get(i));
-        enteringPortal();
+        enterPortal(level.getPortals().get(i));
       }
     }
   }
   
-  private void enteringPortal() {
-    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
+  private void enterPortal(Portal exitPortal) {
+    level.setExitPortal(exitPortal);
+    destroyPlayer();
     // Show some cool animation that you are leaving the map
     level.exitLevel();
+  }
+  
+  private void destroyPlayer() {
+    // Remove notifiers
+    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
   }
   
   @Override

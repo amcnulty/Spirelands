@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Font;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
@@ -32,6 +33,8 @@ public class Level implements Runnable {
   protected DialogBox dialogBox = new DialogBox();
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
+  // Music player
+  protected Music music = new Music();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
   protected ArrayList<NPC> npcs = new ArrayList<>();
@@ -136,6 +139,10 @@ public class Level implements Runnable {
     return player;
   }
   
+  public Music getMusicPlayer() {
+    return music;
+  }
+  
   public DialogBox getDialogBox() {
     return dialogBox;
   }
@@ -182,6 +189,8 @@ public class Level implements Runnable {
   }
   
   public void exitLevel() {
+    // Stop music playing
+    music.stop();
     exitPortal.enterPortal();
   }
   

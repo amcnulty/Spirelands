@@ -27,10 +27,6 @@ public class TestLevel extends Level {
   
   // Other Entities
   private ArrayList<StreetLamp> lamps = new ArrayList<>();
-
-  // Music player
-  private Music music = new Music();
-  
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
@@ -68,7 +64,7 @@ public class TestLevel extends Level {
 
   @Override
   protected void startMusic() {
-    music.playMusic(Music.SAD_PIANO_SONG);
+    music.play(Music.SAD_PIANO_SONG);
   }
   
   @Override

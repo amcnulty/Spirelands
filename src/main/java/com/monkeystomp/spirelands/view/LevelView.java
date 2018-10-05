@@ -37,14 +37,24 @@ public class LevelView extends GameView {
 
   private void setupNotifiers() {
     Keyboard.getKeyboard().pauseNotifier = (KeyEvent e) -> handleEscapeKey(e);
-    pauseMenu.setCloseCommand(() -> gamePaused = false);
+    pauseMenu.setCloseCommand(() -> resumeLevel());
   }
 
   private void handleEscapeKey(KeyEvent e) {
-    if (!gamePaused) sfx.playSoundEffect(SoundEffects.CONFIRM_CHORD);
-    else sfx.playSoundEffect(SoundEffects.CONFIRM);
-    gamePaused = !gamePaused;
-    
+    if (gamePaused) resumeLevel();
+    else pauseLevel();
+  }
+  
+  private void pauseLevel() {
+    sfx.playSoundEffect(SoundEffects.CONFIRM_CHORD);
+    level.getMusicPlayer().pause();
+    gamePaused = true;
+  }
+  
+  private void resumeLevel() {
+    sfx.playSoundEffect(SoundEffects.CONFIRM);
+    level.getMusicPlayer().resume();
+    gamePaused = false;
   }
   
   @Override
