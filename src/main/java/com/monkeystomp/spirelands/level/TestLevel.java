@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.audio.Music;
 import java.util.ArrayList;
 
 /**
@@ -26,6 +27,9 @@ public class TestLevel extends Level {
   
   // Other Entities
   private ArrayList<StreetLamp> lamps = new ArrayList<>();
+
+  // Music player
+  private Music music = new Music();
   
   
   public TestLevel(SpawnCoordinate coordinate) {
@@ -60,6 +64,11 @@ public class TestLevel extends Level {
     solidEntities.add(npc);
     npc.initLevel(this);
     npc.startAtRandomRoutePoint();
+  }
+
+  @Override
+  protected void startMusic() {
+    music.playMusic(Music.SAD_PIANO_SONG);
   }
   
   @Override

@@ -82,26 +82,8 @@ public class GuardPlayer extends Player {
   }
   
   private void checkForInteractableEntities() {
-    int dy = 0,
-        dx = 0;
-    switch (direction) {
-      case 0:
-        dy = -2;
-        dx = 0;
-      break;
-      case 1:
-        dy = 0;
-        dx = 2;
-      break;
-      case 2:
-        dy = 2;
-        dx = 0;
-      break;
-      case 3:
-        dy = 0;
-        dx = -2;
-      break;
-    }
+    int dy = ((direction + 3) % 2) * 2 - (4 * (((direction + 3) % 4) / 3)),
+        dx = (direction % 2) * 2 - (4 * (direction / 3));
     for (int i = 0; i < level.getSolidEntities().size(); i++) {
       for (int j = 0; j < 10; j++) {
         if (level.getSolidEntities().get(i).entityHere(x + dx * j, y + dy * j) && !level.getSolidEntities().get(i).equals(this)) {

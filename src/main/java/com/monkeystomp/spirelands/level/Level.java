@@ -97,6 +97,7 @@ public class Level implements Runnable {
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
     addNpcs();
+    startMusic();
     finalLevelSetup();
   }
 
@@ -110,6 +111,8 @@ public class Level implements Runnable {
   protected void addPortals() {}
   
   protected void addNpcs() {}
+
+  protected void startMusic() {}
 
   protected void finalLevelSetup() {}
 
