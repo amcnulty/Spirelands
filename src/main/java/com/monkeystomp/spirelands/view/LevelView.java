@@ -1,6 +1,5 @@
 package com.monkeystomp.spirelands.view;
 
-import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
@@ -17,7 +16,6 @@ public class LevelView extends GameView {
               renderColor = 0x0079CC;
   // private Level level = new SpawnLevel("./resources/textures/worlds/beach.png");
   private Level level;
-  private SoundEffects sfx = new SoundEffects();
   private boolean gamePaused = false;
   private PauseMenu pauseMenu = new PauseMenu();
 
@@ -36,8 +34,9 @@ public class LevelView extends GameView {
   }
 
   private void setupNotifiers() {
-    Keyboard.getKeyboard().pauseNotifier = (KeyEvent e) -> handleEscapeKey(e);
+    Keyboard.getKeyboard().setEscapeNotifier((KeyEvent e) -> handleEscapeKey(e));
     pauseMenu.setCloseCommand(() -> resumeLevel());
+    pauseMenu.setQuitToMenuCommand(() -> leaveThisView());
   }
 
   private void handleEscapeKey(KeyEvent e) {
@@ -46,15 +45,21 @@ public class LevelView extends GameView {
   }
   
   private void pauseLevel() {
-    sfx.playSoundEffect(SoundEffects.CONFIRM_CHORD);
+    pauseMenu.openMenu();
     level.getMusicPlayer().pause();
     gamePaused = true;
   }
   
   private void resumeLevel() {
-    sfx.playSoundEffect(SoundEffects.CONFIRM);
+    pauseMenu.closeMenu();
     level.getMusicPlayer().resume();
     gamePaused = false;
+  }
+  
+  public void leaveThisView() {
+    Keyboard.getKeyboard().removeEscapeNotifier();
+    level.exitLevel();
+    ViewManager.getViewManager().changeView(new TitleScreen());
   }
   
   @Override

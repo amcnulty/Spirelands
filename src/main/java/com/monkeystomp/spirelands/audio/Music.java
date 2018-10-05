@@ -12,14 +12,16 @@ import javax.sound.sampled.LineEvent;
  */
 public class Music {
 
-  public static File  SAD_PIANO_SONG = new File("./resources/audio/music/sad_piano_song.wav");
+  public static String  SAD_PIANO_SONG = "./resources/audio/music/sad_piano_song.wav",
+                        TITLE_MUSIC = "./resources/audio/music/title_music.wav",
+                        AIRSHIP_SONG = "./resources/audio/music/airship_song_remix.wav";
   
   private Clip clip;
   private long trackTime;
 
-  public void play(File file) {
+  public void play(String path) {
     try {
-      AudioInputStream ais = AudioSystem.getAudioInputStream(file);
+      AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
       clip = AudioSystem.getClip();
       clip.open(ais);
       ais.close();

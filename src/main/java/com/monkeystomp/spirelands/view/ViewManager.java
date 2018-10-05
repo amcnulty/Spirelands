@@ -12,7 +12,8 @@ public class ViewManager {
 
   private GameView view;
 
-  private ViewManager() {}
+  private ViewManager() {
+  }
 
   public static ViewManager getViewManager() {
     return instance;
@@ -26,7 +27,12 @@ public class ViewManager {
     view.render(screen);
   }
   
-  public void setCurrentView(GameView newView) {
-    this.view = newView;
+  public void changeView(GameView newView) {
+    view.leaveView();
+    setView(newView);
+  }
+  
+  public void setView(GameView view) {
+    this.view = view;
   }
 }

@@ -2,15 +2,12 @@ package com.monkeystomp.spirelands.gui.dialog;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
-import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.ICallback;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
-import java.awt.event.KeyEvent;
 
 public class DialogBox {
 
@@ -75,7 +72,6 @@ public class DialogBox {
   }
   
   public void openDialog(String[] messages) {
-    System.out.println("Open Dialog");
     dialogReady = false;
     if (messages == null) {
       closeDialog();

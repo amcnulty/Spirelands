@@ -1,6 +1,5 @@
 package com.monkeystomp.spirelands.level.tile;
 
-import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import java.util.ArrayList;
 import java.util.Arrays;

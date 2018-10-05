@@ -11,7 +11,13 @@ public class GameView {
   protected ViewManager viewManager = ViewManager.getViewManager();
 
   public GameView() {
-    viewManager.setCurrentView(this);
+  }
+  
+  public void setView() {
+    viewManager.setView(this);
+  }
+  
+  public void leaveView() {
   }
   
   public void update() {

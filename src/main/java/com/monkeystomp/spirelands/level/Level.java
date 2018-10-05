@@ -10,7 +10,6 @@ import com.monkeystomp.spirelands.level.tile.Tile;
 import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
@@ -46,7 +45,8 @@ public class Level implements Runnable {
               xScroll,
               yScroll;
   protected Player player;
-  private boolean dialogOpen = false;
+  private boolean dialogOpen = false,
+                  isPortalSet = false;
   private Portal exitPortal;
 
   private ILevelChanger IChanger;
@@ -178,6 +178,7 @@ public class Level implements Runnable {
   
   public void setExitPortal(Portal exitPortal) {
     this.exitPortal = exitPortal;
+    isPortalSet = true;
   }
 
   public void setLevelChanger(ILevelChanger IChanger) {
@@ -191,7 +192,7 @@ public class Level implements Runnable {
   public void exitLevel() {
     // Stop music playing
     music.stop();
-    exitPortal.enterPortal();
+    if (isPortalSet) exitPortal.enterPortal();
   }
   
   private void setScreenOffset(Screen screen) {
