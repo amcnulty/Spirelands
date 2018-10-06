@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.controlls;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -24,13 +25,15 @@ public class Button {
                   buttonHover,
                   buttonDown,
                   currentButton;
+  private SoundEffects sfx = new SoundEffects();
   private FontInfo fontInfo;
   private String buttonText;
   private int mouseB,
               mouseX,
               mouseY;
   private boolean startedOffButton = false,
-                  startedOnButton = false;
+                  startedOnButton = false,
+                  hovering = false;
 
   public Button(String text, int x, int y, int width, int height, ICallback callback) {
     this.buttonText = text;
@@ -60,6 +63,26 @@ public class Button {
     buttonDown = new Sprite(width, height, 0x001366);
     currentButton = button;
   }
+  
+  private void hover() {
+    if (!hovering) sfx.playSoundEffect(SoundEffects.BUTTON_HOVER);
+    currentButton = buttonHover;
+    hovering = true;
+  }
+  
+  private void down() {
+    currentButton = buttonDown;
+  }
+  
+  private void click() {
+    sfx.playSoundEffect(SoundEffects.BUTTON_CLICK);
+    callback.execute();
+  }
+  
+  private void setDefault() {
+    currentButton = button;
+    hovering = false;
+  }
 
   public void update() {
     mouseX = Mouse.getX() / 3;
@@ -67,11 +90,11 @@ public class Button {
     mouseB = Mouse.getMouseButton();
     if (mouseB != 1) {
       if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
-        currentButton = buttonHover;
-        if (startedOnButton) callback.execute();
+        hover();
+        if (startedOnButton) click();
       }
       else {
-        currentButton = button;
+        setDefault();
       }
       startedOnButton = false;
       startedOffButton = false;
@@ -81,12 +104,12 @@ public class Button {
         if (!startedOffButton) {
           startedOffButton = false;
           startedOnButton = true;
-          currentButton = buttonDown;
+          down();
         }
-        else currentButton = buttonHover;
+        else hover();
       }
       else {
-        currentButton = button;
+        setDefault();
         if (!startedOnButton) {
           startedOffButton = true;
           startedOnButton = false;

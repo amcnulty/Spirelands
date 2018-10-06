@@ -39,11 +39,11 @@ public class PauseMenu {
   }
 
   private void playMenuOpenSound() {
-    sfx.playSoundEffect(SoundEffects.CONFIRM_CHORD);
+    sfx.playSoundEffect(SoundEffects.PAUSE);
   }
   
   private void playMenuCloseSound() {
-    sfx.playSoundEffect(SoundEffects.CONFIRM);
+    sfx.playSoundEffect(SoundEffects.RESUME);
   }
   
   private void handleContinueButtonClick() {

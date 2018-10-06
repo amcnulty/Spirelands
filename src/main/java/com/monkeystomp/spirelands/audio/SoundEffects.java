@@ -25,7 +25,13 @@ public class SoundEffects {
                             LOCOMOTIVE = new File("./resources/audio/sfx/locomotive.wav"),
                             THINGS_BREAKING = new File("./resources/audio/sfx/things_breaking.wav"),
                             TRANSPORTER_SOUND = new File("./resources/audio/sfx/transporter_star_trek.wav"),
-                            TRUCK_ENGINE = new File("./resources/audio/sfx/truck_engine.wav");
+                            TRUCK_ENGINE = new File("./resources/audio/sfx/truck_engine.wav"),
+                            // UI SOUNDS
+                            BUTTON_CLICK = new File("./resources/audio/sfx/ui/button_click.wav"),
+                            BUTTON_HOVER = new File("./resources/audio/sfx/ui/button_hover.wav"),
+                            PAUSE = new File("./resources/audio/sfx/ui/pause.wav"),
+                            RESUME = new File("./resources/audio/sfx/ui/resume.wav"),
+                            VOCAL_CONFIRM = new File("./resources/audio/sfx/ui/vocal_confirm.wav");
   
   public void playSoundEffect(File file) {
     Clip clip;
