@@ -16,6 +16,7 @@ public class SpriteSheet {
   private int[] pixels;
   
   public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
+  public static SpriteSheet chestSheet = new SpriteSheet("./resources/textures/sheets/chest_sheet.png");
   /**
    * Creates a SpriteSheet of the given path.
    * @param path - Path to the sprite sheet resource.

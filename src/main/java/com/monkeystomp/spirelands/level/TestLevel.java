@@ -9,7 +9,7 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
-import java.util.ArrayList;
+import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 
 /**
  *
@@ -24,9 +24,6 @@ public class TestLevel extends Level {
   
   // NPCs
   private NPCConfig lonelyMaleElf = new NPCConfig();
-  
-  // Other Entities
-  private ArrayList<StreetLamp> lamps = new ArrayList<>();
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
@@ -45,6 +42,11 @@ public class TestLevel extends Level {
   }
   
   @Override
+  protected void addChests() {
+    
+  }
+  
+  @Override
   protected void addNpcs() {
     NPC npc;
     // Lonely Male Elf setup
@@ -56,7 +58,6 @@ public class TestLevel extends Level {
     lonelyMaleElf.setRoutePoint(160, 160, 1);
     lonelyMaleElf.setMessages(new String[] {"Hi how are you? I'm all alone up here.. I haven't seen anyone around for quite some time.", "Not many people come this way, so I'm guessing that you're a traveler!", "My wife and I used to be travelers until one day she left on what she said was an important adventure. I haven't seen her since she left several months ago. I'm lonely without her."});
     npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_ELF);
-    npcs.add(npc);
     solidEntities.add(npc);
     npc.initLevel(this);
     npc.startAtRandomRoutePoint();
@@ -70,35 +71,30 @@ public class TestLevel extends Level {
   @Override
   protected void finalLevelSetup() {
     Entity entity = new StreetLamp(210, 75);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(360, 75);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(510, 75);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(605, 150);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(605, 300);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(605, 450);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(530, 570);
-    lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
     
     entity = new StreetLamp(380, 570);
-    lamps.add((StreetLamp)entity);
+    solidEntities.add(entity);
+    
+    entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST);
     solidEntities.add(entity);
   }
 
@@ -154,9 +150,6 @@ public class TestLevel extends Level {
   @Override
   protected void renderUnderPlayer(Screen screen) {
     screen.fillLightMap(0x121212, shadowLevel);
-    for (int i = 0; i < lamps.size(); i++) {
-      lamps.get(i).render(screen);
-    }
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }

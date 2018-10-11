@@ -36,7 +36,6 @@ public class Level implements Runnable {
   protected Music music = new Music();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
-  protected ArrayList<NPC> npcs = new ArrayList<>();
     // Solid Entities
     protected ArrayList<Entity> solidEntities = new ArrayList<>();
   protected SpawnCoordinate spawnCoordinate;
@@ -99,6 +98,7 @@ public class Level implements Runnable {
     addPlayer();
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
+    addChests();
     addNpcs();
     startMusic();
     finalLevelSetup();
@@ -112,6 +112,8 @@ public class Level implements Runnable {
   }
 
   protected void addPortals() {}
+  
+  protected void addChests() {}
   
   protected void addNpcs() {}
 
@@ -221,9 +223,10 @@ public class Level implements Runnable {
       if (!dialogOpen) player.update();
       // Call the subclass hook for updating.
       levelUpdate();
-      // Update the npcs.
-      for (int i = 0; i < npcs.size(); i++) {
-        npcs.get(i).update();
+      // Update the solid entities
+      for (int i = 0; i < solidEntities.size(); i++) {
+        if (solidEntities.get(i).equals(player)) continue;
+        solidEntities.get(i).update();
       }
     }
   }
@@ -238,9 +241,10 @@ public class Level implements Runnable {
           getTile(x, y).render(x, y, screen);
         }
       }
-      // Render the npcs.
-      for (int i = 0; i < npcs.size(); i++) {
-        npcs.get(i).render(screen);
+      // Render the solid entities
+      for (int i = 0; i < solidEntities.size(); i++) {
+        if (solidEntities.get(i).equals(player)) continue;
+        solidEntities.get(i).render(screen);
       }
       // Call the subclass hook for rendering under player.
       renderUnderPlayer(screen);
