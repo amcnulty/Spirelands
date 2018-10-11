@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
+import com.monkeystomp.spirelands.input.INotify;
 import java.awt.event.KeyEvent;
 
 /**
@@ -12,12 +13,10 @@ import java.awt.event.KeyEvent;
  */
 public class LevelView extends GameView {
   
-  private int ticks = 0,
-              renderColor = 0x0079CC;
-  // private Level level = new SpawnLevel("./resources/textures/worlds/beach.png");
   private Level level;
   private boolean gamePaused = false;
   private PauseMenu pauseMenu = new PauseMenu();
+  private INotify notifier = (e) -> handleKeypress(e);
 
   public LevelView(Level level) {
     initLevel(level);
@@ -34,14 +33,16 @@ public class LevelView extends GameView {
   }
 
   private void setupNotifiers() {
-    Keyboard.getKeyboard().setEscapeNotifier((KeyEvent e) -> handleEscapeKey(e));
+    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
     pauseMenu.setCloseCommand(() -> resumeLevel());
     pauseMenu.setQuitToMenuCommand(() -> ViewManager.getViewManager().changeView(new TitleScreen()));
   }
 
-  private void handleEscapeKey(KeyEvent e) {
-    if (gamePaused) resumeLevel();
-    else pauseLevel();
+  private void handleKeypress(KeyEvent e) {
+    if (e.getKeyCode() == Keyboard.ESCAPE_KEY) {
+      if (gamePaused) resumeLevel();
+      else pauseLevel();
+    }
   }
   
   private void pauseLevel() {
@@ -58,7 +59,7 @@ public class LevelView extends GameView {
   
   @Override
   public void leaveView() {
-    Keyboard.getKeyboard().removeEscapeNotifier();
+    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
     level.exitLevel();
   }
   

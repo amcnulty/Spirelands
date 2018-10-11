@@ -11,8 +11,11 @@ import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
+import com.monkeystomp.spirelands.input.INotify;
+import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -47,11 +50,20 @@ public class Level implements Runnable {
   private boolean dialogOpen = false,
                   isPortalSet = false;
   private Portal exitPortal;
+  private Keyboard keyboard = Keyboard.getKeyboard();
+  private INotify notifier = (e) -> handleKeypress(e);
 
   private ILevelChanger IChanger;
 
   public Level() {
     dialogBox.setCloseCommand(() -> dialogOpen = false);
+    keyboard.addKeyPressNotifier(notifier);
+  }
+  
+  public void handleKeypress(KeyEvent e) {
+    if (e.getKeyCode() == Keyboard.I_KEY) {
+      System.out.println(InventoryManager.getInventoryManager().getEquipment().get(0).getItem().getDescription());
+    }
   }
 
   /**
@@ -194,6 +206,7 @@ public class Level implements Runnable {
   public void exitLevel() {
     // Stop music playing
     music.stop();
+    keyboard.removeKeyPressNotifier(notifier);
     if (isPortalSet) exitPortal.enterPortal();
   }
   

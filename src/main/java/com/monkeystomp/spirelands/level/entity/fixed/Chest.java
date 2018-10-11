@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.Entity;
 
 /**
@@ -15,15 +16,17 @@ public class Chest extends Entity {
   private Sprite  chestOpenSprite,
                   chestClosedSprite,
                   currentSprite;
+  private final Item treasure;
   private boolean isChestOpen = false;
   
   public static final int WOODEN_CHEST = 0,
                           COMMON_METAL_CHEST = 1,
                           SPECIAL_METAL_CHEST = 2;
   
-  public Chest(int x, int y, int chestType) {
+  public Chest(int x, int y, int chestType, Item treasure) {
     this.x = x;
     this.y = y;
+    this.treasure = treasure;
     setSprites(chestType);
     setCurrentSprite();
     setBounds();
@@ -49,6 +52,8 @@ public class Chest extends Entity {
   private void openChest() {
     isChestOpen = true;
     setCurrentSprite();
+    // show treasure modal
+    treasure.addToInventory();
   }
 
   public boolean isIsChestOpen() {

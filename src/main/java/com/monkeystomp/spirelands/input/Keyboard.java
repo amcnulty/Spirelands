@@ -11,9 +11,7 @@ import java.util.ArrayList;
 public class Keyboard implements KeyListener {
 
   private static Keyboard instance = new Keyboard();
-  private INotify escapeNotifier;
   private ArrayList<INotify> keyPressedNotifiers = new ArrayList<>();
-  private boolean isEscapeNotifierSet = false;
 
   private Keyboard() {}
 
@@ -31,7 +29,8 @@ public class Keyboard implements KeyListener {
                           RIGHT_KEY = 39,
                           SPACE_KEY = 32,
                           LEFT_SHIFT_KEY = 16,
-                          ESCAPE_KEY = 27;
+                          ESCAPE_KEY = 27,
+                          I_KEY = 73;
   
   private static boolean[] keys = new boolean[220];
 
@@ -48,18 +47,6 @@ public class Keyboard implements KeyListener {
   @Override
   public void keyReleased(KeyEvent e) {
     keys[e.getKeyCode()] = false;
-    if (e.getKeyCode() == 27 && isEscapeNotifierSet) {
-      escapeNotifier.notify(e);
-    }
-  }
-  
-  public void setEscapeNotifier(INotify notifier) {
-    isEscapeNotifierSet = true;
-    escapeNotifier = notifier;
-  }
-  
-  public void removeEscapeNotifier() {
-    isEscapeNotifierSet = false;
   }
 
   public static boolean isKeyPressed(int keyCode) {

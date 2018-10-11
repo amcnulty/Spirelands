@@ -9,6 +9,7 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 
 /**
@@ -94,7 +95,7 @@ public class TestLevel extends Level {
     entity = new StreetLamp(380, 570);
     solidEntities.add(entity);
     
-    entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST);
+    entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
     solidEntities.add(entity);
   }
 
