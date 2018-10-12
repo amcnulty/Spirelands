@@ -62,7 +62,7 @@ public class Level implements Runnable {
   
   public void handleKeypress(KeyEvent e) {
     if (e.getKeyCode() == Keyboard.I_KEY) {
-      System.out.println(InventoryManager.getInventoryManager().getEquipment().get(0).getItem().getDescription());
+      System.out.println("Display the inventory screen");
     }
   }
 

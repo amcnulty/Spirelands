@@ -66,7 +66,7 @@ public class TestLevel extends Level {
 
   @Override
   protected void startMusic() {
-    music.play(Music.SAD_PIANO_SONG);
+    music.play(Music.SIMPLE_TOWN);
   }
   
   @Override

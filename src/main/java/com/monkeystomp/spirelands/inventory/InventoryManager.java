@@ -1,7 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -29,43 +30,17 @@ public class InventoryManager {
     if (ITEM_MAP.get(item.getId()).getAmount() == 0) ITEM_MAP.remove(item.getId());
   }
   
-  public ArrayList<InventoryReference> getWeapons() {
-    ArrayList<InventoryReference> weapons = new ArrayList<>();
-    for (int i = 0; i < ITEM_MAP.size(); i++) {
-      if (ITEM_MAP.get(i).getItem().getType() == Item.WEAPON) weapons.add(ITEM_MAP.get(i));
-    }
-    return weapons;
+  public Map<Integer, InventoryReference> getItemsByType(int type) {
+    return ITEM_MAP.entrySet().stream()
+      .filter(map -> map.getValue().getItem().getType()== type)
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
   
-  public ArrayList<InventoryReference> getArmor() {
-    ArrayList<InventoryReference> armor = new ArrayList<>();
-    for (int i = 0; i < ITEM_MAP.size(); i++) {
-      if (ITEM_MAP.get(i).getItem().getType() == Item.ARMOR) armor.add(ITEM_MAP.get(i));
-    }
-    return armor;
-  }
-  
-  public ArrayList<InventoryReference> getEquipment() {
-    ArrayList<InventoryReference> equipment = new ArrayList<>();
-    for (int i = 0; i < ITEM_MAP.size(); i++) {
-      if (ITEM_MAP.get(i).getItem().getType() == Item.EQUIPMENT) equipment.add(ITEM_MAP.get(i));
-    }
-    return equipment;
-  }
-  
-  public ArrayList<InventoryReference> getSpecial() {
-    ArrayList<InventoryReference> special = new ArrayList<>();
-    for (int i = 0; i < ITEM_MAP.size(); i++) {
-      if (ITEM_MAP.get(i).getItem().getType() == Item.SPECIAL) special.add(ITEM_MAP.get(i));
-    }
-    return special;
-  }
-  
-  public int getAmountById(Item item) {
-    if (ITEM_MAP.containsKey(item.getId())) return ITEM_MAP.get(item.getId()).getAmount();
-    else if (ITEM_MAP.containsKey(item.getId())) return ITEM_MAP.get(item.getId()).getAmount();
-    else if (ITEM_MAP.containsKey(item.getId())) return ITEM_MAP.get(item.getId()).getAmount();
-    else if (ITEM_MAP.containsKey(item.getId())) return ITEM_MAP.get(item.getId()).getAmount();
+  public int getAmountById(int id) {
+    if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
+    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
+    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
+    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
     return 0;
   }
 }

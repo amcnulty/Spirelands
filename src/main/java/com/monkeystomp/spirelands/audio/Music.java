@@ -14,6 +14,15 @@ public class Music {
 
   public static String  SAD_PIANO_SONG = "./resources/audio/music/sad_piano_song.wav",
                         TITLE_MUSIC = "./resources/audio/music/title_music.wav",
+                        INSIDE_CASTLE_WALLS = "./resources/audio/music/inside_castle_walls.wav",
+                        INTRODUCE_HERO = "./resources/audio/music/introduct_hero.wav",
+                        NEUTRAL_IN_A_HOUSE = "./resources/audio/music/neutral_in_a_house.wav",
+                        PLOTTING_WITH_COMRADES = "./resources/audio/music/plotting_with_comrades.wav",
+                        SHORT_MERCHANT_LOOP = "./resources/audio/music/short_merchant_loop.wav",
+                        SIMPLE_TOWN = "./resources/audio/music/simple_town.wav",
+                        STORM = "./resources/audio/music/storm.wav",
+                        TOWN_JINGLE = "./resources/audio/music/town_jingle.wav",
+                        UNDER_PRESSURE = "./resources/audio/music/under_pressure.wav",
                         AIRSHIP_SONG = "./resources/audio/music/airship_song_remix.wav";
   
   private Clip clip;

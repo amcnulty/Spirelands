@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.fixed;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -13,6 +14,7 @@ import com.monkeystomp.spirelands.level.entity.Entity;
 public class Chest extends Entity {
   
   private final int SPRITE_SIZE = 32;
+  private final SoundEffects sfx = new SoundEffects();
   private Sprite  chestOpenSprite,
                   chestClosedSprite,
                   currentSprite;
@@ -50,6 +52,7 @@ public class Chest extends Entity {
   }
   
   private void openChest() {
+    sfx.playSoundEffect(SoundEffects.CHEST_OPENING);
     isChestOpen = true;
     setCurrentSprite();
     // show treasure modal

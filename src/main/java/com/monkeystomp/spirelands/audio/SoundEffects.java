@@ -13,6 +13,7 @@ import javax.sound.sampled.LineEvent;
 public class SoundEffects {
   
   public static final File  BIRDS_CHIRPING = new File("./resources/audio/sfx/birds_chirping.wav"),
+                            CHEST_OPENING = new File("./resources/audio/sfx/chest_opening.wav"),
                             CLAPPING = new File("./resources/audio/sfx/clapping.wav"),
                             CONFIRM = new File("./resources/audio/sfx/confirm.wav"),
                             CONFIRM_CHORD = new File("./resources/audio/sfx/confirm_chord.wav"),
