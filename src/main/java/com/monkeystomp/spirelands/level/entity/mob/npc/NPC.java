@@ -113,6 +113,6 @@ public class NPC extends Mob {
   
   @Override
   public void render(Screen screen) {
-    screen.renderSprite(x - spriteSize / 2, y - spriteSize / 2, characterActions.get(currentAction), true);
+    screen.renderSprite(x - spriteSize / 2, y - spriteSize / 2, characterActions.get(currentAction), true, true);
   }
 }

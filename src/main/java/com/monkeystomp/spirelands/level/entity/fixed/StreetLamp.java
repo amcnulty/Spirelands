@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,6 +17,7 @@ public class StreetLamp extends Entity {
                   currentSprite;
   private final int SPRITE_SIZE = 32;
   private boolean lampIsOn = false;
+  private ArrayList entityRef;
   
   public StreetLamp(int x, int y) {
     this.x = x;
@@ -45,17 +47,16 @@ public class StreetLamp extends Entity {
   
   public void turnLightOn() {
     currentSprite = lampOn;
+    entityRef = level.addLightMapEntity(x - lightMap.getWidth() / 2, y - lightMap.getHeight() / 2, lightMap);
   }
   
   public void turnLightOff() {
     currentSprite = lampOff;
+    level.removeLightMapEntity(entityRef);
   }
   
   @Override
   public void render(Screen screen) {
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);
-    if (lampIsOn) {
-      screen.addLightMapEntity(x - lightMap.getWidth() / 2, y - lightMap.getHeight() / 2, lightMap);
-    }
+    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true, true);
   }
 }

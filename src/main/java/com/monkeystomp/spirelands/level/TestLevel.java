@@ -72,34 +72,42 @@ public class TestLevel extends Level {
     Entity entity = new StreetLamp(210, 75);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(360, 75);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(510, 75);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 150);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 300);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 450);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(530, 570);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(380, 570);
     lamps.add((StreetLamp)entity);
     solidEntities.add(entity);
+    entity.initLevel(this);
   }
 
   @Override
@@ -153,7 +161,7 @@ public class TestLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen) {
-    screen.fillLightMap(0x121212, shadowLevel);
+    screen.setLightMap(0x121212, shadowLevel);
     for (int i = 0; i < lamps.size(); i++) {
       lamps.get(i).render(screen);
     }

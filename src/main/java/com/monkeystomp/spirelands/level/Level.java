@@ -14,6 +14,7 @@ import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,6 +35,8 @@ public class Level implements Runnable {
   protected ArrayList<Tile> tiles = new ArrayList<>();
   // Music player
   protected Music music = new Music();
+  // Lightmap entities
+  protected ArrayList<ArrayList<Object>> lightMapEntities = new ArrayList<>();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
   protected ArrayList<NPC> npcs = new ArrayList<>();
@@ -118,6 +121,17 @@ public class Level implements Runnable {
   protected void startMusic() {}
 
   protected void finalLevelSetup() {}
+
+  
+  public ArrayList addLightMapEntity(int x, int y, Sprite sprite) {
+    ArrayList<Object> newList = new ArrayList<>(Arrays.asList(x, y, sprite));
+    lightMapEntities.add(newList);
+    return newList;
+  }
+
+  public void removeLightMapEntity(ArrayList entity) {
+    lightMapEntities.remove(entity);
+  }
 
   public ArrayList<Portal> getPortals() {
     return portals;
@@ -232,6 +246,10 @@ public class Level implements Runnable {
     if (!loadingThread.isAlive()) {
       // Set screen offset
       setScreenOffset(screen);
+      // Render lightmap entities.
+      for (int i = 0; i < lightMapEntities.size(); i++) {
+        screen.renderLightMapEntity((int)lightMapEntities.get(i).get(0), (int)lightMapEntities.get(i).get(1), (Sprite)lightMapEntities.get(i).get(2));
+      }
       // Render the tiles.
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
         for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
@@ -246,8 +264,6 @@ public class Level implements Runnable {
       renderUnderPlayer(screen);
       // Render the player.
       player.render(screen);
-      // Overlay the lightmap on the level.
-      screen.overlayLightMap();
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen);
     }
