@@ -79,6 +79,6 @@ public class Chest extends Entity {
 
   @Override
   public void render(Screen screen) {
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);
+    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true, true);
   }
 }

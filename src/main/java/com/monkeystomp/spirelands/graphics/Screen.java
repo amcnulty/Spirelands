@@ -19,7 +19,6 @@ public class Screen {
   private static int[]  pixels;
   private static int[] lightMap;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
-  private ArrayList<ArrayList<Object>> lightMapEntities = new ArrayList<>();
   private int lightMapColor = 0,
               lightMapAlpha = 0;
   
