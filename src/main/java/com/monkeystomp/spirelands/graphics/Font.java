@@ -46,7 +46,7 @@ public class Font {
         charactersIndex.indexOf(
           text.charAt(i)
         )
-      ], false);
+      ], false, false);
       letterOffset += characterWidth[
         charactersIndex.indexOf(
           text.charAt(i)

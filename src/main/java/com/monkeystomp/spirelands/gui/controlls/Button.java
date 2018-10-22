@@ -119,7 +119,7 @@ public class Button {
   }
 
   public void render(Screen screen) {
-    screen.renderSprite(x, y, currentButton, false);
+    screen.renderSprite(x, y, currentButton, false, false);
     screen.addText(fontInfo);
   }
 }

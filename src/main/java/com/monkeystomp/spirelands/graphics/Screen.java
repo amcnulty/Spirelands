@@ -17,9 +17,11 @@ public class Screen {
   private static double scaleX,
                         scaleY;
   private static int[]  pixels;
-  private static int[][] lightMap;
+  private static int[] lightMap;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
   private ArrayList<ArrayList<Object>> lightMapEntities = new ArrayList<>();
+  private int lightMapColor = 0,
+              lightMapAlpha = 0;
   
   public Screen(int width, int height, double scaleX, double scaleY) {
     this.width = width;
@@ -27,7 +29,7 @@ public class Screen {
     this.scaleX = scaleX;
     this.scaleY = scaleY;
     this.pixels = new int[width * height];
-    this.lightMap = new int[width * height][2];
+    this.lightMap = new int[width * height];
   }
   
   /**
@@ -36,6 +38,7 @@ public class Screen {
   public void clear() {
     for (int i = 0; i < pixels.length; i++) {
       pixels[i] = 0;
+      lightMap[i] = -1;
     }
   }
   
@@ -45,7 +48,7 @@ public class Screen {
     }
   }
   
-  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed) {
+  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean blended) {
     if (fixed) {
       xp -= xOffset;
       yp -= yOffset;
@@ -58,13 +61,29 @@ public class Screen {
         renderX = xp + x;
         if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
         if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
-          pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+          if (blended) {
+            if (lightMap[renderX + renderY * width] != -1) {
+              pixels[renderX + renderY * width] = blend(
+                sprite.getPixels()[x + y * sprite.getWidth()],
+                lightMapColor,
+                lightMap[renderX + renderY * width]
+              );
+            }
+            else {
+              pixels[renderX + renderY * width] = blend(
+                sprite.getPixels()[x + y * sprite.getWidth()],
+                lightMapColor,
+                lightMapAlpha
+              );
+            }
+          }
+          else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
         }
       }
     }
   }
 
-  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed) {
+  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
     if (fixed) {
       xp -= xOffset;
       yp -= yOffset;
@@ -76,13 +95,14 @@ public class Screen {
       for (int x = 0; x < sprite.getWidth(); x++) {
         renderX = xp + x;
         if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
           pixels[renderX + renderY * width] = blend(
             pixels[renderX + renderY * width],
             sprite.getPixels()[x + y * sprite.getWidth()],
             alpha
           );
         }
+        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
       }
     }
   }
@@ -98,16 +118,27 @@ public class Screen {
         renderX = x + xp;
         if (renderX < -sprite.getWidth() || renderX > width - 1 || renderY < 0 || renderY > height - 1) break;
         if (renderX < 0) renderX = 0;
-        pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+        if (lightMap[renderX + renderY * width] != -1) {
+          pixels[renderX + renderY * width] = blend(
+            sprite.getPixels()[x + y * sprite.getWidth()],
+            lightMapColor,
+            lightMap[renderX + renderY * width]
+          );
+        }
+        else {
+          pixels[renderX + renderY * width] = blend(
+            sprite.getPixels()[x + y * sprite.getWidth()],
+            lightMapColor,
+            lightMapAlpha
+          );
+        }
       }
     }
   }
 
-  public void fillLightMap(int color, int alpha) {
-    for (int i = 0; i < lightMap.length; i++) {
-      lightMap[i][0] = color;
-      lightMap[i][1] = alpha;
-    }
+  public void setLightMap(int color, int alpha) {
+    lightMapColor = color;
+    lightMapAlpha = alpha;
   }
   
   public void renderTransparentSprite(int xp, int yp, Sprite sprite, boolean fixed) {
@@ -135,54 +166,36 @@ public class Screen {
       }
     }
   }
-
-  public void overlayLightMap() {
-    renderLightMapEntities();
-    for (int i = 0; i < pixels.length; i++) {
-      pixels[i] = blend(pixels[i], lightMap[i][0], lightMap[i][1]);
-    }
-  }
   
-  public void addLightMapEntity(int x, int y, Sprite sprite) {
-    ArrayList<Object> newList = new ArrayList<>();
-    newList.add(x);
-    newList.add(y);
-    newList.add(sprite);
-    lightMapEntities.add(newList);
-  }
-  
-  private void renderLightMapEntities() {
-    int xp,
-        yp,
+  public void renderLightMapEntity(int x, int y, Sprite mySprite) {
+    int xp = x - xOffset,
+        yp = y - yOffset,
         renderX,
         renderY,
         currentAlpha,
         subtractiveAlpha;
-    for (int i = 0; i < lightMapEntities.size(); i++) {
-      xp = (int)lightMapEntities.get(i).get(0) - xOffset;
-      yp = (int)lightMapEntities.get(i).get(1) - yOffset;
-      Sprite mySprite = (Sprite)lightMapEntities.get(i).get(2);
-      for (int y = 0; y < mySprite.getHeight(); y++) {
-        renderY = yp + y;
-        for (int x = 0; x < mySprite.getWidth(); x++) {
-          renderX = xp + x;
-          if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-          // Subtract the alpha of the sprite by the current value of the lightMap alpha and
-          // don't let alpha be less than 0.
-          currentAlpha = lightMap[renderX + renderY * width][1];
-          if ((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) < 0) {
-            subtractiveAlpha = (int)(((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) + 256) / 25.5);
-          }
-          else {
-            subtractiveAlpha = (int)((mySprite.getPixels()[x + y * mySprite.getWidth()] >> 24) / 25.5);
-          }
+    for (int spriteY = 0; spriteY < mySprite.getHeight(); spriteY++) {
+      renderY = yp + spriteY;
+      for (int spriteX = 0; spriteX < mySprite.getWidth(); spriteX++) {
+        renderX = xp + spriteX;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+        // Subtract the alpha of the sprite by the current value of the lightMap alpha and
+        // don't let alpha be less than 0.
+        currentAlpha = lightMapAlpha;
+        if ((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) < 0) {
+          subtractiveAlpha = (int)(((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) + 256) / 25.5);
+        }
+        else {
+          subtractiveAlpha = (int)((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) / 25.5);
+        }
+        if (subtractiveAlpha > 0) {
+          if (lightMap[renderX + renderY * width] != -1) currentAlpha = lightMap[renderX + renderY * width];
           currentAlpha -= subtractiveAlpha;
           if (currentAlpha < 0) currentAlpha = 0;
-          lightMap[renderX + renderY * width][1] = currentAlpha;
+          lightMap[renderX + renderY * width] = currentAlpha;
         }
       }
     }
-    lightMapEntities.clear();
   }
 
   private int blend(int background, int foreground, int alpha) {

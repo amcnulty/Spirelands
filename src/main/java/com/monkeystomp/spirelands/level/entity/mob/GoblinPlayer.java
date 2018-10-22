@@ -109,6 +109,6 @@ public class GoblinPlayer extends Player {
   
   @Override
   public void render(Screen screen) {
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
+    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true, true);
   }
 }

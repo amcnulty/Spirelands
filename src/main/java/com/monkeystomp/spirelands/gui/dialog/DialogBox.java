@@ -206,7 +206,7 @@ public class DialogBox {
 
   public void render(Screen screen) {
     if (dialogReady) {
-      screen.renderSprite(DIALOG_LEFT, DIALOG_TOP, background, 8, false);
+      screen.renderSprite(DIALOG_LEFT, DIALOG_TOP, background, 8, false, false);
       for (int i = 0; i < lines.size(); i++) {
         screen.addText(lines.get(i));
       }

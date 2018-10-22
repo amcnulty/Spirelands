@@ -93,7 +93,7 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen) {
-    screen.fillLightMap(0x121212, shadowLevel);
+    screen.setLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }

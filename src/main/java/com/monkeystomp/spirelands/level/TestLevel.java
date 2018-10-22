@@ -73,30 +73,38 @@ public class TestLevel extends Level {
   protected void finalLevelSetup() {
     Entity entity = new StreetLamp(210, 75);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(360, 75);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(510, 75);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 150);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 300);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(605, 450);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(530, 570);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new StreetLamp(380, 570);
     solidEntities.add(entity);
     
     entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
     solidEntities.add(entity);
+    entity.initLevel(this);
   }
 
   @Override
@@ -150,7 +158,10 @@ public class TestLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen) {
-    screen.fillLightMap(0x121212, shadowLevel);
+    screen.setLightMap(0x121212, shadowLevel);
+    for (int i = 0; i < lamps.size(); i++) {
+      lamps.get(i).render(screen);
+    }
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }

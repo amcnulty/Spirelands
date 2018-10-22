@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     addMouseListener(mouse);
     addMouseMotionListener(mouse);
   }
-  
+
   private synchronized void start() {
     running = true;
     thread = new Thread(this, "Display");
@@ -123,7 +123,7 @@ public class Game extends Canvas implements Runnable {
   private void render() {
     bufferStrategy = getBufferStrategy();
     if (bufferStrategy == null) {
-      createBufferStrategy(3);
+      createBufferStrategy(2);
       return;
     }
     // Clear the screen.
