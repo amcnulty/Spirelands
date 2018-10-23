@@ -9,7 +9,6 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 import com.monkeystomp.spirelands.level.entity.particle.Particle;
@@ -113,7 +112,7 @@ public class TestLevel extends Level {
     solidEntities.add(entity);
     entity.initLevel(this);
     
-    particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, Particle.EMBER);
+    particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, "EMBER");
   }
 
   @Override
