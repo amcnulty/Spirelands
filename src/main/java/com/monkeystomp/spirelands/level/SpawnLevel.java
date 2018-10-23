@@ -1,8 +1,12 @@
 package com.monkeystomp.spirelands.level;
 
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 
 /**
  *
@@ -30,6 +34,23 @@ public class SpawnLevel extends Level {
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);
     }
+  }
+  
+  @Override
+  protected void addNpcs() {
+    NPCConfig femalePurple = new NPCConfig();
+    femalePurple.setX(512);
+    femalePurple.setY(170);
+    femalePurple.setMessages(new String[] {"Hi! Are you having fun today?", "I'm having a great day! Want to know why?", "Because I'm thinkin 'bout my ah-mazing boyfriend...that's right. He's soooo great. He's not lonely like that elf back there."});
+    NPC npc = new BasicNPC(femalePurple, BasicNPC.FEMALE_PURPLEHAIR);
+    solidEntities.add(npc);
+    npc.initLevel(this);
+    
+  }
+  
+  @Override
+  protected void startMusic() {
+    music.play(Music.TOWN_JINGLE);
   }
 
   @Override

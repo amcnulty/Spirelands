@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
+import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Font;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
@@ -13,11 +14,10 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
-import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.lightmap.LightMapEntity;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class Level implements Runnable {
   // Music player
   protected Music music = new Music();
   // Lightmap entities
-  protected ArrayList<ArrayList<Object>> lightMapEntities = new ArrayList<>();
+  protected ArrayList<LightMapEntity> lightMapEntities = new ArrayList<>();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
     // Solid Entities
@@ -137,13 +137,11 @@ public class Level implements Runnable {
   protected void finalLevelSetup() {}
 
   
-  public ArrayList addLightMapEntity(int x, int y, Sprite sprite) {
-    ArrayList<Object> newList = new ArrayList<>(Arrays.asList(x, y, sprite));
-    lightMapEntities.add(newList);
-    return newList;
+  public void addLightMapEntity(LightMapEntity entity) {
+    lightMapEntities.add(entity);
   }
 
-  public void removeLightMapEntity(ArrayList entity) {
+  public void removeLightMapEntity(LightMapEntity entity) {
     lightMapEntities.remove(entity);
   }
 
@@ -240,6 +238,9 @@ public class Level implements Runnable {
   
   protected void levelUpdate() {}
   
+  
+  protected void renderOverPlayer(Screen screen) {}
+  
   protected void renderUnderPlayer(Screen screen) {}
 
   protected void levelRenderOverLightMap(Screen screen) {}
@@ -264,7 +265,7 @@ public class Level implements Runnable {
       setScreenOffset(screen);
       // Render lightmap entities.
       for (int i = 0; i < lightMapEntities.size(); i++) {
-        screen.renderLightMapEntity((int)lightMapEntities.get(i).get(0), (int)lightMapEntities.get(i).get(1), (Sprite)lightMapEntities.get(i).get(2));
+        screen.renderLightMapEntity((int)lightMapEntities.get(i).getX(), (int)lightMapEntities.get(i).getY(), (Sprite)lightMapEntities.get(i).getSprite());
       }
       // Render the tiles.
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
@@ -281,6 +282,8 @@ public class Level implements Runnable {
       renderUnderPlayer(screen);
       // Render the player.
       player.render(screen);
+      // Call the subclass hook for rendering over the player.
+      renderOverPlayer(screen);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen);
     }

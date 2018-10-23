@@ -9,8 +9,12 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
+import com.monkeystomp.spirelands.level.entity.particle.Particle;
+import com.monkeystomp.spirelands.level.entity.particle.ParticleOverlay;
+import java.util.ArrayList;
 
 /**
  *
@@ -21,6 +25,7 @@ public class TestLevel extends Level {
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0,
               shadowLevel = 0;
+  private ArrayList<Particle> particles;
   public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1);
   
   // NPCs
@@ -29,6 +34,7 @@ public class TestLevel extends Level {
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
+    shadowLevel = 7;
   }
   
   @Override
@@ -101,10 +107,13 @@ public class TestLevel extends Level {
     
     entity = new StreetLamp(380, 570);
     solidEntities.add(entity);
+    entity.initLevel(this);
     
     entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
     solidEntities.add(entity);
     entity.initLevel(this);
+    
+    particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, Particle.EMBER);
   }
 
   @Override
@@ -153,7 +162,14 @@ public class TestLevel extends Level {
       time = 0;
 //      IChanger.change(new SpawnLevel());
     }
-    else time++;
+//    else time++;
+  }
+  
+  @Override
+  protected void renderOverPlayer(Screen screen) {
+    for (int i = 0; i < particles.size(); i++) {
+      screen.renderSpriteUpperLevel(particles.get(i).getX(), particles.get(i).getY(), particles.get(i).getSprite(), 4, true, true);
+    }
   }
   
   @Override

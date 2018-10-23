@@ -105,6 +105,30 @@ public class Screen {
       }
     }
   }
+  
+  public void renderSpriteUpperLevel(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
+    if (fixed) {
+      xp -= xOffset * 1.2;
+      yp -= yOffset * 1.2;
+    }
+    int renderY,
+        renderX;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = yp + y;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = xp + x;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
+          pixels[renderX + renderY * width] = blend(
+            pixels[renderX + renderY * width],
+            sprite.getPixels()[x + y * sprite.getWidth()],
+            alpha
+          );
+        }
+        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+      }
+    }
+  }
 
   public void renderTile(int xp, int yp, Sprite sprite) {
     xp -= xOffset;

@@ -1,5 +1,8 @@
-package com.monkeystomp.spirelands.level;
+package com.monkeystomp.spirelands.level.util;
 
+import com.monkeystomp.spirelands.level.Level;
+import com.monkeystomp.spirelands.level.SpawnLevel;
+import com.monkeystomp.spirelands.level.TestLevel;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import java.util.HashMap;
 

@@ -3,6 +3,10 @@ apply plugin: 'java'
 apply plugin: 'application'
 mainClassName = 'com.monkeystomp.spirelands.Game'
 
+// Compiler Arguments
+compileJava {
+    options.compilerArgs << '-Xlint:unchecked'
+}
 // Repositories
 repositories {
   mavenCentral();

@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import java.util.ArrayList;
+import com.monkeystomp.spirelands.level.entity.lightmap.LightMapEntity;
 
 /**
  *
@@ -11,18 +11,19 @@ import java.util.ArrayList;
  */
 public class StreetLamp extends Entity {
   
-  private Sprite  lampOff = new Sprite("./resources/objects/lamp_off.png"),
-                  lampOn = new Sprite("./resources/objects/lamp_on.png"),
-                  lightMap = new Sprite("./resources/objects/lamp_lightMap.png"),
-                  currentSprite;
+  private final Sprite  LAMP_OFF = new Sprite("./resources/objects/lamp_off.png"),
+                        LAMP_ON = new Sprite("./resources/objects/lamp_on.png"),
+                        LIGHT_MAP = new Sprite("./resources/objects/lamp_lightMap.png");
   private final int SPRITE_SIZE = 32;
+  private final LightMapEntity LIGHT_MAP_ENTITY;
+  private Sprite currentSprite;
   private boolean lampIsOn = false;
-  private ArrayList entityRef;
   
   public StreetLamp(int x, int y) {
     this.x = x;
     this.y = y;
-    currentSprite = lampOff;
+    this.LIGHT_MAP_ENTITY = new LightMapEntity(x - LIGHT_MAP.getWidth() / 2, y - LIGHT_MAP.getHeight() / 2, LIGHT_MAP);
+    currentSprite = LAMP_OFF;
     setBounds();
   }
   
@@ -46,13 +47,13 @@ public class StreetLamp extends Entity {
   }
   
   public void turnLightOn() {
-    currentSprite = lampOn;
-    entityRef = level.addLightMapEntity(x - lightMap.getWidth() / 2, y - lightMap.getHeight() / 2, lightMap);
+    currentSprite = LAMP_ON;
+    level.addLightMapEntity(LIGHT_MAP_ENTITY);
   }
   
   public void turnLightOff() {
-    currentSprite = lampOff;
-    level.removeLightMapEntity(entityRef);
+    currentSprite = LAMP_OFF;
+    level.removeLightMapEntity(LIGHT_MAP_ENTITY);
   }
   
   @Override

@@ -28,7 +28,9 @@ public class Sprite {
                               GRASS_ROCK = new Sprite(Tile.TILE_SIZE, 2, 1, SpriteSheet.smallTestSheet),
                               COBBLESTONE = new Sprite(Tile.TILE_SIZE, 0, 2, SpriteSheet.smallTestSheet),
                               BRICK = new Sprite(Tile.TILE_SIZE, 1, 2, SpriteSheet.smallTestSheet),
-                              DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet);
+                              DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet),
+                              DUST = new Sprite(2, 2, 0xffffff),
+                              EMBER = new Sprite(2, 2, 0xf05e1b);
   
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;

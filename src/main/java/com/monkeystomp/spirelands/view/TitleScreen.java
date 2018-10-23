@@ -1,7 +1,7 @@
 package com.monkeystomp.spirelands.view;
 
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.level.LevelFactory;
+import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.Button;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
