@@ -10,6 +10,8 @@ import java.util.stream.Collectors;
  */
 public class InventoryManager {
   
+  private int gold = 0;
+  
   private final HashMap<Integer, InventoryReference> ITEM_MAP = new HashMap<>();
   
   private static final InventoryManager INSTANCE = new InventoryManager();
@@ -38,9 +40,18 @@ public class InventoryManager {
   
   public int getAmountById(int id) {
     if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
-    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
-    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
-    else if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
     return 0;
+  }
+  
+  public void setGold(int amount) {
+    this.gold = amount;
+  }
+  
+  public int getGold() {
+    return gold;
+  }
+  
+  public void addGold(int amount) {
+    gold += amount;
   }
 }

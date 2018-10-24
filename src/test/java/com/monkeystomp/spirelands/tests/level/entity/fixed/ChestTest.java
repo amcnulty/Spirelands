@@ -29,4 +29,15 @@ public class ChestTest {
     isChestOpen = testChest.isIsChestOpen();
     Assert.assertTrue("Should be true after interacting with chest", isChestOpen);
   }
+  @Test
+  public void interactingWithGoldChestIncreasesGoldTest() {
+    Chest testChest = new Chest(0, 0, Chest.WOODEN_CHEST, null);
+    testChest.addGold(500);
+    InventoryManager.getInventoryManager().setGold(0);
+    int goldStock = InventoryManager.getInventoryManager().getGold();
+    Assert.assertEquals("Should equal zero gold before interacting with chest", 0, goldStock);
+    testChest.interact();
+    goldStock = InventoryManager.getInventoryManager().getGold();
+    Assert.assertEquals("Should equal 500 after interacting with chest", 500, goldStock);
+  }
 }

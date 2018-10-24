@@ -29,8 +29,10 @@ public class Sprite {
                               COBBLESTONE = new Sprite(Tile.TILE_SIZE, 0, 2, SpriteSheet.smallTestSheet),
                               BRICK = new Sprite(Tile.TILE_SIZE, 1, 2, SpriteSheet.smallTestSheet),
                               DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet),
+                              // Particles
                               DUST = new Sprite(2, 2, 0xffffff),
-                              EMBER = new Sprite(2, 2, 0xf05e1b);
+                              EMBER = new Sprite(2, 2, 0xf05e1b),
+                              GOLD = new Sprite(2, 2, 0xfcc201);
   
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;

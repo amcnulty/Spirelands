@@ -49,7 +49,20 @@ public class TestLevel extends Level {
   
   @Override
   protected void addChests() {
+    Chest chest;
     
+    chest = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
+    solidEntities.add(chest);
+    chest.initLevel(this);
+    
+    chest = new Chest(64, 128, Chest.WOODEN_CHEST, null);
+    solidEntities.add(chest);
+    chest.initLevel(this);
+    
+    chest = new Chest(128, 64, Chest.SPECIAL_METAL_CHEST, null);
+    chest.addGold(500);
+    solidEntities.add(chest);
+    chest.initLevel(this);
   }
   
   @Override
@@ -105,10 +118,6 @@ public class TestLevel extends Level {
     entity.initLevel(this);
     
     entity = new StreetLamp(380, 570);
-    solidEntities.add(entity);
-    entity.initLevel(this);
-    
-    entity = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
     solidEntities.add(entity);
     entity.initLevel(this);
     
