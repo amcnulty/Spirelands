@@ -12,6 +12,7 @@ import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
+import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
@@ -51,8 +52,10 @@ public class Level implements Runnable {
               yScroll;
   protected Player player;
   private boolean dialogOpen = false,
-                  isPortalSet = false;
+                  isPortalSet = false,
+                  gameMenuOpen = false;
   private Portal exitPortal;
+  private final GameMenu GAME_MENU = new GameMenu();
   private Keyboard keyboard = Keyboard.getKeyboard();
   private INotify notifier = (e) -> handleKeypress(e);
 
@@ -65,7 +68,10 @@ public class Level implements Runnable {
   
   public void handleKeypress(KeyEvent e) {
     if (e.getKeyCode() == Keyboard.I_KEY) {
-      System.out.println("Display the inventory screen");
+      if (!dialogOpen) {
+        if (gameMenuOpen) closeGameMenu();
+        else openGameMenu();
+      }
     }
   }
 
@@ -135,7 +141,16 @@ public class Level implements Runnable {
   protected void startMusic() {}
 
   protected void finalLevelSetup() {}
+  
+  private void openGameMenu() {
+    GAME_MENU.openMenu();
+    gameMenuOpen = true;
+  }
 
+  private void closeGameMenu() {
+    GAME_MENU.closeMenu();
+    gameMenuOpen = false;
+  }
   
   public void addLightMapEntity(LightMapEntity entity) {
     lightMapEntities.add(entity);
@@ -248,7 +263,7 @@ public class Level implements Runnable {
   public void update(){
     if (!loadingThread.isAlive()) {
       // Update player if dialog is closed.
-      if (!dialogOpen) player.update();
+      if (!dialogOpen && !gameMenuOpen) player.update();
       // Call the subclass hook for updating.
       levelUpdate();
       // Update the solid entities
@@ -286,6 +301,8 @@ public class Level implements Runnable {
       renderOverPlayer(screen);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen);
+//      if (gameMenuOpen) screen.renderTransparentSprite(0, 0, Sprite.GAME_MENU_BACKGROUND, false);
+      if (gameMenuOpen) GAME_MENU.render(screen);
     }
   }
 }

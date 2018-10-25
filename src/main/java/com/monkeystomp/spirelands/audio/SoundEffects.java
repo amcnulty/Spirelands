@@ -32,7 +32,9 @@ public class SoundEffects {
                             BUTTON_HOVER = new File("./resources/audio/sfx/ui/button_hover.wav"),
                             PAUSE = new File("./resources/audio/sfx/ui/pause.wav"),
                             RESUME = new File("./resources/audio/sfx/ui/resume.wav"),
-                            VOCAL_CONFIRM = new File("./resources/audio/sfx/ui/vocal_confirm.wav");
+                            VOCAL_CONFIRM = new File("./resources/audio/sfx/ui/vocal_confirm.wav"),
+                            OPEN_GAME_MENU = new File("./resources/audio/sfx/ui/open_game_menu.wav"),
+                            CLOSE_GAME_MENU = new File("./resources/audio/sfx/ui/close_game_menu.wav");
   
   public void playSoundEffect(File file) {
     Clip clip;

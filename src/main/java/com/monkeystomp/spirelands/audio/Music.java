@@ -33,6 +33,7 @@ public class Music {
       AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
       clip = AudioSystem.getClip();
       clip.open(ais);
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
       ais.close();
       clip.start();
       clip.addLineListener((LineEvent e) -> {

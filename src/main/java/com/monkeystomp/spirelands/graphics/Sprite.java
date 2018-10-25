@@ -19,7 +19,8 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   
-  public static final Sprite  VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0x161616),
+  public static final Sprite  // Tiles
+                              VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0x161616),
                               GRASS = new Sprite(Tile.TILE_SIZE, 0, 0, SpriteSheet.smallTestSheet),
                               DIRT = new Sprite(Tile.TILE_SIZE, 1, 0, SpriteSheet.smallTestSheet),
                               FLOWER = new Sprite(Tile.TILE_SIZE, 2, 0, SpriteSheet.smallTestSheet),
@@ -32,7 +33,9 @@ public class Sprite {
                               // Particles
                               DUST = new Sprite(2, 2, 0xffffff),
                               EMBER = new Sprite(2, 2, 0xf05e1b),
-                              GOLD = new Sprite(2, 2, 0xfcc201);
+                              GOLD = new Sprite(2, 2, 0xfcc201),
+                              // GUI
+                              GAME_MENU_BACKGROUND = new Sprite("./resources/gui/game_menu_background.png");
   
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
     this.width = size;

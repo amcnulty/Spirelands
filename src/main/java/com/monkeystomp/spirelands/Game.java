@@ -93,13 +93,13 @@ public class Game extends Canvas implements Runnable {
         updates++;
         updateDelta--;
       }
-      while (renderDelta >= 1) {
-        render();
-        frames++;
-        renderDelta--;
-      }
-      // render();
-      // frames++;
+//      while (renderDelta >= 1) {
+//        render();
+//        frames++;
+//        renderDelta--;
+//      }
+       render();
+       frames++;
 
       if (System.currentTimeMillis() - timer >= 1000) {
         timer = System.currentTimeMillis();
@@ -146,7 +146,7 @@ public class Game extends Canvas implements Runnable {
    */
   public static void main(String[] args) {
     Game game = new Game();
-    game.frame.setUndecorated(true);
+//    game.frame.setUndecorated(true);
     game.frame.setResizable(false);
     game.frame.add(game);
     game.frame.pack();
