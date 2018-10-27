@@ -129,6 +129,41 @@ public class Screen {
       }
     }
   }
+    
+  public void renderCharacter(int xp, int yp, Sprite sprite, int color, boolean fixed, boolean blended) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    int renderY,
+        renderX;
+    for (int y = 0; y < sprite.getHeight(); y++) {
+      renderY = yp + y;
+      for (int x = 0; x < sprite.getWidth(); x++) {
+        renderX = xp + x;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+          if (blended) {
+            if (lightMap[renderX + renderY * width] != -1) {
+              pixels[renderX + renderY * width] = blend(
+                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color,
+                lightMapColor,
+                lightMap[renderX + renderY * width]
+              );
+            }
+            else {
+              pixels[renderX + renderY * width] = blend(
+                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()]: color,
+                lightMapColor,
+                lightMapAlpha
+              );
+            }
+          }
+          else pixels[renderX + renderY * width] = (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color;
+        }
+      }
+    }
+  }
 
   public void renderTile(int xp, int yp, Sprite sprite) {
     xp -= xOffset;

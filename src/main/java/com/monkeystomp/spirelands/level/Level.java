@@ -271,6 +271,7 @@ public class Level implements Runnable {
         if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).update();
       }
+      if (gameMenuOpen) GAME_MENU.update();
     }
   }
   
@@ -301,7 +302,6 @@ public class Level implements Runnable {
       renderOverPlayer(screen);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen);
-//      if (gameMenuOpen) screen.renderTransparentSprite(0, 0, Sprite.GAME_MENU_BACKGROUND, false);
       if (gameMenuOpen) GAME_MENU.render(screen);
     }
   }

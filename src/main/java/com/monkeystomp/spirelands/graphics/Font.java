@@ -6,10 +6,10 @@ package com.monkeystomp.spirelands.graphics;
  */
 public class Font {
   
-  private SpriteSheet fonts = new SpriteSheet("./resources/fonts/fonts.png");
-  private Sprite[] characters = Sprite.split(fonts, 32);
+  private SpriteSheet fonts = new SpriteSheet("./resources/fonts/8x8_font_sheet.png");
+  private Sprite[] characters = Sprite.split(fonts, 8);
   private int[] characterWidth = new int[characters.length];
-  private final int CHARACTER_SPACING = 3,
+  private final int CHARACTER_SPACING = 2,
                     SPACE_SIZE = 10;
   private int letterOffset;
   
@@ -39,14 +39,14 @@ public class Font {
     }
   }
   
-  public void renderText(int x, int y, String text, Screen screen) {
+  public void renderText(int x, int y, String text, int color, Screen screen) {
     letterOffset = 0;
     for (int i = 0; i < text.length(); i++) {
-      screen.renderSprite(x + letterOffset, y, characters[
+      screen.renderCharacter(x + letterOffset, y, characters[
         charactersIndex.indexOf(
           text.charAt(i)
         )
-      ], false, false);
+      ], color, false, false);
       letterOffset += characterWidth[
         charactersIndex.indexOf(
           text.charAt(i)
