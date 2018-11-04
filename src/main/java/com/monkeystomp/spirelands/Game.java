@@ -1,22 +1,24 @@
 package com.monkeystomp.spirelands;
 
+import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLCapabilities;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.awt.GLCanvas;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
-import java.awt.Canvas;
-import java.awt.Dimension;
+import com.monkeystomp.spirelands.graphics.EventListener;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
 /**
  *
  * @author Aaron Michael McNulty
  */
-public class Game extends Canvas implements Runnable {
+public class Game extends GLCanvas implements Runnable {
   
   private JFrame frame;
   private boolean running;
@@ -26,8 +28,8 @@ public class Game extends Canvas implements Runnable {
               height = width * 9 / 16,
               updatesPerSecond = 60,
               framesPerSecond = 90;
-  private double  scaleX = 3.0,
-                  scaleY = 3.0;
+  private int scaleX = 3,
+              scaleY = 3;
   private BufferedImage image;
   private int[] pixels;
   private BufferStrategy bufferStrategy;
@@ -38,18 +40,18 @@ public class Game extends Canvas implements Runnable {
   
   private ViewManager view = ViewManager.getViewManager();
 
-  private Game() {
+  private Game(GLCapabilities caps) {
+    super(caps);
     // Create the window.
-    Dimension size = new Dimension((int)(width * scaleX), (int)(height * scaleY));
-    setPreferredSize(size);
     frame = new JFrame();
+    // Set the window size.
+    setSize(width * scaleX, height * scaleY);
     // Set the title
     frame.setTitle(title);
-    // Create the buffer strategy and pixel array.
-    image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-    pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     // Create the screen
     screen = new Screen(width, height, scaleX, scaleY);
+    // Add GL event listner
+    addGLEventListener(new EventListener(screen, (GL2)getGL()));
     // Start the title screen.
     (new TitleScreen()).setView();
 
@@ -121,31 +123,17 @@ public class Game extends Canvas implements Runnable {
    * Handles rendering to the window.
    */
   private void render() {
-    bufferStrategy = getBufferStrategy();
-    if (bufferStrategy == null) {
-      createBufferStrategy(2);
-      return;
-    }
-    // Clear the screen.
-    screen.clear();
-    
-    // Render the view.
-    view.render(screen);
-    
-    // Copy pixels from screen class.
-    System.arraycopy(Screen.getPixels(), 0, pixels, 0, pixels.length);
-    // Display the pixels to the window.
-    graphics = bufferStrategy.getDrawGraphics();
-    graphics.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-    screen.renderFonts(graphics);
-    graphics.dispose();
-    bufferStrategy.show();
+    // Display the GLCanvas
+    display();
   }
   /**
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    Game game = new Game();
+    GLProfile glp = GLProfile.get("GL2");
+    GLCapabilities caps = new GLCapabilities(glp);
+    Game game = new Game(caps);
+    
 //    game.frame.setUndecorated(true);
     game.frame.setResizable(false);
     game.frame.add(game);

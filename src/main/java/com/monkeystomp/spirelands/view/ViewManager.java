@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.view;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 
 /**
@@ -23,8 +24,8 @@ public class ViewManager {
     view.update();
   }
   
-  public void render(Screen screen) {
-    view.render(screen);
+  public void render(Screen screen, GL2 gl) {
+    view.render(screen, gl);
   }
   
   public void changeView(GameView newView) {

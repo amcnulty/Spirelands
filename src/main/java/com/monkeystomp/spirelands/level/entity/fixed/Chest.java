@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.fixed;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -149,11 +150,11 @@ public class Chest extends Entity {
   }
 
   @Override
-  public void render(Screen screen) {
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true, true);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);
     for (int i = 0; i < particles.size(); i++) {
-      particles.get(i).render(screen);
+      particles.get(i).render(screen, gl);
     }
-    if (showingItem) screen.renderSprite(x - treasure.getThumbnail().getWidth() / 2, y - animY - treasure.getThumbnail().getHeight() / 2, treasure.getThumbnail(), true, true);
+    if (showingItem) screen.renderSprite(gl, x - treasure.getThumbnail().getWidth() / 2, y - animY - treasure.getThumbnail().getHeight() / 2, treasure.getThumbnail(), true);
   }
 }

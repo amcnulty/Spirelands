@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.graphics;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import java.awt.Graphics;
 import java.util.ArrayList;
@@ -31,6 +32,45 @@ public class Screen {
     this.lightMap = new int[width * height];
   }
   
+  public void renderTitleScreenBackground(GL2 gl) {
+    gl.glColor4f(1, 0, 0, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glVertex2f(0, 0);
+      gl.glVertex2f(width, 0);
+      gl.glVertex2f(width, height);
+      gl.glVertex2f(0, height);
+    gl.glEnd();
+    gl.glFlush();
+  }
+  
+  public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    int renderY,
+        renderX;
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+  }
+  
+  
+  
   /**
    * Clears the pixel array.
    */
@@ -47,40 +87,40 @@ public class Screen {
     }
   }
   
-  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean blended) {
-    if (fixed) {
-      xp -= xOffset;
-      yp -= yOffset;
-    }
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
-          if (blended) {
-            if (lightMap[renderX + renderY * width] != -1) {
-              pixels[renderX + renderY * width] = blend(
-                sprite.getPixels()[x + y * sprite.getWidth()],
-                lightMapColor,
-                lightMap[renderX + renderY * width]
-              );
-            }
-            else {
-              pixels[renderX + renderY * width] = blend(
-                sprite.getPixels()[x + y * sprite.getWidth()],
-                lightMapColor,
-                lightMapAlpha
-              );
-            }
-          }
-          else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-        }
-      }
-    }
-  }
+//  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean blended) {
+//    if (fixed) {
+//      xp -= xOffset;
+//      yp -= yOffset;
+//    }
+//    int renderY,
+//        renderX;
+//    for (int y = 0; y < sprite.getHeight(); y++) {
+//      renderY = yp + y;
+//      for (int x = 0; x < sprite.getWidth(); x++) {
+//        renderX = xp + x;
+//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+//          if (blended) {
+//            if (lightMap[renderX + renderY * width] != -1) {
+//              pixels[renderX + renderY * width] = blend(
+//                sprite.getPixels()[x + y * sprite.getWidth()],
+//                lightMapColor,
+//                lightMap[renderX + renderY * width]
+//              );
+//            }
+//            else {
+//              pixels[renderX + renderY * width] = blend(
+//                sprite.getPixels()[x + y * sprite.getWidth()],
+//                lightMapColor,
+//                lightMapAlpha
+//              );
+//            }
+//          }
+//          else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+//        }
+//      }
+//    }
+//  }
 
   public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
     if (fixed) {

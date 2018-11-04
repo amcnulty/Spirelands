@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.view;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
@@ -75,10 +76,10 @@ public class LevelView extends GameView {
   }
 
   @Override
-  public void render(Screen screen) {
-    level.render(screen);
+  public void render(Screen screen, GL2 gl) {
+    level.render(screen, gl);
     if (gamePaused) {
-      pauseMenu.render(screen);
+      pauseMenu.render(screen, gl);
     }
   }
 }

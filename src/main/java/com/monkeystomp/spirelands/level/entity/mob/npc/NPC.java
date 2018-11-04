@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.mob.npc;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.mob.Mob;
@@ -112,7 +113,7 @@ public class NPC extends Mob {
   }
   
   @Override
-  public void render(Screen screen) {
-    screen.renderSprite(x - spriteSize / 2, y - spriteSize / 2, characterActions.get(currentAction), true, true);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x - spriteSize / 2, y - spriteSize / 2, characterActions.get(currentAction), true);
   }
 }

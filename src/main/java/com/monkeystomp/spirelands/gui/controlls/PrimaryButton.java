@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.controlls;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -35,9 +36,9 @@ public class PrimaryButton extends Button {
   }
 
   private void createButtonSprites() {
-    button = new Sprite(width, height, 0x0079cc);
-    buttonHover = new Sprite(width, height, 0x004E9A);
-    buttonDown = new Sprite(width, height, 0x001366);
+    button = new Sprite(width, height, 0xFF0079CC);
+    buttonHover = new Sprite(width, height, 0xFF004E9A);
+    buttonDown = new Sprite(width, height, 0xFF001366);
     currentButton = button;
   }
   
@@ -52,8 +53,8 @@ public class PrimaryButton extends Button {
   }
   
   @Override
-  public void render(Screen screen) {
-    super.render(screen);
+  public void render(Screen screen, GL2 gl) {
+    super.render(screen, gl);
     screen.addText(fontInfo);
   }
 }

@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.particle;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 
@@ -71,7 +72,7 @@ public class ProjectileParticle extends Particle {
   }
   
   @Override
-  public void render(Screen screen) {
-    screen.renderSprite(x, y, getSprite(), true, true);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x, y, getSprite(), true);
   }
 }

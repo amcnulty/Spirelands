@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Font;
@@ -275,7 +276,7 @@ public class Level implements Runnable {
     }
   }
   
-  public void render(Screen screen){
+  public void render(Screen screen, GL2 gl){
     if (!loadingThread.isAlive()) {
       // Set screen offset
       setScreenOffset(screen);
@@ -292,7 +293,7 @@ public class Level implements Runnable {
       // Render the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
         if (solidEntities.get(i).equals(player)) continue;
-        solidEntities.get(i).render(screen);
+        solidEntities.get(i).render(screen, gl);
       }
       // Call the subclass hook for rendering under player.
       renderUnderPlayer(screen);
@@ -302,7 +303,7 @@ public class Level implements Runnable {
       renderOverPlayer(screen);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen);
-      if (gameMenuOpen) GAME_MENU.render(screen);
+      if (gameMenuOpen) GAME_MENU.render(screen, gl);
     }
   }
 }

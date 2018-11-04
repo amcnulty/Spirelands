@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.pausemenu;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -65,10 +66,10 @@ public class PauseMenu {
     exitButton.update();
   }
 
-  public void render(Screen screen) {
+  public void render(Screen screen, GL2 gl) {
     screen.renderSprite(x, y, background, 8, false, false);
-    continueButton.render(screen);
-    mainMenuButton.render(screen);
-    exitButton.render(screen);
+    continueButton.render(screen, gl);
+    mainMenuButton.render(screen, gl);
+    exitButton.render(screen, gl);
   }
 }

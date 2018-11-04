@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.controlls;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Font;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -81,8 +82,8 @@ public class GameMenuNavButton extends Button {
   }
   
   @Override
-  public void render(Screen screen) {
-    super.render(screen);
+  public void render(Screen screen, GL2 gl) {
+    super.render(screen, gl);
     font.renderText(x + LEFT_PADDING, y + TOP_PADDING, buttonText, textColor, screen);
   }
 }

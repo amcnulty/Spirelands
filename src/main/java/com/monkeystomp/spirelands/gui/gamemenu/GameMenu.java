@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.gamemenu;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -84,12 +85,12 @@ public class GameMenu {
     }
   }
   
-  public void render(Screen screen) {
+  public void render(Screen screen, GL2 gl) {
     // Render the background 
-    screen.renderSprite(0, 0, background, false, false);
+    screen.renderSprite(gl, 0, 0, background, false);
     // Render the nav buttons
     for (int i = 0; i < navButtons.size(); i++) {
-      navButtons.get(i).render(screen);
+      navButtons.get(i).render(screen, gl);
     }
   }
 }

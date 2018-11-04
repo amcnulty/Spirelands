@@ -1,5 +1,8 @@
 package com.monkeystomp.spirelands.graphics;
 
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +17,8 @@ public class SpriteSheet {
   private int width,
               height;
   private int[] pixels;
+  private Texture texture;
+  private BufferedImage image;
   
   public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
   public static SpriteSheet chestSheet = new SpriteSheet("./resources/textures/sheets/chest_sheet.png");
@@ -29,15 +34,21 @@ public class SpriteSheet {
   
   private void load() {
     try {
-      BufferedImage image = ImageIO.read(new File(path));
+      image = ImageIO.read(new File(path));
       width = image.getWidth();
       height = image.getHeight();
       pixels = new int[width * height];
       image.getRGB(0, 0, width, height, pixels, 0, width);
+      
     }
     catch (IOException e) {
       e.printStackTrace();
     }
+  }
+  
+  public Texture getTexture() {
+    if (texture == null) texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, true);
+    return texture;
   }
   
   public int[] getPixels() {

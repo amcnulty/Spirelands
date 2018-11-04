@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.fixed;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;
@@ -57,7 +58,7 @@ public class StreetLamp extends Entity {
   }
   
   @Override
-  public void render(Screen screen) {
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true, true);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);
   }
 }

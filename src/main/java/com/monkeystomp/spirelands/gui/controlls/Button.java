@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.controlls;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -97,7 +98,7 @@ public class Button {
     }
   }
 
-  public void render(Screen screen) {
-    screen.renderSprite(x, y, currentButton, false, false);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x, y, currentButton, false);
   }
 }

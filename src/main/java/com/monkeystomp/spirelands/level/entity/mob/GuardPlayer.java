@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.mob;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -154,8 +155,8 @@ public class GuardPlayer extends Player {
   }
   
   @Override
-  public void render(Screen screen) {
+  public void render(Screen screen, GL2 gl) {
     screen.renderTransparentSprite(x - shadow.getWidth() / 2, y + SPRITE_SIZE / 2 - shadow.getHeight() / 2, shadow, true);
-    screen.renderSprite(x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true, true);
+    screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
   }
 }

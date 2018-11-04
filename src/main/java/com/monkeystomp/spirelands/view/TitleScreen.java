@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.view;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -52,8 +53,9 @@ public class TitleScreen extends GameView {
   }
 
   @Override
-  public void render(Screen screen) {
-    screen.renderColor(0xff0000);
-    startButton.render(screen);
+  public void render(Screen screen, GL2 gl) {
+    screen.renderTitleScreenBackground(gl);
+    startButton.render(screen, gl);
+//    screen.renderColor(0xff0000);
   }
 }
