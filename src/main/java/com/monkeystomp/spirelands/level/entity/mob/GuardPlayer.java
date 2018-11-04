@@ -156,7 +156,7 @@ public class GuardPlayer extends Player {
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    screen.renderTransparentSprite(x - shadow.getWidth() / 2, y + SPRITE_SIZE / 2 - shadow.getHeight() / 2, shadow, true);
+    screen.renderSprite(gl, x - shadow.getWidth() / 2, y + SPRITE_SIZE / 2 - shadow.getHeight() / 2, shadow, true);
     screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, characterActions.get(currentAction), true);
   }
 }

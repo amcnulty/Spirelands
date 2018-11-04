@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
@@ -113,14 +114,14 @@ public class SpawnLevel extends Level {
   }
   
   @Override
-  protected void renderUnderPlayer(Screen screen) {
+  protected void renderUnderPlayer(Screen screen, GL2 gl) {
     screen.setLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }
 
   @Override
-  protected void levelRenderOverLightMap(Screen screen) {
-    if (getDialogOpen()) dialogBox.render(screen);
+  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {
+    if (getDialogOpen()) dialogBox.render(screen, gl);
   }
 }

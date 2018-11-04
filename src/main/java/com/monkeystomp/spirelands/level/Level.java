@@ -255,11 +255,11 @@ public class Level implements Runnable {
   protected void levelUpdate() {}
   
   
-  protected void renderOverPlayer(Screen screen) {}
+  protected void renderOverPlayer(Screen screen, GL2 gl) {}
   
-  protected void renderUnderPlayer(Screen screen) {}
+  protected void renderUnderPlayer(Screen screen, GL2 gl) {}
 
-  protected void levelRenderOverLightMap(Screen screen) {}
+  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {}
   
   public void update(){
     if (!loadingThread.isAlive()) {
@@ -287,7 +287,7 @@ public class Level implements Runnable {
       // Render the tiles.
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
         for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
-          getTile(x, y).render(x, y, screen);
+          getTile(x, y).render(x, y, screen, gl);
         }
       }
       // Render the solid entities
@@ -296,13 +296,13 @@ public class Level implements Runnable {
         solidEntities.get(i).render(screen, gl);
       }
       // Call the subclass hook for rendering under player.
-      renderUnderPlayer(screen);
+      renderUnderPlayer(screen, gl);
       // Render the player.
-      player.render(screen);
+      player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
-      renderOverPlayer(screen);
+      renderOverPlayer(screen, gl);
       // Call the subclass hook for rendering over the light map.
-      levelRenderOverLightMap(screen);
+      levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);
     }
   }

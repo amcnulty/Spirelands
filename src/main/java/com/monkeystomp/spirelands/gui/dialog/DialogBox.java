@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.dialog;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -18,7 +19,7 @@ public class DialogBox {
                     DIALOG_PADDING_SIDES = 6,
                     DIALOG_PADDING_BOTTOM = 12,
                     MESSAGE_SPEED = 3,
-                    BACKGROUND_COLOR = 0xEFEFEF;
+                    BACKGROUND_COLOR = 0xFFEFEFEF;
   private final Color TEXT_COLOR = new Color(0x323232);
   private final String  DOWN_TRIANGLE = "\u25BE",
                         TIMES = "\u2A2F";
@@ -204,9 +205,9 @@ public class DialogBox {
     }
   }
 
-  public void render(Screen screen) {
+  public void render(Screen screen, GL2 gl) {
     if (dialogReady) {
-      screen.renderSprite(DIALOG_LEFT, DIALOG_TOP, background, 8, false, false);
+      screen.renderSprite(gl, DIALOG_LEFT, DIALOG_TOP, background, .8f, false);
       for (int i = 0; i < lines.size(); i++) {
         screen.addText(lines.get(i));
       }

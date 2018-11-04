@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.entity.mob;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -32,5 +33,5 @@ public class Player extends Mob {
   @Override
   public void update() {}
   
-  public void render(Screen screen) {}
+  public void render(Screen screen, GL2 gl) {}
 }

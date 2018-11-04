@@ -35,9 +35,9 @@ public class Sprite {
                               BRICK = new Sprite(Tile.TILE_SIZE, 1, 2, SpriteSheet.smallTestSheet),
                               DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet),
                               // Particles
-                              DUST = new Sprite(2, 2, 0xffffff),
-                              EMBER = new Sprite(2, 2, 0xf05e1b),
-                              GOLD = new Sprite(2, 2, 0xfcc201),
+                              DUST = new Sprite(2, 2, 0xFFFFFFFF),
+                              EMBER = new Sprite(2, 2, 0xFFF05E1B),
+                              GOLD = new Sprite(2, 2, 0xFFFCC201),
                               // GUI
                               GAME_MENU_BACKGROUND = new Sprite("./resources/gui/game_menu_background.png");
   

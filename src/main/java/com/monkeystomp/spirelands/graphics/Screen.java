@@ -15,15 +15,15 @@ public class Screen {
                       height,
                       xOffset,
                       yOffset;
-  private static double scaleX,
-                        scaleY;
+  private static int  scaleX,
+                      scaleY;
   private static int[]  pixels;
   private static int[] lightMap;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
   private int lightMapColor = 0,
               lightMapAlpha = 0;
   
-  public Screen(int width, int height, double scaleX, double scaleY) {
+  public Screen(int width, int height, int scaleX, int scaleY) {
     this.width = width;
     this.height = height;
     this.scaleX = scaleX;
@@ -48,8 +48,6 @@ public class Screen {
       xp -= xOffset;
       yp -= yOffset;
     }
-    int renderY,
-        renderX;
     gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
     gl.glColor4f(1, 1, 1, 1);
     gl.glBegin(GL2.GL_QUADS);
@@ -69,23 +67,78 @@ public class Screen {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
-  
-  
-  /**
-   * Clears the pixel array.
-   */
-  public void clear() {
-    for (int i = 0; i < pixels.length; i++) {
-      pixels[i] = 0;
-      lightMap[i] = -1;
+  public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
     }
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, alpha);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
-  public void renderColor(int color) {
-    for (int i = 0; i < pixels.length; i++) {
-      pixels[i] = color;
-    }
+  public void renderTile(GL2 gl, int xp, int yp, Sprite sprite) {
+    xp -= xOffset;
+    yp -= yOffset;
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
+  
+  public void renderSpriteUpperLevel(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset * 1.2;
+      yp -= yOffset * 1.2;
+    }
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, alpha);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+  }
+  
+  
+  
   
 //  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean blended) {
 //    if (fixed) {
@@ -122,147 +175,97 @@ public class Screen {
 //    }
 //  }
 
-  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
-    if (fixed) {
-      xp -= xOffset;
-      yp -= yOffset;
-    }
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
-          pixels[renderX + renderY * width] = blend(
-            pixels[renderX + renderY * width],
-            sprite.getPixels()[x + y * sprite.getWidth()],
-            alpha
-          );
-        }
-        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-      }
-    }
-  }
-  
-  public void renderSpriteUpperLevel(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
-    if (fixed) {
-      xp -= xOffset * 1.2;
-      yp -= yOffset * 1.2;
-    }
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
-          pixels[renderX + renderY * width] = blend(
-            pixels[renderX + renderY * width],
-            sprite.getPixels()[x + y * sprite.getWidth()],
-            alpha
-          );
-        }
-        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-      }
-    }
-  }
+//  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
+//    if (fixed) {
+//      xp -= xOffset;
+//      yp -= yOffset;
+//    }
+//    int renderY,
+//        renderX;
+//    for (int y = 0; y < sprite.getHeight(); y++) {
+//      renderY = yp + y;
+//      for (int x = 0; x < sprite.getWidth(); x++) {
+//        renderX = xp + x;
+//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
+//          pixels[renderX + renderY * width] = blend(
+//            pixels[renderX + renderY * width],
+//            sprite.getPixels()[x + y * sprite.getWidth()],
+//            alpha
+//          );
+//        }
+//        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
+//      }
+//    }
+//  }
     
-  public void renderCharacter(int xp, int yp, Sprite sprite, int color, boolean fixed, boolean blended) {
-    if (fixed) {
-      xp -= xOffset;
-      yp -= yOffset;
-    }
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
-          if (blended) {
-            if (lightMap[renderX + renderY * width] != -1) {
-              pixels[renderX + renderY * width] = blend(
-                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color,
-                lightMapColor,
-                lightMap[renderX + renderY * width]
-              );
-            }
-            else {
-              pixels[renderX + renderY * width] = blend(
-                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()]: color,
-                lightMapColor,
-                lightMapAlpha
-              );
-            }
-          }
-          else pixels[renderX + renderY * width] = (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color;
-        }
-      }
-    }
-  }
+//  public void renderCharacter(int xp, int yp, Sprite sprite, int color, boolean fixed, boolean blended) {
+//    if (fixed) {
+//      xp -= xOffset;
+//      yp -= yOffset;
+//    }
+//    int renderY,
+//        renderX;
+//    for (int y = 0; y < sprite.getHeight(); y++) {
+//      renderY = yp + y;
+//      for (int x = 0; x < sprite.getWidth(); x++) {
+//        renderX = xp + x;
+//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
+//          if (blended) {
+//            if (lightMap[renderX + renderY * width] != -1) {
+//              pixels[renderX + renderY * width] = blend(
+//                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color,
+//                lightMapColor,
+//                lightMap[renderX + renderY * width]
+//              );
+//            }
+//            else {
+//              pixels[renderX + renderY * width] = blend(
+//                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()]: color,
+//                lightMapColor,
+//                lightMapAlpha
+//              );
+//            }
+//          }
+//          else pixels[renderX + renderY * width] = (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color;
+//        }
+//      }
+//    }
+//  }
 
-  public void renderTile(int xp, int yp, Sprite sprite) {
-    xp -= xOffset;
-    yp -= yOffset;
-    int renderY,
-        renderX;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = y + yp;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = x + xp;
-        if (renderX < -sprite.getWidth() || renderX > width - 1 || renderY < 0 || renderY > height - 1) break;
-        if (renderX < 0) renderX = 0;
-        if (lightMap[renderX + renderY * width] != -1) {
-          pixels[renderX + renderY * width] = blend(
-            sprite.getPixels()[x + y * sprite.getWidth()],
-            lightMapColor,
-            lightMap[renderX + renderY * width]
-          );
-        }
-        else {
-          pixels[renderX + renderY * width] = blend(
-            sprite.getPixels()[x + y * sprite.getWidth()],
-            lightMapColor,
-            lightMapAlpha
-          );
-        }
-      }
-    }
-  }
+//  public void renderTile(int xp, int yp, Sprite sprite) {
+//    xp -= xOffset;
+//    yp -= yOffset;
+//    int renderY,
+//        renderX;
+//    for (int y = 0; y < sprite.getHeight(); y++) {
+//      renderY = y + yp;
+//      for (int x = 0; x < sprite.getWidth(); x++) {
+//        renderX = x + xp;
+//        if (renderX < -sprite.getWidth() || renderX > width - 1 || renderY < 0 || renderY > height - 1) break;
+//        if (renderX < 0) renderX = 0;
+//        if (lightMap[renderX + renderY * width] != -1) {
+//          pixels[renderX + renderY * width] = blend(
+//            sprite.getPixels()[x + y * sprite.getWidth()],
+//            lightMapColor,
+//            lightMap[renderX + renderY * width]
+//          );
+//        }
+//        else {
+//          pixels[renderX + renderY * width] = blend(
+//            sprite.getPixels()[x + y * sprite.getWidth()],
+//            lightMapColor,
+//            lightMapAlpha
+//          );
+//        }
+//      }
+//    }
+//  }
 
   public void setLightMap(int color, int alpha) {
     lightMapColor = color;
     lightMapAlpha = alpha;
-  }
-  
-  public void renderTransparentSprite(int xp, int yp, Sprite sprite, boolean fixed) {
-    if (fixed) {
-      xp -= xOffset;
-      yp -= yOffset;
-    }
-    int renderY,
-        renderX,
-        alpha;
-    for (int y = 0; y < sprite.getHeight(); y++) {
-      renderY = yp + y;
-      for (int x = 0; x < sprite.getWidth(); x++) {
-        renderX = xp + x;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-          if ((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) < 0) {
-            alpha = (int)(((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) + 256) / 25.5);
-          }
-          else alpha = (int)((sprite.getPixels()[x + y * sprite.getWidth()] >> 24) / 25.5);
-          pixels[renderX + renderY * width] = blend(
-            pixels[renderX + renderY * width],
-            sprite.getPixels()[x + y * sprite.getWidth()],
-            alpha
-          );
-      }
-    }
   }
   
   public void renderLightMapEntity(int x, int y, Sprite mySprite) {
@@ -336,11 +339,11 @@ public class Screen {
       this.yOffset = yOffset;
   }
   
-  public static double getScaleX() {
+  public static int getScaleX() {
     return scaleX;
   }
   
-  public static double getScaleY() {
+  public static int getScaleY() {
     return scaleY;
   }
   

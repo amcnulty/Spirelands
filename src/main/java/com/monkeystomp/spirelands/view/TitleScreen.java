@@ -56,6 +56,5 @@ public class TitleScreen extends GameView {
   public void render(Screen screen, GL2 gl) {
     screen.renderTitleScreenBackground(gl);
     startButton.render(screen, gl);
-//    screen.renderColor(0xff0000);
   }
 }

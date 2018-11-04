@@ -1,5 +1,7 @@
 package com.monkeystomp.spirelands.graphics;
 
+import com.jogamp.opengl.GL2;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -39,14 +41,14 @@ public class Font {
     }
   }
   
-  public void renderText(int x, int y, String text, int color, Screen screen) {
+  public void renderText(int x, int y, String text, int color, Screen screen, GL2 gl) {
     letterOffset = 0;
     for (int i = 0; i < text.length(); i++) {
-      screen.renderCharacter(x + letterOffset, y, characters[
+      screen.renderSprite(gl, x + letterOffset, y, characters[
         charactersIndex.indexOf(
           text.charAt(i)
         )
-      ], color, false, false);
+      ], color, false);
       letterOffset += characterWidth[
         charactersIndex.indexOf(
           text.charAt(i)

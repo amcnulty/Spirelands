@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.tile;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 
@@ -28,7 +29,7 @@ public class Tile {
     return solid;
   }
   
-  public void render(int x, int y, Screen screen) {
-    screen.renderTile(x << 4, y << 4, sprite);
+  public void render(int x, int y, Screen screen, GL2 gl) {
+    screen.renderTile(gl, x << 4, y << 4, sprite);
   }
 }

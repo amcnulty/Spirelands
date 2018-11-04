@@ -10,7 +10,7 @@ import com.monkeystomp.spirelands.input.ICallback;
 
 public class PauseMenu {
 
-  private final Sprite background = new Sprite(80, 100, 0xefefef);
+  private final Sprite background = new Sprite(80, 100, 0xFFEFEFEF);
 
   private final SoundEffects sfx = new SoundEffects();
   
@@ -67,7 +67,7 @@ public class PauseMenu {
   }
 
   public void render(Screen screen, GL2 gl) {
-    screen.renderSprite(x, y, background, 8, false, false);
+    screen.renderSprite(gl, x, y, background, .8f, false);
     continueButton.render(screen, gl);
     mainMenuButton.render(screen, gl);
     exitButton.render(screen, gl);

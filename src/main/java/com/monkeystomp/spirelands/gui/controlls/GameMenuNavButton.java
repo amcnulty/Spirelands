@@ -26,14 +26,14 @@ public class GameMenuNavButton extends Button {
 
   public GameMenuNavButton(String text, int x, int y, ICallback callback) {
     super(text, x, y, GameMenuNavButton.WIDTH, GameMenuNavButton.HEIGHT, callback);
-    setNoBackground();
+    createButtonSprites();
     setButtonSounds();
   }
 
-  private void setNoBackground() {
-    button = new Sprite(0, 0, 0x0079cc);
-    buttonHover = new Sprite(0, 0, 0x004E9A);
-    buttonDown = new Sprite(0, 0, 0x001366);
+  private void createButtonSprites() {
+    button = new Sprite(width, height, 0x000079CC);
+    buttonHover = new Sprite(width, height, 0x00004E9A);
+    buttonDown = new Sprite(width, height, 0x00001366);
     currentButton = button;
   }
   
@@ -73,7 +73,7 @@ public class GameMenuNavButton extends Button {
   }
   
   public void removeBackground() {
-    setNoBackground();
+    createButtonSprites();
   }
   
   @Override
@@ -84,6 +84,6 @@ public class GameMenuNavButton extends Button {
   @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
-    font.renderText(x + LEFT_PADDING, y + TOP_PADDING, buttonText, textColor, screen);
+    font.renderText(x + LEFT_PADDING, y + TOP_PADDING, buttonText, textColor, screen, gl);
   }
 }
