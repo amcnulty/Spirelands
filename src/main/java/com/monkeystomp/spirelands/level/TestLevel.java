@@ -23,8 +23,7 @@ import java.util.ArrayList;
 public class TestLevel extends Level {
 
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
-  private int time = 0,
-              shadowLevel = 0;
+  private int time = 0;
   private ArrayList<Particle> particles;
   public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1);
   
@@ -34,7 +33,7 @@ public class TestLevel extends Level {
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
-    shadowLevel = 7;
+    shadowLevel = .7f;
   }
   
   @Override
@@ -131,39 +130,39 @@ public class TestLevel extends Level {
       dialogBox.update();
     }
     // 7 pm
-    if (time == 420) shadowLevel = 1;
+    if (time == 420) shadowLevel = .1f;
     // 7:30 pm
-    else if (time == 450) shadowLevel = 2;
+    else if (time == 450) shadowLevel = .2f;
     // 8 pm
-    else if (time == 480) shadowLevel = 3;
+    else if (time == 480) shadowLevel = .3f;
     // 8:15 pm
-    else if (time == 495) shadowLevel = 4;
+    else if (time == 495) shadowLevel = .4f;
     // 8:30 pm
-    else if (time == 510) shadowLevel = 5;
+    else if (time == 510) shadowLevel = .5f;
     // 8:45 pm
-    else if (time == 525) shadowLevel = 6;
+    else if (time == 525) shadowLevel = .6f;
     // 9 pm
-    else if (time == 540) shadowLevel = 7;
+    else if (time == 540) shadowLevel = .7f;
     // 9:30 pm
-    else if (time == 570) shadowLevel = 8;
+    else if (time == 570) shadowLevel = .8f;
     // 10 pm
-    else if (time == 700) shadowLevel = 9;
+    else if (time == 700) shadowLevel = .9f;
     // 4 am
-    else if (time == 1060) shadowLevel = 8;
+    else if (time == 1060) shadowLevel = .8f;
     // 4:30 am
-    else if (time == 1090) shadowLevel = 7;
+    else if (time == 1090) shadowLevel = .7f;
     // 5 am
-    else if (time == 1120) shadowLevel = 6;
+    else if (time == 1120) shadowLevel = .6f;
     // 5:15 am
-    else if (time == 1135) shadowLevel = 5;
+    else if (time == 1135) shadowLevel = .5f;
     // 5:30 am
-    else if (time == 1150) shadowLevel = 4;
+    else if (time == 1150) shadowLevel = .4f;
     // 5:45 am
-    else if (time == 1165) shadowLevel = 3;
+    else if (time == 1165) shadowLevel = .3f;
     // 6 am
-    else if (time == 1180) shadowLevel = 2;
+    else if (time == 1180) shadowLevel = .2f;
     // 6:30 am
-    else if (time == 1210) shadowLevel = 1;
+    else if (time == 1210) shadowLevel = .1f;
     // 7 am
     else if (time == 1240) shadowLevel = 0;
 
@@ -183,7 +182,7 @@ public class TestLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen, GL2 gl) {
-    screen.setLightMap(0x121212, shadowLevel);
+//    screen.setLightMap(0x121212, shadowLevel);
 //    font.renderText(200, 200, "This is a test!", screen);
 //    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }

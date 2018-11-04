@@ -135,7 +135,7 @@ public class Game extends GLCanvas implements Runnable {
     Game game = new Game(caps);
     
 //    game.frame.setUndecorated(true);
-    game.frame.setResizable(false);
+    game.frame.setResizable(true);
     game.frame.add(game);
     game.frame.pack();
     game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

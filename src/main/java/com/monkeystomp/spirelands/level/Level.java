@@ -52,6 +52,7 @@ public class Level implements Runnable {
               xScroll,
               yScroll;
   protected Player player;
+  protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
                   gameMenuOpen = false;
@@ -258,7 +259,7 @@ public class Level implements Runnable {
   protected void renderOverPlayer(Screen screen, GL2 gl) {}
   
   protected void renderUnderPlayer(Screen screen, GL2 gl) {}
-
+  
   protected void levelRenderOverLightMap(Screen screen, GL2 gl) {}
   
   public void update(){
@@ -280,10 +281,6 @@ public class Level implements Runnable {
     if (!loadingThread.isAlive()) {
       // Set screen offset
       setScreenOffset(screen);
-      // Render lightmap entities.
-      for (int i = 0; i < lightMapEntities.size(); i++) {
-        screen.renderLightMapEntity((int)lightMapEntities.get(i).getX(), (int)lightMapEntities.get(i).getY(), (Sprite)lightMapEntities.get(i).getSprite());
-      }
       // Render the tiles.
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
         for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
@@ -301,6 +298,12 @@ public class Level implements Runnable {
       player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
       renderOverPlayer(screen, gl);
+      // Render lightmap entities.
+      for (int i = 0; i < lightMapEntities.size(); i++) {
+        screen.renderLightMapEntity(gl, (int)lightMapEntities.get(i).getX(), (int)lightMapEntities.get(i).getY(), (Sprite)lightMapEntities.get(i).getSprite());
+      }
+      // Render the lightmap.
+      screen.renderLightMap(gl, shadowLevel);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);

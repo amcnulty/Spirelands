@@ -1,8 +1,12 @@
 package com.monkeystomp.spirelands.graphics;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.util.texture.Texture;
+import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
@@ -17,11 +21,13 @@ public class Screen {
                       yOffset;
   private static int  scaleX,
                       scaleY;
-  private static int[]  pixels;
-  private static int[] lightMap;
+  private int[] pixels,
+                lightMap;
+  private boolean[] lightMapPixelChecked;
+  private BufferedImage lightMapImage;
+  private Texture lightMapTex;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
-  private int lightMapColor = 0,
-              lightMapAlpha = 0;
+  private int lightMapColor = 0xFF121212;
   
   public Screen(int width, int height, int scaleX, int scaleY) {
     this.width = width;
@@ -30,6 +36,8 @@ public class Screen {
     this.scaleY = scaleY;
     this.pixels = new int[width * height];
     this.lightMap = new int[width * height];
+    this.lightMapPixelChecked = new boolean[width * height];
+    clearLightMap();
   }
   
   public void renderTitleScreenBackground(GL2 gl) {
@@ -40,7 +48,7 @@ public class Screen {
       gl.glVertex2f(width, height);
       gl.glVertex2f(0, height);
     gl.glEnd();
-    gl.glFlush();
+//    gl.glFlush();
   }
   
   public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
@@ -63,7 +71,7 @@ public class Screen {
       gl.glTexCoord2f(0, 1);
       gl.glVertex2f(xp, yp + sprite.getHeight());
     gl.glEnd();
-    gl.glFlush();
+//    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
@@ -87,7 +95,7 @@ public class Screen {
       gl.glTexCoord2f(0, 1);
       gl.glVertex2f(xp, yp + sprite.getHeight());
     gl.glEnd();
-    gl.glFlush();
+//    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
@@ -133,10 +141,83 @@ public class Screen {
       gl.glTexCoord2f(0, 1);
       gl.glVertex2f(xp, yp + sprite.getHeight());
     gl.glEnd();
-    gl.glFlush();
+//    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
+  public void renderLightMapEntity(GL2 gl, int x, int y, Sprite sprite) {
+    x -= xOffset;
+    y -= yOffset;
+    int renderX,
+        renderY;
+    for (int yp = 0; yp < sprite.getHeight(); yp++) {
+      renderY = y + yp;
+      for (int xp = 0; xp < sprite.getWidth(); xp++) {
+        renderX = x + xp;
+        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+        if (lightMapPixelChecked[renderX + renderY * width]) {
+          lightMap[renderX + renderY * width] = blendAlphas(lightMap[renderX + renderY * width], sprite.getPixels()[xp + yp * sprite.getWidth()]);
+        }
+        else {
+          lightMap[renderX + renderY * width] = sprite.getPixels()[xp + yp * sprite.getWidth()];
+          lightMapPixelChecked[renderX + renderY * width] = true;
+        }
+      }
+    }
+  }
+  
+  public void renderLightMap(GL2 gl, float alpha) {
+    lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    lightMapImage.setRGB(0, 0, width, height, lightMap, 0, width);
+    lightMapTex = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), lightMapImage, true);
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, lightMapTex.getTextureObject());
+    gl.glColor4f(1, 1, 1, alpha);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(0, 0);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(width, 0);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(width, height);
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(0, height);
+    gl.glEnd();
+//    gl.glFlush();
+    clearLightMap();
+  }
+  
+  private void clearLightMap() {
+    for (int i = 0; i < lightMap.length; i++) {
+      lightMap[i] = lightMapColor;
+      lightMapPixelChecked[i] = false;
+    }
+  }
+  
+  private final int R = (lightMapColor & 0xFF0000) >> 16,
+                    G = (lightMapColor & 0xFF00) >> 8,
+                    B = lightMapColor & 0xFF;
+  
+  private int blendAlphas(int background, int newColor) {
+    int newAlpha, backgroundAlpha;
+    if ((newColor & 0xFF000000 ) >> 24 < 0) {
+      newAlpha = ((newColor & 0xFF000000 ) >> 24) + 256;
+    }
+    else {
+      newAlpha = (newColor & 0xFF000000 ) >> 24;
+    }
+    if ((background & 0xFF000000 ) >> 24 < 0) {
+      backgroundAlpha = ((background & 0xFF000000 ) >> 24) + 256;
+    }
+    else {
+      backgroundAlpha = (background & 0xFF000000 ) >> 24;
+    }
+    backgroundAlpha -= 255 - newAlpha;
+    if (backgroundAlpha < 0) backgroundAlpha = 0;
+    return (backgroundAlpha << 24) | (R << 16) | (G << 8) | B;
+  }
   
   
   
@@ -263,41 +344,41 @@ public class Screen {
 //    }
 //  }
 
-  public void setLightMap(int color, int alpha) {
-    lightMapColor = color;
-    lightMapAlpha = alpha;
-  }
+//  public void setLightMap(int color, int alpha) {
+//    lightMapColor = color;
+//    lightMapAlpha = alpha;
+//  }
   
-  public void renderLightMapEntity(int x, int y, Sprite mySprite) {
-    int xp = x - xOffset,
-        yp = y - yOffset,
-        renderX,
-        renderY,
-        currentAlpha,
-        subtractiveAlpha;
-    for (int spriteY = 0; spriteY < mySprite.getHeight(); spriteY++) {
-      renderY = yp + spriteY;
-      for (int spriteX = 0; spriteX < mySprite.getWidth(); spriteX++) {
-        renderX = xp + spriteX;
-        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-        // Subtract the alpha of the sprite by the current value of the lightMap alpha and
-        // don't let alpha be less than 0.
-        currentAlpha = lightMapAlpha;
-        if ((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) < 0) {
-          subtractiveAlpha = (int)(((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) + 256) / 25.5);
-        }
-        else {
-          subtractiveAlpha = (int)((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) / 25.5);
-        }
-        if (subtractiveAlpha > 0) {
-          if (lightMap[renderX + renderY * width] != -1) currentAlpha = lightMap[renderX + renderY * width];
-          currentAlpha -= subtractiveAlpha;
-          if (currentAlpha < 0) currentAlpha = 0;
-          lightMap[renderX + renderY * width] = currentAlpha;
-        }
-      }
-    }
-  }
+//  public void renderLightMapEntity(int x, int y, Sprite mySprite) {
+//    int xp = x - xOffset,
+//        yp = y - yOffset,
+//        renderX,
+//        renderY,
+//        currentAlpha,
+//        subtractiveAlpha;
+//    for (int spriteY = 0; spriteY < mySprite.getHeight(); spriteY++) {
+//      renderY = yp + spriteY;
+//      for (int spriteX = 0; spriteX < mySprite.getWidth(); spriteX++) {
+//        renderX = xp + spriteX;
+//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
+//        // Subtract the alpha of the sprite by the current value of the lightMap alpha and
+//        // don't let alpha be less than 0.
+//        currentAlpha = lightMapAlpha;
+//        if ((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) < 0) {
+//          subtractiveAlpha = (int)(((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) + 256) / 25.5);
+//        }
+//        else {
+//          subtractiveAlpha = (int)((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) / 25.5);
+//        }
+//        if (subtractiveAlpha > 0) {
+//          if (lightMap[renderX + renderY * width] != -1) currentAlpha = lightMap[renderX + renderY * width];
+//          currentAlpha -= subtractiveAlpha;
+//          if (currentAlpha < 0) currentAlpha = 0;
+//          lightMap[renderX + renderY * width] = currentAlpha;
+//        }
+//      }
+//    }
+//  }
 
   private int blend(int background, int foreground, int alpha) {
     int oldR = (background & 0xff0000) >> 16;
@@ -355,8 +436,7 @@ public class Screen {
     return height;
   }
   
-  public static int[] getPixels() {
+  public int[] getPixels() {
     return pixels;
   }
-
 }
