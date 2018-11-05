@@ -20,7 +20,7 @@ public class SpriteSheet {
   private Texture texture;
   private BufferedImage image;
   
-  public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
+  public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet_stretch.png");
   public static SpriteSheet chestSheet = new SpriteSheet("./resources/textures/sheets/chest_sheet.png");
   public static SpriteSheet itemsSheet = new SpriteSheet("./resources/textures/sheets/items_sheet.png");
   /**
@@ -47,7 +47,7 @@ public class SpriteSheet {
   }
   
   public Texture getTexture() {
-    if (texture == null) texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, true);
+    if (texture == null) texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, false);
     return texture;
   }
   

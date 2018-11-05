@@ -5,6 +5,7 @@ import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.level.tile.Tile;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class Screen {
     this.pixels = new int[width * height];
     this.lightMap = new int[width * height];
     this.lightMapPixelChecked = new boolean[width * height];
+    lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     clearLightMap();
   }
   
@@ -99,26 +101,64 @@ public class Screen {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
-  public void renderTile(GL2 gl, int xp, int yp, Sprite sprite) {
-    xp -= xOffset;
-    yp -= yOffset;
-    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+  public void bindTileTex(GL2 gl) {
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, Tile.getTexture().getTextureObject());
+  }
+  
+//  public void renderTile(GL2 gl, int xp, int yp, Sprite sprite) {
+//    xp -= xOffset;
+//    yp -= yOffset;
+////    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+//    gl.glColor4f(1, 1, 1, 1);
+//    gl.glBegin(GL2.GL_QUADS);
+//      gl.glTexCoord2f(0, 0);
+//      gl.glVertex2f(xp, yp);
+//      
+//      gl.glTexCoord2f(1, 0);
+//      gl.glVertex2f(xp + sprite.getWidth(), yp);
+//      
+//      gl.glTexCoord2f(1, 1);
+//      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+//      
+//      gl.glTexCoord2f(0, 1);
+//      gl.glVertex2f(xp, yp + sprite.getHeight());
+//    gl.glEnd();
+//    gl.glFlush();
+////    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+//  }
+  float pixelUnit = 1 / (float)54;
+  public void renderTile(ArrayList<Tile> tileData, ArrayList<Float> xFloat, ArrayList<Float> yFloat, GL2 gl) {
     gl.glColor4f(1, 1, 1, 1);
     gl.glBegin(GL2.GL_QUADS);
-      gl.glTexCoord2f(0, 0);
-      gl.glVertex2f(xp, yp);
-      
-      gl.glTexCoord2f(1, 0);
-      gl.glVertex2f(xp + sprite.getWidth(), yp);
-      
-      gl.glTexCoord2f(1, 1);
-      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
-      
-      gl.glTexCoord2f(0, 1);
-      gl.glVertex2f(xp, yp + sprite.getHeight());
+      for (int i = 0; i < tileData.size(); i++) {
+        gl.glTexCoord2f(tileData.get(i).atlasX1(), tileData.get(i).atlasY1());
+        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) - yOffset);
+        
+        gl.glTexCoord2f(tileData.get(i).atlasX2(), tileData.get(i).atlasY1());
+        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) - yOffset);
+        
+        gl.glTexCoord2f(tileData.get(i).atlasX2(), tileData.get(i).atlasY2());
+        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
+        
+        gl.glTexCoord2f(tileData.get(i).atlasX1(), tileData.get(i).atlasY2());
+        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
+        
+        
+        
+//        gl.glTexCoord2f(pixelUnit + (18 * pixelUnit), pixelUnit + (36 * pixelUnit));
+//        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) - yOffset);
+//        
+//        gl.glTexCoord2f(16 * pixelUnit + (18 * pixelUnit), pixelUnit + (36 * pixelUnit));
+//        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) - yOffset);
+//        
+//        gl.glTexCoord2f(16 * pixelUnit + (18 * pixelUnit), 16 * pixelUnit + (36 * pixelUnit));
+//        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
+//        
+//        gl.glTexCoord2f(pixelUnit + (18 * pixelUnit), 16 * pixelUnit + (36 * pixelUnit));
+//        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
+      }
     gl.glEnd();
     gl.glFlush();
-    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
   public void renderSpriteUpperLevel(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
@@ -165,11 +205,15 @@ public class Screen {
       }
     }
   }
-  
+  int count = 2;
   public void renderLightMap(GL2 gl, float alpha) {
-    lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    lightMapImage.setRGB(0, 0, width, height, lightMap, 0, width);
-    lightMapTex = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), lightMapImage, true);
+//    lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    if (count % 2 == 0) {
+      lightMapImage.setRGB(0, 0, width, height, lightMap, 0, width);
+      lightMapTex = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), lightMapImage, false);
+      count = 0;
+    }
+    count++;
     gl.glBindTexture(GL2.GL_TEXTURE_2D, lightMapTex.getTextureObject());
     gl.glColor4f(1, 1, 1, alpha);
     gl.glBegin(GL2.GL_QUADS);

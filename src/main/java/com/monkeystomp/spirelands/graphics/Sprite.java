@@ -106,7 +106,7 @@ public class Sprite {
   private void setTexture() {
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     image.setRGB(0, 0, width, height, pixels, 0, width);
-    texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, true);
+    texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, false);
   }
   
   private void cutSpriteFromSheet() {

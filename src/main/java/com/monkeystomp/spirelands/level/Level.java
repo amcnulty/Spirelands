@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.level;
 
 import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.util.texture.Texture;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Font;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 /**
@@ -111,7 +113,9 @@ public class Level implements Runnable {
       tiles.add(
         new Tile(
           (Sprite) TileData.library.get(bitmap[i]).get(0),
-          (boolean) TileData.library.get(bitmap[i]).get(1)
+          (boolean) TileData.library.get(bitmap[i]).get(1),
+          (Integer) TileData.library.get(bitmap[i]).get(2),
+          (Integer) TileData.library.get(bitmap[i]).get(3)
         )
       );
     }
@@ -276,17 +280,27 @@ public class Level implements Runnable {
       if (gameMenuOpen) GAME_MENU.update();
     }
   }
-  
+  private ArrayList<Tile> textureData = new ArrayList<>();
+  private ArrayList<Float> xFloat = new ArrayList<>();
+  private ArrayList<Float> yFloat = new ArrayList<>();
   public void render(Screen screen, GL2 gl){
     if (!loadingThread.isAlive()) {
       // Set screen offset
       setScreenOffset(screen);
       // Render the tiles.
+      screen.bindTileTex(gl);
+      textureData.clear();
+      xFloat.clear();
+      yFloat.clear();
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
         for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
-          getTile(x, y).render(x, y, screen, gl);
+//          getTile(x, y).render(x, y, screen, gl);
+          textureData.add(getTile(x, y));
+          xFloat.add((float)(x << 4));
+          yFloat.add((float)(y << 4));
         }
       }
+      screen.renderTile(textureData, xFloat, yFloat, gl);
       // Render the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
         if (solidEntities.get(i).equals(player)) continue;
