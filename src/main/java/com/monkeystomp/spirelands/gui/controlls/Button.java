@@ -65,8 +65,8 @@ public class Button {
   }
 
   public void update() {
-    mouseX = Mouse.getX() / 3;
-    mouseY = Mouse.getY() / 3;
+    mouseX = (int)(Mouse.getX() / Screen.getScaleX());
+    mouseY = (int)(Mouse.getY() / Screen.getScaleY());
     mouseB = Mouse.getMouseButton();
     if (mouseB != 1) {
       if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {

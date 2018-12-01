@@ -50,9 +50,10 @@ public class EventListener implements GLEventListener {
   @Override
   public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
     GL2 gl = drawable.getGL().getGL2();
+    Screen.setScaleX(drawable.getSurfaceWidth() / (float)Screen.getWidth());
+    Screen.setScaleY(drawable.getSurfaceHeight() / (float)Screen.getHeight());
     gl.glMatrixMode(GL2.GL_PROJECTION);
     gl.glLoadIdentity();
-    
     gl.glOrthof(0, 420, 420*9/16, 0, -1, 1);
     gl.glMatrixMode(GL2.GL_MODELVIEW);
   }

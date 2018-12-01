@@ -10,9 +10,6 @@ import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
 import javax.swing.JFrame;
 /**
  *
@@ -30,10 +27,6 @@ public class Game extends GLCanvas implements Runnable {
               framesPerSecond = 90;
   private int scaleX = 3,
               scaleY = 3;
-  private BufferedImage image;
-  private int[] pixels;
-  private BufferStrategy bufferStrategy;
-  private Graphics graphics;
   private Screen screen;
   private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = new Mouse();

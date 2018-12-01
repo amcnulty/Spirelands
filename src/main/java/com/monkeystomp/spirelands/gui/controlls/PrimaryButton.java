@@ -55,6 +55,6 @@ public class PrimaryButton extends Button {
   @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
-    screen.addText(fontInfo);
+    screen.renderFonts(fontInfo);
   }
 }

@@ -2,11 +2,12 @@ package com.monkeystomp.spirelands.graphics;
 
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLProfile;
+import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.level.tile.Tile;
-import java.awt.Graphics;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -20,8 +21,8 @@ public class Screen {
                       height,
                       xOffset,
                       yOffset;
-  private static int  scaleX,
-                      scaleY;
+  private static float  scaleX,
+                        scaleY;
   private int[] pixels,
                 lightMap;
   private boolean[] lightMapPixelChecked;
@@ -285,14 +286,15 @@ public class Screen {
     fontInfo.add(info);
   }
   
-  public void renderFonts(Graphics graphics) {
-    for (int i = 0; i < fontInfo.size(); i++) {
-      graphics.setFont(fontInfo.get(i).getFont());
-      graphics.setColor(fontInfo.get(i).getColor());
-      int verticalAdjustment = graphics.getFontMetrics().getAscent() / 2;
-      graphics.drawString(fontInfo.get(i).getText(), (int)(fontInfo.get(i).getX() * scaleX), (int)(fontInfo.get(i).getY() * scaleY) + verticalAdjustment);
-    }
-    fontInfo.clear();
+  public void renderFonts(FontInfo info) {
+    TextRenderer textRenderer = new TextRenderer(info.getFont());
+    Rectangle2D bounds = textRenderer.getBounds("M");
+    int textHeight = (int)(bounds.getHeight()),
+        vertAdjustment = (int)(textHeight / 2);
+    textRenderer.beginRendering((int)(width * scaleX), (int)(height * scaleY));
+    textRenderer.setColor(info.getColor());
+    textRenderer.draw(info.getText(), (int)(info.getX() * scaleX), (int)(height * scaleY - (info.getY() * scaleY + vertAdjustment)));
+    textRenderer.endRendering();
   }
   
   /**
@@ -305,12 +307,20 @@ public class Screen {
       this.yOffset = yOffset;
   }
   
-  public static int getScaleX() {
+  public static float getScaleX() {
     return scaleX;
   }
   
-  public static int getScaleY() {
+  public static void setScaleX(float scaleX) {
+    Screen.scaleX = scaleX;
+  }
+  
+  public static float getScaleY() {
     return scaleY;
+  }
+  
+  public static void setScaleY(float scaleY) {
+    Screen.scaleY = scaleY;
   }
   
   public static int getWidth() {

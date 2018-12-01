@@ -209,9 +209,9 @@ public class DialogBox {
     if (dialogReady) {
       screen.renderSprite(gl, DIALOG_LEFT, DIALOG_TOP, background, .8f, false);
       for (int i = 0; i < lines.size(); i++) {
-        screen.addText(lines.get(i));
+        screen.renderFonts(lines.get(i));
       }
-      screen.addText(symbolFontInfo);
+      screen.renderFonts(symbolFontInfo);
     }
   }
 }
