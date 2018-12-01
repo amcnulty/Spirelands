@@ -14,7 +14,7 @@ public class StreetLamp extends Entity {
   
   private final Sprite  LAMP_OFF = new Sprite("./resources/objects/lamp_off.png"),
                         LAMP_ON = new Sprite("./resources/objects/lamp_on.png"),
-                        LIGHT_MAP = new Sprite("./resources/objects/lamp_lightMap.png");
+                        LIGHT_MAP = new Sprite("./resources/objects/lamp_lightMap_blend_yellow.png");
   private final int SPRITE_SIZE = 32;
   private final LightMapEntity LIGHT_MAP_ENTITY;
   private Sprite currentSprite;
@@ -49,12 +49,12 @@ public class StreetLamp extends Entity {
   
   public void turnLightOn() {
     currentSprite = LAMP_ON;
-    level.addLightMapEntity(LIGHT_MAP_ENTITY);
+    level.getLightMap().addBasicLightMapEntity(LIGHT_MAP_ENTITY);
   }
   
   public void turnLightOff() {
     currentSprite = LAMP_OFF;
-    level.removeLightMapEntity(LIGHT_MAP_ENTITY);
+    level.getLightMap().removeBasicLightMapEntity(LIGHT_MAP_ENTITY);
   }
   
   @Override

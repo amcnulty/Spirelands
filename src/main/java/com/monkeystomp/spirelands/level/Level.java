@@ -1,7 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
 import com.jogamp.opengl.GL2;
-import com.jogamp.opengl.util.texture.Texture;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Font;
@@ -18,13 +17,12 @@ import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import com.monkeystomp.spirelands.level.entity.lightmap.LightMapEntity;
+import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import javax.imageio.ImageIO;
 
 /**
@@ -42,8 +40,8 @@ public class Level implements Runnable {
   protected ArrayList<Tile> tiles = new ArrayList<>();
   // Music player
   protected Music music = new Music();
-  // Lightmap entities
-  protected ArrayList<LightMapEntity> lightMapEntities = new ArrayList<>();
+  // LightMap Manager
+  protected LightMap lightMap = new LightMap();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
     // Solid Entities
@@ -157,14 +155,6 @@ public class Level implements Runnable {
     GAME_MENU.closeMenu();
     gameMenuOpen = false;
   }
-  
-  public void addLightMapEntity(LightMapEntity entity) {
-    lightMapEntities.add(entity);
-  }
-
-  public void removeLightMapEntity(LightMapEntity entity) {
-    lightMapEntities.remove(entity);
-  }
 
   public ArrayList<Portal> getPortals() {
     return portals;
@@ -192,6 +182,10 @@ public class Level implements Runnable {
   
   public DialogBox getDialogBox() {
     return dialogBox;
+  }
+  
+  public LightMap getLightMap() {
+    return lightMap;
   }
   
   public Tile getTile(int x, int y) {
@@ -312,12 +306,8 @@ public class Level implements Runnable {
       player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
       renderOverPlayer(screen, gl);
-      // Render lightmap entities.
-      for (int i = 0; i < lightMapEntities.size(); i++) {
-        screen.renderLightMapEntity(gl, (int)lightMapEntities.get(i).getX(), (int)lightMapEntities.get(i).getY(), (Sprite)lightMapEntities.get(i).getSprite());
-      }
       // Render the lightmap.
-      screen.renderLightMap(gl, shadowLevel);
+      lightMap.render(gl, screen, shadowLevel);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);

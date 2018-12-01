@@ -28,7 +28,11 @@ public class Screen {
   private BufferedImage lightMapImage;
   private Texture lightMapTex;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
-  private int lightMapColor = 0xFF121212;
+  private int lightMapColor = 0xFF121212,
+              count = 2;
+  private final float LIGHTMAP_R_VALUE = 0.07058823529411764705882352941176f,
+                      LIGHTMAP_G_VALUE = 0.07058823529411764705882352941176f,
+                      LIGHTMAP_B_VALUE = 0.07058823529411764705882352941176f;
   
   public Screen(int width, int height, int scaleX, int scaleY) {
     this.width = width;
@@ -77,6 +81,31 @@ public class Screen {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
   
+  public void renderBlendedSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    gl.glBlendFunc(GL2.GL_DST_COLOR, GL2.GL_ONE);
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+    gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
+  }
+  
   public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
     if (fixed) {
       xp -= xOffset;
@@ -105,28 +134,6 @@ public class Screen {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, Tile.getTexture().getTextureObject());
   }
   
-//  public void renderTile(GL2 gl, int xp, int yp, Sprite sprite) {
-//    xp -= xOffset;
-//    yp -= yOffset;
-////    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
-//    gl.glColor4f(1, 1, 1, 1);
-//    gl.glBegin(GL2.GL_QUADS);
-//      gl.glTexCoord2f(0, 0);
-//      gl.glVertex2f(xp, yp);
-//      
-//      gl.glTexCoord2f(1, 0);
-//      gl.glVertex2f(xp + sprite.getWidth(), yp);
-//      
-//      gl.glTexCoord2f(1, 1);
-//      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
-//      
-//      gl.glTexCoord2f(0, 1);
-//      gl.glVertex2f(xp, yp + sprite.getHeight());
-//    gl.glEnd();
-//    gl.glFlush();
-////    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
-//  }
-  float pixelUnit = 1 / (float)54;
   public void renderTile(ArrayList<Tile> tileData, ArrayList<Float> xFloat, ArrayList<Float> yFloat, GL2 gl) {
     gl.glColor4f(1, 1, 1, 1);
     gl.glBegin(GL2.GL_QUADS);
@@ -142,20 +149,6 @@ public class Screen {
         
         gl.glTexCoord2f(tileData.get(i).atlasX1(), tileData.get(i).atlasY2());
         gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
-        
-        
-        
-//        gl.glTexCoord2f(pixelUnit + (18 * pixelUnit), pixelUnit + (36 * pixelUnit));
-//        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) - yOffset);
-//        
-//        gl.glTexCoord2f(16 * pixelUnit + (18 * pixelUnit), pixelUnit + (36 * pixelUnit));
-//        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) - yOffset);
-//        
-//        gl.glTexCoord2f(16 * pixelUnit + (18 * pixelUnit), 16 * pixelUnit + (36 * pixelUnit));
-//        gl.glVertex2f(xFloat.get(i) + Tile.TILE_SIZE - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
-//        
-//        gl.glTexCoord2f(pixelUnit + (18 * pixelUnit), 16 * pixelUnit + (36 * pixelUnit));
-//        gl.glVertex2f(xFloat.get(i) - xOffset, yFloat.get(i) + Tile.TILE_SIZE - yOffset);
       }
     gl.glEnd();
     gl.glFlush();
@@ -205,9 +198,8 @@ public class Screen {
       }
     }
   }
-  int count = 2;
+  
   public void renderLightMap(GL2 gl, float alpha) {
-//    lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     if (count % 2 == 0) {
       lightMapImage.setRGB(0, 0, width, height, lightMap, 0, width);
       lightMapTex = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), lightMapImage, false);
@@ -231,6 +223,16 @@ public class Screen {
     gl.glEnd();
 //    gl.glFlush();
     clearLightMap();
+  }
+  
+  public void renderBlendedLightMap(GL2 gl, float alpha) {
+    gl.glColor4f(LIGHTMAP_R_VALUE, LIGHTMAP_G_VALUE, LIGHTMAP_B_VALUE, alpha);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glVertex2f(0, 0);
+      gl.glVertex2f(width, 0);
+      gl.glVertex2f(width, height);
+      gl.glVertex2f(0, height);
+    gl.glEnd();
   }
   
   private void clearLightMap() {
@@ -262,167 +264,6 @@ public class Screen {
     if (backgroundAlpha < 0) backgroundAlpha = 0;
     return (backgroundAlpha << 24) | (R << 16) | (G << 8) | B;
   }
-  
-  
-  
-//  public void renderSprite(int xp, int yp, Sprite sprite, boolean fixed, boolean blended) {
-//    if (fixed) {
-//      xp -= xOffset;
-//      yp -= yOffset;
-//    }
-//    int renderY,
-//        renderX;
-//    for (int y = 0; y < sprite.getHeight(); y++) {
-//      renderY = yp + y;
-//      for (int x = 0; x < sprite.getWidth(); x++) {
-//        renderX = xp + x;
-//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
-//          if (blended) {
-//            if (lightMap[renderX + renderY * width] != -1) {
-//              pixels[renderX + renderY * width] = blend(
-//                sprite.getPixels()[x + y * sprite.getWidth()],
-//                lightMapColor,
-//                lightMap[renderX + renderY * width]
-//              );
-//            }
-//            else {
-//              pixels[renderX + renderY * width] = blend(
-//                sprite.getPixels()[x + y * sprite.getWidth()],
-//                lightMapColor,
-//                lightMapAlpha
-//              );
-//            }
-//          }
-//          else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-//        }
-//      }
-//    }
-//  }
-
-//  public void renderSprite(int xp, int yp, Sprite sprite, int alpha, boolean fixed, boolean blended) {
-//    if (fixed) {
-//      xp -= xOffset;
-//      yp -= yOffset;
-//    }
-//    int renderY,
-//        renderX;
-//    for (int y = 0; y < sprite.getHeight(); y++) {
-//      renderY = yp + y;
-//      for (int x = 0; x < sprite.getWidth(); x++) {
-//        renderX = xp + x;
-//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0 && blended) {
-//          pixels[renderX + renderY * width] = blend(
-//            pixels[renderX + renderY * width],
-//            sprite.getPixels()[x + y * sprite.getWidth()],
-//            alpha
-//          );
-//        }
-//        else pixels[renderX + renderY * width] = sprite.getPixels()[x + y * sprite.getWidth()];
-//      }
-//    }
-//  }
-    
-//  public void renderCharacter(int xp, int yp, Sprite sprite, int color, boolean fixed, boolean blended) {
-//    if (fixed) {
-//      xp -= xOffset;
-//      yp -= yOffset;
-//    }
-//    int renderY,
-//        renderX;
-//    for (int y = 0; y < sprite.getHeight(); y++) {
-//      renderY = yp + y;
-//      for (int x = 0; x < sprite.getWidth(); x++) {
-//        renderX = xp + x;
-//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-//        if (sprite.getPixels()[x + y * sprite.getWidth()] != 0) {
-//          if (blended) {
-//            if (lightMap[renderX + renderY * width] != -1) {
-//              pixels[renderX + renderY * width] = blend(
-//                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color,
-//                lightMapColor,
-//                lightMap[renderX + renderY * width]
-//              );
-//            }
-//            else {
-//              pixels[renderX + renderY * width] = blend(
-//                (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()]: color,
-//                lightMapColor,
-//                lightMapAlpha
-//              );
-//            }
-//          }
-//          else pixels[renderX + renderY * width] = (color == 0) ? sprite.getPixels()[x + y * sprite.getWidth()] : color;
-//        }
-//      }
-//    }
-//  }
-
-//  public void renderTile(int xp, int yp, Sprite sprite) {
-//    xp -= xOffset;
-//    yp -= yOffset;
-//    int renderY,
-//        renderX;
-//    for (int y = 0; y < sprite.getHeight(); y++) {
-//      renderY = y + yp;
-//      for (int x = 0; x < sprite.getWidth(); x++) {
-//        renderX = x + xp;
-//        if (renderX < -sprite.getWidth() || renderX > width - 1 || renderY < 0 || renderY > height - 1) break;
-//        if (renderX < 0) renderX = 0;
-//        if (lightMap[renderX + renderY * width] != -1) {
-//          pixels[renderX + renderY * width] = blend(
-//            sprite.getPixels()[x + y * sprite.getWidth()],
-//            lightMapColor,
-//            lightMap[renderX + renderY * width]
-//          );
-//        }
-//        else {
-//          pixels[renderX + renderY * width] = blend(
-//            sprite.getPixels()[x + y * sprite.getWidth()],
-//            lightMapColor,
-//            lightMapAlpha
-//          );
-//        }
-//      }
-//    }
-//  }
-
-//  public void setLightMap(int color, int alpha) {
-//    lightMapColor = color;
-//    lightMapAlpha = alpha;
-//  }
-  
-//  public void renderLightMapEntity(int x, int y, Sprite mySprite) {
-//    int xp = x - xOffset,
-//        yp = y - yOffset,
-//        renderX,
-//        renderY,
-//        currentAlpha,
-//        subtractiveAlpha;
-//    for (int spriteY = 0; spriteY < mySprite.getHeight(); spriteY++) {
-//      renderY = yp + spriteY;
-//      for (int spriteX = 0; spriteX < mySprite.getWidth(); spriteX++) {
-//        renderX = xp + spriteX;
-//        if (renderX < 0 || renderX > width -1 || renderY < 0 || renderY > height -1) continue;
-//        // Subtract the alpha of the sprite by the current value of the lightMap alpha and
-//        // don't let alpha be less than 0.
-//        currentAlpha = lightMapAlpha;
-//        if ((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) < 0) {
-//          subtractiveAlpha = (int)(((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) + 256) / 25.5);
-//        }
-//        else {
-//          subtractiveAlpha = (int)((mySprite.getPixels()[spriteX + spriteY * mySprite.getWidth()] >> 24) / 25.5);
-//        }
-//        if (subtractiveAlpha > 0) {
-//          if (lightMap[renderX + renderY * width] != -1) currentAlpha = lightMap[renderX + renderY * width];
-//          currentAlpha -= subtractiveAlpha;
-//          if (currentAlpha < 0) currentAlpha = 0;
-//          lightMap[renderX + renderY * width] = currentAlpha;
-//        }
-//      }
-//    }
-//  }
 
   private int blend(int background, int foreground, int alpha) {
     int oldR = (background & 0xff0000) >> 16;

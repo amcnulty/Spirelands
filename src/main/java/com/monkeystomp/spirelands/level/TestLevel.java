@@ -14,6 +14,7 @@ import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 import com.monkeystomp.spirelands.level.entity.particle.Particle;
 import com.monkeystomp.spirelands.level.entity.particle.ParticleOverlay;
+import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 import java.util.ArrayList;
 
 /**
@@ -33,7 +34,7 @@ public class TestLevel extends Level {
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
-    shadowLevel = .7f;
+//    shadowLevel = .7f;
   }
   
   @Override
@@ -89,6 +90,8 @@ public class TestLevel extends Level {
   
   @Override
   protected void finalLevelSetup() {
+    lightMap.enableLightMap(LightMapType.BLENDED);
+    
     Entity entity = new StreetLamp(210, 75);
     solidEntities.add(entity);
     entity.initLevel(this);
@@ -144,11 +147,11 @@ public class TestLevel extends Level {
     // 9 pm
     else if (time == 540) shadowLevel = .7f;
     // 9:30 pm
-    else if (time == 570) shadowLevel = .8f;
+    else if (time == 570) shadowLevel = .7f;
     // 10 pm
-    else if (time == 700) shadowLevel = .9f;
+    else if (time == 700) shadowLevel = .7f;
     // 4 am
-    else if (time == 1060) shadowLevel = .8f;
+    else if (time == 1060) shadowLevel = .7f;
     // 4:30 am
     else if (time == 1090) shadowLevel = .7f;
     // 5 am
@@ -170,7 +173,7 @@ public class TestLevel extends Level {
       time = 0;
 //      IChanger.change(new SpawnLevel());
     }
-//    else time++;
+    else time++;
   }
   
   @Override
@@ -182,9 +185,6 @@ public class TestLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen, GL2 gl) {
-//    screen.setLightMap(0x121212, shadowLevel);
-//    font.renderText(200, 200, "This is a test!", screen);
-//    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }
 
   @Override

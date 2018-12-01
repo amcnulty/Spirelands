@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
+import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 
 /**
  *
@@ -55,6 +56,7 @@ public class SpawnLevel extends Level {
 
   @Override
   protected void finalLevelSetup() {
+    lightMap.enableLightMap(LightMapType.BLENDED);
     
 // Example of how to open a dialog box.
 //    dialogOpen = true;
@@ -118,9 +120,6 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void renderUnderPlayer(Screen screen, GL2 gl) {
-//    screen.setLightMap(0x121212, shadowLevel);
-//    font.renderText(200, 200, "This is a test!", screen);
-//    font.renderText(200, 300, "Demo version no. #1234567890", screen);
   }
 
   @Override
