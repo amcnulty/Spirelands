@@ -61,7 +61,7 @@ public class LevelView extends GameView {
   @Override
   public void leaveView() {
     Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
-    level.exitLevel();
+    level.transitionOutOfLevel();
   }
   
   @Override

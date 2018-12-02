@@ -5,7 +5,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
-import com.monkeystomp.spirelands.level.entity.lightmap.LightMapEntity;
+import com.monkeystomp.spirelands.level.lightmap.LightMapEntity;
 
 /**
  *

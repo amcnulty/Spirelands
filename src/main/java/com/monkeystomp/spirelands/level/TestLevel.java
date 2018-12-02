@@ -29,7 +29,8 @@ public class TestLevel extends Level {
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0;
   private ArrayList<Particle> particles;
-  public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1);
+  public static SpawnCoordinate westEntrance = new SpawnCoordinate(48, 256, 1),
+                                houseExit = new SpawnCoordinate(234, 528, 2);
   
   // NPCs
   private NPCConfig lonelyMaleElf = new NPCConfig();
@@ -48,7 +49,7 @@ public class TestLevel extends Level {
     
     Bounds doorBounds = new Bounds();
     doorBounds.setQuadBounds(516, 247, 522, 222);
-    portals.add(new Portal(doorBounds, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
+    portals.add(new Portal(doorBounds, HouseLevel.entrance, "HOUSE_LEVEL"));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);

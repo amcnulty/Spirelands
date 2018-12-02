@@ -1,13 +1,12 @@
 package com.monkeystomp.spirelands.level.tile;
 
-import com.jogamp.opengl.GL2;
+import com.jogamp.opengl.GLException;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
-import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
@@ -17,55 +16,45 @@ import javax.imageio.ImageIO;
 public class Tile {
   
   public static final int TILE_SIZE = 16;
-  public static final Tile VOID_TILE = new Tile(Sprite.VOID_SPRITE, true, -1, -1);
+  public static final Tile VOID_TILE = new Tile(true, 0, 3);
   private static Texture texture;
-  private int x, y;
-  private float pixelUnits;
+  private static final File TILE_SHEET = new File("./resources/textures/sheets/smallTestSheet_stretch.png");
+  private final int x, y;
+  private final float PIXEL_UNITS;
+  private final boolean SOLID;
   
-  private Sprite sprite;
-  private boolean solid;
-  
-  public Tile(Sprite sprite, boolean solid, int x, int y) {
-    this.sprite = sprite;
-    this.solid = solid;
+  public Tile(boolean solid, int x, int y) {
+    this.SOLID = solid;
     this.x = x;
     this.y = y;
-    pixelUnits = 1 / (float)SpriteSheet.smallTestSheet.getWidth();
+    PIXEL_UNITS = 1 / (float)SpriteSheet.smallTestSheet.getWidth();
   }
-  
-  public Sprite getSprite() {
-    return sprite;
-  }
-  
+
   public float atlasX1() {
-    return ((2 * pixelUnits) + (TILE_SIZE * pixelUnits)) * x + pixelUnits;
-//    return pixelUnits + ((x * 18) * pixelUnits);
+    return ((2 * PIXEL_UNITS) + (TILE_SIZE * PIXEL_UNITS)) * x + PIXEL_UNITS;
   }
   
   public float atlasX2() {
-    return ((2 * pixelUnits) + (TILE_SIZE * pixelUnits)) * x + (pixelUnits * TILE_SIZE);
-//    return (TILE_SIZE * pixelUnits) + (x * 18) * pixelUnits;
+    return ((2 * PIXEL_UNITS) + (TILE_SIZE * PIXEL_UNITS)) * x + (PIXEL_UNITS * TILE_SIZE);
   }
   
   public float atlasY1() {
-    return ((2 * pixelUnits) + (TILE_SIZE * pixelUnits)) * y + pixelUnits;
-//    return pixelUnits + ((y * 18) * pixelUnits);
+    return ((2 * PIXEL_UNITS) + (TILE_SIZE * PIXEL_UNITS)) * y + PIXEL_UNITS;
   }
   
   public float atlasY2() {
-    return ((2 * pixelUnits) + (TILE_SIZE * pixelUnits)) * y + (pixelUnits * TILE_SIZE);
-//    return (TILE_SIZE * pixelUnits) + (y * 18) * pixelUnits;
+    return ((2 * PIXEL_UNITS) + (TILE_SIZE * PIXEL_UNITS)) * y + (PIXEL_UNITS * TILE_SIZE);
   }
   
   public boolean isSolid() {
-    return solid;
+    return SOLID;
   }
   
   private static void setTexture() {
     try {
-      texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), ImageIO.read(new File("./resources/textures/sheets/smallTestSheet_stretch.png")), false);
+      texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), ImageIO.read(TILE_SHEET), false);
     }
-    catch (Exception e) {
+    catch (GLException | IOException e) {
       e.printStackTrace();
     }
   }
@@ -73,9 +62,5 @@ public class Tile {
   public static Texture getTexture() {
     if (texture == null) setTexture();
     return texture;
-  }
-  
-  public void render(int x, int y, Screen screen, GL2 gl) {
-//    screen.renderTile(gl, x << 4, y << 4, sprite);
   }
 }

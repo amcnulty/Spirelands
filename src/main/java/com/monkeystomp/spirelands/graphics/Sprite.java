@@ -3,7 +3,6 @@ package com.monkeystomp.spirelands.graphics;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
-import com.monkeystomp.spirelands.level.tile.Tile;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,21 +22,12 @@ public class Sprite {
   private SpriteSheet sheet;
   private Texture texture;
   
-  public static final Sprite  // Tiles
-                              VOID_SPRITE = new Sprite(Tile.TILE_SIZE, Tile.TILE_SIZE, 0xFF161616),
-                              GRASS = new Sprite(Tile.TILE_SIZE, 0, 0, SpriteSheet.smallTestSheet),
-                              DIRT = new Sprite(Tile.TILE_SIZE, 1, 0, SpriteSheet.smallTestSheet),
-                              FLOWER = new Sprite(Tile.TILE_SIZE, 2, 0, SpriteSheet.smallTestSheet),
-                              SAND = new Sprite(Tile.TILE_SIZE, 0, 1, SpriteSheet.smallTestSheet),
-                              WATER = new Sprite(Tile.TILE_SIZE, 1, 1, SpriteSheet.smallTestSheet),
-                              GRASS_ROCK = new Sprite(Tile.TILE_SIZE, 2, 1, SpriteSheet.smallTestSheet),
-                              COBBLESTONE = new Sprite(Tile.TILE_SIZE, 0, 2, SpriteSheet.smallTestSheet),
-                              BRICK = new Sprite(Tile.TILE_SIZE, 1, 2, SpriteSheet.smallTestSheet),
-                              DIRT_ROCK = new Sprite(Tile.TILE_SIZE, 2, 2, SpriteSheet.smallTestSheet),
-                              // Particles
+  public static final Sprite  // Particles
                               DUST = new Sprite(2, 2, 0xFFFFFFFF),
                               EMBER = new Sprite(2, 2, 0xFFF05E1B),
                               GOLD = new Sprite(2, 2, 0xFFFCC201),
+                              // Level Transition
+                              TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), 0xFF000000),
                               // GUI
                               GAME_MENU_BACKGROUND = new Sprite("./resources/gui/game_menu_background.png");
   
@@ -49,7 +39,6 @@ public class Sprite {
     this.x = x * width;
     this.y = y * height;
     cutSpriteFromSheet();
-//    setTexture();
   }
   
   public Sprite(int width, int height, int color) {
@@ -59,7 +48,6 @@ public class Sprite {
     for (int i = 0; i < pixels.length; i++) {
       pixels[i] = color;
     }
-//    setTexture();
   }
   
   public Sprite(int[] pixels, int width, int height) {
@@ -69,7 +57,6 @@ public class Sprite {
     for (int i = 0; i < pixels.length; i++) {
       this.pixels[i] = pixels[i];
     }
-//    setTexture();
   }
   
   public Sprite(String path) {
@@ -79,7 +66,6 @@ public class Sprite {
       this.height = image.getHeight();
       this.pixels = new int[width * height];
       image.getRGB(0, 0, width, height, pixels, 0, width);
-//      setTexture();
     }
     catch (IOException e) {
       e.printStackTrace();

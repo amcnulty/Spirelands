@@ -32,7 +32,6 @@ public class Mob extends Entity {
       y += yDir;
       walking = true;
     }
-    else System.out.println("Collision");
   }
   
   protected boolean collision(int xDir, int yDir, int[] bounds) {

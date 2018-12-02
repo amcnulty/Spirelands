@@ -53,16 +53,22 @@ public class Level implements Runnable {
   private int levelTileWidth,
               levelTileHeight,
               xScroll,
-              yScroll;
+              yScroll,
+              transitionOpacity = 100;
   protected Player player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
-                  gameMenuOpen = false;
+                  gameMenuOpen = false,
+                  transitionRunning = true,
+                  transitionIn = true;
   private Portal exitPortal;
   private final GameMenu GAME_MENU = new GameMenu();
   private Keyboard keyboard = Keyboard.getKeyboard();
   private INotify notifier = (e) -> handleKeypress(e);
+  private ArrayList<Tile> textureData = new ArrayList<>();
+  private ArrayList<Float>  xFloat = new ArrayList<>(),
+                            yFloat = new ArrayList<>();
 
   private ILevelChanger IChanger;
 
@@ -82,6 +88,8 @@ public class Level implements Runnable {
 
   /**
    * Begins the level loading process on a separate thread.
+   * 
+   * @param path Path to the bitmap resource for the level.
    */
   protected void loadLevel(String path){
     this.path = path;
@@ -93,6 +101,8 @@ public class Level implements Runnable {
     loadBitmap();
     createTiles();
     generateLevel();
+    // Update the player one time before starting the transition so they are facing the correct direction.
+    player.update();
   }
 
   protected void loadBitmap() {
@@ -113,10 +123,9 @@ public class Level implements Runnable {
     for (int i = 0; i < bitmap.length; i++) {
       tiles.add(
         new Tile(
-          (Sprite) TileData.library.get(bitmap[i]).get(0),
-          (boolean) TileData.library.get(bitmap[i]).get(1),
-          (Integer) TileData.library.get(bitmap[i]).get(2),
-          (Integer) TileData.library.get(bitmap[i]).get(3)
+          TileData.library.get(bitmap[i]).isSolid(),
+          TileData.library.get(bitmap[i]).getX(),
+          TileData.library.get(bitmap[i]).getY()
         )
       );
     }
@@ -240,7 +249,12 @@ public class Level implements Runnable {
     return IChanger;
   }
   
-  public void exitLevel() {
+  public void transitionOutOfLevel() {
+    transitionIn = false;
+    transitionRunning = true;
+  }
+  
+  private void exitLevel() {
     // Stop music playing
     music.stop();
     keyboard.removeKeyPressNotifier(notifier);
@@ -273,7 +287,7 @@ public class Level implements Runnable {
   public void update(){
     if (!loadingThread.isAlive()) {
       // Update player if dialog is closed.
-      if (!dialogOpen && !gameMenuOpen) player.update();
+      if (!dialogOpen && !gameMenuOpen && !transitionRunning) player.update();
       // Call the subclass hook for updating.
       levelUpdate();
       // Update the solid entities
@@ -286,11 +300,19 @@ public class Level implements Runnable {
         multiPartEntities.get(i).update();
       }
       if (gameMenuOpen) GAME_MENU.update();
+      if (transitionRunning) {
+        if (transitionIn) {
+          transitionOpacity -= 5;
+          if (transitionOpacity == 0) transitionRunning = false;
+        }
+        else {
+          transitionOpacity += 10;
+          if (transitionOpacity == 100) exitLevel();
+        }
+      }
     }
   }
-  private ArrayList<Tile> textureData = new ArrayList<>();
-  private ArrayList<Float> xFloat = new ArrayList<>();
-  private ArrayList<Float> yFloat = new ArrayList<>();
+
   public void render(Screen screen, GL2 gl){
     if (!loadingThread.isAlive()) {
       // Set screen offset
@@ -333,6 +355,7 @@ public class Level implements Runnable {
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);
+      if (transitionRunning) screen.renderSprite(gl, 0, 0, Sprite.TRANSITION, transitionOpacity / (float)100, false);
     }
   }
 }

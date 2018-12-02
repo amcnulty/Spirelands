@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.level.entity.lightmap;
+package com.monkeystomp.spirelands.level.lightmap;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;

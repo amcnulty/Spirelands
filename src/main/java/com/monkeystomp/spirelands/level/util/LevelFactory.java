@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level.util;
 
+import com.monkeystomp.spirelands.level.HouseLevel;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.level.SpawnLevel;
 import com.monkeystomp.spirelands.level.TestLevel;
@@ -48,6 +49,7 @@ public class LevelFactory {
   static {
     factoryMap.put("SPAWN_LEVEL", SpawnLevel::new);
     factoryMap.put("TEST_LEVEL", TestLevel::new);
+    factoryMap.put("HOUSE_LEVEL", HouseLevel::new);
   }
   
   public static Level createLevel(String key, SpawnCoordinate coordinate) {

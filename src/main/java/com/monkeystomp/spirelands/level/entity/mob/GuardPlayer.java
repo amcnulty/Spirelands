@@ -150,7 +150,7 @@ public class GuardPlayer extends Player {
     level.setExitPortal(exitPortal);
     destroyPlayer();
     // Show some cool animation that you are leaving the map
-    level.exitLevel();
+    level.transitionOutOfLevel();
   }
   
   private void destroyPlayer() {
