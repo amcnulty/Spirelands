@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.level.entity.mob.npc;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 
 /**
  *
@@ -29,6 +30,7 @@ public class BasicNPC extends NPC {
   private int randTime = random.nextInt(240),
               walkingSteps = 2,
               framesPerStep = 12;
+  private Bounds quad = new Bounds();
 
   public BasicNPC(NPCConfig config, int character) {
     super(config);
@@ -74,14 +76,26 @@ public class BasicNPC extends NPC {
   }
     
   protected void setBounds() {
-    bounds[0] = y - SPRITE_SIZE / 2;
-    bounds[1] = x + SPRITE_SIZE / 2;
-    bounds[2] = y + SPRITE_SIZE / 2;
-    bounds[3] = x - SPRITE_SIZE / 2;
+    quad.setQuadBounds(
+      y - SPRITE_SIZE / 2,
+      x + SPRITE_SIZE / 2,
+      y + SPRITE_SIZE / 2,
+      x - SPRITE_SIZE / 2
+    );
+    bounds.add(quad);
     moveBounds[0] = SPRITE_SIZE / 2;
     moveBounds[1] = SPRITE_SIZE / 2;
     moveBounds[2] = SPRITE_SIZE / 2;
     moveBounds[3] = SPRITE_SIZE / 2;
+  }
+  
+  protected void updateBounds() {
+    quad.setQuadBounds(
+      y - SPRITE_SIZE / 2,
+      x + SPRITE_SIZE / 2,
+      y + SPRITE_SIZE / 2,
+      x - SPRITE_SIZE / 2
+    );
   }
   
   protected void setCurrentAction() { 

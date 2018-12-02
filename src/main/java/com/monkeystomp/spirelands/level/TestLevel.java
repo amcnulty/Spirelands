@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.level;
 
+import com.monkeystomp.spirelands.level.entity.fixed.House;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.entity.fixed.StreetLamp;
 import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
@@ -11,7 +12,9 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
+import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 import com.monkeystomp.spirelands.level.entity.particle.Particle;
 import com.monkeystomp.spirelands.level.entity.particle.ParticleOverlay;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
@@ -39,9 +42,13 @@ public class TestLevel extends Level {
   
   @Override
   protected void addPortals() {
-    portals.add(new Portal(0, 224, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
-    portals.add(new Portal(0, 240, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
-    portals.add(new Portal(0, 256, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
+    Bounds bounds = new Bounds();
+    bounds.setQuadBounds(223, 16, 257, 0);
+    portals.add(new Portal(bounds, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
+    
+    Bounds doorBounds = new Bounds();
+    doorBounds.setQuadBounds(516, 247, 522, 222);
+    portals.add(new Portal(doorBounds, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);
@@ -125,6 +132,10 @@ public class TestLevel extends Level {
     entity.initLevel(this);
     
     particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, "EMBER");
+    
+    MultipartEntity MPentity = new House(240, 412);
+    multiPartEntities.add(MPentity);
+    MPentity.initLevel(this);
   }
 
   @Override

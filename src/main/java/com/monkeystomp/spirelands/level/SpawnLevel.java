@@ -3,8 +3,9 @@ package com.monkeystomp.spirelands.level;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
-import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
+import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
@@ -28,9 +29,9 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void addPortals() {
-    portals.add(new Portal(624, 240, TestLevel.westEntrance, "TEST_LEVEL"));
-    portals.add(new Portal(624, 256, TestLevel.westEntrance, "TEST_LEVEL"));
-    portals.add(new Portal(624, 272, TestLevel.westEntrance, "TEST_LEVEL"));
+    Bounds bounds = new Bounds();
+    bounds.setQuadBounds(239, 640, 273, 624);
+    portals.add(new Portal(bounds, TestLevel.westEntrance, "TEST_LEVEL"));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);

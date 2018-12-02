@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import com.monkeystomp.spirelands.level.tile.Tile;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 
 /**
  *
@@ -13,20 +13,17 @@ public class Portal extends Entity {
   
   private SpawnCoordinate coordinate;
   private String levelKey;
+  private Bounds portalBounds;
   
-  public Portal(int x, int y, SpawnCoordinate coordinate, String levelKey) {
-    this.x = x;
-    this.y = y;
+  public Portal(Bounds bounds, SpawnCoordinate coordinate, String levelKey) {
+    this.portalBounds = bounds;
     this.coordinate = coordinate;
     this.levelKey = levelKey;
     setBounds();
   }
   
   private void setBounds() {
-    bounds[0] = y - 1;
-    bounds[1] = x + Tile.TILE_SIZE;
-    bounds[2] = y + Tile.TILE_SIZE;
-    bounds[3] = x - 1;
+    bounds.add(portalBounds);
   }
   
   public void enterPortal() {

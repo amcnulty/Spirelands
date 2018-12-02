@@ -39,7 +39,8 @@ public class TitleScreen extends GameView {
 
   private void handleStartButtonClick() {
 //    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
-    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(128, 128, 0))));
+//    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 0))));
+    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(100, 100, 0))));
   }
   
   @Override

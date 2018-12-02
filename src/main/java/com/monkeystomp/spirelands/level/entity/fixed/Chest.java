@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.particle.ProjectileParticle;
 import java.util.ArrayList;
 import java.util.Random;
@@ -52,10 +53,18 @@ public class Chest extends Entity {
   }
   
   private void setBounds() {
-    bounds[0] = y - SPRITE_SIZE / 2;
-    bounds[1] = x + SPRITE_SIZE / 2;
-    bounds[2] = y + SPRITE_SIZE / 2;
-    bounds[3] = x - SPRITE_SIZE / 2;
+    Bounds quad = new Bounds();
+    quad.setQuadBounds(
+      y - SPRITE_SIZE / 2,
+      x + SPRITE_SIZE / 2,
+      y + SPRITE_SIZE / 2,
+      x - SPRITE_SIZE / 2
+    );
+    bounds.add(quad);
+//    bounds[0] = y - SPRITE_SIZE / 2;
+//    bounds[1] = x + SPRITE_SIZE / 2;
+//    bounds[2] = y + SPRITE_SIZE / 2;
+//    bounds[3] = x - SPRITE_SIZE / 2;
   }
   
   private void setCurrentSprite() {

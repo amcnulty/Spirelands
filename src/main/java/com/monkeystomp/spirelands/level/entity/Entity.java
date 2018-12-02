@@ -3,6 +3,8 @@ package com.monkeystomp.spirelands.level.entity;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.level.Level;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
+import java.util.ArrayList;
 
 /**
  *
@@ -12,9 +14,10 @@ public abstract class Entity {
   
   protected int x,
                 y;
-  protected int[] bounds = new int[4];
+//  protected int[] bounds = new int[4];
+  protected ArrayList<Bounds> bounds = new ArrayList<>();
   protected Level level;
-  private boolean removed;
+  private boolean removed = false;
   
   public void remove() {
     removed = true;
@@ -43,7 +46,11 @@ public abstract class Entity {
   public void interact() {}
   
   public boolean entityHere(int xp, int yp) {
-    return (xp > bounds[3] && xp < bounds[1] + 1 && yp > bounds[0] && yp < bounds[2]);
+    for (Bounds bound: bounds) {
+      if (bound.insideBounds(xp, yp)) return true;
+    }
+    return false;
+//    return (xp > bounds[3] && xp < bounds[1] + 1 && yp > bounds[0] && yp < bounds[2]);
   }
   
   public void initLevel(Level level) {

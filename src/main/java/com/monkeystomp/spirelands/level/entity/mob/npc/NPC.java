@@ -100,6 +100,8 @@ public class NPC extends Mob {
   
   protected void setBounds() {}
   
+  protected void updateBounds() {}
+  
   @Override
   public void update() {
     if (!fixedDirection && !speaking) {
@@ -107,7 +109,7 @@ public class NPC extends Mob {
         moveToPoint();
       }
       setCurrentAction();
-      setBounds();
+      updateBounds();
       anim++;
     }
   }

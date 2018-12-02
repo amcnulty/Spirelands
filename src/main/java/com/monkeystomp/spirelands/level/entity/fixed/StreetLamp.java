@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.lightmap.LightMapEntity;
 
 /**
@@ -29,10 +30,14 @@ public class StreetLamp extends Entity {
   }
   
   private void setBounds() {
-    bounds[0] = y - SPRITE_SIZE / 2;
-    bounds[1] = x + SPRITE_SIZE / 2;
-    bounds[2] = y + SPRITE_SIZE / 2;
-    bounds[3] = x - SPRITE_SIZE / 2;
+    Bounds quad = new Bounds();
+    quad.setQuadBounds(
+      y - SPRITE_SIZE / 2,
+      x + SPRITE_SIZE / 2,
+      y + SPRITE_SIZE / 2,
+      x - SPRITE_SIZE / 2
+    );
+    bounds.add(quad);
   }
   
   @Override

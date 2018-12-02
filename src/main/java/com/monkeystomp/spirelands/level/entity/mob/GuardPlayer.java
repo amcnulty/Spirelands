@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import java.awt.event.KeyEvent;
 
@@ -30,6 +31,7 @@ public class GuardPlayer extends Player {
               animMax = walkingSteps * framesPerStep - 2;
   private Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
   private INotify notifier = (KeyEvent e) -> handleSpaceKeyPress(e);
+  private Bounds quad = new Bounds();
   
   public GuardPlayer(int x, int y) {
     super(x, y);
@@ -38,14 +40,26 @@ public class GuardPlayer extends Player {
   }
   
   private void setBounds() {
-    bounds[0] = y - 2;
-    bounds[1] = x + 10;
-    bounds[2] = y + 15;
-    bounds[3] = x - 10;
+    quad.setQuadBounds(
+      y - 2,
+      x + 10,
+      y + 15,
+      x - 10
+    );
+    bounds.add(quad);
     moveBounds[0] = 0;
     moveBounds[1] = 10;
     moveBounds[2] = 15;
     moveBounds[3] = 10;
+  }
+  
+  private void updateBounds() {
+    quad.setQuadBounds(
+      y - 2,
+      x + 10,
+      y + 15,
+      x - 10
+    );
   }
   
   @Override
@@ -151,7 +165,7 @@ public class GuardPlayer extends Player {
     checkMovementInput();
     setCurrentAction();
     checkForPortals();
-    setBounds();
+    updateBounds();
   }
   
   @Override

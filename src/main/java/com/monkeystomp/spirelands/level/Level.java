@@ -17,6 +17,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class Level implements Runnable {
   protected ArrayList<Portal> portals = new ArrayList<>();
     // Solid Entities
     protected ArrayList<Entity> solidEntities = new ArrayList<>();
+    // Multi part entities that have sections rendered over player and under player.
+    protected ArrayList<MultipartEntity> multiPartEntities = new ArrayList<>();
   protected SpawnCoordinate spawnCoordinate;
   private int levelTileWidth,
               levelTileHeight,
@@ -161,7 +164,14 @@ public class Level implements Runnable {
   }
   
   public ArrayList<Entity> getSolidEntities() {
-    return solidEntities;
+    ArrayList<Entity> allSolidEntities = new ArrayList<>();
+    for (Entity entity: solidEntities) {
+      allSolidEntities.add(entity);
+    }
+    for (Entity entity: multiPartEntities) {
+      allSolidEntities.add(entity);
+    }
+    return allSolidEntities;
   }
   
   public boolean getDialogOpen() {
@@ -271,6 +281,10 @@ public class Level implements Runnable {
         if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).update();
       }
+      // Update the multipart entities
+      for (int i = 0; i < multiPartEntities.size(); i++) {
+        multiPartEntities.get(i).update();
+      }
       if (gameMenuOpen) GAME_MENU.update();
     }
   }
@@ -300,12 +314,20 @@ public class Level implements Runnable {
         if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).render(screen, gl);
       }
+      // Render the multipart entites under player.
+      for (int i = 0; i < multiPartEntities.size(); i++) {
+        multiPartEntities.get(i).renderUnderPlayer(screen, gl);
+      }
       // Call the subclass hook for rendering under player.
       renderUnderPlayer(screen, gl);
       // Render the player.
       player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
       renderOverPlayer(screen, gl);
+      // Render the multipart entites over player.
+      for (int i = 0; i < multiPartEntities.size(); i++) {
+        multiPartEntities.get(i).renderOverPlayer(screen, gl);
+      }
       // Render the lightmap.
       lightMap.render(gl, screen, shadowLevel);
       // Call the subclass hook for rendering over the light map.
