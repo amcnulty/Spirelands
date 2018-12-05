@@ -26,6 +26,8 @@ public class Sprite {
                               DUST = new Sprite(2, 2, 0xFFFFFFFF),
                               EMBER = new Sprite(2, 2, 0xFFF05E1B),
                               GOLD = new Sprite(2, 2, 0xFFFCC201),
+                              // Objects
+                              STAIRS_WOOD_TURN_LEFT = new Sprite("./resources/objects/stairs_wood_turn_left.png"),
                               // Level Transition
                               TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), 0xFF000000),
                               // GUI

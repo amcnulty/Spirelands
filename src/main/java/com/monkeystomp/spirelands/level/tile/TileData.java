@@ -34,6 +34,8 @@ public class TileData {
     library.put(0xFF9B9B91, new TileData(false, 0, 2));
     // Grey Brick
     library.put(0xFF5B6A72, new TileData(true, 1, 2));
+    // Indoor
+    library.put(0xFF633C10, new TileData(false, 3, 0));
   }
   
   public TileData(boolean solid, int x, int y) {

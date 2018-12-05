@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
+import com.monkeystomp.spirelands.level.entity.fixed.SolidEntity;
 import com.monkeystomp.spirelands.level.lightmap.CustomLightMap;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 
@@ -38,6 +39,15 @@ public class HouseLevel extends Level {
   @Override
   protected void startMusic() {
     music.play(Music.NEUTRAL_IN_A_HOUSE);
+  }
+  
+  @Override
+  protected void addSolidEntities() {
+    SolidEntity entity = new SolidEntity(224, 32);
+    entity.setSprite(Sprite.STAIRS_WOOD_TURN_LEFT);
+    // Add bounds to this entity
+    entity.initLevel(this);
+    solidEntities.add(entity);
   }
   
   @Override
