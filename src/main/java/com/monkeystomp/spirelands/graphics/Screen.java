@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**
- *
+ * The Screen class is used to render to the screen. The public methods of this class are used to render sprites, lightmaps, and lightmap entities.
  * @author Aaron Michael McNulty
  */
 public class Screen {
@@ -31,10 +31,19 @@ public class Screen {
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
   private int lightMapColor = 0xFF121212,
               count = 2;
+  private final int R = (lightMapColor & 0xFF0000) >> 16,
+                    G = (lightMapColor & 0xFF00) >> 8,
+                    B = lightMapColor & 0xFF;
   private final float LIGHTMAP_R_VALUE = 0.07058823529411764705882352941176f,
                       LIGHTMAP_G_VALUE = 0.07058823529411764705882352941176f,
                       LIGHTMAP_B_VALUE = 0.07058823529411764705882352941176f;
-  
+  /**
+   * Creates a Screen object of the given dimensions and scaling factors.
+   * @param width The width of the drawing area in pixels.
+   * @param height The height of the drawing are in pixels.
+   * @param scaleX The horizontal scaling factor to size the final screen.
+   * @param scaleY The vertical scaling factor to size the final screen.
+   */
   public Screen(int width, int height, int scaleX, int scaleY) {
     this.width = width;
     this.height = height;
@@ -46,7 +55,10 @@ public class Screen {
     lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     clearLightMap();
   }
-  
+  /**
+   * Renders the title screen background.
+   * @param gl Instance of the GL2 class.
+   */
   public void renderTitleScreenBackground(GL2 gl) {
     gl.glColor4f(1, 0, 0, 1);
     gl.glBegin(GL2.GL_QUADS);
@@ -57,7 +69,14 @@ public class Screen {
     gl.glEnd();
 //    gl.glFlush();
   }
-  
+  /**
+   * Renders a sprite to the screen at the given coordinates. If fixed is set to true the sprite will be rendered at a specific location on the map otherwise the coordinates will be in relation to the screen.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   */
   public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
     if (fixed) {
       xp -= xOffset;
@@ -81,7 +100,14 @@ public class Screen {
 //    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
-  
+  /**
+   * Renders a sprite with color blending effects. This is mostly used for lights that need to blend colors with their surroundings.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   */
   public void renderBlendedSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
     if (fixed) {
       xp -= xOffset;
@@ -106,7 +132,15 @@ public class Screen {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
     gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
   }
-  
+  /**
+   * Renders a sprite to the screen at the given coordinates with a set alpha transparency. If fixed is set to true the sprite will be rendered at a specific location on the map otherwise the coordinates will be in relation to the screen.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param alpha The transparency to be applied over the whole sprite.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   */
   public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
     if (fixed) {
       xp -= xOffset;
@@ -130,11 +164,20 @@ public class Screen {
 //    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
-  
+  /**
+   * Binds the tile texture. This is best called just before rendering all of the tiles so each tile render doesn't require rebinding with another resource.
+   * @param gl Instance of the GL2 class.
+   */
   public void bindTileTex(GL2 gl) {
     gl.glBindTexture(GL2.GL_TEXTURE_2D, Tile.getTexture().getTextureObject());
   }
-  
+  /**
+   * Renders a set of tiles to the screen based on the tile data and coordinate location.
+   * @param tileData Array list of tiles to be rendered.
+   * @param xFloat Array list of x coordinate locations for each respective tile in the tileData parameter.
+   * @param yFloat Array list of y coordinate locations for each respective tile in the tileData parameter.
+   * @param gl Instance of the GL2 class.
+   */
   public void renderTile(ArrayList<Tile> tileData, ArrayList<Float> xFloat, ArrayList<Float> yFloat, GL2 gl) {
     gl.glColor4f(1, 1, 1, 1);
     gl.glBegin(GL2.GL_QUADS);
@@ -154,7 +197,15 @@ public class Screen {
     gl.glEnd();
     gl.glFlush();
   }
-  
+  /**
+   * Renders a sprite to a location above the ground. This creates an effect of the tile moving across the screen faster than other tiles at ground level.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param alpha The transparency to be applied over the whole sprite.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   */
   public void renderSpriteUpperLevel(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
     if (fixed) {
       xp -= xOffset * 1.2;
@@ -178,7 +229,13 @@ public class Screen {
 //    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
   }
-  
+  /**
+   * Renders a sprite as a light map entity to the screen. This is used when using a subtractive lightmap.
+   * @param gl Instance of the GL2 class.
+   * @param x X position to start rendering of the sprite.
+   * @param y Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   */
   public void renderLightMapEntity(GL2 gl, int x, int y, Sprite sprite) {
     x -= xOffset;
     y -= yOffset;
@@ -199,7 +256,11 @@ public class Screen {
       }
     }
   }
-  
+  /**
+   * Renders a subtractive light map to the screen. This should be used sparingly as it has performance implications.
+   * @param gl Instance of the GL2 class.
+   * @param alpha The transparency to be applied over the whole light map.
+   */
   public void renderLightMap(GL2 gl, float alpha) {
     if (count % 2 == 0) {
       lightMapImage.setRGB(0, 0, width, height, lightMap, 0, width);
@@ -225,7 +286,11 @@ public class Screen {
 //    gl.glFlush();
     clearLightMap();
   }
-  
+  /**
+   * Renders a blended light map to the screen of the preset light map color.
+   * @param gl Instance of the GL2 class.
+   * @param alpha The transparency to be applied over the whole light map.
+   */
   public void renderBlendedLightMap(GL2 gl, float alpha) {
     gl.glColor4f(LIGHTMAP_R_VALUE, LIGHTMAP_G_VALUE, LIGHTMAP_B_VALUE, alpha);
     gl.glBegin(GL2.GL_QUADS);
@@ -235,17 +300,15 @@ public class Screen {
       gl.glVertex2f(0, height);
     gl.glEnd();
   }
-  
+  /**
+   * Clears the subtractive light map.
+   */
   private void clearLightMap() {
     for (int i = 0; i < lightMap.length; i++) {
       lightMap[i] = lightMapColor;
       lightMapPixelChecked[i] = false;
     }
   }
-  
-  private final int R = (lightMapColor & 0xFF0000) >> 16,
-                    G = (lightMapColor & 0xFF00) >> 8,
-                    B = lightMapColor & 0xFF;
   
   private int blendAlphas(int background, int newColor) {
     int newAlpha, backgroundAlpha;
@@ -281,11 +344,19 @@ public class Screen {
 
     return (r << 16) | (g << 8) | b;
   }
-  
+  /**
+   * Adds font info to the array of font info to be rendered.
+   * @param info FontInfo object to be added to the que to be rendered.
+   * @deprecated This feature should not be used as there is a new method for rendering fonts called renderFonts().
+   * @see #renderFonts(FontInfo info)
+   */
   public void addText(FontInfo info) {
     fontInfo.add(info);
   }
-  
+  /**
+   * Renders fonts to the screen based on their FontInfo configuration object.
+   * @param info FontInfo configuration object that holds information regarding the text to be rendered.
+   */
   public void renderFonts(FontInfo info) {
     TextRenderer textRenderer = new TextRenderer(info.getFont());
     Rectangle2D bounds = textRenderer.getBounds("M");

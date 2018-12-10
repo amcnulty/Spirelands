@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.graphics;
 import com.jogamp.opengl.GL2;
 
 /**
- *
+ * The Font class is used to draw font sprites to the screen.
  * @author Aaron Michael McNulty
  */
 public class Font {
@@ -16,7 +16,9 @@ public class Font {
   private int letterOffset;
   
   private String charactersIndex = " !\"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~";
-  
+  /**
+   * Creates a Font object.
+   */
   public Font(){
     setCharacterSpacing();
   }
@@ -40,7 +42,15 @@ public class Font {
       }
     }
   }
-  
+  /**
+   * Renders text to the screen at the specified x and y coordinates with the given color.
+   * @param x x coordinate to begin text render.
+   * @param y y coordinate to begin text render.
+   * @param text The text to be rendered.
+   * @param color The hex code for the color to render the font in.
+   * @param screen Instance of the screen class.
+   * @param gl Instance of the GL2 class.
+   */
   public void renderText(int x, int y, String text, int color, Screen screen, GL2 gl) {
     letterOffset = 0;
     for (int i = 0; i < text.length(); i++) {

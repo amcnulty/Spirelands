@@ -12,7 +12,7 @@ import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
 import javax.swing.JFrame;
 /**
- *
+ * The main class for the application. Spirelands is a 2D RPG game for PC produced by Monkey Stomp Games.
  * @author Aaron Michael McNulty
  */
 public class Game extends GLCanvas implements Runnable {
@@ -67,7 +67,9 @@ public class Game extends GLCanvas implements Runnable {
       e.printStackTrace();
     }
   }
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void run() {
     long  lastTime = System.nanoTime(),
@@ -120,6 +122,7 @@ public class Game extends GLCanvas implements Runnable {
     display();
   }
   /**
+   * The main method of the application.
    * @param args the command line arguments
    */
   public static void main(String[] args) {
