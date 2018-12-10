@@ -10,6 +10,8 @@ import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.entity.fixed.SolidEntity;
 import com.monkeystomp.spirelands.level.lightmap.CustomLightMap;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
+import com.monkeystomp.spirelands.level.wall.Wall;
+import com.monkeystomp.spirelands.level.wall.WallConfig;
 
 /**
  *
@@ -18,7 +20,7 @@ import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 public class HouseLevel extends Level {
   
   private final String BITMAP_PATH = "./resources/textures/worlds/houseLevel.png";
-  public static SpawnCoordinate entrance = new SpawnCoordinate(136, 192, 0);
+  public static SpawnCoordinate entrance = new SpawnCoordinate(148, 208, 0);
 
   public HouseLevel(SpawnCoordinate spawnCoordinate) {
     this.spawnCoordinate = spawnCoordinate;
@@ -28,7 +30,7 @@ public class HouseLevel extends Level {
   @Override
   protected void addPortals() {
     Bounds bounds = new Bounds();
-    bounds.setQuadBounds(205, 161, 214, 111);
+    bounds.setQuadBounds(221, 161, 230, 111);
     portals.add(new Portal(bounds, TestLevel.houseExit, "TEST_LEVEL"));
     
     for (int i = 0; i < portals.size(); i++) {
@@ -43,11 +45,93 @@ public class HouseLevel extends Level {
   
   @Override
   protected void addSolidEntities() {
-    SolidEntity entity = new SolidEntity(224, 32);
+    SolidEntity entity = new SolidEntity(216, 32);
     entity.setSprite(Sprite.STAIRS_WOOD_TURN_LEFT);
-    // Add bounds to this entity
+    Bounds quad = new Bounds();
+    quad.setQuadBounds(
+      entity.getY(),
+      entity.getX(),
+      entity.getY() + Sprite.STAIRS_WOOD_TURN_LEFT.getHeight(),
+      entity.getX() - 4
+    );
+    entity.addBounds(quad);
     entity.initLevel(this);
     solidEntities.add(entity);
+    
+    Wall wall = new Wall();
+    WallConfig config = new WallConfig();
+    config.setStartingX(40);
+    config.setStartingY(11);
+    config.setInterior(true);
+    config.setLength(13);
+    config.setWindows(new int[]{3, 6, 9});
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(32);
+    config.setStartingY(19);
+    config.setHasWallFront(true);
+    config.setInterior(false);
+    config.setLength(11);
+    wall.createVerticalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(40);
+    config.setStartingY(195);
+    config.setInterior(false);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(5);
+    config.setWindows(new int[]{2});
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(168);
+    config.setStartingY(195);
+    config.setInterior(false);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(5);
+    config.setWindows(new int[]{2});
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(248);
+    config.setStartingY(19);
+    config.setHasWallFront(true);
+    config.setInterior(false);
+    config.setLength(11);
+    wall.createVerticalWall(config);
+    solidEntities.add(wall);
+    
+    // interior walls
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(40);
+    config.setStartingY(99);
+    config.setInterior(true);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(3);
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(120);
+    config.setStartingY(99);
+    config.setInterior(false);
+    config.setLength(6);
+    wall.createVerticalWall(config);
+    solidEntities.add(wall);
   }
   
   @Override

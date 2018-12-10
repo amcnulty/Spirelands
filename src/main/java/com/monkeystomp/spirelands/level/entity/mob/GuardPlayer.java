@@ -47,7 +47,7 @@ public class GuardPlayer extends Player {
       x - 10
     );
     bounds.add(quad);
-    moveBounds[0] = 0;
+    moveBounds[0] = 1;
     moveBounds[1] = 10;
     moveBounds[2] = 15;
     moveBounds[3] = 10;

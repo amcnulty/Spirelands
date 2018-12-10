@@ -32,7 +32,7 @@ public class StreetLamp extends Entity {
   private void setBounds() {
     Bounds quad = new Bounds();
     quad.setQuadBounds(
-      y - SPRITE_SIZE / 2,
+      y,
       x + SPRITE_SIZE / 2,
       y + SPRITE_SIZE / 2,
       x - SPRITE_SIZE / 2

@@ -59,13 +59,25 @@ public class Mob extends Entity {
     for (int i = 0; i < level.getSolidEntities().size(); i++) {
       // Make sure entity is not running into itself
       if (!level.getSolidEntities().get(i).equals(this)) {
-        if (yDir < 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) - bounds[0])) return true;
-        if (xDir > 0 && level.getSolidEntities().get(i).entityHere((x + xDir) + bounds[1], y)) return true;
-        if (yDir > 0 && level.getSolidEntities().get(i).entityHere(x, (y + yDir) + bounds[2])) return true;
-        if (xDir < 0 && level.getSolidEntities().get(i).entityHere((x + xDir) - bounds[3], y)) return true;
-        // Check corner pins
-        for (int c = 0; c < 4; c++) {
-          if (level.getSolidEntities().get(i).entityHere((x + xDir) + c % 2 * (bounds[1] + bounds[3]) - bounds[3], (y + yDir) + c / 2 * (bounds[2] + bounds[0]) - bounds[0])) return true;
+        if (yDir < 0) {
+          for (int j = 0; j < 11; j++) {
+            if (level.getSolidEntities().get(i).entityHere(x - bounds[3] + 2 * j, (y + yDir) - bounds[0])) return true;
+          }
+        }
+        else if (xDir > 0) {
+          for (int j = 0; j < 9; j++) {
+            if (level.getSolidEntities().get(i).entityHere((x + xDir) + bounds[1], y - bounds[0] + 2 * j)) return true;
+          }
+        }
+        else if (yDir > 0) {
+          for (int j = 0; j < 11; j++) {
+            if (level.getSolidEntities().get(i).entityHere(x - bounds[3] + 2 * j, (y + yDir) + bounds[2])) return true;
+          }
+        }
+        else if (xDir < 0) {
+          for (int j = 0; j < 9; j++) {
+            if (level.getSolidEntities().get(i).entityHere((x + xDir) - bounds[3], y - bounds[0] + 2 * j)) return true;
+          }
         }
       }
     }

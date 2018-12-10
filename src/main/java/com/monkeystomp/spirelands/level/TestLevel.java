@@ -18,6 +18,8 @@ import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 import com.monkeystomp.spirelands.level.entity.particle.Particle;
 import com.monkeystomp.spirelands.level.entity.particle.ParticleOverlay;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
+import com.monkeystomp.spirelands.level.wall.Wall;
+import com.monkeystomp.spirelands.level.wall.WallConfig;
 import java.util.ArrayList;
 
 /**
@@ -92,6 +94,39 @@ public class TestLevel extends Level {
   }
 
   @Override
+  protected void addSolidEntities() {
+    // Add walls
+    Wall wall = new Wall();
+    WallConfig config = new WallConfig();
+    config.setStartingX(340);
+    config.setStartingY(200);
+    config.setLength(14);
+    config.setInterior(true);
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(332);
+    config.setStartingY(208);
+    config.setLength(5);
+    config.setInterior(false);
+    wall.createVerticalWall(config);
+    solidEntities.add(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(340);
+    config.setStartingY(288);
+    config.setLength(6);
+    config.setInterior(false);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    wall.createHorizontalWall(config);
+    solidEntities.add(wall);
+  }
+  
+  @Override
   protected void startMusic() {
     music.play(Music.SIMPLE_TOWN);
   }
@@ -134,9 +169,9 @@ public class TestLevel extends Level {
     
     particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, "EMBER");
     
-    MultipartEntity MPentity = new House(240, 412);
-    multiPartEntities.add(MPentity);
-    MPentity.initLevel(this);
+    entity = new House(240, 412);
+    solidEntities.add(entity);
+    entity.initLevel(this);
   }
 
   @Override
@@ -185,7 +220,7 @@ public class TestLevel extends Level {
       time = 0;
 //      IChanger.change(new SpawnLevel());
     }
-    else time++;
+//    else time++;
   }
   
   @Override

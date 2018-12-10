@@ -28,6 +28,15 @@ public class Sprite {
                               GOLD = new Sprite(2, 2, 0xFFFCC201),
                               // Objects
                               STAIRS_WOOD_TURN_LEFT = new Sprite("./resources/objects/stairs_wood_turn_left.png"),
+                              // Walls
+                              WALL_STONE = new Sprite("./resources/textures/building/wall_stone.png"),
+                              WALL_STONE_WINDOW = new Sprite("./resources/textures/building/wall_stone_window.png"),
+                              WALL_STONE_CORNER = new Sprite("./resources/textures/building/wall_stone_corner.png"),
+                              WALL_DRYWALL = new Sprite("./resources/textures/building/wall_drywall.png"),
+                              WALL_DRYWALL_WINDOW = new Sprite("./resources/textures/building/wall_drywall_window.png"),
+                              WALL_DRYWALL_CORNER = new Sprite("./resources/textures/building/wall_drywall_corner.png"),
+                              WALLTOP_DRYWALL_VERT = new Sprite("./resources/textures/building/walltop_drywall_vert.png"),
+                              WALLTOP_DRYWALL_CORNER = new Sprite("./resources/textures/building/walltop_drywall_corner.png"),
                               // Level Transition
                               TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), 0xFF000000),
                               // GUI

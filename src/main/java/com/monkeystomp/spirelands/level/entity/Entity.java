@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public abstract class Entity {
   
   protected int x,
-                y;
+                y,
+                overlapY;
 //  protected int[] bounds = new int[4];
   protected ArrayList<Bounds> bounds = new ArrayList<>();
   protected Level level;
@@ -41,6 +42,10 @@ public abstract class Entity {
   
   public void setY(int y) {
     this.y = y;
+  }
+
+  public int getOverlapY() {
+    return y;
   }
   
   public void interact() {}

@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import javax.imageio.ImageIO;
 
 /**
@@ -278,8 +280,11 @@ public class Level implements Runnable {
     screen.setOffset(xScroll, yScroll);
   }
   
-  protected void levelUpdate() {}
+  private void sortSolidEntities() {
+    Collections.sort(solidEntities, (Entity a, Entity b) -> (a.getOverlapY() > b.getOverlapY()) ? 1 : a.getOverlapY() < b.getOverlapY() ? -1 : 0);
+  }
   
+  protected void levelUpdate() {}
   
   protected void renderOverPlayer(Screen screen, GL2 gl) {}
   
@@ -293,6 +298,8 @@ public class Level implements Runnable {
       if (!dialogOpen && !gameMenuOpen && !transitionRunning) player.update();
       // Call the subclass hook for updating.
       levelUpdate();
+      // Sort the solid entities
+      sortSolidEntities();
       // Update the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
         if (solidEntities.get(i).equals(player)) continue;
@@ -336,7 +343,7 @@ public class Level implements Runnable {
       screen.renderTile(textureData, xFloat, yFloat, gl);
       // Render the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
-        if (solidEntities.get(i).equals(player)) continue;
+//        if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).render(screen, gl);
       }
       // Render the multipart entites under player.
@@ -346,7 +353,7 @@ public class Level implements Runnable {
       // Call the subclass hook for rendering under player.
       renderUnderPlayer(screen, gl);
       // Render the player.
-      player.render(screen, gl);
+//      player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
       renderOverPlayer(screen, gl);
       // Render the multipart entites over player.

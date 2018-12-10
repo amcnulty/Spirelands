@@ -21,6 +21,7 @@ public class Chest extends Entity {
   
   private final int SPRITE_SIZE = 32,
                     PARTICLE_AMOUNT = 60;
+  private final Bounds QUAD = new Bounds();
   private final SoundEffects sfx = new SoundEffects();
   private Sprite  chestOpenSprite,
                   chestClosedSprite,
@@ -45,6 +46,7 @@ public class Chest extends Entity {
     setSprites(chestType);
     setCurrentSprite();
     setBounds();
+    setOverlapY();
   }
   
   private void setSprites(int chestType) {
@@ -53,18 +55,17 @@ public class Chest extends Entity {
   }
   
   private void setBounds() {
-    Bounds quad = new Bounds();
-    quad.setQuadBounds(
-      y - SPRITE_SIZE / 2,
+    QUAD.setQuadBounds(
+      y - 10,
       x + SPRITE_SIZE / 2,
       y + SPRITE_SIZE / 2,
       x - SPRITE_SIZE / 2
     );
-    bounds.add(quad);
-//    bounds[0] = y - SPRITE_SIZE / 2;
-//    bounds[1] = x + SPRITE_SIZE / 2;
-//    bounds[2] = y + SPRITE_SIZE / 2;
-//    bounds[3] = x - SPRITE_SIZE / 2;
+    bounds.add(QUAD);
+  }
+  
+  private void setOverlapY() {
+    this.overlapY = QUAD.getTop() - 15;
   }
   
   private void setCurrentSprite() {
@@ -129,6 +130,11 @@ public class Chest extends Entity {
 
   public void setIsChestOpen(boolean isChestOpen) {
     this.isChestOpen = isChestOpen;
+  }
+  
+  @Override
+  public int getOverlapY() {
+    return overlapY;
   }
   
   @Override

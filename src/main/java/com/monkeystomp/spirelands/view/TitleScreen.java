@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.Button;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.level.HouseLevel;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 
 /**
@@ -39,8 +40,12 @@ public class TitleScreen extends GameView {
 
   private void handleStartButtonClick() {
 //    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
-    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
+// left of house
+//    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
+// top left corner
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(100, 100, 2))));
+// inside house
+    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.entrance)));
   }
   
   @Override

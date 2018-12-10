@@ -3,14 +3,14 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
-import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 
 /**
  *
  * @author Aaron Michael McNulty
  */
-public class House extends MultipartEntity {
+public class House extends Entity {
   
   private Sprite  houseTopSprite = new Sprite("./resources/objects/house_top.png"),
                   houseBottomSprite = new Sprite("./resources/objects/house_bottom.png"),
@@ -60,12 +60,12 @@ public class House extends MultipartEntity {
       x - houseTopSprite.getWidth() / 2
     );
     bounds.add(quad3);
-    
+    // rectagular area below triangle
     touchBounds[0] = top + 95;
     touchBounds[1] = x + houseTopSprite.getWidth() / 2 - 16;
     touchBounds[2] = top + 200;
     touchBounds[3] = x - houseTopSprite.getWidth() / 2;
-    
+    // triangle area above rectangle
     triangleBounds[0] = left + 5;
     triangleBounds[1] = top + 95;
     triangleBounds[2] = left + 95;
@@ -113,7 +113,6 @@ public class House extends MultipartEntity {
   private boolean playerAtDoor() {
     int playerX = level.getPlayer().getX(),
         playerY = level.getPlayer().getY();
-//    System.out.println("PlayerX: " + playerX + " PlayerY: " + playerY);
     return (
       playerY > bottom - 70 &&
       playerX > left + 73 &&
@@ -130,27 +129,11 @@ public class House extends MultipartEntity {
     else opacity = 1;
   }
   
-  public void renderUnderPlayer(Screen screen, GL2 gl) {
-    screen.renderSprite(
-      gl,
-      x - houseBottomSprite.getWidth() / 2,
-      y - ((houseTopSprite.getHeight() + houseBottomSprite.getHeight()) / 2) + houseTopSprite.getHeight(),
-      houseBottomSprite,
-      opacity,
-      true
-    );
+  @Override
+  public void render(Screen screen, GL2 gl) {
+    screen.renderSprite(gl, x - houseSprite.getWidth() / 2, y - houseSprite.getHeight() / 2, houseSprite, opacity, true);
     if (playerAtDoor()) {
       screen.renderSprite(gl, left + 74, top + 209, doorOpenSprite, true);
     }
-  }
-  
-  public void renderOverPlayer(Screen screen, GL2 gl) {
-    screen.renderSprite(gl,
-      x - houseTopSprite.getWidth() / 2,
-      y - (houseTopSprite.getHeight() + houseBottomSprite.getHeight()) / 2,
-      houseTopSprite,
-      opacity,
-      true
-    );
   }
 }
