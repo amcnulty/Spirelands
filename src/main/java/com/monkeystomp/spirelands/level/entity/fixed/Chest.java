@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- *
+ * The Chest class is used to creat a treasure chest entity to be added to a level. Chests can have items or gold inside of them.
  * @author Aaron Michael McNulty
  */
 public class Chest extends Entity {
@@ -34,11 +34,25 @@ public class Chest extends Entity {
               animY = 0,
               gold = 0;
   private ArrayList<ProjectileParticle> particles = new ArrayList<>();
-  
-  public static final int WOODEN_CHEST = 0,
-                          COMMON_METAL_CHEST = 1,
-                          SPECIAL_METAL_CHEST = 2;
-  
+  /**
+   * A wood sided chest.
+   */
+  public static final int WOODEN_CHEST = 0;
+  /**
+   * A plain metal sided chest.
+   */
+  public static final int COMMON_METAL_CHEST = 1;
+  /**
+   * A metal sided chest with special designs.
+   */
+  public static final int SPECIAL_METAL_CHEST = 2;
+  /**
+   * Creates a chest object with the given configuration.
+   * @param x The x coordinate to place the chest.
+   * @param y The y coordinate to place the chest.
+   * @param chestType The type of chest to create.
+   * @param treasure The item that is in the chest.
+   */
   public Chest(int x, int y, int chestType, Item treasure) {
     this.x = x;
     this.y = y;
@@ -119,7 +133,10 @@ public class Chest extends Entity {
   private int getRandomAngleInRange(int low, int high) {
     return low + random.nextInt(high - low);
   }
-  
+  /**
+   * Adds a given amount of gold to the chest.
+   * @param gold The amount of gold to add to the chest.
+   */
   public void addGold(int gold) {
     this.gold = gold;
   }
@@ -131,17 +148,23 @@ public class Chest extends Entity {
   public void setIsChestOpen(boolean isChestOpen) {
     this.isChestOpen = isChestOpen;
   }
-  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public int getOverlapY() {
     return overlapY;
   }
-  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void interact() {
     if (!isChestOpen) openChest();
   }
-  
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void update() {
     for (int i = 0; i < particles.size(); i++) {
@@ -163,7 +186,9 @@ public class Chest extends Entity {
       anim++;
     }
   }
-
+  /**
+   * {@inheritDoc}
+   */
   @Override
   public void render(Screen screen, GL2 gl) {
     screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);

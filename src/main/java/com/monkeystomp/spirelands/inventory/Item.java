@@ -5,7 +5,7 @@ import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
 
 /**
- *
+ * The Item class holds information about game items and has an interface for interacting with the inventory for the item.
  * @author Aaron Michael McNulty
  */
 public class Item {
@@ -26,9 +26,10 @@ public class Item {
                           ARMOR = 1,
                           EQUIPMENT = 2,
                           SPECIAL = 3;
-  
-  
-  // Health Potion
+  // Item declarations
+  /**
+   * A basic health potion. (EQUIPMENT)
+   */
   public static final Item
     HEALTH_POTION = new ItemBuilder()
           .title("Health Potion")
@@ -40,7 +41,11 @@ public class Item {
             System.out.println("Performing action of health potion");
             INVENTORY_MANAGER.removeFromInventory(Item.HEALTH_POTION);
           })
-          .build(),
+          .build();
+  /**
+   * A cookie (EQUIPMENT)
+   */
+  public static final Item
     COOKIE = new ItemBuilder()
           .title("Cookie")
           .description("A freshly baked cookie. Looks delicious.")
@@ -51,7 +56,11 @@ public class Item {
             System.out.println("Performing action of cookie");
             INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
           })
-          .build(),
+          .build();
+  /**
+   * Basic leather helmet. (ARMOR)
+   */
+  public static final Item
     LEATHER_HELMET = new ItemBuilder()
           .title("Leather Helmet")
           .description("A basic leather helmet used for defense.")
@@ -60,9 +69,13 @@ public class Item {
           .type(ARMOR)
           .itemAction(() -> {
             System.out.println("Performing action of leather helmet");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.LEATHER_HELMET);
           })
-          .build(),
+          .build();
+  /**
+   * Steel boots. (ARMOR)
+   */
+  public static final Item
     STEEL_BOOTS = new ItemBuilder()
           .title("Steel Boots")
           .description("Military grade steel boots. Goes best with a matching suit of armor.")
@@ -71,9 +84,13 @@ public class Item {
           .type(ARMOR)
           .itemAction(() -> {
             System.out.println("Performing action of Steel Boots");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.STEEL_BOOTS);
           })
-          .build(),
+          .build();
+  /**
+   * Basic sword. (WEAPON)
+   */
+  public static final Item
     COMMON_SWORD = new ItemBuilder()
           .title("Common Sword")
           .description("A common sword wielded by many townspeople across Spirelands.")
@@ -82,9 +99,13 @@ public class Item {
           .type(WEAPON)
           .itemAction(() -> {
             System.out.println("Performing action of Common Sword");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.COMMON_SWORD);
           })
-          .build(),
+          .build();
+  /**
+   * The blood axe. (WEAPON)
+   */
+  public static final Item
     BLOOD_AXE = new ItemBuilder()
           .title("Blood Axe")
           .description("The blood axe of lore. Its blade is stained by the blood of its victims.")
@@ -93,9 +114,13 @@ public class Item {
           .type(WEAPON)
           .itemAction(() -> {
             System.out.println("Performing action of cookie");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.BLOOD_AXE);
           })
-          .build(),
+          .build();
+  /**
+   * A briefcase to hold more items. (SPECIAL)
+   */
+  public static final Item
     BRIEFCASE = new ItemBuilder()
           .title("Briefcase")
           .description("Use this briefcase to carry more items on your journey.")
@@ -104,9 +129,13 @@ public class Item {
           .type(SPECIAL)
           .itemAction(() -> {
             System.out.println("Performing action of Briefcase");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.BRIEFCASE);
           })
-          .build(),
+          .build();
+  /**
+   * A message scroll to be delivered. (SPECIAL)
+   */
+  public static final Item
     MESSAGE_SCROLL = new ItemBuilder()
           .title("Message Scroll")
           .description("A scroll with an urgent message to be sent to the king of the neighboring city. I wonder what it says...")
@@ -115,11 +144,12 @@ public class Item {
           .type(SPECIAL)
           .itemAction(() -> {
             System.out.println("Performing action of cookie");
-            INVENTORY_MANAGER.removeFromInventory(Item.COOKIE);
+            INVENTORY_MANAGER.removeFromInventory(Item.MESSAGE_SCROLL);
           })
           .build();
-          
-
+  /**
+   * Creates an Item object with the specified configuration.
+   */
   public Item(ItemBuilder builder) {
     this.id = getNextId();
     this.title = builder.title;
@@ -157,15 +187,21 @@ public class Item {
   public int getPrice() {
     return price;
   }
-  
+  /**
+   * Adds this item to inventory.
+   */
   public void addToInventory() {
     INVENTORY_MANAGER.addToInventory(this);
   }
-  
+  /**
+   * Removes this item from inventory.
+   */
   public void removeFromInventory() {
     INVENTORY_MANAGER.removeFromInventory(this);
   }
-  
+  /**
+   * Calls the action method that has been set for this item.
+   */
   public void useItem() {
     this.itemAction.execute();
   }

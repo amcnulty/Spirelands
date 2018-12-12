@@ -9,7 +9,7 @@ import com.monkeystomp.spirelands.input.ICallback;
 import java.util.ArrayList;
 
 /**
- *
+ * The Game Menu is the menu screen that opens to display party information, inventory, level information and other game information.
  * @author Aaron Michael McNulty
  */
 public class GameMenu {
@@ -20,7 +20,9 @@ public class GameMenu {
   private final SoundEffects sfx = new SoundEffects();
 
   private ICallback closeCommand;
-  
+  /**
+   * Creates a GameMenu object.
+   */
   public GameMenu() {
     createNavButtons();
   }
@@ -55,11 +57,15 @@ public class GameMenu {
       handleNavButtonClick();
             }));
   }
-
+  /**
+   * Opens the game menu.
+   */
   public void openMenu() {
     playMenuOpenSound();
   }
-  
+  /**
+   * Closes the game menu.
+   */
   public void closeMenu() {
     playMenuCloseSound();
   }
@@ -77,14 +83,20 @@ public class GameMenu {
       navButtons.get(i).removeBackground();
     }
   }
-  
+  /**
+   * Updates the game menu.
+   */
   public void update() {
     // Update the nav buttons
     for (int i = 0; i < navButtons.size(); i++) {
       navButtons.get(i).update();
     }
   }
-  
+  /**
+   * Renders the game menu to the screen.
+   * @param screen Instance of the Screen class.
+   * @param gl Instance of the GL2 class.
+   */
   public void render(Screen screen, GL2 gl) {
     // Render the background 
     screen.renderSprite(gl, 0, 0, background, false);

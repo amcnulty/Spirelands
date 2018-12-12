@@ -22,17 +22,67 @@ public class Button {
   private boolean startedOffButton = false,
                   startedOnButton = false,
                   hovering = false;
-  protected int x, y, right, bottom,
-              width,
-              height;
-  protected Sprite  button,
-                    buttonHover,
-                    buttonDown,
-                    currentButton;
+  /**
+   * The x pixel coordinate of the button.
+   */
+  protected int x;
+  /**
+   * The y pixel coordinate of the button.
+   */
+  protected int y;
+  /**
+   * The right edge of the button.
+   */
+  protected int right;
+  /**
+   * The bottom edge of the button.
+   */
+  protected int bottom;
+  /**
+   * The width of the button;
+   */
+  protected int width;
+  /**
+   * The height of the button.
+   */
+  protected int height;
+  /**
+   * The default state of the button.
+   */
+  protected Sprite button;
+  /**
+   * The hover state of the button.
+   */
+  protected Sprite buttonHover;
+  /**
+   * The down state of the button.
+   */
+  protected Sprite buttonDown;
+  /**
+   * The current state of the button to render to the screen.
+   */
+  protected Sprite currentButton;
+  /**
+   * The text to render on the button.
+   */
   protected String buttonText;
-  protected File  hoverSound,
-                  clickSound;
-
+  /**
+   * The sound when hovering over a button.
+   */
+  protected File hoverSound;
+  /**
+   * The sound after the button is clicked.
+   */
+  protected File clickSound;
+  /**
+   * Creates a Button object with a callback that gets fired when button is clicked.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param width The width of the button.
+   * @param height The height of the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
   public Button(String text, int x, int y, int width, int height, ICallback callback) {
     this.buttonText = text;
     this.width = width;
@@ -43,27 +93,37 @@ public class Button {
     right = x + width / 2;
     bottom = y + height / 2;
   }
-  
+  /**
+   * Fires when the button is hovered over with the cursor.
+   */
   protected void hover() {
     if (!hovering && hoverSound != null) sfx.playSoundEffect(hoverSound);
     currentButton = buttonHover;
     hovering = true;
   }
-  
+  /**
+   * Fires when the button is being pressed down.
+   */
   protected void down() {
     currentButton = buttonDown;
   }
-  
+  /**
+   * Fires when the button is clicked on. Will execute the callback that was set for this button.
+   */
   protected void click() {
     if (clickSound != null) sfx.playSoundEffect(clickSound);
     callback.execute();
   }
-  
+  /**
+   * Fires once when the button is not being hovered over or being clicked on to set the default state of the button.
+   */
   protected void setDefault() {
     currentButton = button;
     hovering = false;
   }
-
+  /**
+   * Updates the button.
+   */
   public void update() {
     mouseX = (int)(Mouse.getX() / Screen.getScaleX());
     mouseY = (int)(Mouse.getY() / Screen.getScaleY());
@@ -97,7 +157,11 @@ public class Button {
       }
     }
   }
-
+  /**
+   * Renders the button to the screen.
+   * @param screen Instance of the Screen class.
+   * @param gl Instance of the GL2 class.
+   */
   public void render(Screen screen, GL2 gl) {
     screen.renderSprite(gl, x, y, currentButton, false);
   }

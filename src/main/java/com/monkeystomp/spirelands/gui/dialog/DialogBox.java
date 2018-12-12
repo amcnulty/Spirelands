@@ -9,7 +9,10 @@ import java.awt.Font;
 import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
-
+/**
+ * Dialog boxes are used to show conversations between NPCs and other dialog to the player.
+ * @author Aaron Michael McNulty
+ */
 public class DialogBox {
 
   private final int DIALOG_WIDTH = 240,
@@ -45,13 +48,17 @@ public class DialogBox {
               symbolY = 0;
   private FontInfo symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
   private ArrayList<FontInfo> lines = new ArrayList<>();
-//  private INotify notifier = (KeyEvent e) -> handleSpaceKey(e);
   private ICallback callback;
-
+  /**
+   * Sets the callback method that fires when the dialog gets closed.
+   * @param callback The callback method that will get fired when the dialog closes.
+   */
   public void setCloseCommand(ICallback callback) {
     this.callback = callback;
   }
-
+  /**
+   * Call this method when the space key is pressed to advance through the dialog when the dialog box is open.
+   */
   public void handleSpaceKey() {
     if (dialogReady) {
       if (++messageIndex < messages.length) {
@@ -64,14 +71,16 @@ public class DialogBox {
   private void closeDialog() {
     dialogReady = false;
     messageIndex = 0;
-//    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
     callback.execute();
   }
 
   private void advanceDialog() {
     displayMessage(messageIndex);
   }
-  
+  /**
+   * Opens the dialog with the set of messages.
+   * @param messages An array of messages to be displayed in the dialog. Each index will create a new slide.
+   */
   public void openDialog(String[] messages) {
     dialogReady = false;
     if (messages == null) {
@@ -80,7 +89,6 @@ public class DialogBox {
     }
     this.messages = messages;
     displayMessage(messageIndex);
-//    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
     dialogReady = true;
   }
   
@@ -195,7 +203,9 @@ public class DialogBox {
     symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
     symbolAnim++;
   }
-
+  /**
+   * Updates the dialog box.
+   */
   public void update() {
     if (messageBuilding) {
        buildCurrentMessage();
@@ -204,7 +214,11 @@ public class DialogBox {
       animateSymbol();
     }
   }
-
+  /**
+   * Renders the dialog box to the screen.
+   * @param screen Instance of the Screen class.
+   * @param gl Instance of the GL2 class.
+   */
   public void render(Screen screen, GL2 gl) {
     if (dialogReady) {
       screen.renderSprite(gl, DIALOG_LEFT, DIALOG_TOP, background, .8f, false);

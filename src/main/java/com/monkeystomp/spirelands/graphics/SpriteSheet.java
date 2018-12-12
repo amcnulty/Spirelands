@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * Sprite sheets are used as a collection of sprites that can be used accross the application.
  * @author Aaron Michael McNulty
  */
 public class SpriteSheet {
@@ -19,9 +19,17 @@ public class SpriteSheet {
   private int[] pixels;
   private Texture texture;
   private BufferedImage image;
-  
+  /**
+   * A test sheet that contains tile sprites.
+   */
   public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet_stretch.png");
+  /**
+   * A collection of treasure chests of various styles and states.
+   */
   public static SpriteSheet chestSheet = new SpriteSheet("./resources/textures/sheets/chest_sheet.png");
+  /**
+   * A collection of game items sprites.
+   */
   public static SpriteSheet itemsSheet = new SpriteSheet("./resources/textures/sheets/items_sheet.png");
   /**
    * Creates a SpriteSheet of the given path.
