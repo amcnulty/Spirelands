@@ -57,7 +57,7 @@ public class Wall extends Entity {
   private void setHorizontalBounds() {
     Bounds quadBounds = new Bounds();
     quadBounds.setQuadBounds(
-      startingY + 20,
+      startingY + 25,
       startingX + Sprite.WALL_DRYWALL.getWidth() * length,
       startingY + Sprite.WALL_DRYWALL.getHeight() - 4,
       startingX
@@ -101,7 +101,7 @@ public class Wall extends Entity {
   }
   
   private void setVerticalOverlap() {
-    this.overlapY = startingY + Sprite.WALLTOP_DRYWALL_VERT.getHeight() * length + 6;
+    this.overlapY = startingY + Sprite.WALLTOP_DRYWALL_VERT.getHeight() * length + 11;
   }
   
   @Override

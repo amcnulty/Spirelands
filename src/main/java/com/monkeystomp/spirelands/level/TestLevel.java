@@ -51,7 +51,7 @@ public class TestLevel extends Level {
     
     Bounds doorBounds = new Bounds();
     doorBounds.setQuadBounds(516, 247, 522, 222);
-    portals.add(new Portal(doorBounds, HouseLevel.entrance, "HOUSE_LEVEL"));
+    portals.add(new Portal(doorBounds, HouseLevel.FIRST_FLOOR_ENTRANCE, "HOUSE_LEVEL"));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);

@@ -11,21 +11,19 @@ import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.tile.Tile;
 import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
-import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
+import com.monkeystomp.spirelands.level.util.TransitionFader;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Comparator;
 import javax.imageio.ImageIO;
 
 /**
@@ -49,21 +47,18 @@ public class Level implements Runnable {
   protected ArrayList<Portal> portals = new ArrayList<>();
     // Solid Entities
     protected ArrayList<Entity> solidEntities = new ArrayList<>();
-    // Multi part entities that have sections rendered over player and under player.
-    protected ArrayList<MultipartEntity> multiPartEntities = new ArrayList<>();
   protected SpawnCoordinate spawnCoordinate;
   private int levelTileWidth,
               levelTileHeight,
               xScroll,
-              yScroll,
-              transitionOpacity = 100;
+              yScroll;
+  private TransitionFader transitionFader = new TransitionFader();
   protected Player player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
                   gameMenuOpen = false,
-                  transitionRunning = true,
-                  transitionIn = true;
+                  threadIsAlive = true;
   private Portal exitPortal;
   private final GameMenu GAME_MENU = new GameMenu();
   private Keyboard keyboard = Keyboard.getKeyboard();
@@ -95,6 +90,7 @@ public class Level implements Runnable {
    */
   protected void loadLevel(String path){
     this.path = path;
+    loadingThread = new Thread(this, "Level Loader");
     loadingThread.start();
   }
 
@@ -134,14 +130,16 @@ public class Level implements Runnable {
   }
   
   protected void generateLevel(){
-    addPlayer();
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
     addChests();
     addNpcs();
     addSolidEntities();
+    addPlayer();
     startMusic();
     finalLevelSetup();
+    threadIsAlive = false;
+    transitionFader.startTransitionIn();
   }
 
   protected void addPlayer() {
@@ -178,14 +176,7 @@ public class Level implements Runnable {
   }
   
   public ArrayList<Entity> getSolidEntities() {
-    ArrayList<Entity> allSolidEntities = new ArrayList<>();
-    for (Entity entity: solidEntities) {
-      allSolidEntities.add(entity);
-    }
-    for (Entity entity: multiPartEntities) {
-      allSolidEntities.add(entity);
-    }
-    return allSolidEntities;
+    return solidEntities;
   }
   
   public boolean getDialogOpen() {
@@ -245,6 +236,18 @@ public class Level implements Runnable {
     this.exitPortal = exitPortal;
     isPortalSet = true;
   }
+  
+  public void changeScenes(Portal portal) {
+    transitionFader.startTransitionOut(() -> {
+      tiles.clear();
+      solidEntities.clear();
+      portals.clear();
+      this.spawnCoordinate = portal.getSpawnCoordinate();
+      changeScenes(portal.getSceneKey());
+    });
+  }
+  
+  protected void changeScenes(String sceneKey) {}
 
   public void setLevelChanger(ILevelChanger IChanger) {
     this.IChanger = IChanger;
@@ -255,8 +258,7 @@ public class Level implements Runnable {
   }
   
   public void transitionOutOfLevel() {
-    transitionIn = false;
-    transitionRunning = true;
+    transitionFader.startTransitionOut(() -> {exitLevel();});
   }
   
   private void exitLevel() {
@@ -295,7 +297,7 @@ public class Level implements Runnable {
   public void update(){
     if (!loadingThread.isAlive()) {
       // Update player if dialog is closed.
-      if (!dialogOpen && !gameMenuOpen && !transitionRunning) player.update();
+      if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) player.update();
       // Call the subclass hook for updating.
       levelUpdate();
       // Sort the solid entities
@@ -305,21 +307,8 @@ public class Level implements Runnable {
         if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).update();
       }
-      // Update the multipart entities
-      for (int i = 0; i < multiPartEntities.size(); i++) {
-        multiPartEntities.get(i).update();
-      }
       if (gameMenuOpen) GAME_MENU.update();
-      if (transitionRunning) {
-        if (transitionIn) {
-          transitionOpacity -= 5;
-          if (transitionOpacity == 0) transitionRunning = false;
-        }
-        else {
-          transitionOpacity += 10;
-          if (transitionOpacity == 100) exitLevel();
-        }
-      }
+      transitionFader.update();
     }
   }
 
@@ -334,7 +323,6 @@ public class Level implements Runnable {
       yFloat.clear();
       for (int y = yScroll >> 4; y < Screen.getHeight() + yScroll + Tile.TILE_SIZE >> 4; y++) {
         for (int x = xScroll >> 4; x < Screen.getWidth() + xScroll + Tile.TILE_SIZE >> 4; x++) {
-//          getTile(x, y).render(x, y, screen, gl);
           textureData.add(getTile(x, y));
           xFloat.add((float)(x << 4));
           yFloat.add((float)(y << 4));
@@ -343,29 +331,18 @@ public class Level implements Runnable {
       screen.renderTile(textureData, xFloat, yFloat, gl);
       // Render the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
-//        if (solidEntities.get(i).equals(player)) continue;
         solidEntities.get(i).render(screen, gl);
-      }
-      // Render the multipart entites under player.
-      for (int i = 0; i < multiPartEntities.size(); i++) {
-        multiPartEntities.get(i).renderUnderPlayer(screen, gl);
       }
       // Call the subclass hook for rendering under player.
       renderUnderPlayer(screen, gl);
-      // Render the player.
-//      player.render(screen, gl);
       // Call the subclass hook for rendering over the player.
       renderOverPlayer(screen, gl);
-      // Render the multipart entites over player.
-      for (int i = 0; i < multiPartEntities.size(); i++) {
-        multiPartEntities.get(i).renderOverPlayer(screen, gl);
-      }
       // Render the lightmap.
       lightMap.render(gl, screen, shadowLevel);
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);
-      if (transitionRunning) screen.renderSprite(gl, 0, 0, Sprite.TRANSITION, transitionOpacity / (float)100, false);
+      transitionFader.render(screen, gl);
     }
   }
 }

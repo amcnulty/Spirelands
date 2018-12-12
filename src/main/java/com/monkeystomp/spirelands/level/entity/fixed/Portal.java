@@ -6,19 +6,35 @@ import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 
 /**
- *
+ * Portal class is used to create a portal from one level to the next.
  * @author Aaron Michael McNulty
  */
 public class Portal extends Entity {
   
   private SpawnCoordinate coordinate;
-  private String levelKey;
+  private String  levelKey,
+                  sceneKey;
   private Bounds portalBounds;
-  
+  private boolean portalExitsLevel;
+  /**
+   * Creates a portal object of a certain size based on bounds object that links to another level at the specified spawn coordinate.
+   * @param bounds The bounds of the portal.
+   * @param coordinate The spawn coordinate where the player will appear in the new level.
+   * @param levelKey The level key for the level factory to fetch the new level.
+   */
   public Portal(Bounds bounds, SpawnCoordinate coordinate, String levelKey) {
     this.portalBounds = bounds;
     this.coordinate = coordinate;
     this.levelKey = levelKey;
+    this.portalExitsLevel = true;
+    setBounds();
+  }
+  
+  public Portal(Bounds bounds, String sceneKey, SpawnCoordinate coordinate) {
+    this.portalBounds = bounds;
+    this.coordinate = coordinate;
+    this.sceneKey = sceneKey;
+    this.portalExitsLevel = false;
     setBounds();
   }
   
@@ -26,7 +42,24 @@ public class Portal extends Entity {
     bounds.add(portalBounds);
   }
   
+  public boolean portalExitsLevel() {
+    return portalExitsLevel;
+  }
+  
+  public String getSceneKey() {
+    return sceneKey;
+  }
+  
+  public SpawnCoordinate getSpawnCoordinate() {
+    return coordinate;
+  }
+  /**
+   * Enter the portal to change levels.
+   */
   public void enterPortal() {
-    level.getLevelChanger().change(LevelFactory.createLevel(levelKey, coordinate));
+    if (portalExitsLevel) {
+      level.getLevelChanger().change(LevelFactory.createLevel(levelKey, coordinate));
+    }
+    else System.out.println("Handle Entering Inter-level Portal.");
   }
 }

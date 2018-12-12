@@ -123,4 +123,9 @@ public class Music {
       clip.start();
     }
   }
+  
+  public boolean isPlaying() {
+    if (clip != null) return clip.isRunning();
+    else return false;
+  }
 }

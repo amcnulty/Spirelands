@@ -147,10 +147,14 @@ public class GuardPlayer extends Player {
   }
   
   private void enterPortal(Portal exitPortal) {
-    level.setExitPortal(exitPortal);
-    destroyPlayer();
-    // Show some cool animation that you are leaving the map
-    level.transitionOutOfLevel();
+    if (exitPortal.portalExitsLevel()) {
+      level.setExitPortal(exitPortal);
+      destroyPlayer();
+      level.transitionOutOfLevel();
+    }
+    else {
+      level.changeScenes(exitPortal);
+    }
   }
   
   private void destroyPlayer() {
@@ -160,6 +164,7 @@ public class GuardPlayer extends Player {
   
   @Override
   public void update() {
+//    System.out.println("X: " + getX() + " Y: " + getY());
     if (anim > animMax) anim = 0;
     else anim++;
     checkMovementInput();

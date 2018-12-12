@@ -21,15 +21,30 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   private Texture texture;
-  
-  public static final Sprite  // Particles
-                              DUST = new Sprite(2, 2, 0xFFFFFFFF),
-                              EMBER = new Sprite(2, 2, 0xFFF05E1B),
-                              GOLD = new Sprite(2, 2, 0xFFFCC201),
-                              // Objects
-                              STAIRS_WOOD_TURN_LEFT = new Sprite("./resources/objects/stairs_wood_turn_left.png"),
+  //Particles
+  /**
+   * Dust particle for floating particles on level.
+   */
+  public static final Sprite DUST = new Sprite(2, 2, 0xFFFFFFFF);
+  /**
+   * Ember particle for floating particles on level.
+   */
+  public static final Sprite EMBER = new Sprite(2, 2, 0xFFF05E1B);
+  /**
+   * Gold pieces for chest opening effect.
+   */
+  public static final Sprite GOLD = new Sprite(2, 2, 0xFFFCC201);
+  // Objects
+  /**
+   * Wooden stairs that turn left at the end
+   */
+  public static final Sprite STAIRS_WOOD_TURN_LEFT = new Sprite("./resources/objects/stairs_wood_turn_left.png");
+  /**
+   * Wooden stairs that go down and to the right.
+   */
+  public static final Sprite STAIRS_WOOD_DOWN_RIGHT = new Sprite("./resources/objects/stairs_wood_down_right.png");
                               // Walls
-                              WALL_STONE = new Sprite("./resources/textures/building/wall_stone.png"),
+  public static final Sprite  WALL_STONE = new Sprite("./resources/textures/building/wall_stone.png"),
                               WALL_STONE_WINDOW = new Sprite("./resources/textures/building/wall_stone_window.png"),
                               WALL_STONE_CORNER = new Sprite("./resources/textures/building/wall_stone_corner.png"),
                               WALL_DRYWALL = new Sprite("./resources/textures/building/wall_drywall.png"),

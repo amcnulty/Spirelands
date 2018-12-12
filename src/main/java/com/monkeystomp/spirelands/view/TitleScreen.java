@@ -45,7 +45,7 @@ public class TitleScreen extends GameView {
 // top left corner
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(100, 100, 2))));
 // inside house
-    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.entrance)));
+    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.FIRST_FLOOR_ENTRANCE)));
   }
   
   @Override
