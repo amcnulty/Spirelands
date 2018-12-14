@@ -15,7 +15,6 @@ public abstract class Entity {
   protected int x,
                 y,
                 overlapY;
-//  protected int[] bounds = new int[4];
   protected ArrayList<Bounds> bounds = new ArrayList<>();
   protected Level level;
   private boolean removed = false;
@@ -47,7 +46,7 @@ public abstract class Entity {
   public int getOverlapY() {
     return y;
   }
-  
+
   public void interact() {}
   
   public boolean entityHere(int xp, int yp) {
@@ -55,7 +54,6 @@ public abstract class Entity {
       if (bound.insideBounds(xp, yp)) return true;
     }
     return false;
-//    return (xp > bounds[3] && xp < bounds[1] + 1 && yp > bounds[0] && yp < bounds[2]);
   }
   
   public void initLevel(Level level) {

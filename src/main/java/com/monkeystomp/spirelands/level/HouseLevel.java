@@ -26,13 +26,15 @@ public class HouseLevel extends Level {
   private HashMap<String, Scene> sceneMap = new HashMap<>();
   private Scene currentScene;
   private static final String FIRST_FLOOR_BITMAP = "./resources/textures/worlds/houseLevel.png",
-                              UPSTAIRS_BITMAP = "./resources/textures/worlds/houseLevel_upstairs.png",
+                              UPSTAIRS_BITMAP = "./resources/textures/worlds/houseLevel.png",
                               FIRST_FLOOR_LIGHTMAP = "./resources/textures/worlds/houseLevelLightMap.png",
                               UPSTAIRS_LIGHTMAP = "./resources/textures/worlds/houseLevelLightMap.png";
   public static SpawnCoordinate FIRST_FLOOR_ENTRANCE = new SpawnCoordinate(148, 208, 0);
-  public static SpawnCoordinate UPSTAIRS_ENTRANCE = new SpawnCoordinate(148, 75, 3);
+  public static SpawnCoordinate FIRST_FLOOR_STAIRS = new SpawnCoordinate(232, 125, 2);
+  public static SpawnCoordinate UPSTAIRS_ENTRANCE = new SpawnCoordinate(206, 53, 3);
   private static final String FIRST_FLOOR_KEY = "First_Floor",
                               UPSTAIRS_KEY = "Upstairs";
+  private ArrayList<Entity> belowEntities = new ArrayList<>();
 
   public HouseLevel(SpawnCoordinate spawnCoordinate) {
     setFirstFloorScene();
@@ -80,8 +82,10 @@ public class HouseLevel extends Level {
     Wall wall = new Wall();
     WallConfig config = new WallConfig();
     config.setStartingX(40);
-    config.setStartingY(11);
+    config.setStartingY(3);
     config.setInterior(true);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
     config.setLength(13);
     config.setWindows(new int[]{3, 6, 9});
     wall.createHorizontalWall(config);
@@ -91,10 +95,10 @@ public class HouseLevel extends Level {
     wall = new Wall();
     config = new WallConfig();
     config.setStartingX(32);
-    config.setStartingY(19);
+    config.setStartingY(3);
     config.setHasWallFront(true);
     config.setInterior(false);
-    config.setLength(11);
+    config.setLength(12);
     wall.createVerticalWall(config);
     
     firstFloor.addSolidEntity(wall);
@@ -128,10 +132,10 @@ public class HouseLevel extends Level {
     wall = new Wall();
     config = new WallConfig();
     config.setStartingX(248);
-    config.setStartingY(19);
+    config.setStartingY(3);
     config.setHasWallFront(true);
     config.setInterior(false);
-    config.setLength(11);
+    config.setLength(12);
     wall.createVerticalWall(config);
     
     firstFloor.addSolidEntity(wall);
@@ -175,24 +179,111 @@ public class HouseLevel extends Level {
     
     // Add portals
     Bounds bounds = new Bounds();
-    bounds.setQuadBounds(48, 225, 80, 220);
+    bounds.setQuadBounds(45, 237, 56, 220);
     
-    upstairs.addPortal(new Portal(bounds, HouseLevel.FIRST_FLOOR_KEY, HouseLevel.FIRST_FLOOR_ENTRANCE));
+    upstairs.addPortal(new Portal(bounds, HouseLevel.FIRST_FLOOR_KEY, HouseLevel.FIRST_FLOOR_STAIRS));
     
     for (int i = 0; i < upstairs.getPortals().size(); i++) {
       upstairs.getPortals().get(i).initLevel(this);
     }
     
+    SolidEntity entity = new SolidEntity(220, 48);
+    entity.setSprite(Sprite.STAIRS_WOOD_DOWN_RIGHT);
+    belowEntities.add(entity);
+    
     // Add solid entities
     Wall wall = new Wall();
     WallConfig config = new WallConfig();
     config.setStartingX(40);
-    config.setStartingY(99);
+    config.setStartingY(3);
     config.setInterior(true);
     config.setLeftCorner(false);
     config.setRightCorner(false);
-    config.setLength(3);
+    config.setLength(13);
+    config.setWindows(new int[]{3, 6, 9});
     wall.createHorizontalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(32);
+    config.setStartingY(3);
+    config.setHasWallFront(true);
+    config.setInterior(false);
+    config.setLength(12);
+    wall.createVerticalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(40);
+    config.setStartingY(195);
+    config.setInterior(false);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(13);
+    config.setWindows(new int[]{1, 6, 11});
+    wall.createHorizontalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(248);
+    config.setStartingY(3);
+    config.setHasWallFront(true);
+    config.setInterior(false);
+    config.setLength(12);
+    wall.createVerticalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    // Interior walls
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(40);
+    config.setStartingY(112);
+    config.setInterior(true);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(5);
+    wall.createHorizontalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(120);
+    config.setStartingY(112);
+    config.setInterior(true);
+    config.setLength(0);
+    config.setHasWallFront(true);
+    wall.createVerticalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(168);
+    config.setStartingY(112);
+    config.setInterior(true);
+    config.setLeftCorner(false);
+    config.setRightCorner(false);
+    config.setLength(5);
+    wall.createHorizontalWall(config);
+    
+    upstairs.addSolidEntity(wall);
+    
+    wall = new Wall();
+    config = new WallConfig();
+    config.setStartingX(160);
+    config.setStartingY(112);
+    config.setInterior(true);
+    config.setLength(0);
+    config.setHasWallFront(true);
+    wall.createVerticalWall(config);
     
     upstairs.addSolidEntity(wall);
     
@@ -214,7 +305,9 @@ public class HouseLevel extends Level {
   
   @Override
   protected void addPortals() {
-    portals = (ArrayList<Portal>)currentScene.getPortals().clone();
+    for (int i = 0; i < currentScene.getPortals().size(); i++) {
+      portals.add(currentScene.getPortals().get(i));
+    }
   }
   
   @Override
@@ -224,7 +317,9 @@ public class HouseLevel extends Level {
   
   @Override
   protected void addSolidEntities() {
-    solidEntities = (ArrayList<Entity>)currentScene.getSolidEntities().clone();
+    for (int i = 0; i < currentScene.getSolidEntities().size(); i++) {
+      solidEntities.add(currentScene.getSolidEntities().get(i));
+    }
   }
   
   @Override
@@ -234,20 +329,20 @@ public class HouseLevel extends Level {
   
   @Override
   protected void levelUpdate() {
-    
   }
   
   @Override
-  protected void renderOverPlayer(Screen screen, GL2 gl) {
-    
+  protected void renderUnderSolidEntities(Screen screen, GL2 gl) {
+    for (int i = 0; i < belowEntities.size(); i++) {
+      belowEntities.get(i).render(screen, gl);
+    }
   }
   
   @Override
-  protected void renderUnderPlayer(Screen screen, GL2 gl) {
+  protected void renderOverSolidEntities(Screen screen, GL2 gl) {
   }
 
   @Override
-  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {
-    
+  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {  
   }
 }

@@ -224,14 +224,14 @@ public class TestLevel extends Level {
   }
   
   @Override
-  protected void renderOverPlayer(Screen screen, GL2 gl) {
+  protected void renderOverSolidEntities(Screen screen, GL2 gl) {
     for (int i = 0; i < particles.size(); i++) {
       screen.renderSpriteUpperLevel(gl, particles.get(i).getX(), particles.get(i).getY(), particles.get(i).getSprite(), .4f, true);
     }
   }
   
   @Override
-  protected void renderUnderPlayer(Screen screen, GL2 gl) {
+  protected void renderUnderSolidEntities(Screen screen, GL2 gl) {
   }
 
   @Override

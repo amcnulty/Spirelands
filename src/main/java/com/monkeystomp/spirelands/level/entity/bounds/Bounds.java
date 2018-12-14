@@ -72,7 +72,7 @@ public class Bounds {
    * @return True if given point is inside triangle bounds, otherwise returns false.
    */
   public boolean insideBounds(int x, int y) {
-    if (quadSet) return (y > top && x < right && y < bottom && x > left);
+    if (quadSet) return (y >= top && x <= right && y <= bottom && x >= left);
     else if (triSet) return insideTriangle(x1, y1, x2, y2, x3, y3, x, y);
     return false;
   }

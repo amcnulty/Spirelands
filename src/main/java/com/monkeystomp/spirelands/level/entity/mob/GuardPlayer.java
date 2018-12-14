@@ -39,6 +39,12 @@ public class GuardPlayer extends Player {
     Keyboard.getKeyboard().addKeyPressNotifier(notifier);
   }
   
+  @Override
+  public void setDirection(int direction) {
+    super.setDirection(direction);
+    setCurrentAction();
+  }
+  
   private void setBounds() {
     quad.setQuadBounds(
       y - 2,
@@ -164,7 +170,7 @@ public class GuardPlayer extends Player {
   
   @Override
   public void update() {
-//    System.out.println("X: " + getX() + " Y: " + getY());
+    System.out.println("X: " + getX() + " Y: " + getY());
     if (anim > animMax) anim = 0;
     else anim++;
     checkMovementInput();

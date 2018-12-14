@@ -116,11 +116,11 @@ public class SpawnLevel extends Level {
   }
   
   @Override
-  protected void renderOverPlayer(Screen screen, GL2 gl) {
+  protected void renderOverSolidEntities(Screen screen, GL2 gl) {
   }
   
   @Override
-  protected void renderUnderPlayer(Screen screen, GL2 gl) {
+  protected void renderUnderSolidEntities(Screen screen, GL2 gl) {
   }
 
   @Override

@@ -57,8 +57,7 @@ public class Level implements Runnable {
   protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
-                  gameMenuOpen = false,
-                  threadIsAlive = true;
+                  gameMenuOpen = false;
   private Portal exitPortal;
   private final GameMenu GAME_MENU = new GameMenu();
   private Keyboard keyboard = Keyboard.getKeyboard();
@@ -99,8 +98,6 @@ public class Level implements Runnable {
     loadBitmap();
     createTiles();
     generateLevel();
-    // Update the player one time before starting the transition so they are facing the correct direction.
-    player.update();
   }
 
   protected void loadBitmap() {
@@ -138,7 +135,6 @@ public class Level implements Runnable {
     addPlayer();
     startMusic();
     finalLevelSetup();
-    threadIsAlive = false;
     transitionFader.startTransitionIn();
   }
 
@@ -288,9 +284,9 @@ public class Level implements Runnable {
   
   protected void levelUpdate() {}
   
-  protected void renderOverPlayer(Screen screen, GL2 gl) {}
+  protected void renderOverSolidEntities(Screen screen, GL2 gl) {}
   
-  protected void renderUnderPlayer(Screen screen, GL2 gl) {}
+  protected void renderUnderSolidEntities(Screen screen, GL2 gl) {}
   
   protected void levelRenderOverLightMap(Screen screen, GL2 gl) {}
   
@@ -329,14 +325,14 @@ public class Level implements Runnable {
         }
       }
       screen.renderTile(textureData, xFloat, yFloat, gl);
+      // Call the subclass hook for rendering under solid entities.
+      renderUnderSolidEntities(screen, gl);
       // Render the solid entities
       for (int i = 0; i < solidEntities.size(); i++) {
         solidEntities.get(i).render(screen, gl);
       }
-      // Call the subclass hook for rendering under player.
-      renderUnderPlayer(screen, gl);
-      // Call the subclass hook for rendering over the player.
-      renderOverPlayer(screen, gl);
+      // Call the subclass hook for rendering over the solid entities.
+      renderOverSolidEntities(screen, gl);
       // Render the lightmap.
       lightMap.render(gl, screen, shadowLevel);
       // Call the subclass hook for rendering over the light map.
