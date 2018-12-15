@@ -11,10 +11,10 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
-import com.monkeystomp.spirelands.level.entity.multipart.MultipartEntity;
 import com.monkeystomp.spirelands.level.entity.particle.Particle;
 import com.monkeystomp.spirelands.level.entity.particle.ParticleOverlay;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
@@ -28,6 +28,7 @@ import java.util.ArrayList;
  */
 public class TestLevel extends Level {
 
+  private final String LEVEL_NAME = "Sandbox area for testing!";
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0;
   private ArrayList<Particle> particles;
@@ -41,6 +42,11 @@ public class TestLevel extends Level {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
 //    shadowLevel = .7f;
+  }
+  
+  @Override
+  protected void setLevelName(GameMenu gameMenu) {
+    gameMenu.setLevelName(LEVEL_NAME);
   }
   
   @Override

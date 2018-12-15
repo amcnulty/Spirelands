@@ -30,6 +30,11 @@ public class FontInfo {
     this.x = x;
     this.y = y;
   }
+  
+  public FontInfo(Font font, Color color) {
+    this.font = font;
+    this.color = color;
+  }
 
   public Font getFont() {
     return font;
@@ -37,6 +42,10 @@ public class FontInfo {
 
   public String getText() {
     return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
   }
 
   public Color getColor() {
@@ -47,7 +56,15 @@ public class FontInfo {
     return x;
   }
 
+  public void setX(int x) {
+    this.x = x;
+  }
+
   public int getY() {
     return y;
+  }
+
+  public void setY(int y) {
+    this.y = y;
   }
 }

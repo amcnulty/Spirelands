@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
@@ -17,6 +18,7 @@ import com.monkeystomp.spirelands.level.lightmap.LightMapType;
  */
 public class SpawnLevel extends Level {
 
+  protected final String LEVEL_NAME = "Beach Front";
   private final String BITMAP_PATH = "./resources/textures/worlds/beach.png";
   private int time = 0;
   private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi Steph! How are you doing? I think the laundry is almost done. I've been programing this whole time working on adding dialog boxes to the game. Love You! <3"};
@@ -25,6 +27,11 @@ public class SpawnLevel extends Level {
   public SpawnLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
+  }
+  
+  @Override
+  protected void setLevelName(GameMenu gameMenu) {
+    gameMenu.setLevelName(LEVEL_NAME);
   }
   
   @Override

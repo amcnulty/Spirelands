@@ -5,7 +5,10 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.GameMenuNavButton;
-import com.monkeystomp.spirelands.input.ICallback;
+import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 
 /**
@@ -16,15 +19,23 @@ public class GameMenu {
   
   private final Sprite background = Sprite.GAME_MENU_BACKGROUND;
   private ArrayList<GameMenuNavButton> navButtons = new ArrayList<>();
+  private final FontInfo levelName = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.WHITE);
+  private final FontInfo goldLabel = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.GRAY, "Gold:", 225, 199);
+  private final FontInfo goldAmount = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.WHITE, "190", 248, 199);
   
   private final SoundEffects sfx = new SoundEffects();
 
-  private ICallback closeCommand;
   /**
    * Creates a GameMenu object.
    */
   public GameMenu() {
     createNavButtons();
+  }
+  
+  public void setLevelName(String text) {
+    this.levelName.setText(text);
+    this.levelName.setX(35);
+    this.levelName.setY(199);
   }
   
   private void createNavButtons() {
@@ -104,5 +115,10 @@ public class GameMenu {
     for (int i = 0; i < navButtons.size(); i++) {
       navButtons.get(i).render(screen, gl);
     }
+    screen.renderFonts(levelName);
+    screen.renderFonts(goldLabel);
+    // Update gold amount
+    goldAmount.setText(String.valueOf(InventoryManager.getInventoryManager().getGold()));
+    screen.renderFonts(goldAmount);
   }
 }

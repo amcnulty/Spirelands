@@ -127,6 +127,7 @@ public class Level implements Runnable {
   }
   
   protected void generateLevel(){
+    setLevelName(GAME_MENU);
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
     addChests();
@@ -144,6 +145,8 @@ public class Level implements Runnable {
     player.initLevel(this);
     solidEntities.add(player);
   }
+  
+  protected void setLevelName(GameMenu menu) {}
 
   protected void addPortals() {}
   

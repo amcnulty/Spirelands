@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
@@ -23,6 +24,7 @@ import java.util.HashMap;
  */
 public class HouseLevel extends Level {
   
+  protected final String LEVEL_NAME = "Villager's Home";
   private HashMap<String, Scene> sceneMap = new HashMap<>();
   private Scene currentScene;
   private static final String FIRST_FLOOR_BITMAP = "./resources/textures/worlds/houseLevel.png",
@@ -295,6 +297,11 @@ public class HouseLevel extends Level {
     
     // Add scene to scene map
     sceneMap.put(UPSTAIRS_KEY, upstairs);
+  }
+  
+  @Override
+  protected void setLevelName(GameMenu gameMenu) {
+    gameMenu.setLevelName(LEVEL_NAME);
   }
   
   @Override
