@@ -159,6 +159,7 @@ public class GuardPlayer extends Player {
       level.transitionOutOfLevel();
     }
     else {
+      destroyPlayer();
       level.changeScenes(exitPortal);
     }
   }

@@ -10,6 +10,9 @@ import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.entity.fixed.SolidEntity;
+import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
+import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.lightmap.CustomLightMap;
 import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 import com.monkeystomp.spirelands.level.scene.Scene;
@@ -37,6 +40,7 @@ public class HouseLevel extends Level {
   private static final String FIRST_FLOOR_KEY = "First_Floor",
                               UPSTAIRS_KEY = "Upstairs";
   private ArrayList<Entity> belowEntities = new ArrayList<>();
+  private NPCConfig npcConfig = new NPCConfig();
 
   public HouseLevel(SpawnCoordinate spawnCoordinate) {
     setFirstFloorScene();
@@ -65,6 +69,16 @@ public class HouseLevel extends Level {
     for (int i = 0; i < firstFloor.getPortals().size(); i++) {
       firstFloor.getPortals().get(i).initLevel(this);
     }
+    
+    // Add NPCs
+    NPC npc;
+    
+    npcConfig.setX(55);
+    npcConfig.setY(64);
+    npcConfig.setMessages(new String[] {"Hi I'm Steph nice to meet you!!", "Welcome to Aaron's awesome video game. This house is something of an improvement over the last game.", "I think I saw Aaron upstairs if you want to talk to him."});
+    npc = new BasicNPC(npcConfig, BasicNPC.FEMALE_ELF);
+    firstFloor.addSolidEntity(npc);
+    npc.initLevel(this);
     
     // Add solid entities
     SolidEntity entity = new SolidEntity(216, 32);
@@ -189,6 +203,15 @@ public class HouseLevel extends Level {
       upstairs.getPortals().get(i).initLevel(this);
     }
     
+    NPC npc;
+    
+    npcConfig.setX(96);
+    npcConfig.setY(185);
+    npcConfig.setMessages(new String[] {"Luke McLovin: Hey man what the fuck are you doin' in my house? Like, you totally are freaking me out right now.", "I really need a sandwich to chill out right now...do you know anyone who can make me a sandwich?", "I heard there was a guy around here who used to be part of the four horsemen. They say he makes a good sandwich.", "Have you heard of Skip-and-go-naked? Well, if you haven't then you are missing out. They are pretty much the best drink ever, but you have to be careful.", "If you have to many Skip-and-go-nakeds in one night you might end up throwing it out on the stairs in the middle of the night while your neighbors are trying to sleep and you and your friends are partying like crazy people.", "Get the fuck out of my house."});
+    npc = new BasicNPC(npcConfig, BasicNPC.MALE_BLONDE);
+    npc.initLevel(this);
+    upstairs.addSolidEntity(npc);
+    
     SolidEntity entity = new SolidEntity(220, 48);
     entity.setSprite(Sprite.STAIRS_WOOD_DOWN_RIGHT);
     belowEntities.add(entity);
@@ -260,9 +283,7 @@ public class HouseLevel extends Level {
     config.setStartingX(120);
     config.setStartingY(112);
     config.setInterior(true);
-    config.setLength(0);
-    config.setHasWallFront(true);
-    wall.createVerticalWall(config);
+    wall.createWallFront(config);
     
     upstairs.addSolidEntity(wall);
     
@@ -283,9 +304,7 @@ public class HouseLevel extends Level {
     config.setStartingX(160);
     config.setStartingY(112);
     config.setInterior(true);
-    config.setLength(0);
-    config.setHasWallFront(true);
-    wall.createVerticalWall(config);
+    wall.createWallFront(config);
     
     upstairs.addSolidEntity(wall);
     
@@ -321,7 +340,7 @@ public class HouseLevel extends Level {
   protected void startMusic() {
     if (!music.isPlaying()) music.play(Music.NEUTRAL_IN_A_HOUSE);
   }
-  
+
   @Override
   protected void addSolidEntities() {
     for (int i = 0; i < currentScene.getSolidEntities().size(); i++) {
@@ -336,6 +355,9 @@ public class HouseLevel extends Level {
   
   @Override
   protected void levelUpdate() {
+    if (getDialogOpen()) {
+      dialogBox.update();
+    }
   }
   
   @Override
@@ -350,6 +372,7 @@ public class HouseLevel extends Level {
   }
 
   @Override
-  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {  
+  protected void levelRenderOverLightMap(Screen screen, GL2 gl) {
+    if (getDialogOpen()) dialogBox.render(screen, gl);  
   }
 }

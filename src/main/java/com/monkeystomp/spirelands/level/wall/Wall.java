@@ -23,6 +23,28 @@ public class Wall extends Entity {
                   leftCorner,
                   rightCorner,
                   hasWallFront;
+  public void createWallFront(WallConfig config) {
+    this.startingX = config.getStartingX();
+    this.startingY = config.getStartingY();
+    this.interior = config.isInterior();
+    this.length = 1;
+    SolidEntity wallSection = new SolidEntity(startingX, startingY);
+    wallSection.setSprite(interior ? Sprite.WALL_DRYWALL_CORNER : Sprite.WALL_STONE_CORNER);
+    wall.add(wallSection);
+    setWallFrontBounds();
+    setHorizontalOverlap();
+  }
+  
+  private void setWallFrontBounds() {
+    Bounds quadBounds = new Bounds();
+    quadBounds.setQuadBounds(
+      startingY + 25,
+      startingX + Sprite.WALL_DRYWALL_CORNER.getWidth(),
+      startingY + Sprite.WALL_DRYWALL.getHeight() - 4,
+      startingX
+    );
+    bounds.add(quadBounds);
+  }
   
   public void createHorizontalWall(WallConfig config) {
     this.startingX = config.getStartingX();

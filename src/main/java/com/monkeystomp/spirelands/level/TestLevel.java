@@ -37,6 +37,7 @@ public class TestLevel extends Level {
   
   // NPCs
   private NPCConfig lonelyMaleElf = new NPCConfig();
+  private NPCConfig randyMarsh = new NPCConfig();
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
@@ -94,6 +95,18 @@ public class TestLevel extends Level {
     lonelyMaleElf.setRoutePoint(160, 160, 1);
     lonelyMaleElf.setMessages(new String[] {"Hi how are you? I'm all alone up here.. I haven't seen anyone around for quite some time.", "Not many people come this way, so I'm guessing that you're a traveler!", "My wife and I used to be travelers until one day she left on what she said was an important adventure. I haven't seen her since she left several months ago. I'm lonely without her."});
     npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_ELF);
+    solidEntities.add(npc);
+    npc.initLevel(this);
+    npc.startAtRandomRoutePoint();
+    
+    randyMarsh.setX(16);
+    randyMarsh.setY(304);
+    randyMarsh.setRoutePoint(128, 304, 2);
+    randyMarsh.setRoutePoint(128, 368, 2);
+    randyMarsh.setRoutePoint(16, 368, 2);
+    randyMarsh.setRoutePoint(16, 304, 2);
+    randyMarsh.setMessages(new String[] {"I'm heading out Californie way because I heard they have internet.", "I haven't jerked off in two weeks. Do you think I can use your computer to watch some Brazillian fart porn?"});
+    npc = new BasicNPC(randyMarsh, BasicNPC.MALE_REDHAIR);
     solidEntities.add(npc);
     npc.initLevel(this);
     npc.startAtRandomRoutePoint();
@@ -226,7 +239,7 @@ public class TestLevel extends Level {
       time = 0;
 //      IChanger.change(new SpawnLevel());
     }
-//    else time++;
+    else time++;
   }
   
   @Override

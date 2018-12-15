@@ -145,7 +145,7 @@ public class DialogBox {
   
   private void setSymbol() {
     if (messageIndex < messages.length - 1) currentSymbol = DOWN_TRIANGLE;
-    else currentSymbol = TIMES;
+    else currentSymbol = "";
     symbolY = DIALOG_TOP + dialogCurrentHeight - 8;
     symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
   }
