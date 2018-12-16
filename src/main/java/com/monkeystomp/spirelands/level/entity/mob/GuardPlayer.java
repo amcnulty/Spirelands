@@ -97,10 +97,10 @@ public class GuardPlayer extends Player {
   }
   
   private void handleSpaceKeyPress(KeyEvent e) {
-    if (e.getKeyCode() == Keyboard.SPACE_KEY && !level.getDialogOpen()) {
-      checkForInteractableEntities();
+    if (e.getKeyCode() == Keyboard.SPACE_KEY) {
+      if (level.getDialogOpen()) level.getDialogBox().handleSpaceKey();
+      else checkForInteractableEntities();
     }
-    else if (level.getDialogOpen()) level.getDialogBox().handleSpaceKey();
   }
   
   private void checkForInteractableEntities() {

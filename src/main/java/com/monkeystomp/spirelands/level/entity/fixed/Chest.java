@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * The Chest class is used to creat a treasure chest entity to be added to a level. Chests can have items or gold inside of them.
+ * The Chest class is used to create a treasure chest entity to be added to a level. Chests can have items or gold inside of them.
  * @author Aaron Michael McNulty
  */
 public class Chest extends Entity {
@@ -28,7 +28,8 @@ public class Chest extends Entity {
                   currentSprite;
   private final Item treasure;
   private boolean isChestOpen = false,
-                  showingItem = false;
+                  showingItem = false,
+                  showingGold = false;
   private Random random = new Random();
   private int anim = 0,
               animY = 0,
@@ -94,7 +95,8 @@ public class Chest extends Entity {
       treasure.addToInventory();
     }
     if (gold > 0) {
-      generateParticles();
+      showingGold = true;
+//      generateParticles();
       InventoryManager.getInventoryManager().addGold(gold);
     }
     sfx.playSoundEffect(SoundEffects.CHEST_OPENING);
@@ -123,7 +125,7 @@ public class Chest extends Entity {
 
   private int getRandomAngle() {
     if (random.nextBoolean()) {
-      return 65 + random.nextInt(10);
+      return 60 + random.nextInt(10);
     }
     else {
       return 95 + random.nextInt(10);
@@ -171,6 +173,13 @@ public class Chest extends Entity {
       if (!particles.get(i).isRemoved()) particles.get(i).update();
       else particles.remove(i);
     }
+    if (showingGold && anim++ < 60) {
+      for (int i = 0; i < getRandomX(5, 10); i++) {
+        particles.add(new ProjectileParticle(getRandomX(x - 12, 24), getRandomY(y - 2, 13), Sprite.GOLD, getRandomForce(10, 3), getRandomAngle()));
+        particles.get(i).setGroundLevel(y - 10 + random.nextInt(20));
+      }
+    }
+    else showingGold = false;
     if (showingItem && anim < 20) {
       anim++;
       animY++;

@@ -67,8 +67,8 @@ public class SpawnLevel extends Level {
     lightMap.enableLightMap(LightMapType.BLENDED);
     
 // Example of how to open a dialog box.
-    this.setDialogOpen(true);
-    dialogBox.openDialog(welcomeText);
+//    this.setDialogOpen(true);
+//    dialogBox.openDialog(welcomeText);
   }
   
   @Override
