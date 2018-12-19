@@ -10,6 +10,7 @@ import java.awt.Font;
 public class FontInfo {
 
   private Font font;
+  private FontStyle fontStyle;
   private Color color;
   private String text;
   private int x,
@@ -35,6 +36,10 @@ public class FontInfo {
     this.font = font;
     this.color = color;
   }
+  
+  public FontInfo(FontStyle fontStyle) {
+    this.fontStyle = fontStyle;
+  }
 
   public Font getFont() {
     return font;
@@ -50,6 +55,10 @@ public class FontInfo {
 
   public Color getColor() {
     return color;
+  }
+  
+  public void setColor(Color color) {
+    this.color = color;
   }
 
   public int getX() {
