@@ -1,16 +1,2 @@
 theme: jekyll-theme-architect
 title: Spirelands
-author:
-  name     : "Aaron Michael McNulty"
-  avatar   : "https://avatars0.githubusercontent.com/u/8146225?s=460&v=4"
-  bio      : "Developer for hire with experience in many technologies. Explore my repositories to see my skills in Java game development, Mobile applications, and web apps."
-  location : "San Francisco Bay Area, California"
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/amcnulty"
-footer:
-  links:
-    - label: "GitHub"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/amcnulty"
