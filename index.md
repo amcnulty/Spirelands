@@ -1,3 +1,21 @@
+---
+title: Spirelands
+author:
+  name     : "Aaron Michael McNulty"
+  avatar   : "https://avatars0.githubusercontent.com/u/8146225?s=460&v=4"
+  bio      : "Developer for hire with experience in many technologies. Explore my repositories to see my skills in Java game development, Mobile applications, and web apps."
+  location : "San Francisco Bay Area, California"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amcnulty"
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/amcnulty"
+---
+
 # Spirelands #
 Spirelands is a RPG game for PC written in Java. This project is maintained exclusively by me _Aaron Michael McNulty_, so new content gets added whenever I have time. The project uses [Gradle](https://gradle.org/ "Gradle Build Tool") for build automation and dependency management. If you intend on getting the source code from this repository, Gradle will be required to build the application see [Running Spirelands Locally With Gradle](#running-spirelands-locally-with-gradle).
 
