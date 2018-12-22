@@ -11,6 +11,7 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
@@ -43,6 +44,7 @@ public class TestLevel extends Level {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
 //    shadowLevel = .7f;
+    CharacterManager.getCharacterManager();
   }
   
   @Override

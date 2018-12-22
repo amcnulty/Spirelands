@@ -1,0 +1,53 @@
+{
+  "Luke": {
+    "stats": {
+      "name": "Luke McLovin",
+      "level": 1,
+      "health": 120,
+      "mana": 40,
+      "strength": 12,
+      "defense": 6,
+      "intellect": 8,
+      "spirit": 6,
+      "speed": 10,
+      "luck": 5
+    },
+    "partyInfo": {
+      "inParty": true
+    }
+  },
+  "Sara": {
+    "stats": {
+      "name": "Sara Snowbridge",
+      "level": 1,
+      "health": 100,
+      "mana": 45,
+      "strength": 8,
+      "defense": 5,
+      "intellect": 8,
+      "spirit": 8,
+      "speed": 9,
+      "luck": 4
+    },
+    "partyInfo": {
+      "inParty": true
+    }
+  },
+  "William": {
+    "stats": {
+      "name": "William Wallace",
+      "level": 1,
+      "health": 110,
+      "mana": 30,
+      "strength": 11,
+      "defense": 7,
+      "intellect": 3,
+      "spirit": 3,
+      "speed": 7,
+      "luck": 2
+    },
+    "partyInfo": {
+      "inParty": true
+    }
+  }
+}
