@@ -10,7 +10,8 @@
       "intellect": 8,
       "spirit": 6,
       "speed": 10,
-      "luck": 5
+      "luck": 5,
+      "thumbnail": "./resources/characters/thumbnails/luke.png"
     },
     "partyInfo": {
       "inParty": true
@@ -27,7 +28,8 @@
       "intellect": 8,
       "spirit": 8,
       "speed": 9,
-      "luck": 4
+      "luck": 4,
+      "thumbnail": "./resources/characters/thumbnails/sara.png"
     },
     "partyInfo": {
       "inParty": true
@@ -44,7 +46,8 @@
       "intellect": 3,
       "spirit": 3,
       "speed": 7,
-      "luck": 2
+      "luck": 2,
+      "thumbnail": "./resources/characters/thumbnails/william.png"
     },
     "partyInfo": {
       "inParty": true

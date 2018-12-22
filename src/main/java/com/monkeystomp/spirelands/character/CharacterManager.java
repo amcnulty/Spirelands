@@ -1,7 +1,9 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.graphics.Sprite;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -37,7 +39,8 @@ public class CharacterManager {
   }
   
   private void createCharacters() {
-    json.keySet().forEach((key) -> {
+    Set<?> keys = json.keySet();
+    keys.forEach((key) -> {
       Character character = setupCharacter((JSONObject)json.get(key));
       gameCharacters.add(character);
       if ((boolean)((JSONObject)((JSONObject)json.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(character);
@@ -58,6 +61,7 @@ public class CharacterManager {
     character.setSpirit(Integer.parseInt(stats.get("spirit").toString()));
     character.setSpeed(Integer.parseInt(stats.get("speed").toString()));
     character.setLuck(Integer.parseInt(stats.get("luck").toString()));
+    character.setThumbnail(new Sprite((String)stats.get("thumbnail")));
     return character;
   }
   

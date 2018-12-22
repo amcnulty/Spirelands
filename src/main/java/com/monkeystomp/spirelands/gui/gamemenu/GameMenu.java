@@ -19,9 +19,12 @@ public class GameMenu {
   private final GoldPanel GOLD_PANEL = new GoldPanel();
   private final DisplayPanel DISPLAY_PANEL = new DisplayPanel();
   private final FontInfo levelName = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.WHITE);
-  
   private final SoundEffects sfx = new SoundEffects();
 
+  public GameMenu() {
+    BUTTON_PANEL.setViewChanger(key -> DISPLAY_PANEL.changeView(key));
+  }
+  
   public void setLevelName(String text) {
     this.levelName.setText(text);
     this.levelName.setX(32);
@@ -40,6 +43,7 @@ public class GameMenu {
   public void closeMenu() {
     playMenuCloseSound();
     BUTTON_PANEL.resetNavButtons();
+    DISPLAY_PANEL.changeView(DisplayPanel.DEFAULT);
   }
 
   private void playMenuOpenSound() {

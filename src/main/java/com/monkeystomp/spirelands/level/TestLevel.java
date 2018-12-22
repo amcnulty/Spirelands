@@ -44,7 +44,6 @@ public class TestLevel extends Level {
     this.spawnCoordinate = coordinate;
     loadLevel(BITMAP_PATH);
 //    shadowLevel = .7f;
-    CharacterManager.getCharacterManager();
   }
   
   @Override

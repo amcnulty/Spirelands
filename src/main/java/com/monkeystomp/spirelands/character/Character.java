@@ -1,5 +1,7 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.graphics.Sprite;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -25,6 +27,8 @@ public class Character {
   private int speed;
   // Luck
   private int luck;
+  // Thumbnail image for character
+  private Sprite thumbnail;
 
   public String getName() {
     return name;
@@ -105,6 +109,13 @@ public class Character {
   public void setLuck(int luck) {
     this.luck = luck;
   }
-  
-  
+
+  public Sprite getThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(Sprite thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+    
 }
