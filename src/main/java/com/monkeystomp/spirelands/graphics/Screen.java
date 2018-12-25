@@ -6,12 +6,10 @@ import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
-import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.level.tile.Tile;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The Screen class is used to render to the screen. The public methods of this class are used to render sprites, lightmaps, and lightmap entities.
@@ -39,7 +37,6 @@ public class Screen {
   private final float LIGHTMAP_R_VALUE = 0.07058823529411764705882352941176f,
                       LIGHTMAP_G_VALUE = 0.07058823529411764705882352941176f,
                       LIGHTMAP_B_VALUE = 0.07058823529411764705882352941176f;
-  private HashMap<String, TextRenderer> textRendererMap = new HashMap<>();
   /**
    * Creates a Screen object of the given dimensions and scaling factors.
    * @param width The width of the drawing area in pixels.
@@ -57,14 +54,6 @@ public class Screen {
     this.lightMapPixelChecked = new boolean[width * height];
     lightMapImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
     clearLightMap();
-    createTextRendererMap();
-  }
-  private void createTextRendererMap() {
-    textRendererMap.put(GameFonts.getGAME_MENU_NAV_BUTTON().getKey(), new TextRenderer(GameFonts.getGAME_MENU_NAV_BUTTON().getFont()));
-    textRendererMap.put(GameFonts.getGAME_MENU_PRIMARY_TEXT().getKey(), new TextRenderer(GameFonts.getGAME_MENU_PRIMARY_TEXT().getFont()));
-    textRendererMap.put(GameFonts.getGAME_MENU_HEADLINE_THIN().getKey(), new TextRenderer(GameFonts.getGAME_MENU_HEADLINE_THIN().getFont()));
-    textRendererMap.put(GameFonts.getGAME_MENU_PRIMARY_TEXT_THIN().getKey(), new TextRenderer(GameFonts.getGAME_MENU_PRIMARY_TEXT_THIN().getFont()));
-    textRendererMap.put(GameFonts.getGAME_MENU_HEADLINE().getKey(), new TextRenderer(GameFonts.getGAME_MENU_HEADLINE().getFont()));
   }
   /**
    * Renders the title screen background.
@@ -369,8 +358,7 @@ public class Screen {
    * @param info FontInfo configuration object that holds information regarding the text to be rendered.
    */
   public void renderFonts(FontInfo info) {
-    TextRenderer textRenderer = textRendererMap.get(info.getKey());
-    if (textRenderer == null) textRenderer = textRendererMap.get("gameMenuPrimaryText");
+    TextRenderer textRenderer = info.getTextRenderer();
     Rectangle2D bounds = textRenderer.getBounds("M");
     int textHeight = (int)(bounds.getHeight()),
         vertAdjustment = (int)(textHeight / 2);

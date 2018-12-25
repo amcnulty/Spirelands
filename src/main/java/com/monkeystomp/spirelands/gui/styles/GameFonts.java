@@ -16,35 +16,35 @@ public class GameFonts {
    * @return The font info object.
    */
   public static FontInfo getGAME_MENU_NAV_BUTTON() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 27), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)), "gameMenuNavButton");
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 27), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu primary text
    * @return The font info object.
    */
   public static FontInfo getGAME_MENU_PRIMARY_TEXT() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 21), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)), "gameMenuPrimaryText");
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 21), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu primary text thin
    * @return The font info object.
    */
   public static FontInfo getGAME_MENU_PRIMARY_TEXT_THIN() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 21), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)), "gameMenuPrimaryTextThin");
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 21), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu headline thin
    * @return The font info object.
    */
   public static FontInfo getGAME_MENU_HEADLINE_THIN() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 28), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)), "gameMenuHeadlineThin");
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 28), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu headline
    * @return The font info object.
    */
   public static FontInfo getGAME_MENU_HEADLINE() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 28), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)), "gameMenuHeadline");
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 28), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   
 }
