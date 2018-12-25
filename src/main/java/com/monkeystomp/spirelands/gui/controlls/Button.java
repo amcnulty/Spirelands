@@ -14,8 +14,8 @@ import java.io.File;
  */
 public class Button {
   
-  private ICallback callback;
-  private SoundEffects sfx = new SoundEffects();
+  private final ICallback CALLBACK;
+  private final SoundEffects SFX = new SoundEffects();
   private int mouseB,
               mouseX,
               mouseY;
@@ -89,7 +89,7 @@ public class Button {
     this.height = height;
     this.x = x - width / 2;
     this.y = y - height / 2;
-    this.callback = callback;
+    this.CALLBACK = callback;
     right = x + width / 2;
     bottom = y + height / 2;
   }
@@ -97,7 +97,7 @@ public class Button {
    * Fires when the button is hovered over with the cursor.
    */
   protected void hover() {
-    if (!hovering && hoverSound != null) sfx.playSoundEffect(hoverSound);
+    if (!hovering && hoverSound != null) SFX.playSoundEffect(hoverSound);
     currentButton = buttonHover;
     hovering = true;
   }
@@ -111,8 +111,8 @@ public class Button {
    * Fires when the button is clicked on. Will execute the callback that was set for this button.
    */
   protected void click() {
-    if (clickSound != null) sfx.playSoundEffect(clickSound);
-    callback.execute();
+    if (clickSound != null) SFX.playSoundEffect(clickSound);
+    CALLBACK.execute();
   }
   /**
    * Fires once when the button is not being hovered over or being clicked on to set the default state of the button.

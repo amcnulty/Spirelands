@@ -1,5 +1,8 @@
 package com.monkeystomp.spirelands.gui.gamemenu;
 
+import com.monkeystomp.spirelands.gui.gamemenu.panels.GoldPanel;
+import com.monkeystomp.spirelands.gui.gamemenu.panels.ButtonPanel;
+import com.monkeystomp.spirelands.gui.gamemenu.panels.DisplayPanel;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;

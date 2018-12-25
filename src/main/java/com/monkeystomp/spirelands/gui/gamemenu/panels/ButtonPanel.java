@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.gui.gamemenu;
+package com.monkeystomp.spirelands.gui.gamemenu.panels;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;

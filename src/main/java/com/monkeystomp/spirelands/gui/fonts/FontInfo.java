@@ -12,7 +12,8 @@ public class FontInfo {
   private Font font;
   private FontStyle fontStyle;
   private Color color;
-  private String text;
+  private String  text,
+                  key;
   private int x,
               y;
   /**
@@ -37,8 +38,11 @@ public class FontInfo {
     this.color = color;
   }
   
-  public FontInfo(FontStyle fontStyle) {
+  public FontInfo(FontStyle fontStyle, String key) {
     this.fontStyle = fontStyle;
+    this.font = fontStyle.getFONT();
+    this.color = fontStyle.getCOLOR();
+    this.key = key;
   }
 
   public Font getFont() {
@@ -76,4 +80,9 @@ public class FontInfo {
   public void setY(int y) {
     this.y = y;
   }
+  
+  public String getKey() {
+    return key;
+  }
+  
 }

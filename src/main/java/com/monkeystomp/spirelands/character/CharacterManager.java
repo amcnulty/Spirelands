@@ -53,8 +53,11 @@ public class CharacterManager {
     JSONObject stats = (JSONObject)data.get("stats");
     character.setName((String)stats.get("name"));
     character.setLevel(Integer.parseInt(stats.get("level").toString()));
+    character.setExperience(Integer.parseInt(stats.get("experience").toString()));
     character.setHealth(Integer.parseInt(stats.get("health").toString()));
+    character.setHealthMax(Integer.parseInt(stats.get("healthMax").toString()));
     character.setMana(Integer.parseInt(stats.get("mana").toString()));
+    character.setManaMax(Integer.parseInt(stats.get("manaMax").toString()));
     character.setStrength(Integer.parseInt(stats.get("strength").toString()));
     character.setDefense(Integer.parseInt(stats.get("defense").toString()));
     character.setIntellect(Integer.parseInt(stats.get("intellect").toString()));

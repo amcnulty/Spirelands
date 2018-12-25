@@ -11,10 +11,16 @@ public class Character {
   private String name;
   // Character level
   private int level;
-  // Hit points
+  // Experience points
+  private int experience;
+  // Current hit points
   private int health;
-  // Mana points
+  // Hit point max
+  private int healthMax;
+  // Current mana points
   private int mana;
+  // Max mana points
+  private int manaMax;
   // Physical attack stat
   private int strength;
   // Physical attack resistance
@@ -46,6 +52,14 @@ public class Character {
     this.level = level;
   }
 
+  public int getExperience() {
+    return experience;
+  }
+
+  public void setExperience(int experience) {
+    this.experience = experience;
+  }
+
   public int getHealth() {
     return health;
   }
@@ -54,12 +68,28 @@ public class Character {
     this.health = health;
   }
 
+  public int getHealthMax() {
+    return healthMax;
+  }
+
+  public void setHealthMax(int healthMax) {
+    this.healthMax = healthMax;
+  }
+
   public int getMana() {
     return mana;
   }
 
   public void setMana(int mana) {
     this.mana = mana;
+  }
+
+  public int getManaMax() {
+    return manaMax;
+  }
+
+  public void setManaMax(int manaMax) {
+    this.manaMax = manaMax;
   }
 
   public int getStrength() {
