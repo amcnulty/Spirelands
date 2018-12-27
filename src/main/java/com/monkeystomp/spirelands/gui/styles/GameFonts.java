@@ -6,11 +6,10 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- *
+ * Central location for font definitions used across the application. This allows for easier maintenance of fonts and creates a better inheritance structure that defining fonts in the classes they are used.
  * @author Aaron Michael McNulty
  */
 public class GameFonts {
-
   /**
    * Game menu button font style.
    * @return The font info object.

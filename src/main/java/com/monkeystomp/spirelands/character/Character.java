@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.character;
 import com.monkeystomp.spirelands.graphics.Sprite;
 
 /**
- *
+ * A Character defines the name and stats of a group member that can be used in the player's party.
  * @author Aaron Michael McNulty
  */
 public class Character {

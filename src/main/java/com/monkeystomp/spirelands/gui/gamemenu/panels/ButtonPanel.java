@@ -7,14 +7,16 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
- *
+ * The left panel in the game menu that is used for displaying the navigation buttons.
  * @author Aaron Michael McNulty
  */
 public class ButtonPanel {
   
   private Consumer<String> viewChanger;
   private ArrayList<GameMenuNavButton> navButtons = new ArrayList<>();
-    
+  /**
+   * Creates a ButtonPanel object.
+   */
   public ButtonPanel() {
     createNavButtons();
   }

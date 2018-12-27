@@ -7,7 +7,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- *
+ * The items view is used to show the current inventory of items that is in the player's possesion.
  * @author Aaron Michael McNulty
  */
 public class ItemsView extends DisplayView {

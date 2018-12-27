@@ -8,7 +8,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.components.PartyMemberButton;
 import java.util.ArrayList;
 
 /**
- *
+ * The Default View is the first view that is seen when opening the game menu. It is used to display the current party and a brief snapshot of their health, magic and level.
  * @author Aaron Michael McNulty
  */
 public class DefaultView extends DisplayView {
@@ -19,7 +19,9 @@ public class DefaultView extends DisplayView {
                     VERTICAL_SPACING = 52;
   private final CharacterManager CHARACTER_MANAGER = CharacterManager.getCharacterManager();
   private ArrayList<PartyMemberButton> buttons = new ArrayList<>();
-  
+  /**
+   * Creates a DefaultView object that displays the party member buttons.
+   */
   public DefaultView() {
     createCharacterButtons();
   }

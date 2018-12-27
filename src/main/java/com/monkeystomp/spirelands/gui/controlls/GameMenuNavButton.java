@@ -11,7 +11,7 @@ import com.monkeystomp.spirelands.input.ICallback;
 import java.awt.Color;
 
 /**
- *
+ * The navigation button used in the game menu.
  * @author Aaron Michael McNulty
  */
 public class GameMenuNavButton extends Button {
@@ -25,7 +25,13 @@ public class GameMenuNavButton extends Button {
                     FONT_SIZE = 27;
   private final Sprite SELECTED_BACKGROUND = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);;
   private final FontInfo FONT_INFO = GameFonts.getGAME_MENU_NAV_BUTTON();
-
+  /**
+   * Creates a GameMenuNavButton with the given text and with a callback that gets fired when button is clicked.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
   public GameMenuNavButton(String text, int x, int y, ICallback callback) {
     super(text, x, y, GameMenuNavButton.WIDTH, GameMenuNavButton.HEIGHT, callback);
     createButtonSprites();

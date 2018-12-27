@@ -1,11 +1,10 @@
 package com.monkeystomp.spirelands.gui.styles;
 
 /**
- *
+ * Central location to define all color variables used in the game. This allows for easier maintenance of colors and creates a better inheritance structure that defining color variables in the classes they are used.
  * @author Aaron Michael McNulty
  */
 public class GameColors {
-  
   /**
    * Underline color for health bar #0xFFB20000
    */

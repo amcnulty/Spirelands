@@ -11,7 +11,7 @@ import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
 
 /**
- *
+ * Clickable party member buttons that are displayed in the game menu. These components are used to select a party member to apply actions to, for example equipment changes.
  * @author Aaron Michael McNulty
  */
 public class PartyMemberButton extends Button {
@@ -32,9 +32,17 @@ public class PartyMemberButton extends Button {
   private final FontInfo CHARACTER_MANA_FONT = GameFonts.getGAME_MENU_PRIMARY_TEXT_THIN();
   private final FontInfo CHARACTER_LEVEL_FONT = GameFonts.getGAME_MENU_HEADLINE();
   private final Character CHARACTER;
+  private int characterHealth = -1,
+              characterMana = -1;
   private Sprite healthFill;
   private Sprite manaFill;
-  
+  /**
+   * Creates a PartyMemberButton for the given character with a callback method to fire when button is clicked.
+   * @param character The character for whom this button is related to.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
   public PartyMemberButton(Character character, int x, int y, ICallback callback) {
     super(null, x, y, WIDTH, HEIGHT, callback);
     this.CHARACTER = character;
@@ -75,15 +83,21 @@ public class PartyMemberButton extends Button {
   }
   
   private void updateStatBars() {
-    healthFill = new Sprite((int)((CHARACTER.getHealth() / (double)CHARACTER.getHealthMax()) * 65), 4, GameColors.HEALTH_BAR_FILL);
-    manaFill = new Sprite((int)((CHARACTER.getMana() / (double)CHARACTER.getManaMax()) * 65), 4, GameColors.MANA_BAR_FILL);
+    if (characterHealth != CHARACTER.getHealth()) {
+      healthFill = new Sprite((int)((CHARACTER.getHealth() / (double)CHARACTER.getHealthMax()) * 65), 4, GameColors.HEALTH_BAR_FILL);
+      characterHealth = CHARACTER.getHealth();
+    }
+    if (characterMana != CHARACTER.getMana()) {
+      manaFill = new Sprite((int)((CHARACTER.getMana() / (double)CHARACTER.getManaMax()) * 65), 4, GameColors.MANA_BAR_FILL);
+      characterMana = CHARACTER.getMana();
+    }
   }
   
   @Override
   public void update() {
     super.update();
     updateStatText();
-//    updateStatBars();
+    updateStatBars();
   }
   
   @Override

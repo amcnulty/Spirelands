@@ -23,17 +23,21 @@ public class GameMenu {
   private final DisplayPanel DISPLAY_PANEL = new DisplayPanel();
   private final FontInfo levelName = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.WHITE);
   private final SoundEffects sfx = new SoundEffects();
-
+  /**
+   * Creates a GameMenu object used for displaying the game inventory and party information menu.
+   */
   public GameMenu() {
     BUTTON_PANEL.setViewChanger(key -> DISPLAY_PANEL.changeView(key));
   }
-  
+  /**
+   * Sets the level name to display in the lower left panel.
+   * @param text The name of the level to display.
+   */
   public void setLevelName(String text) {
     this.levelName.setText(text);
     this.levelName.setX(32);
     this.levelName.setY(199);
   }
-  
   /**
    * Opens the game menu.
    */

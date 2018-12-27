@@ -5,7 +5,7 @@ import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 
 /**
- *
+ * Basic NPC characters to be used in the game. This class sets up the 
  * @author Aaron Michael McNulty
  */
 public class BasicNPC extends NPC {

@@ -8,7 +8,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 /**
- *
+ * CharacterManager is a singleton class that is used to perform operations on Character objects.
  * @author Aaron Michael McNulty
  */
 public class CharacterManager {
@@ -33,7 +33,10 @@ public class CharacterManager {
       e.printStackTrace();
     }
   }
-  
+  /**
+   * Gets the singleton instance of this class.
+   * @return The singleton instance of CharacterManager.
+   */
   public static CharacterManager getCharacterManager() {
     return INSTANCE;
   }

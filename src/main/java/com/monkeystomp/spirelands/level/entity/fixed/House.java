@@ -7,7 +7,7 @@ import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 
 /**
- *
+ * A example class to show how to build a structure on the overworld map.
  * @author Aaron Michael McNulty
  */
 public class House extends Entity {
