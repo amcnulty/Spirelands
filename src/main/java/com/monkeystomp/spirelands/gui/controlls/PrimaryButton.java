@@ -12,13 +12,21 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- *
+ * The primary button for menu operations on the title screen and pause menu.
  * @author Aaron Michael McNulty
  */
 public class PrimaryButton extends Button {
   
   private FontInfo fontInfo;
-
+  /**
+   * Creates a PrimaryButton object with a callback that gets fired when button is clicked.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param width The width of the button.
+   * @param height The height of the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
   public PrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
     setFontInfo();

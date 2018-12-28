@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gui.fonts;
 
+import com.jogamp.opengl.util.awt.TextRenderer;
 import java.awt.Color;
 import java.awt.Font;
 
@@ -9,10 +10,11 @@ import java.awt.Font;
  */
 public class FontInfo {
 
-  private Font font;
+  private final Font FONT;
+  private final TextRenderer TEXT_RENDERER;
   private FontStyle fontStyle;
   private Color color;
-  private String text;
+  private String  text;
   private int x,
               y;
   /**
@@ -24,7 +26,8 @@ public class FontInfo {
    * @param y The y location to render this text.
    */
   public FontInfo(Font font, Color color, String text, int x, int y) {
-    this.font = font;
+    this.FONT = font;
+    this.TEXT_RENDERER = new TextRenderer(font);
     this.color = color;
     this.text = text;
     if (this.text == null) this.text = "";
@@ -33,16 +36,24 @@ public class FontInfo {
   }
   
   public FontInfo(Font font, Color color) {
-    this.font = font;
+    this.FONT = font;
+    this.TEXT_RENDERER = new TextRenderer(font);
     this.color = color;
   }
   
   public FontInfo(FontStyle fontStyle) {
     this.fontStyle = fontStyle;
+    this.TEXT_RENDERER = new TextRenderer(fontStyle.getFONT());
+    this.FONT = fontStyle.getFONT();
+    this.color = fontStyle.getCOLOR();
   }
 
   public Font getFont() {
-    return font;
+    return FONT;
+  }
+  
+  public TextRenderer getTextRenderer() {
+    return TEXT_RENDERER;
   }
 
   public String getText() {
@@ -76,4 +87,5 @@ public class FontInfo {
   public void setY(int y) {
     this.y = y;
   }
+  
 }

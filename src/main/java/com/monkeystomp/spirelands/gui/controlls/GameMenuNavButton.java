@@ -5,12 +5,13 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
 import java.awt.Color;
-import java.awt.Font;
 
 /**
- *
+ * The navigation button used in the game menu.
  * @author Aaron Michael McNulty
  */
 public class GameMenuNavButton extends Button {
@@ -19,13 +20,18 @@ public class GameMenuNavButton extends Button {
                             HEIGHT = 20,
                             TOP_PADDING = 6,
                             LEFT_PADDING = 10;
-  private final int DEFAULT_TEXT = 0xf1f1f1,
-                    SELECTED_TEXT = 0xDAA520,
+  private final int DEFAULT_TEXT = GameColors.GAME_MENU_DEFAULT_TEXT,
+                    SELECTED_TEXT = GameColors.GAME_MENU_SELECTED_TEXT,
                     FONT_SIZE = 27;
-//  private final Sprite SELECTED_BACKGROUND = new Sprite("./resources/gui/game_menu_nav_button.png");
-  private final Sprite SELECTED_BACKGROUND = new Sprite(WIDTH, HEIGHT, 0xFF3b3b3b);;
-  private final FontInfo FONT_INFO = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, FONT_SIZE), new Color(DEFAULT_TEXT));
-
+  private final Sprite SELECTED_BACKGROUND = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);;
+  private final FontInfo FONT_INFO = GameFonts.getGAME_MENU_NAV_BUTTON();
+  /**
+   * Creates a GameMenuNavButton with the given text and with a callback that gets fired when button is clicked.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
   public GameMenuNavButton(String text, int x, int y, ICallback callback) {
     super(text, x, y, GameMenuNavButton.WIDTH, GameMenuNavButton.HEIGHT, callback);
     createButtonSprites();
@@ -36,9 +42,9 @@ public class GameMenuNavButton extends Button {
   }
 
   private void createButtonSprites() {
-    button = new Sprite(WIDTH, HEIGHT, 0x000079CC);
-    buttonHover = new Sprite(WIDTH, HEIGHT, 0xFF3b3b3b);
-    buttonDown = new Sprite(WIDTH, HEIGHT, 0xFF4e4e4e);
+    button = new Sprite(WIDTH, HEIGHT, GameColors.TRANSPARENT);
+    buttonHover = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);
+    buttonDown = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_DOWN);
     currentButton = button;
   }
   

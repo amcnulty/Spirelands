@@ -18,6 +18,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     compile "org.jogamp.gluegen:gluegen-rt:2.3.1"
     compile "org.jogamp.jogl:jogl-all:2.3.1"
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+    
+    runtime 'com.googlecode.json-simple:json-simple:1.1'
 
 //    runtime "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-android-aarch64"
 //    runtime "org.jogamp.gluegen:gluegen-rt:2.3.1:natives-android-armv6"

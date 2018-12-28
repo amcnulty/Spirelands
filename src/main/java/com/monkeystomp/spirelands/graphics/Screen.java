@@ -358,12 +358,12 @@ public class Screen {
    * @param info FontInfo configuration object that holds information regarding the text to be rendered.
    */
   public void renderFonts(FontInfo info) {
-    TextRenderer textRenderer = new TextRenderer(info.getFont());
+    TextRenderer textRenderer = info.getTextRenderer();
     Rectangle2D bounds = textRenderer.getBounds("M");
     int textHeight = (int)(bounds.getHeight()),
         vertAdjustment = (int)(textHeight / 2);
-    textRenderer.beginRendering((int)(width * scaleX), (int)(height * scaleY));
     textRenderer.setColor(info.getColor());
+    textRenderer.beginRendering((int)(width * scaleX), (int)(height * scaleY));
     textRenderer.draw(info.getText(), (int)(info.getX() * scaleX), (int)(height * scaleY - (info.getY() * scaleY + vertAdjustment)));
     textRenderer.endRendering();
   }

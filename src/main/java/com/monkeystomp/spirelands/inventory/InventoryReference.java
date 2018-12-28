@@ -10,7 +10,7 @@ public class InventoryReference {
   private Item item;
   /**
    * Creates an InventoryReference object for the given item and amount.
-   * @param item The item to creat the reference for.
+   * @param item The item to create the reference for.
    * @param amount The amount of the item to set.
    */
   public InventoryReference(Item item, int amount) {
