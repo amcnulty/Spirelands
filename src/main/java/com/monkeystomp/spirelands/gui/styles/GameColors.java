@@ -41,6 +41,10 @@ public class GameColors {
    * Dark gray used for down state on game menu buttons #0xFF393939.
    */
   public static final int GAME_MENU_BUTTON_DOWN = 0xFF393939;
+  /**
+   * Border color used in the game menu #0xE2E2E2.
+   */
+  public static final int GAME_MENU_BORDER = 0xFFE2E2E2;
   
   //
   //  Font Colors
@@ -48,10 +52,18 @@ public class GameColors {
   /**
    * Default text color in the game menu #0xF1F1F1
    */
-  public static final int GAME_MENU_DEFAULT_TEXT = 0xF1F1F1;
+  public static final int GAME_MENU_DEFAULT_TEXT = 0xFFF1F1F1;
   /**
    * Selected text color in the game menu #0xDAA520
    */
-  public static final int GAME_MENU_SELECTED_TEXT = 0xDAA520;
+  public static final int GAME_MENU_SELECTED_TEXT = 0xFFDAA520;
+  /**
+   * Subdued gold color for labels in the game menu #0xA6911E
+   */
+  public static final int GAME_MENU_LABEL_TEXT = 0xFFA6911E;
+  /**
+   * Muted text for descriptions and non highlighted text in game menu #0x888888
+   */
+  public static final int GAME_MENU_MUTED_TEXT = 0xFF888888;
   
 }

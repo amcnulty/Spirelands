@@ -35,7 +35,6 @@ public class ButtonPanel {
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Items", 70, 99, () -> {
-      System.out.println("Items Button Clicked");
       this.viewChanger.accept(DisplayPanel.ITEMS);
       resetNavButtons();
     }));

@@ -74,7 +74,7 @@ public class TestLevel extends Level {
     solidEntities.add(chest);
     chest.initLevel(this);
     
-    chest = new Chest(64, 128, Chest.WOODEN_CHEST, null);
+    chest = new Chest(64, 128, Chest.WOODEN_CHEST, Item.COOKIE);
     solidEntities.add(chest);
     chest.initLevel(this);
     

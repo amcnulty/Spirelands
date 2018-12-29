@@ -42,6 +42,14 @@ public class InventoryManager {
   }
   /**
    * Gets all the items by a type. This is returned as a map.
+   * <p>
+   * Example Usage:
+   * </p>
+   * <pre>
+   * {@code
+   * Map<Integer, InventoryReference> items = manager.getItemsByType(Item.ARMOR);
+   * }
+   * </pre>
    * @param type The type of item to fetch results for.
    * @return The map of items based on the given type.
    */

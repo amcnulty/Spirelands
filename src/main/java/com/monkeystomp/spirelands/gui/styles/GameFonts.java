@@ -11,11 +11,25 @@ import java.awt.Font;
  */
 public class GameFonts {
   /**
-   * Game menu button font style.
+   * Game menu label text.
    * @return The font info object.
    */
-  public static FontInfo getGAME_MENU_NAV_BUTTON() {
-    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 27), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
+  public static FontInfo getGAME_MENU_LABEL_TEXT() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 18), new Color(GameColors.GAME_MENU_LABEL_TEXT)));
+  }
+  /**
+   * Game menu muted text.
+   * @return The font info object.
+   */
+  public static FontInfo getGAME_MENU_MUTED_TEXT() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 18), new Color(GameColors.GAME_MENU_MUTED_TEXT)));
+  }
+  /**
+   * Game menu primary text
+   * @return The font info object.
+   */
+  public static FontInfo getGAME_MENU_PRIMARY_TEXT_SMALL() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 18), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu primary text
@@ -30,6 +44,13 @@ public class GameFonts {
    */
   public static FontInfo getGAME_MENU_PRIMARY_TEXT_THIN() {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, 21), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
+  }
+  /**
+   * Game menu button font style.
+   * @return The font info object.
+   */
+  public static FontInfo getGAME_MENU_NAV_BUTTON() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, 27), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
    * Game menu headline thin

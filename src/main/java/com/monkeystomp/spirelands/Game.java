@@ -10,6 +10,8 @@ import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
+import com.monkeystomp.spirelands.inventory.Item;
 import javax.swing.JFrame;
 /**
  * The main class for the application. Spirelands is a 2D RPG game for PC produced by Monkey Stomp Games.
@@ -51,6 +53,14 @@ public class Game extends GLCanvas implements Runnable {
     addKeyListener(key);
     addMouseListener(mouse);
     addMouseMotionListener(mouse);
+    
+    // Temporarily add items to player inventory for testing.
+    InventoryManager manager = InventoryManager.getInventoryManager();
+    for (int i = 0; i < 27; i++) {
+      manager.addToInventory(Item.COOKIE);
+      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
+      manager.addToInventory(Item.BLOOD_AXE);
+    }
   }
 
   private synchronized void start() {
