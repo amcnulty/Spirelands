@@ -22,7 +22,7 @@ public class ItemsView extends DisplayView {
   private ArrayList<InventoryListItem> listItems = new ArrayList<>();
   private int itemCount = 0,
               startingY = 35,
-              spaceBetweenRows = 20;
+              spaceBetweenRows = 16;
   private final Sprite BORDER = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
   
   private void createListItems(Map itemsMap) {

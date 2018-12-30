@@ -5,6 +5,32 @@ package com.monkeystomp.spirelands.gui.styles;
  * @author Aaron Michael McNulty
  */
 public class GameColors {
+  //
+  // Base Colors
+  //
+  /**
+   * Fully transparent color #00000000.
+   */
+  public static final int TRANSPARENT = 0x00000000;
+  /**
+   * White #0xFFFFFFFF
+   */
+  public static final int WHITE = 0xFFFFFFFF;
+  /**
+   * Black #0xFF000000
+   */
+  public static final int BLACK = 0xFF000000;
+  /**
+   * Red #0xFFFF0000
+   */
+  public static final int RED = 0xFFFF0000;
+  /**
+   * Blue #0xFF0000FF
+   */
+  public static final int BLUE = 0xFF0000FF;
+  //
+  // UI, Menu, lightmap, particle colors
+  //
   /**
    * Underline color for health bar #0xFFB20000
    */
@@ -12,7 +38,7 @@ public class GameColors {
   /**
    * Health bar filled color #0xFFFF0000
    */
-  public static final int HEALTH_BAR_FILL = 0xFFFF0000;
+  public static final int HEALTH_BAR_FILL = RED;
   /**
    * Health bar empty color #0xFFFF9999
    */
@@ -24,15 +50,11 @@ public class GameColors {
   /**
    * Mana bar filled color #0xFF0000FF
    */
-  public static final int MANA_BAR_FILL = 0xFF0000FF;
+  public static final int MANA_BAR_FILL = BLUE;
   /**
    * Mana bar empty color #0xFF9999FF
    */
   public static final int MANA_BAR_EMPTY = 0xFF9999FF;
-  /**
-   * Fully transparent color #00000000.
-   */
-  public static final int TRANSPARENT = 0x00000000;
   /**
    * Dark gray used for hovering game menu buttons #0xFF2C2C2C.
    */
@@ -45,10 +67,41 @@ public class GameColors {
    * Border color used in the game menu #0xE2E2E2.
    */
   public static final int GAME_MENU_BORDER = 0xFFE2E2E2;
-  
+  /**
+   * Color of the light map for night time effect #0xFF121212
+   */
+  public static final int LIGHTMAP_COLOR = 0xFF121212;
+  /**
+   * Ember particle color #0xFFF05E1B
+   */
+  public static final int EMBER_PARTICLE_COLOR = 0xFFF05E1B;
+  /**
+   * Gold particle color #0xFFFCC201
+   */
+  public static final int GOLD_PARTICLE_COLOR = 0xFFFCC201;
+  /**
+   * Primary button blue color #0x0079CC
+   */
+  public static final int PRIMARY_BUTTON_BLUE = 0xFF0079CC;
+  /**
+   * Primary button blue hover color #0xFF004E9A
+   */
+  public static final int PRIMARY_BUTTON_BLUE_HOVER = 0xFF004E9A;
+  /**
+   * Primary button blue down color #0xFF001366
+   */
+  public static final int PRIMARY_BUTTON_BLUE_DOWN = 0xFF001366;
+  /**
+   * Dialog box background color #0xFFEFEFEF
+   */
+  public static final int DIALOG_BOX_BACKGROUND = 0xFFEFEFEF;
   //
   //  Font Colors
   //
+  /**
+   * Primary text color for light backgrounds #0xFF323232
+   */
+  public static final int DARK_TEXT = 0xFF323232;
   /**
    * Default text color in the game menu #0xF1F1F1
    */
@@ -61,6 +114,10 @@ public class GameColors {
    * Subdued gold color for labels in the game menu #0xA6911E
    */
   public static final int GAME_MENU_LABEL_TEXT = 0xFFA6911E;
+  /**
+   * Subdued gold color for labels in the game menu #0xFF6B5600
+   */
+  public static final int GAME_MENU_LABEL_TEXT_DARK = 0xFF6B5600;
   /**
    * Muted text for descriptions and non highlighted text in game menu #0x888888
    */

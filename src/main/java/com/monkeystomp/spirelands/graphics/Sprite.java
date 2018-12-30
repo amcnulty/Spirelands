@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.graphics;
 import com.jogamp.opengl.GLProfile;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -25,16 +26,20 @@ public class Sprite {
   /**
    * Dust particle for floating particles on level.
    */
-  public static final Sprite DUST = new Sprite(2, 2, 0xFFFFFFFF);
+  public static final Sprite DUST = new Sprite(2, 2, GameColors.WHITE);
   /**
    * Ember particle for floating particles on level.
    */
-  public static final Sprite EMBER = new Sprite(2, 2, 0xFFF05E1B);
+  public static final Sprite EMBER = new Sprite(2, 2, GameColors.EMBER_PARTICLE_COLOR);
   /**
    * Gold pieces for chest opening effect.
    */
-  public static final Sprite GOLD = new Sprite(2, 2, 0xFFFCC201);
+  public static final Sprite GOLD = new Sprite(2, 2, GameColors.GOLD_PARTICLE_COLOR);
   // Objects
+  /**
+   * The gold indicator icon.
+   */
+  public static final Sprite GOLD_INDICATOR = new Sprite("./resources/gui/gold_indicator.png");
   /**
    * Wooden stairs that turn left at the end
    */
@@ -80,7 +85,7 @@ public class Sprite {
   /**
    * The transition sprite that is the size of the entire screen.
    */
-  public static final Sprite TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), 0xFF000000);
+  public static final Sprite TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), GameColors.BLACK);
   // GUI
   /**
    * The background and border for the game menu.

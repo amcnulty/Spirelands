@@ -140,7 +140,8 @@ public class Game extends GLCanvas implements Runnable {
     GLCapabilities caps = new GLCapabilities(glp);
     Game game = new Game(caps);
     
-//    game.frame.setUndecorated(true);
+    game.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+    game.frame.setUndecorated(true);
     game.frame.setResizable(true);
     game.frame.add(game);
     game.frame.pack();

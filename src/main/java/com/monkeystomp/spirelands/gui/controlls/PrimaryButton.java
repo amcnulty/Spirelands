@@ -5,9 +5,9 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -35,18 +35,20 @@ public class PrimaryButton extends Button {
   }
   
   private void setFontInfo() {
-    Font font = new Font(Font.SANS_SERIF, Font.BOLD, 16);
-    Rectangle2D rect = font.getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    Rectangle2D rect = GameFonts.getPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = new FontInfo(font, Color.WHITE, buttonText, fontX, fontY);
+    fontInfo = GameFonts.getPrimaryButtonText();
+    fontInfo.setText(buttonText);
+    fontInfo.setX(fontX);
+    fontInfo.setY(fontY);
   }
 
   private void createButtonSprites() {
-    button = new Sprite(width, height, 0xFF0079CC);
-    buttonHover = new Sprite(width, height, 0xFF004E9A);
-    buttonDown = new Sprite(width, height, 0xFF001366);
+    button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
+    buttonHover = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_HOVER);
+    buttonDown = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_DOWN);
     currentButton = button;
   }
   

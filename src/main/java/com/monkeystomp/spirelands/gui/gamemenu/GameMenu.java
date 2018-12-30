@@ -8,8 +8,7 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
-import java.awt.Color;
-import java.awt.Font;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
 
 /**
  * The Game Menu is the menu screen that opens to display party information, inventory, level information and other game information.
@@ -21,7 +20,7 @@ public class GameMenu {
   private final ButtonPanel BUTTON_PANEL = new ButtonPanel();
   private final GoldPanel GOLD_PANEL = new GoldPanel();
   private final DisplayPanel DISPLAY_PANEL = new DisplayPanel();
-  private final FontInfo levelName = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.WHITE);
+  private final FontInfo levelName = GameFonts.getlightText_bold_23();
   private final SoundEffects sfx = new SoundEffects();
   /**
    * Creates a GameMenu object used for displaying the game inventory and party information menu.
