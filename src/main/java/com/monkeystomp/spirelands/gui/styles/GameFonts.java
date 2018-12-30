@@ -113,8 +113,6 @@ public class GameFonts {
   
   
   private static int getAdjustedFontSize(int baseSize) {
-    System.out.println("Getting adjusted font size and returning : " + (int)(baseSize * Screen.getScaleY() / 3.0));
-    System.out.println("Screen.getScaleY: " + Screen.getScaleY());
     return (int)(baseSize * Screen.getScaleY() / 3.0);
   }
   
