@@ -75,7 +75,7 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(22)), new Color(GameColors.DARK_TEXT)));
   }
   /**
-   * Dark text for light backgrounds.
+   * Light text for darks backgrounds.
    * @return The font info object.
    */
   public static FontInfo getlightText_bold_23() {

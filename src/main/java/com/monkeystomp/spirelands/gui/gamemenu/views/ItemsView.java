@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
+import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
@@ -18,26 +19,36 @@ import java.util.Set;
  */
 public class ItemsView extends DisplayView {
   
-  private final InventoryManager MANAGER = InventoryManager.getInventoryManager();
+  private final InventoryManager manager = InventoryManager.getInventoryManager();
   private ArrayList<InventoryListItem> listItems = new ArrayList<>();
   private int itemCount = 0,
               startingY = 35,
               spaceBetweenRows = 16;
-  private final Sprite BORDER = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
+  private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
+  private final ItemDetailCard itemDetailCard = new ItemDetailCard();
+  
+  private void showItemDetails(Item item) {
+    itemDetailCard.setItem(item);
+  }
   
   private void createListItems(Map itemsMap) {
     listItems = new ArrayList<>();
     Set<?> keys = itemsMap.keySet();
     keys.forEach(key -> {
-      listItems.add(new InventoryListItem((InventoryReference)itemsMap.get(key), startingY + listItems.size() * this.spaceBetweenRows));
+      listItems.add(new InventoryListItem((InventoryReference)itemsMap.get(key), startingY + listItems.size() * this.spaceBetweenRows, item -> showItemDetails(item)));
     });
   }
   
   private void checkItemCount() {
-    if (itemCount != MANAGER.getItemsByType(Item.EQUIPMENT).size()) {
-      createListItems(MANAGER.getItemsByType(Item.EQUIPMENT));
-      itemCount = MANAGER.getItemsByType(Item.EQUIPMENT).size();
+    if (itemCount != manager.getItemsByType(Item.EQUIPMENT).size()) {
+      createListItems(manager.getItemsByType(Item.EQUIPMENT));
+      itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
     }
+  }
+  
+  @Override
+  public void exitingView() {
+    itemDetailCard.clearCard();
   }
   
   @Override
@@ -46,6 +57,7 @@ public class ItemsView extends DisplayView {
     for (InventoryListItem item: listItems) {
       item.update();
     }
+    itemDetailCard.update();
   }
   
   @Override
@@ -53,7 +65,8 @@ public class ItemsView extends DisplayView {
     for (InventoryListItem item: listItems) {
       item.render(screen, gl);
     }
-    screen.renderSprite(gl, 306, 23, BORDER, false);
+    screen.renderSprite(gl, 306, 23, border, false);
+    itemDetailCard.render(screen, gl);
   }
   
 }

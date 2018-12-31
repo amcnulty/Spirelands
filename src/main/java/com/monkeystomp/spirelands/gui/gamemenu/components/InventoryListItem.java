@@ -9,6 +9,7 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.util.function.Consumer;
 
 /**
  *
@@ -28,8 +29,9 @@ public class InventoryListItem {
                           amountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private GameMenuPrimaryButton infoButton;
   private PrimaryButton useButton;
+  private Consumer<Item> consumer;
 
-  public InventoryListItem(InventoryReference ref, int y) {
+  public InventoryListItem(InventoryReference ref, int y, Consumer<Item> consumer) {
     this.inventoryReference = ref;
     this.item = ref.getItem();
     this.amount = ref.getAmount();
@@ -37,6 +39,7 @@ public class InventoryListItem {
     this.name = item.getTitle();
     this.description = item.getDescription();
     this.Y = y;
+    this.consumer = consumer;
     setFonts();
     addButtons();
   }
@@ -52,7 +55,7 @@ public class InventoryListItem {
   }
   
   private void addButtons() {
-    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> {item.useItem();});
+    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> consumer.accept(item));
     useButton = new PrimaryButton("Use", X + 126, Y, 18, 11, () -> {item.useItem();});
   }
   

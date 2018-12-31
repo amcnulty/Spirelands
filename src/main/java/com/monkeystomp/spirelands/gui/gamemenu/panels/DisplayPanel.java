@@ -48,6 +48,7 @@ public class DisplayPanel {
    * @param viewKey The key for the type of view to display.
    */
   public void changeView(String viewKey) {
+    currentView.exitingView();
     setCurrentView(VIEW_MAP.get(viewKey));
   }
   /**

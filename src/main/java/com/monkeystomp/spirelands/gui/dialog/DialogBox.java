@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
+import com.monkeystomp.spirelands.gui.util.TextUtil;
 import com.monkeystomp.spirelands.input.ICallback;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
@@ -23,10 +24,8 @@ public class DialogBox {
                     DIALOG_PADDING_BOTTOM = 12,
                     MESSAGE_SPEED = 3,
                     BACKGROUND_COLOR = GameColors.DIALOG_BOX_BACKGROUND;
-  private final String  DOWN_TRIANGLE = "\u25BE",
-                        TIMES = "\u2A2F";
-  private String[]  messages,
-                    words;
+  private final String  DOWN_TRIANGLE = "\u25BE";
+  private String[] messages;
   private ArrayList<String> lineMessages = new ArrayList<>(),
                             displayLineMessages = new ArrayList<>();
   private boolean messageBuilding = false,
@@ -94,45 +93,21 @@ public class DialogBox {
     displayLineMessages.clear();
     substringIndex = 0;
     renderLineIndex = 0;
-    words = messages[messageIndex].split(" ");
-    setLines(0, 0);
+    lineMessages = TextUtil.createWrappedText(messages[messageIndex], GameFonts.getDarkText_bold_22().getFont(), DIALOG_WIDTH - (DIALOG_PADDING_SIDES * 2));
+    for (int i = 0; i < lineMessages.size(); i++) {
+      displayLineMessages.add("");
+      FontInfo info = GameFonts.getDarkText_bold_22();
+      info.setText("");
+      info.setX(DIALOG_LEFT + DIALOG_PADDING_SIDES);
+      info.setY(DIALOG_TOP + DIALOG_PADDING_TOP);
+      lines.add(info);
+    }
     createBackground();
     setSymbol();
     updateFontInfo();
     messageBuilding = true;
   }
 
-  private void setLines(int lineIndex, int wordIndex) {
-    FontInfo info = GameFonts.getDarkText_bold_22();
-    info.setText("");
-    info.setX(DIALOG_LEFT + DIALOG_PADDING_SIDES);
-    info.setY(DIALOG_TOP + DIALOG_PADDING_TOP);
-    lines.add(info);
-    lineMessages.add("");
-    displayLineMessages.add("");
-    double lineTotal = 0;
-    String  testString = "";
-    for (int i = wordIndex; i < words.length; i++) {
-      if (lineMessages.get(lineIndex).length() == 0) {
-        testString += words[i];
-        lineTotal += info.getFont().getStringBounds(words[i], frc).getWidth() / Screen.getScaleX();
-      }
-      else {
-        testString += " " + words[i];
-        lineTotal += info.getFont().getStringBounds(" " + words[i], frc).getWidth() / Screen.getScaleX();
-      }
-      if (lineTotal < (DIALOG_WIDTH - (DIALOG_PADDING_SIDES * 2))) {
-        lineMessages.set(lineIndex, testString);
-      }
-      else {
-        if (i < words.length) {
-          setLines(++lineIndex, i);
-        }
-        break;
-      }
-    }
-  }
-  
   private void createBackground() {
     dialogLineHeight = (int)(lines.get(0).getFont().getStringBounds("random string", frc).getHeight() / Screen.getScaleY());
     dialogCurrentHeight = dialogLineHeight * lineMessages.size() + DIALOG_PADDING_TOP + DIALOG_PADDING_BOTTOM;

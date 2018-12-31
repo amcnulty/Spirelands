@@ -25,6 +25,10 @@ public abstract class DisplayView {
    */
   protected final int LEFT = 124;
   /**
+   * Life cycle method that is called when view is about to close.
+   */
+  public void exitingView() {}
+  /**
    * Updates the display view.
    */
   public void update() {}

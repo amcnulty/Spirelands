@@ -1,8 +1,10 @@
 package com.monkeystomp.spirelands.gui.fonts;
 
 import com.jogamp.opengl.util.awt.TextRenderer;
+import com.monkeystomp.spirelands.graphics.Screen;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.font.FontRenderContext;
 
 /**
  * Font info is a configuration class that holds information about a font to be rendered.
@@ -10,13 +12,14 @@ import java.awt.Font;
  */
 public class FontInfo {
 
-  private final Font FONT;
-  private final TextRenderer TEXT_RENDERER;
+  private final Font font;
+  private final TextRenderer textRenderer;
   private FontStyle fontStyle;
   private Color color;
   private String  text;
   private int x,
               y;
+  private static FontRenderContext frc = new FontRenderContext(null, true, true);
   /**
    * Creates a FontInfo object with the specified configuration.
    * @param font The font object to set.
@@ -26,8 +29,8 @@ public class FontInfo {
    * @param y The y location to render this text.
    */
   public FontInfo(Font font, Color color, String text, int x, int y) {
-    this.FONT = font;
-    this.TEXT_RENDERER = new TextRenderer(font);
+    this.font = font;
+    this.textRenderer = new TextRenderer(font);
     this.color = color;
     this.text = text;
     if (this.text == null) this.text = "";
@@ -36,24 +39,30 @@ public class FontInfo {
   }
   
   public FontInfo(Font font, Color color) {
-    this.FONT = font;
-    this.TEXT_RENDERER = new TextRenderer(font);
+    this.font = font;
+    this.textRenderer = new TextRenderer(font);
     this.color = color;
   }
   
   public FontInfo(FontStyle fontStyle) {
     this.fontStyle = fontStyle;
-    this.TEXT_RENDERER = new TextRenderer(fontStyle.getFONT());
-    this.FONT = fontStyle.getFONT();
+    this.textRenderer = new TextRenderer(fontStyle.getFONT());
+    this.font = fontStyle.getFONT();
     this.color = fontStyle.getCOLOR();
+  }
+  /**
+   * Centers the text horizontally around the x coordinate.
+   */
+  public void centerText() {
+    x -= (int)((font.getStringBounds(text, frc).getBounds().getWidth() / Screen.getScaleX()) / 2);
   }
 
   public Font getFont() {
-    return FONT;
+    return font;
   }
   
   public TextRenderer getTextRenderer() {
-    return TEXT_RENDERER;
+    return textRenderer;
   }
 
   public String getText() {

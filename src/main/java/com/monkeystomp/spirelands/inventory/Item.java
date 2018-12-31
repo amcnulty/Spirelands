@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.inventory;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.util.HashMap;
 
 /**
  * The Item class holds information about game items and has an interface for interacting with the inventory for the item.
@@ -26,6 +27,13 @@ public class Item {
                           ARMOR = 1,
                           EQUIPMENT = 2,
                           SPECIAL = 3;
+  private static HashMap<Integer, String> typeMap = new HashMap<>();
+  static {
+    typeMap.put(WEAPON, "Weapon");
+    typeMap.put(ARMOR, "Armor");
+    typeMap.put(EQUIPMENT, "Equipment");
+    typeMap.put(SPECIAL, "Special");
+  }
   // Item declarations
   /**
    * A basic health potion. (EQUIPMENT)
@@ -170,6 +178,10 @@ public class Item {
   
   public int getType() {
     return type;
+  }
+  
+  public String getTypeAsString(int type) {
+    return typeMap.get(type);
   }
 
   public String getDescription() {

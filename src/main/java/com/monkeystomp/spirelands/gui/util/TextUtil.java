@@ -21,6 +21,7 @@ public class TextUtil {
     TextUtil.font = font;
     TextUtil.words = message.split(" ");
     TextUtil.lineWidth = lineWidth;
+    lines.clear();
     createLines(0, 0);
     return lines;
   }
