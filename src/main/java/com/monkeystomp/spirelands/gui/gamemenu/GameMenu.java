@@ -17,16 +17,17 @@ import com.monkeystomp.spirelands.gui.styles.GameFonts;
 public class GameMenu {
   
   private final Sprite background = Sprite.GAME_MENU_BACKGROUND;
-  private final ButtonPanel BUTTON_PANEL = new ButtonPanel();
-  private final GoldPanel GOLD_PANEL = new GoldPanel();
-  private final DisplayPanel DISPLAY_PANEL = new DisplayPanel();
+  private final ButtonPanel buttonPanel = new ButtonPanel();
+  private final GoldPanel goldPanel = new GoldPanel();
+  private final DisplayPanel displayPanel = new DisplayPanel();
   private final FontInfo levelName = GameFonts.getlightText_bold_23();
   private final SoundEffects sfx = new SoundEffects();
   /**
    * Creates a GameMenu object used for displaying the game inventory and party information menu.
    */
   public GameMenu() {
-    BUTTON_PANEL.setViewChanger(key -> DISPLAY_PANEL.changeView(key));
+    buttonPanel.setViewChanger(key -> displayPanel.changeView(key));
+    buttonPanel.setNextViewChanger(key -> displayPanel.prepareNextViewWithCharacter(key));
   }
   /**
    * Sets the level name to display in the lower left panel.
@@ -48,8 +49,8 @@ public class GameMenu {
    */
   public void closeMenu() {
     playMenuCloseSound();
-    BUTTON_PANEL.resetNavButtons();
-    DISPLAY_PANEL.changeView(DisplayPanel.DEFAULT);
+    buttonPanel.resetNavButtons();
+    displayPanel.changeView(DisplayPanel.DEFAULT);
   }
 
   private void playMenuOpenSound() {
@@ -64,8 +65,8 @@ public class GameMenu {
    */
   public void update() {
     // Update the panels
-    BUTTON_PANEL.update();
-    DISPLAY_PANEL.update();
+    buttonPanel.update();
+    displayPanel.update();
   }
   /**
    * Renders the game menu to the screen.
@@ -76,9 +77,9 @@ public class GameMenu {
     // Render the background 
     screen.renderSprite(gl, 0, 0, background, false);
     // Render the panels
-    BUTTON_PANEL.render(screen, gl);
-    GOLD_PANEL.render(screen, gl);
-    DISPLAY_PANEL.render(screen, gl);
+    buttonPanel.render(screen, gl);
+    goldPanel.render(screen, gl);
+    displayPanel.render(screen, gl);
     // Render the level name
     screen.renderFonts(levelName);
   }

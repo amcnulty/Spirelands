@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.components.PartyMemberButton;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * The Default View is the first view that is seen when opening the game menu. It is used to display the current party and a brief snapshot of their health, magic and level.
@@ -19,6 +20,7 @@ public class DefaultView extends DisplayView {
                     VERTICAL_SPACING = 52;
   private final CharacterManager CHARACTER_MANAGER = CharacterManager.getCharacterManager();
   private ArrayList<PartyMemberButton> buttons = new ArrayList<>();
+  private Consumer<Character> openViewWithCharacter;
   /**
    * Creates a DefaultView object that displays the party member buttons.
    */
@@ -36,7 +38,11 @@ public class DefaultView extends DisplayView {
   }
 
   private void handleButtonClick(Character character) {
-    System.out.println(character.getName() + " button was clicked!");
+    openViewWithCharacter.accept(character);
+  }
+  
+  public void setPartyMemberButtonPressHandler(Consumer<Character> consumer) {
+    this.openViewWithCharacter = consumer;
   }
   /**
    * Activates the party member buttons.
@@ -54,6 +60,11 @@ public class DefaultView extends DisplayView {
       button.setDisabled(true);
     }
   }
+  
+  @Override
+  public void exitingView() {
+    disableCharacterButtons();
+  } 
   
   @Override
   public void update() {

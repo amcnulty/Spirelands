@@ -92,6 +92,10 @@ public class Sprite {
    */
   public static final Sprite GAME_MENU_BACKGROUND = new Sprite("./resources/gui/game_menu_background.png");
   /**
+   * The right arrow that appears next to the play buttons when active.
+   */
+  public static final Sprite GAME_MENU_RIGHT_ARROW = new Sprite("./resources/gui/arrow.png");
+  /**
    * Creates a Sprite object of equal width and height from a specific point cut from a sprite sheet.
    * @param size The width and height in pixels of the sprite to cut from the given sprite sheet.
    * @param x The x coordinate of the sprite on the sprite sheet in sprite precision.

@@ -16,16 +16,15 @@ public class WeaponView extends DisplayView {
   public WeaponView() {
     fontInfo.setX(128);
     fontInfo.setY(50);
-    fontInfo.setText("Weapon View Works!");
   }
   
   @Override
   public void update() {
-    
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
+    fontInfo.setText("Showing weapons for :" + this.character.getName());
     screen.renderFonts(fontInfo);
   }
 
