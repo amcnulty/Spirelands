@@ -23,7 +23,7 @@ public class ButtonPanel {
 
   private void createNavButtons() {
     navButtons.add(new GameMenuNavButton("Weapons", 70, 39, () -> {
-      System.out.println("Item Button Clicked");
+      this.viewChanger.accept(DisplayPanel.WEAPON);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Armor", 70, 59, () -> {

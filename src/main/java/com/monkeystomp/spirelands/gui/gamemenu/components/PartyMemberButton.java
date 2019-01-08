@@ -74,6 +74,7 @@ public class PartyMemberButton extends Button {
     button = new Sprite(width, height, GameColors.TRANSPARENT);
     buttonHover = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_HOVER);
     buttonDown = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_DOWN);
+    disabledButton = button;
     currentButton = button;
   }
   

@@ -74,6 +74,7 @@ public class GameMenuNavButton extends Button {
     super.click();
     setBackground();
     FONT_INFO.setColor(new Color(SELECTED_TEXT));
+    setDisabled(true);
   }
   
   @Override
@@ -84,6 +85,7 @@ public class GameMenuNavButton extends Button {
   public void removeBackground() {
     FONT_INFO.setColor(new Color(DEFAULT_TEXT));
     createButtonSprites();
+    setDisabled(false);
   }
   
   @Override

@@ -30,12 +30,29 @@ public class DefaultView extends DisplayView {
     int i = 0;
     for (Character partyMember : CHARACTER_MANAGER.getPartyMembers()) {
       buttons.add(new PartyMemberButton(partyMember, PLAYER_BUTTON_X, PLAYER_BUTTON_STARTING_Y + VERTICAL_SPACING * i, () -> {handleButtonClick(partyMember);}));
+      buttons.get(i).setDisabled(true);
       i++;
     }
   }
 
   private void handleButtonClick(Character character) {
     System.out.println(character.getName() + " button was clicked!");
+  }
+  /**
+   * Activates the party member buttons.
+   */
+  public void activateCharacterButtons() {
+    for (PartyMemberButton button: buttons) {
+      button.setDisabled(false);
+    }
+  }
+  /**
+   * Disables the party member buttons.
+   */
+  public void disableCharacterButtons() {
+    for (PartyMemberButton button: buttons) {
+      button.setDisabled(true);
+    }
   }
   
   @Override

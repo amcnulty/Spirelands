@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.WeaponView;
 import java.util.HashMap;
 
 /**
@@ -20,10 +21,14 @@ public class DisplayPanel {
    * The items view.
    */
   public static final String ITEMS = "items";
+  /**
+   * The weapon view.
+   */
+  public static final String WEAPON = "weapon";
   
   private final DisplayView DEFAULT_VIEW = new DefaultView();
   private final DisplayView ITEMS_VIEW = new ItemsView();
-  // private final DisplayPanelView WEAPONS_VIEW = new DisplayPanelView();
+   private final DisplayView WEAPON_VIEW = new WeaponView();
   // private final DisplayPanelView MAGIC_VIEW = new DisplayPanelView();
   private DisplayView currentView;
   private final HashMap<String, DisplayView> VIEW_MAP = new HashMap<>();
@@ -38,6 +43,7 @@ public class DisplayPanel {
   private void createMap() {
     VIEW_MAP.put(DEFAULT, DEFAULT_VIEW);
     VIEW_MAP.put(ITEMS, ITEMS_VIEW);
+    VIEW_MAP.put(WEAPON, WEAPON_VIEW);
   }
 
   private void setCurrentView(DisplayView view) {
