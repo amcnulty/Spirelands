@@ -147,5 +147,21 @@ public class Character {
   public void setThumbnail(Sprite thumbnail) {
     this.thumbnail = thumbnail;
   }
+  /**
+   * Increases the health stat of this character. Health cannot be increased more than the healthMax stat.
+   * @param amount The amount to increase the health by.
+   */
+  public void increaseHealth(int amount) {
+    health += amount;
+    if (health > healthMax) health = healthMax;
+  }
+  /**
+   * Decreases the health of this character. Health cannot be decreased below zero.
+   * @param amount The amount to decrease the health by.
+   */
+  public void decreaseHealth(int amount) {
+    health -= amount;
+    if (health < 0) health = 0;
+  }
     
 }

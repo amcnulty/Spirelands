@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.GameMenuPrimaryButton;
@@ -19,6 +20,7 @@ public class InventoryListItem {
   
   private final Sprite thumbnail;
   private final String  name,
+                        primaryButtonText,
                         description;
   private int amount;
   private final int X = 140,
@@ -31,12 +33,13 @@ public class InventoryListItem {
   private PrimaryButton useButton;
   private Consumer<Item> consumer;
 
-  public InventoryListItem(InventoryReference ref, int y, Consumer<Item> consumer) {
+  public InventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> consumer) {
     this.inventoryReference = ref;
     this.item = ref.getItem();
     this.amount = ref.getAmount();
     this.thumbnail = item.getThumbnail();
     this.name = item.getTitle();
+    this.primaryButtonText = primaryButtonText;
     this.description = item.getDescription();
     this.Y = y;
     this.consumer = consumer;
@@ -56,7 +59,7 @@ public class InventoryListItem {
   
   private void addButtons() {
     infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> consumer.accept(item));
-    useButton = new PrimaryButton("Use", X + 126, Y, 18, 11, () -> {item.useItem();});
+    useButton = new PrimaryButton(primaryButtonText, X + 126, Y, 18, 11, () -> {item.setCharacter(CharacterManager.getCharacterManager().getPartyMembers().get(0));item.useItem();});
   }
   
   private void checkAmount() {

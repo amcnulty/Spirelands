@@ -35,7 +35,7 @@ public class ItemsView extends DisplayView {
     listItems = new ArrayList<>();
     Set<?> keys = itemsMap.keySet();
     keys.forEach(key -> {
-      listItems.add(new InventoryListItem((InventoryReference)itemsMap.get(key), startingY + listItems.size() * this.spaceBetweenRows, item -> showItemDetails(item)));
+      listItems.add(new InventoryListItem((InventoryReference)itemsMap.get(key), startingY + listItems.size() * this.spaceBetweenRows, "Use", item -> showItemDetails(item)));
     });
   }
   

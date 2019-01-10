@@ -29,7 +29,7 @@ import com.monkeystomp.spirelands.input.ICallback;
  */
 public class ItemBuilder {
   /**
-   * The dispaly title of the item.
+   * The display title of the item.
    */
   public String title;
   /**
@@ -110,7 +110,21 @@ public class ItemBuilder {
    * Builds this item by calling the Item class constructor with this instance of ItemBuilder as the argument.
    * @return A newly created Item instance.
    */
+  public <T extends Item> T build(Class<T> itemClass) {
+//    return new Item(this);
+    try {
+      return itemClass.getConstructor(this.getClass()).newInstance(this);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
+    return null;
+//    return itemClass.cast(new Item(this));
+//    return new itemClass(this);
+  }
+  
   public Item build() {
     return new Item(this);
   }
+  
 }
