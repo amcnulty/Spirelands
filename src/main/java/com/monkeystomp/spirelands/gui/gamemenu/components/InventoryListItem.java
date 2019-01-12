@@ -31,9 +31,9 @@ public class InventoryListItem {
                           amountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private GameMenuPrimaryButton infoButton;
   private PrimaryButton useButton;
-  private Consumer<Item> consumer;
+  private final Consumer<Item> IShowItemDetails;
 
-  public InventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> consumer) {
+  public InventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> IShowItemDetails) {
     this.inventoryReference = ref;
     this.item = ref.getItem();
     this.amount = ref.getAmount();
@@ -42,7 +42,7 @@ public class InventoryListItem {
     this.primaryButtonText = primaryButtonText;
     this.description = item.getDescription();
     this.Y = y;
-    this.consumer = consumer;
+    this.IShowItemDetails = IShowItemDetails;
     setFonts();
     addButtons();
   }
@@ -52,13 +52,13 @@ public class InventoryListItem {
     label.setX(X + 12);
     label.setY(Y);
     amountFont.setText("" + amount);
-    if (amount < 10) amountFont.setX(X + 108);
-    else amountFont.setX(X + 105);
+    amountFont.setX(X + 112);
     amountFont.setY(Y);
+    amountFont.rightAlignText();
   }
   
   private void addButtons() {
-    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> consumer.accept(item));
+    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> IShowItemDetails.accept(item));
     useButton = new PrimaryButton(primaryButtonText, X + 126, Y, 18, 11, () -> {item.setCharacter(CharacterManager.getCharacterManager().getPartyMembers().get(0));item.useItem();});
   }
   

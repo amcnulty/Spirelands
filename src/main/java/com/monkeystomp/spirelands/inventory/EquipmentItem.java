@@ -1,9 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.input.ICallback;
+import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Set;
 
 /**
  *
@@ -11,25 +10,32 @@ import java.util.Set;
  */
 public class EquipmentItem extends Item {
   
-  private final String  healthRestore = "Health Restore";
-  private final HashMap<String, ICallback> actionMap = new HashMap<>();
+  private final ArrayList<ICallback> actions = new ArrayList<>();
   
   public EquipmentItem(ItemBuilder builder) {
     super(builder.type(EQUIPMENT));
   }
   
   public void setHealingPoints(int points) {
-    actionMap.put(healthRestore, () -> {
-      getCharacter().increaseHealth(points);
-    });
+    actions.add(() -> getCharacter().increaseHealth(points));
+    attributes.add(new ItemAttribute(ItemAttribute.HEALTH_RESTORE, points));
+  }
+  
+  public void setManaRestorePoints(int points) {
+    actions.add(() -> getCharacter().increaseMana(points));
+    attributes.add(new ItemAttribute(ItemAttribute.MANA_RESTORE, points));
+  }
+
+  @Override
+  public ArrayList<ItemAttribute> getAttributes() {
+    return attributes;
   }
   
   @Override
   public void useItem() {
-    Set<String> keys = actionMap.keySet();
-    keys.forEach(key -> {
-      actionMap.get(key).execute();
-    });
+    for (ICallback action: actions) {
+      action.execute();
+    }
     INVENTORY_MANAGER.removeFromInventory(this);
   }
   

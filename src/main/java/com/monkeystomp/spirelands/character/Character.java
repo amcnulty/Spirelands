@@ -163,5 +163,21 @@ public class Character {
     health -= amount;
     if (health < 0) health = 0;
   }
+  /**
+   * Increases the mana of this character. Mana cannot be increased more than the manaMax stat.
+   * @param amount The amount to increase the mana by.
+   */
+  public void increaseMana(int amount) {
+    mana += amount;
+    if (mana > manaMax) mana = manaMax;
+  }
+  /**
+   * Decreases the mana of this character. Mana cannot be decreased below zero.
+   * @param amount The amount to decrease the mana by.
+   */
+  public void decreaseMana(int amount) {
+    mana -= amount;
+    if (mana < 0) mana = 0;
+  }
     
 }

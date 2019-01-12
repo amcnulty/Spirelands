@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.gui.util.TextUtil;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.inventory.ItemAttribute;
 import java.util.ArrayList;
 
 /**
@@ -15,25 +16,24 @@ import java.util.ArrayList;
  */
 public class ItemDetailCard {
   
-  private Item item;
   private Sprite thumbnail;
-  private String  title,
-                  description,
-                  type,
-                  noSelectedItem = "Select an item to view more information about it here.";
-  private FontInfo  titleFont = GameFonts.getlightText_bold_23(),
-                    descriptionFont = GameFonts.getGAME_MENU_MUTED_TEXT(),
-                    typeFont = GameFonts.getGAME_MENU_LABEL_TEXT(),
-                    priceFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
-  private int price,
-              cardWidth = 89,
-              sidePadding = 5,
-              cardCenterHoriz = 351,
-              cardCenterVert = 100,
-              cardLeft = 307;
+  private final String noSelectedItem = "Select an item to view more information about it here.";
+  private final FontInfo  titleFont = GameFonts.getlightText_bold_23(),
+                          descriptionFont = GameFonts.getGAME_MENU_MUTED_TEXT(),
+                          typeFont = GameFonts.getGAME_MENU_LABEL_TEXT(),
+                          priceFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
+  private final int price = 0,
+                    cardWidth = 89,
+                    sidePadding = 5,
+                    cardCenterHoriz = 351,
+                    cardCenterVert = 100,
+                    cardLeft = 307,
+                    cardRight = cardLeft + cardWidth;
   private boolean itemSet = false;
-  private ArrayList<FontInfo> noSelectedInfoList = new ArrayList<>(),
-                              itemDescriptionList = new ArrayList<>();
+  private final ArrayList<FontInfo> noSelectedInfoList = new ArrayList<>(),
+                                    itemDescriptionList = new ArrayList<>(),
+                                    attributeLabelList = new ArrayList<>(),
+                                    attributeValueList = new ArrayList<>();
   
   public ItemDetailCard() {
     ArrayList<String> lines = TextUtil.createWrappedText(noSelectedItem, GameFonts.getGAME_MENU_MUTED_TEXT().getFont(), cardWidth - (2 * sidePadding));
@@ -47,9 +47,7 @@ public class ItemDetailCard {
   }
   
   public void setItem(Item item) {
-//    this.item = item;
     this.thumbnail = item.getThumbnail();
-//    this.title = item.getTitle();
     titleFont.setText(item.getTitle());
     titleFont.setX(cardCenterHoriz);
     titleFont.setY(30);
@@ -74,9 +72,24 @@ public class ItemDetailCard {
       itemDescriptionList.add(info);
     }
     
-//    this.description = item.getDescription();
-//    this.price = item.getPrice();
-//    this.type = item.getTypeAsString(item.getType());
+    ArrayList<ItemAttribute> attributes = item.getAttributes();
+    attributeLabelList.clear();
+    attributeValueList.clear();
+    for (int i = 0; i < attributes.size(); i++) {
+      FontInfo labelInfo = GameFonts.getGAME_MENU_LABEL_TEXT();
+      labelInfo.setText(attributes.get(i).getLabel() + ":");
+      labelInfo.setX(cardLeft + sidePadding);
+      labelInfo.setY(120 + i * 7);
+      attributeLabelList.add(labelInfo);
+      
+      FontInfo valueInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT();
+      valueInfo.setText(attributes.get(i).getValue());
+      valueInfo.setX(cardRight - sidePadding);
+      valueInfo.setY(120 + i * 7);
+      valueInfo.rightAlignText();
+      attributeValueList.add(valueInfo);
+    }
+    
     itemSet = true;
   }
   
@@ -93,6 +106,12 @@ public class ItemDetailCard {
       screen.renderSprite(gl, cardCenterHoriz - thumbnail.getWidth() / 2, 40, thumbnail, false);
       screen.renderFonts(typeFont);
       for (FontInfo info: itemDescriptionList) {
+        screen.renderFonts(info);
+      }
+      for (FontInfo info: attributeLabelList) {
+        screen.renderFonts(info);
+      }
+      for (FontInfo info: attributeValueList) {
         screen.renderFonts(info);
       }
     }

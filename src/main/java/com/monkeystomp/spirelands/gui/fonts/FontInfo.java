@@ -56,6 +56,12 @@ public class FontInfo {
   public void centerText() {
     x -= (int)((font.getStringBounds(text, frc).getBounds().getWidth() / Screen.getScaleX()) / 2);
   }
+  /**
+   * Right aligns text so the right edge is at the x coordinate.
+   */
+  public void rightAlignText() {
+    x -= (int) font.getStringBounds(text, frc).getBounds().getWidth() / Screen.getScaleX();
+  }
 
   public Font getFont() {
     return font;

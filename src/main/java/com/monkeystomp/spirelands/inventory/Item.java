@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -21,6 +22,7 @@ public class Item {
   private static int nextId = 0;
   private Character character;
   private final ICallback itemAction;
+  protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
   protected static final InventoryManager INVENTORY_MANAGER = InventoryManager.getInventoryManager();
   private static final int  SPRITE_SIZE = 16,
                             NO_PRICE = -1;
@@ -68,6 +70,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     COOKIE.setHealingPoints(5);
+    COOKIE.setManaRestorePoints(5);
   }
   /**
    * Basic leather helmet. (ARMOR)
@@ -188,6 +191,10 @@ public class Item {
    */
   public String getTypeAsString(int type) {
     return TYPE_MAP.get(type);
+  }
+  
+  public ArrayList<ItemAttribute> getAttributes() {
+    return attributes;
   }
 
   public String getDescription() {
