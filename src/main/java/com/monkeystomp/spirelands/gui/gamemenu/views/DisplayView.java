@@ -32,9 +32,9 @@ public abstract class DisplayView {
   protected Character character;
   /**
    * Sets the consumer for changing views with a Character reference.
-   * @param consumer Method for calling a new view with a Character reference.
+   * @param IChangeViewWithCharacter Method for calling a new view with a Character reference.
    */
-  public void setPartyMemberButtonPressHandler(Consumer<Character> consumer) {}
+  public void setPartyMemberButtonPressHandler(Consumer<Character> IChangeViewWithCharacter) {}
   
   public void setCharacter(Character character) {
     this.character = character;

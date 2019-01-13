@@ -60,6 +60,7 @@ public class Game extends GLCanvas implements Runnable {
       manager.addToInventory(Item.COOKIE);
       if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
       manager.addToInventory(Item.BLOOD_AXE);
+      manager.addToInventory(Item.COMMON_SWORD);
     }
   }
 

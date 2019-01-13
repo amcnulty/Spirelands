@@ -21,21 +21,28 @@ public class ItemsView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
   private ArrayList<InventoryListItem> listItems = new ArrayList<>();
-  private int itemCount = 0,
-              startingY = 35,
-              spaceBetweenRows = 16;
+  private int itemCount = 0;
+  private final int startingY = 35,
+                    spaceBetweenRows = 16;
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
-  private final ItemDetailCard itemDetailCard = new ItemDetailCard();
+  private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> {card.clearCard();});
   
   private void showItemDetails(Item item) {
     itemDetailCard.setItem(item);
   }
   
-  private void createListItems(Map itemsMap) {
+  private void createListItems(Map<Integer, InventoryReference> itemsMap) {
     listItems = new ArrayList<>();
-    Set<?> keys = itemsMap.keySet();
+    Set<Integer> keys = itemsMap.keySet();
     keys.forEach(key -> {
-      listItems.add(new InventoryListItem((InventoryReference)itemsMap.get(key), startingY + listItems.size() * this.spaceBetweenRows, "Use", item -> showItemDetails(item)));
+      listItems.add(
+        new InventoryListItem(
+          itemsMap.get(key),
+          startingY + listItems.size() * this.spaceBetweenRows,
+          "Use",
+          item -> System.out.println(item.getTitle() + " has been clicked on in the item's view."),
+          item -> showItemDetails(item))
+      );
     });
   }
   

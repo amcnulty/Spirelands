@@ -111,6 +111,9 @@ public class Item {
             System.out.println("Performing action of Common Sword");
           })
           .build(WeaponItem.class);
+  static {
+    COMMON_SWORD.setAttackPower(10);
+  }
   /**
    * The blood axe. (WEAPON)
    */
@@ -121,9 +124,12 @@ public class Item {
           .price(3300)
           .thumbnail(new Sprite(SPRITE_SIZE, 4, 5, SpriteSheet.itemsSheet))
           .itemAction(() -> {
-            System.out.println("Performing action of cookie");
+            System.out.println("Performing action of Blood Axe");
           })
           .build(WeaponItem.class);
+  static {
+    BLOOD_AXE.setAttackPower(50);
+  }
   /**
    * A briefcase to hold more items. (SPECIAL)
    */
@@ -148,7 +154,7 @@ public class Item {
           .thumbnail(new Sprite(SPRITE_SIZE, 5, 11, SpriteSheet.itemsSheet))
           .type(SPECIAL)
           .itemAction(() -> {
-            System.out.println("Performing action of cookie");
+            System.out.println("Performing action of Message Scroll");
           })
           .build(SpecialItem.class);
   /**

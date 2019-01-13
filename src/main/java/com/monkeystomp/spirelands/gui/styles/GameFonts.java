@@ -19,7 +19,7 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(16)), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
-   * Dark text for light backgrounds.
+   * Gold label color text for game menu primary button.
    * @return The font info object.
    */
   public static FontInfo getGameMenuPrimaryButtonText() {

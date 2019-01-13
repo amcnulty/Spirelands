@@ -13,6 +13,10 @@ public class ItemAttribute {
    * Mana restoring attribute. Used for healing equipment items.
    */
   public static final String MANA_RESTORE = "Mana Restore";
+  /**
+   * Attack power of a weapon. Used on offensive weapons that modify a characters total attack stat.
+   */
+  public static final String ATTACK_POWER = "Attack Power";
   private final String  label,
                         value;
   /**

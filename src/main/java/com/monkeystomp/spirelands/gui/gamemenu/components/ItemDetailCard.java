@@ -3,12 +3,14 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.gui.controlls.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.gui.util.TextUtil;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.ItemAttribute;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -17,25 +19,35 @@ import java.util.ArrayList;
 public class ItemDetailCard {
   
   private Sprite thumbnail;
-  private final String noSelectedItem = "Select an item to view more information about it here.";
+  private final String  noSelectedItem = "Select an item to view more information about it here.",
+                        times = "\u2A2F";
   private final FontInfo  titleFont = GameFonts.getlightText_bold_23(),
                           descriptionFont = GameFonts.getGAME_MENU_MUTED_TEXT(),
-                          typeFont = GameFonts.getGAME_MENU_LABEL_TEXT(),
-                          priceFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
+                          typeFont = GameFonts.getGAME_MENU_LABEL_TEXT();
   private final int price = 0,
                     cardWidth = 89,
                     sidePadding = 5,
+                    cardTop = 23,
                     cardCenterHoriz = 351,
                     cardCenterVert = 100,
                     cardLeft = 307,
                     cardRight = cardLeft + cardWidth;
   private boolean itemSet = false;
+  private final Consumer<ItemDetailCard> ICloseOperation;
   private final ArrayList<FontInfo> noSelectedInfoList = new ArrayList<>(),
                                     itemDescriptionList = new ArrayList<>(),
                                     attributeLabelList = new ArrayList<>(),
                                     attributeValueList = new ArrayList<>();
+  private final GameMenuSecondaryButton exitButton = new GameMenuSecondaryButton(
+    times,
+    cardLeft + sidePadding,
+    cardTop + sidePadding,
+    9,
+    9,
+    () -> {handleExitButtonClick();}
+  );
   
-  public ItemDetailCard() {
+  public ItemDetailCard(Consumer<ItemDetailCard> ICloseOperation) {
     ArrayList<String> lines = TextUtil.createWrappedText(noSelectedItem, GameFonts.getGAME_MENU_MUTED_TEXT().getFont(), cardWidth - (2 * sidePadding));
     for (int i = 0; i < lines.size(); i++) {
       FontInfo info = GameFonts.getGAME_MENU_MUTED_TEXT();
@@ -44,6 +56,11 @@ public class ItemDetailCard {
       info.setY(cardCenterVert + i * 7);
       noSelectedInfoList.add(info);
     }
+    this.ICloseOperation = ICloseOperation;
+  }
+  
+  private void handleExitButtonClick() {
+    ICloseOperation.accept(this);
   }
   
   public void setItem(Item item) {
@@ -98,10 +115,12 @@ public class ItemDetailCard {
   }
 
   public void update() {
+    if (itemSet) exitButton.update();
   }
   
   public void render(Screen screen, GL2 gl) {
     if (itemSet) {
+      exitButton.render(screen, gl);
       screen.renderFonts(titleFont);
       screen.renderSprite(gl, cardCenterHoriz - thumbnail.getWidth() / 2, 40, thumbnail, false);
       screen.renderFonts(typeFont);

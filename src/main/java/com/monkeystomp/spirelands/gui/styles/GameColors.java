@@ -64,6 +64,10 @@ public class GameColors {
    */
   public static final int GAME_MENU_BUTTON_DOWN = 0xFF393939;
   /**
+   * Dark gray background color for the game menu #0xFF1E1E1E;
+   */
+  public static final int GAME_MENU_BACKGROUND = 0xFF1E1E1E;
+  /**
    * Border color used in the game menu #0xE2E2E2.
    */
   public static final int GAME_MENU_BORDER = 0xFFE2E2E2;

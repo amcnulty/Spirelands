@@ -40,9 +40,13 @@ public class DefaultView extends DisplayView {
   private void handleButtonClick(Character character) {
     openViewWithCharacter.accept(character);
   }
-  
-  public void setPartyMemberButtonPressHandler(Consumer<Character> consumer) {
-    this.openViewWithCharacter = consumer;
+  /**
+   * Sets the consumer for changing views with a Character reference.
+   * @param IChangeViewWithCharacter Method for calling a new view with a Character reference.
+   */
+  @Override
+  public void setPartyMemberButtonPressHandler(Consumer<Character> IChangeViewWithCharacter) {
+    this.openViewWithCharacter = IChangeViewWithCharacter;
   }
   /**
    * Activates the party member buttons.

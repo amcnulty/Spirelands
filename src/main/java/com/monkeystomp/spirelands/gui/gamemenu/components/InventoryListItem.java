@@ -1,7 +1,6 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
-import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.GameMenuPrimaryButton;
@@ -31,9 +30,10 @@ public class InventoryListItem {
                           amountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private GameMenuPrimaryButton infoButton;
   private PrimaryButton useButton;
-  private final Consumer<Item> IShowItemDetails;
+  private final Consumer<Item>  IShowItemDetails,
+                                IHandlePrimaryClick;
 
-  public InventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> IShowItemDetails) {
+  public InventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> IHandlePrimaryClick, Consumer<Item> IShowItemDetails) {
     this.inventoryReference = ref;
     this.item = ref.getItem();
     this.amount = ref.getAmount();
@@ -42,6 +42,7 @@ public class InventoryListItem {
     this.primaryButtonText = primaryButtonText;
     this.description = item.getDescription();
     this.Y = y;
+    this.IHandlePrimaryClick = IHandlePrimaryClick;
     this.IShowItemDetails = IShowItemDetails;
     setFonts();
     addButtons();
@@ -58,8 +59,8 @@ public class InventoryListItem {
   }
   
   private void addButtons() {
-    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 18, 11, () -> IShowItemDetails.accept(item));
-    useButton = new PrimaryButton(primaryButtonText, X + 126, Y, 18, 11, () -> {item.setCharacter(CharacterManager.getCharacterManager().getPartyMembers().get(0));item.useItem();});
+    infoButton = new GameMenuPrimaryButton("Info", X + 148, Y, 19, 11, () -> IShowItemDetails.accept(item));
+    useButton = new PrimaryButton(primaryButtonText, X + 126, Y, 19, 11, () -> IHandlePrimaryClick.accept(item));
   }
   
   private void checkAmount() {

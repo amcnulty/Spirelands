@@ -8,19 +8,18 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
-import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * The Game Menu primary button is a gold bordered button with light text. When hovered the button fills in.
+ * The Game Menu secondary button is a flat button for the game menu. This button will have no border or background and shows a slightly lighter background when hovering and clicking.
  * @author Aaron Michael McNulty
  */
-public class GameMenuPrimaryButton extends Button {
+public class GameMenuSecondaryButton extends Button {
   
   private FontInfo fontInfo;
   /**
-   * Creates a new GameMenuPrimaryButton
+   * Creates a new GameMneuSecondaryButton.
    * @param text The text to be rendered on the button.
    * @param x The x coordinate to render the button.
    * @param y The y coordinate to render the button.
@@ -28,7 +27,7 @@ public class GameMenuPrimaryButton extends Button {
    * @param height The height of the button.
    * @param callback The callback function that fires when the button is clicked on.
    */
-  public GameMenuPrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
+  public GameMenuSecondaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
     setFontInfo();
     createButtonSprites();
@@ -40,32 +39,17 @@ public class GameMenuPrimaryButton extends Button {
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = GameFonts.getGameMenuPrimaryButtonText();
+    fontInfo = GameFonts.getlightText_bold_23();
     fontInfo.setText(buttonText);
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
   }
 
   private void createButtonSprites() {
-    button = createBorderSprite();
-    buttonHover = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT);
-    buttonDown = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT_DARK);
+    button = new Sprite(width, height, GameColors.GAME_MENU_BACKGROUND);
+    buttonHover = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_HOVER);
+    buttonDown = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_DOWN);
     currentButton = button;
-  }
-  
-  private Sprite createBorderSprite() {
-    int[] pixels = new int[width * height];
-    for (int yy = 0; yy < height; yy++) {
-      for (int xx = 0; xx < width; xx++) {
-        if (yy == 0 || yy == height - 1) {
-          pixels[xx + yy * width] = GameColors.GAME_MENU_LABEL_TEXT;
-        }
-        else if (xx == 0 || xx == width - 1) {
-          pixels[xx + yy * width] = GameColors.GAME_MENU_LABEL_TEXT;
-        }
-      }
-    }
-    return new Sprite(pixels, width, height);
   }
   
   private void setButtonSounds() {
@@ -74,25 +58,9 @@ public class GameMenuPrimaryButton extends Button {
   }
   
   @Override
-  protected void hover() {
-    super.hover();
-    fontInfo.setColor(new Color(GameColors.GAME_MENU_DEFAULT_TEXT));
-  }
-  
-  @Override
-  protected void setDefault() {
-    super.setDefault();
-    fontInfo.setColor(new Color(GameColors.GAME_MENU_LABEL_TEXT));
-  }
-  
-  @Override
-  public void update() {
-    super.update();
-  }
-  
-  @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
     screen.renderFonts(fontInfo);
   }
+
 }
