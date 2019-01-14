@@ -4,7 +4,7 @@
       "name": "Luke McLovin",
       "level": 1,
       "experience": 0,
-      "health": 100,
+      "health": 10,
       "healthMax": 120,
       "mana": 20,
       "manaMax": 40,

@@ -84,11 +84,6 @@ public class Music {
       clip.loop(Clip.LOOP_CONTINUOUSLY);
       ais.close();
       clip.start();
-      clip.addLineListener((LineEvent e) -> {
-        if (e.getType() == LineEvent.Type.STOP){
-//          e.getLine().close();
-        }
-      });
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -110,6 +105,7 @@ public class Music {
   public void pause() {
     if (clip != null) {
       trackTime = clip.getMicrosecondPosition();
+      if (trackTime > clip.getMicrosecondLength()) trackTime -= clip.getMicrosecondLength();
       clip.stop();
       clip.flush();
     }
@@ -121,6 +117,7 @@ public class Music {
     if (clip != null) {
       clip.setMicrosecondPosition(trackTime);
       clip.start();
+      clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
   }
   

@@ -24,7 +24,8 @@ public class PartyMemberButton extends Button {
   private final Sprite MANA_UNDERLINE = new Sprite(65, 1, GameColors.MANA_BAR_UNDERLINE);
   private final Sprite MANA_EMPTY = new Sprite(65, 4, GameColors.MANA_BAR_EMPTY);
   private final int THUMBNAIL_X,
-                    THUMBNAIL_Y;
+                    THUMBNAIL_Y,
+                    arrowY;
   private final FontInfo CHARACTER_NAME_FONT = GameFonts.getGAME_MENU_HEADLINE_THIN();
   private final FontInfo HEALTH_LABEL = GameFonts.getGAME_MENU_PRIMARY_TEXT();
   private final FontInfo CHARACTER_HEALTH_FONT = GameFonts.getGAME_MENU_PRIMARY_TEXT_THIN();
@@ -33,7 +34,9 @@ public class PartyMemberButton extends Button {
   private final FontInfo CHARACTER_LEVEL_FONT = GameFonts.getGAME_MENU_HEADLINE();
   private final Character CHARACTER;
   private int characterHealth = -1,
-              characterMana = -1;
+              characterMana = -1,
+              arrowX = 130,
+              arrowTimer;
   private Sprite healthFill;
   private Sprite manaFill;
   /**
@@ -52,6 +55,7 @@ public class PartyMemberButton extends Button {
     this.THUMBNAIL = character.getThumbnail();
     this.THUMBNAIL_X = this.x + 10;
     this.THUMBNAIL_Y = this.y + 6;
+    this.arrowY = this.y + this.height / 2 - Sprite.GAME_MENU_RIGHT_ARROW.getHeight() / 2;
     this.CHARACTER_NAME_FONT.setX(this.x + 50);
     this.CHARACTER_NAME_FONT.setY(this.y + 7);
     this.CHARACTER_NAME_FONT.setText(character.getName());
@@ -74,6 +78,7 @@ public class PartyMemberButton extends Button {
     button = new Sprite(width, height, GameColors.TRANSPARENT);
     buttonHover = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_HOVER);
     buttonDown = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_DOWN);
+    disabledButton = button;
     currentButton = button;
   }
   
@@ -93,16 +98,25 @@ public class PartyMemberButton extends Button {
     }
   }
   
+  private void updateArrow() {
+    if (arrowTimer % 12 == 0) {
+      arrowX += (arrowX == 130) ? 2 : -2;
+    }
+    arrowTimer++;
+  }
+  
   @Override
   public void update() {
     super.update();
     updateStatText();
     updateStatBars();
+    if (!isDisabled()) updateArrow();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
+    if (!isDisabled()) screen.renderSprite(gl, arrowX, arrowY, Sprite.GAME_MENU_RIGHT_ARROW, false);
     screen.renderSprite(gl, THUMBNAIL_X, THUMBNAIL_Y, THUMBNAIL, false);
     screen.renderFonts(CHARACTER_NAME_FONT);
     screen.renderFonts(CHARACTER_HEALTH_FONT);

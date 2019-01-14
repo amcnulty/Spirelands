@@ -54,36 +54,38 @@ public class GameMenuNavButton extends Button {
   }
   
   private void setBackground() {
-     button = SELECTED_BACKGROUND;
-     buttonHover = SELECTED_BACKGROUND;
-     buttonDown = SELECTED_BACKGROUND;
+    button = SELECTED_BACKGROUND;
+    buttonHover = SELECTED_BACKGROUND;
+    buttonDown = SELECTED_BACKGROUND;
   }
-  
+
   @Override
   protected void hover() {
     super.hover();
   }
   
   @Override
-   protected void down() {
-     super.down();
-   }
+  protected void down() {
+    super.down();
+  }
    
   @Override
-   protected void click() {
-     super.click();
-     setBackground();
-     FONT_INFO.setColor(new Color(SELECTED_TEXT));
-   }
+  protected void click() {
+    super.click();
+    setBackground();
+    FONT_INFO.setColor(new Color(SELECTED_TEXT));
+    setDisabled(true);
+  }
   
   @Override
   protected void setDefault() {
-      super.setDefault();
+    super.setDefault();
   }
   
   public void removeBackground() {
     FONT_INFO.setColor(new Color(DEFAULT_TEXT));
     createButtonSprites();
+    setDisabled(false);
   }
   
   @Override

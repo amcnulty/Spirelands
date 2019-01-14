@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.components.PartyMemberButton;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * The Default View is the first view that is seen when opening the game menu. It is used to display the current party and a brief snapshot of their health, magic and level.
@@ -19,6 +20,7 @@ public class DefaultView extends DisplayView {
                     VERTICAL_SPACING = 52;
   private final CharacterManager CHARACTER_MANAGER = CharacterManager.getCharacterManager();
   private ArrayList<PartyMemberButton> buttons = new ArrayList<>();
+  private Consumer<Character> openViewWithCharacter;
   /**
    * Creates a DefaultView object that displays the party member buttons.
    */
@@ -30,13 +32,43 @@ public class DefaultView extends DisplayView {
     int i = 0;
     for (Character partyMember : CHARACTER_MANAGER.getPartyMembers()) {
       buttons.add(new PartyMemberButton(partyMember, PLAYER_BUTTON_X, PLAYER_BUTTON_STARTING_Y + VERTICAL_SPACING * i, () -> {handleButtonClick(partyMember);}));
+      buttons.get(i).setDisabled(true);
       i++;
     }
   }
 
   private void handleButtonClick(Character character) {
-    System.out.println(character.getName() + " button was clicked!");
+    openViewWithCharacter.accept(character);
   }
+  /**
+   * Sets the consumer for changing views with a Character reference.
+   * @param IChangeViewWithCharacter Method for calling a new view with a Character reference.
+   */
+  @Override
+  public void setPartyMemberButtonPressHandler(Consumer<Character> IChangeViewWithCharacter) {
+    this.openViewWithCharacter = IChangeViewWithCharacter;
+  }
+  /**
+   * Activates the party member buttons.
+   */
+  public void activateCharacterButtons() {
+    for (PartyMemberButton button: buttons) {
+      button.setDisabled(false);
+    }
+  }
+  /**
+   * Disables the party member buttons.
+   */
+  public void disableCharacterButtons() {
+    for (PartyMemberButton button: buttons) {
+      button.setDisabled(true);
+    }
+  }
+  
+  @Override
+  public void exitingView() {
+    disableCharacterButtons();
+  } 
   
   @Override
   public void update() {

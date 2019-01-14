@@ -2,10 +2,10 @@ package com.monkeystomp.spirelands.gui.gamemenu.panels;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
-import java.awt.Color;
-import java.awt.Font;
 
 /**
  * The bottom right panel in the game menu that is used to display the current gold supply.
@@ -13,17 +13,21 @@ import java.awt.Font;
  */
 public class GoldPanel {
   
-  private final FontInfo goldLabel = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), Color.GRAY, "Gold:", 222, 199);
-  private final FontInfo goldAmount = new FontInfo(new Font(Font.SANS_SERIF, Font.BOLD, 23), new Color(0xf1f1f1), "190", 245, 199);
+  private final FontInfo goldFont = GameFonts.getlightText_bold_23();
+  
+  public GoldPanel() {
+    goldFont.setX(255);
+    goldFont.setY(199);
+  }
   /**
    * Renders the gold panel to the screen.
    * @param screen Instance of the Screen class.
    * @param gl Instance of the GL2 class.
    */
   public void render(Screen screen, GL2 gl) {
-    screen.renderFonts(goldLabel);
+    screen.renderSprite(gl, 222, 193, Sprite.GOLD_INDICATOR, false);
     // Update gold amount
-    goldAmount.setText(String.valueOf(InventoryManager.getInventoryManager().getGold()));
-    screen.renderFonts(goldAmount); 
+    goldFont.setText(String.valueOf(InventoryManager.getInventoryManager().getGold()));
+    screen.renderFonts(goldFont); 
   }
 }

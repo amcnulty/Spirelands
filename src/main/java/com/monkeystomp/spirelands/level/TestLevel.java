@@ -11,7 +11,6 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
@@ -74,7 +73,7 @@ public class TestLevel extends Level {
     solidEntities.add(chest);
     chest.initLevel(this);
     
-    chest = new Chest(64, 128, Chest.WOODEN_CHEST, null);
+    chest = new Chest(64, 128, Chest.WOODEN_CHEST, Item.COOKIE);
     solidEntities.add(chest);
     chest.initLevel(this);
     

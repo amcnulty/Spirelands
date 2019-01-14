@@ -12,14 +12,14 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * The primary button for menu operations on the title screen and pause menu.
+ * The Game Menu secondary button is a flat button for the game menu. This button will have no border or background and shows a slightly lighter background when hovering and clicking.
  * @author Aaron Michael McNulty
  */
-public class PrimaryButton extends Button {
+public class GameMenuSecondaryButton extends Button {
   
   private FontInfo fontInfo;
   /**
-   * Creates a PrimaryButton object with a callback that gets fired when button is clicked.
+   * Creates a new GameMneuSecondaryButton.
    * @param text The text to be rendered on the button.
    * @param x The x coordinate to render the button.
    * @param y The y coordinate to render the button.
@@ -27,7 +27,7 @@ public class PrimaryButton extends Button {
    * @param height The height of the button.
    * @param callback The callback function that fires when the button is clicked on.
    */
-  public PrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
+  public GameMenuSecondaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
     setFontInfo();
     createButtonSprites();
@@ -35,20 +35,20 @@ public class PrimaryButton extends Button {
   }
   
   private void setFontInfo() {
-    Rectangle2D rect = GameFonts.getPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    Rectangle2D rect = GameFonts.getGameMenuPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = GameFonts.getPrimaryButtonText();
+    fontInfo = GameFonts.getlightText_bold_23();
     fontInfo.setText(buttonText);
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
   }
 
   private void createButtonSprites() {
-    button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
-    buttonHover = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_HOVER);
-    buttonDown = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_DOWN);
+    button = new Sprite(width, height, GameColors.GAME_MENU_BACKGROUND);
+    buttonHover = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_HOVER);
+    buttonDown = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_DOWN);
     currentButton = button;
   }
   
@@ -58,13 +58,9 @@ public class PrimaryButton extends Button {
   }
   
   @Override
-  public void update() {
-    super.update();
-  }
-  
-  @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
     screen.renderFonts(fontInfo);
   }
+
 }

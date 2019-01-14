@@ -4,9 +4,10 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
+import com.monkeystomp.spirelands.gui.util.TextUtil;
 import com.monkeystomp.spirelands.input.ICallback;
-import java.awt.Font;
-import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
 /**
@@ -22,20 +23,14 @@ public class DialogBox {
                     DIALOG_PADDING_SIDES = 6,
                     DIALOG_PADDING_BOTTOM = 12,
                     MESSAGE_SPEED = 3,
-                    BACKGROUND_COLOR = 0xFFEFEFEF;
-  private final Color TEXT_COLOR = new Color(0x323232);
-  private final String  DOWN_TRIANGLE = "\u25BE",
-                        TIMES = "\u2A2F";
-  private String currentSymbol = TIMES;
-  private String[]  messages,
-                    words;
+                    BACKGROUND_COLOR = GameColors.DIALOG_BOX_BACKGROUND;
+  private final String  DOWN_TRIANGLE = "\u25BE";
+  private String[] messages;
   private ArrayList<String> lineMessages = new ArrayList<>(),
                             displayLineMessages = new ArrayList<>();
   private boolean messageBuilding = false,
                   dialogReady = false;
   private Sprite background;
-  private Font font = new Font(Font.SANS_SERIF, Font.BOLD, 22);
-  private Font symbolFont = new Font(Font.SANS_SERIF, Font.PLAIN, 30);
   private FontRenderContext frc = new FontRenderContext(null, true, true);
   private int timer = 0,
               symbolAnim = 0,
@@ -46,7 +41,7 @@ public class DialogBox {
               dialogCurrentHeight,
               symbolX = DIALOG_WIDTH + 4,
               symbolY = 0;
-  private FontInfo symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
+  private FontInfo symbolFontInfo = GameFonts.getDialogBoxSymbolFont();
   private ArrayList<FontInfo> lines = new ArrayList<>();
   private ICallback callback;
   /**
@@ -98,43 +93,23 @@ public class DialogBox {
     displayLineMessages.clear();
     substringIndex = 0;
     renderLineIndex = 0;
-    words = messages[messageIndex].split(" ");
-    setLines(0, 0);
+    lineMessages = TextUtil.createWrappedText(messages[messageIndex], GameFonts.getDarkText_bold_22().getFont(), DIALOG_WIDTH - (DIALOG_PADDING_SIDES * 2));
+    for (int i = 0; i < lineMessages.size(); i++) {
+      displayLineMessages.add("");
+      FontInfo info = GameFonts.getDarkText_bold_22();
+      info.setText("");
+      info.setX(DIALOG_LEFT + DIALOG_PADDING_SIDES);
+      info.setY(DIALOG_TOP + DIALOG_PADDING_TOP);
+      lines.add(info);
+    }
     createBackground();
     setSymbol();
     updateFontInfo();
     messageBuilding = true;
   }
 
-  private void setLines(int lineIndex, int wordIndex) {
-    lines.add(new FontInfo(font, TEXT_COLOR, "", DIALOG_LEFT + DIALOG_PADDING_SIDES, DIALOG_TOP + DIALOG_PADDING_TOP));
-    lineMessages.add("");
-    displayLineMessages.add("");
-    double lineTotal = 0;
-    String  testString = "";
-    for (int i = wordIndex; i < words.length; i++) {
-      if (lineMessages.get(lineIndex).length() == 0) {
-        testString += words[i];
-        lineTotal += font.getStringBounds(words[i], frc).getWidth() / Screen.getScaleX();
-      }
-      else {
-        testString += " " + words[i];
-        lineTotal += font.getStringBounds(" " + words[i], frc).getWidth() / Screen.getScaleX();
-      }
-      if (lineTotal < (DIALOG_WIDTH - (DIALOG_PADDING_SIDES * 2))) {
-        lineMessages.set(lineIndex, testString);
-      }
-      else {
-        if (i < words.length) {
-          setLines(++lineIndex, i);
-        }
-        break;
-      }
-    }
-  }
-  
   private void createBackground() {
-    dialogLineHeight = (int)(font.getStringBounds("random string", frc).getHeight() / Screen.getScaleY());
+    dialogLineHeight = (int)(lines.get(0).getFont().getStringBounds("random string", frc).getHeight() / Screen.getScaleY());
     dialogCurrentHeight = dialogLineHeight * lineMessages.size() + DIALOG_PADDING_TOP + DIALOG_PADDING_BOTTOM;
     background = new Sprite(
       DIALOG_WIDTH,
@@ -144,24 +119,17 @@ public class DialogBox {
   }
   
   private void setSymbol() {
-    if (messageIndex < messages.length - 1) currentSymbol = DOWN_TRIANGLE;
-    else currentSymbol = "";
+    if (messageIndex < messages.length - 1) symbolFontInfo.setText(DOWN_TRIANGLE);
+    else symbolFontInfo.setText("");
     symbolY = DIALOG_TOP + dialogCurrentHeight - 8;
-    symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
+    symbolFontInfo.setX(symbolX);
+    symbolFontInfo.setY(symbolY);
   }
 
   private void updateFontInfo() {
     for (int i = 0; i < lines.size(); i++) {
-      lines.set(
-        i,
-        new FontInfo(
-          font,
-          TEXT_COLOR,
-          displayLineMessages.get(i),
-          DIALOG_LEFT + DIALOG_PADDING_SIDES,
-          DIALOG_TOP + DIALOG_PADDING_TOP + dialogLineHeight * i + (dialogLineHeight / 2)
-        )
-      );
+      lines.get(i).setText(displayLineMessages.get(i));
+      lines.get(i).setY(DIALOG_TOP + DIALOG_PADDING_TOP + dialogLineHeight * i + (dialogLineHeight / 2));
     }
   }
 
@@ -200,7 +168,7 @@ public class DialogBox {
         symbolY++;
       break;
     }
-    symbolFontInfo = new FontInfo(symbolFont, TEXT_COLOR, currentSymbol, symbolX, symbolY);
+    symbolFontInfo.setY(symbolY);
     symbolAnim++;
   }
   /**

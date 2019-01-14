@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.Button;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.input.ICallback;
 /**
  * The Pause Menu is displayed when the user pauses the game.
@@ -13,7 +14,7 @@ import com.monkeystomp.spirelands.input.ICallback;
  */
 public class PauseMenu {
 
-  private final Sprite background = new Sprite(80, 100, 0xFFEFEFEF);
+  private final Sprite background = new Sprite(80, 100, GameColors.DIALOG_BOX_BACKGROUND);
 
   private final SoundEffects sfx = new SoundEffects();
   

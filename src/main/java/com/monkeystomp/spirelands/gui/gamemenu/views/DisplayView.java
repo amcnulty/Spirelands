@@ -2,6 +2,8 @@ package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.character.Character;
+import java.util.function.Consumer;
 
 /**
  * Abstract class for display views that is used for switching between different views in the game menu display panel.
@@ -24,6 +26,23 @@ public abstract class DisplayView {
    * X coordinate of the left most edge in the display view in pixels.
    */
   protected final int LEFT = 124;
+  /**
+   * Character associated with the view.
+   */
+  protected Character character;
+  /**
+   * Sets the consumer for changing views with a Character reference.
+   * @param IChangeViewWithCharacter Method for calling a new view with a Character reference.
+   */
+  public void setPartyMemberButtonPressHandler(Consumer<Character> IChangeViewWithCharacter) {}
+  
+  public void setCharacter(Character character) {
+    this.character = character;
+  }
+  /**
+   * Life cycle method that is called when view is about to close.
+   */
+  public void exitingView() {}
   /**
    * Updates the display view.
    */

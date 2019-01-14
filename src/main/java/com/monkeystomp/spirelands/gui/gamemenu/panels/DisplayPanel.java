@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.WeaponView;
 import java.util.HashMap;
 
 /**
@@ -20,35 +21,60 @@ public class DisplayPanel {
    * The items view.
    */
   public static final String ITEMS = "items";
+  /**
+   * The weapon view.
+   */
+  public static final String WEAPON = "weapon";
   
-  private final DisplayView DEFAULT_VIEW = new DefaultView();
-  private final DisplayView ITEMS_VIEW = new ItemsView();
-  // private final DisplayPanelView WEAPONS_VIEW = new DisplayPanelView();
+  private final DisplayView defaultView = new DefaultView();
+  private final DisplayView itemsView = new ItemsView();
+   private final DisplayView weaponView = new WeaponView();
   // private final DisplayPanelView MAGIC_VIEW = new DisplayPanelView();
   private DisplayView currentView;
-  private final HashMap<String, DisplayView> VIEW_MAP = new HashMap<>();
+  private String nextViewKey;
+  private final HashMap<String, DisplayView> viewMap = new HashMap<>();
   /**
   * Creates a DisplayPanel object used for displaying view in the game menu.
   */
   public DisplayPanel() {
     createMap();
-    setCurrentView(DEFAULT_VIEW);
+    setCurrentView(defaultView);
+    defaultView.setPartyMemberButtonPressHandler(character -> {
+      viewMap.get(nextViewKey).setCharacter(character);
+      changeView(nextViewKey);
+    });
   }
   
   private void createMap() {
-    VIEW_MAP.put(DEFAULT, DEFAULT_VIEW);
-    VIEW_MAP.put(ITEMS, ITEMS_VIEW);
+    viewMap.put(DEFAULT, defaultView);
+    viewMap.put(ITEMS, itemsView);
+    viewMap.put(WEAPON, weaponView);
   }
-
+  /**
+   * WARNING! DO NOT CALL THIS METHOD DIRECTLY!! Use changeView() method because it will call exitingView() on the current view.
+   * @param view The view to change to.
+   */
   private void setCurrentView(DisplayView view) {
     this.currentView = view;
+  }
+  
+  private void setNextViewKey(String key) {
+    this.nextViewKey = key;
+  }
+  
+  public void prepareNextViewWithCharacter(String key) {
+    setNextViewKey(key);
+    changeView(DEFAULT);
+    DefaultView view = (DefaultView)viewMap.get(DEFAULT);
+    view.activateCharacterButtons();
   }
   /**
    * Changes the current view to the given display key type.
    * @param viewKey The key for the type of view to display.
    */
   public void changeView(String viewKey) {
-    setCurrentView(VIEW_MAP.get(viewKey));
+    currentView.exitingView();
+    setCurrentView(viewMap.get(viewKey));
   }
   /**
    * Updates the current view.

@@ -3,7 +3,6 @@ package com.monkeystomp.spirelands.level;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.graphics.Font;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
@@ -32,7 +31,6 @@ import javax.imageio.ImageIO;
  */
 public class Level implements Runnable {
   
-  protected Font font = new Font();
   private String path;
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;

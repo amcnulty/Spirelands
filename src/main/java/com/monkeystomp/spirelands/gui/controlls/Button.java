@@ -21,7 +21,8 @@ public class Button {
               mouseY;
   private boolean startedOffButton = false,
                   startedOnButton = false,
-                  hovering = false;
+                  hovering = false,
+                  disabled = false;
   /**
    * The x pixel coordinate of the button.
    */
@@ -58,6 +59,10 @@ public class Button {
    * The down state of the button.
    */
   protected Sprite buttonDown;
+  /**
+   * The disabled state of the button.
+   */
+  protected Sprite disabledButton;
   /**
    * The current state of the button to render to the screen.
    */
@@ -121,38 +126,50 @@ public class Button {
     currentButton = button;
     hovering = false;
   }
+  
+  public boolean isDisabled() {
+    return this.disabled;
+  }
+  
+  public void setDisabled(boolean disabled) {
+    this.disabled = disabled;
+    if (this.disabled && disabledButton != null) currentButton = disabledButton;
+    else currentButton = button;
+  }
   /**
    * Updates the button.
    */
   public void update() {
-    mouseX = (int)(Mouse.getX() / Screen.getScaleX());
-    mouseY = (int)(Mouse.getY() / Screen.getScaleY());
-    mouseB = Mouse.getMouseButton();
-    if (mouseB != 1) {
-      if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
-        hover();
-        if (startedOnButton) click();
-      }
-      else {
-        setDefault();
-      }
-      startedOnButton = false;
-      startedOffButton = false;
-    }
-    else {
-      if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
-        if (!startedOffButton) {
-          startedOffButton = false;
-          startedOnButton = true;
-          down();
+    if (!disabled) {
+      mouseX = (int)(Mouse.getX() / Screen.getScaleX());
+      mouseY = (int)(Mouse.getY() / Screen.getScaleY());
+      mouseB = Mouse.getMouseButton();
+      if (mouseB != 1) {
+        if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
+          hover();
+          if (startedOnButton) click();
         }
-        else hover();
+        else {
+          setDefault();
+        }
+        startedOnButton = false;
+        startedOffButton = false;
       }
       else {
-        setDefault();
-        if (!startedOnButton) {
-          startedOffButton = true;
-          startedOnButton = false;
+        if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
+          if (!startedOffButton) {
+            startedOffButton = false;
+            startedOnButton = true;
+            down();
+          }
+          else hover();
+        }
+        else {
+          setDefault();
+          if (!startedOnButton) {
+            startedOffButton = true;
+            startedOnButton = false;
+          }
         }
       }
     }

@@ -13,7 +13,8 @@ import java.util.function.Consumer;
 public class ButtonPanel {
   
   private Consumer<String> viewChanger;
-  private ArrayList<GameMenuNavButton> navButtons = new ArrayList<>();
+  private Consumer<String> nextViewChanger;
+  private final ArrayList<GameMenuNavButton> navButtons = new ArrayList<>();
   /**
    * Creates a ButtonPanel object.
    */
@@ -23,7 +24,7 @@ public class ButtonPanel {
 
   private void createNavButtons() {
     navButtons.add(new GameMenuNavButton("Weapons", 70, 39, () -> {
-      System.out.println("Item Button Clicked");
+      this.nextViewChanger.accept(DisplayPanel.WEAPON);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Armor", 70, 59, () -> {
@@ -35,7 +36,6 @@ public class ButtonPanel {
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Items", 70, 99, () -> {
-      System.out.println("Items Button Clicked");
       this.viewChanger.accept(DisplayPanel.ITEMS);
       resetNavButtons();
     }));
@@ -58,6 +58,13 @@ public class ButtonPanel {
    */
   public void setViewChanger(Consumer<String> changer) {
     this.viewChanger = changer;
+  }
+  /**
+   * Sets the next view changer used to call the outer class with view changing instructions. This method is used when the next view to be changed cannot be rendered until the party member button is clicked on to send the character information.
+   * @param changer The method to call in the outer class.
+   */
+  public void setNextViewChanger(Consumer<String> changer) {
+    this.nextViewChanger = changer;
   }
   /**
    * Resets the navigation buttons to unselected state.

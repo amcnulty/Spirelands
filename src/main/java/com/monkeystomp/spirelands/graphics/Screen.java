@@ -6,6 +6,7 @@ import com.jogamp.opengl.util.awt.TextRenderer;
 import com.jogamp.opengl.util.texture.Texture;
 import com.jogamp.opengl.util.texture.awt.AWTTextureIO;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.level.tile.Tile;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
@@ -29,7 +30,7 @@ public class Screen {
   private BufferedImage lightMapImage;
   private Texture lightMapTex;
   private ArrayList<FontInfo> fontInfo = new ArrayList<>();
-  private int lightMapColor = 0xFF121212,
+  private int lightMapColor = GameColors.LIGHTMAP_COLOR,
               count = 2;
   private final int R = (lightMapColor & 0xFF0000) >> 16,
                     G = (lightMapColor & 0xFF00) >> 8,

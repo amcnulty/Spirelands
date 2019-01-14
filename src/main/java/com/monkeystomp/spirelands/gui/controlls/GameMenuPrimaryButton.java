@@ -8,18 +8,19 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * The primary button for menu operations on the title screen and pause menu.
+ * The Game Menu primary button is a gold bordered button with light text. When hovered the button fills in.
  * @author Aaron Michael McNulty
  */
-public class PrimaryButton extends Button {
+public class GameMenuPrimaryButton extends Button {
   
   private FontInfo fontInfo;
   /**
-   * Creates a PrimaryButton object with a callback that gets fired when button is clicked.
+   * Creates a new GameMenuPrimaryButton
    * @param text The text to be rendered on the button.
    * @param x The x coordinate to render the button.
    * @param y The y coordinate to render the button.
@@ -27,7 +28,7 @@ public class PrimaryButton extends Button {
    * @param height The height of the button.
    * @param callback The callback function that fires when the button is clicked on.
    */
-  public PrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
+  public GameMenuPrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
     setFontInfo();
     createButtonSprites();
@@ -35,26 +36,53 @@ public class PrimaryButton extends Button {
   }
   
   private void setFontInfo() {
-    Rectangle2D rect = GameFonts.getPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    Rectangle2D rect = GameFonts.getGameMenuPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = GameFonts.getPrimaryButtonText();
+    fontInfo = GameFonts.getGameMenuPrimaryButtonText();
     fontInfo.setText(buttonText);
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
   }
 
   private void createButtonSprites() {
-    button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
-    buttonHover = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_HOVER);
-    buttonDown = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_DOWN);
+    button = createBorderSprite();
+    buttonHover = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT);
+    buttonDown = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT_DARK);
     currentButton = button;
+  }
+  
+  private Sprite createBorderSprite() {
+    int[] pixels = new int[width * height];
+    for (int yy = 0; yy < height; yy++) {
+      for (int xx = 0; xx < width; xx++) {
+        if (yy == 0 || yy == height - 1) {
+          pixels[xx + yy * width] = GameColors.GAME_MENU_LABEL_TEXT;
+        }
+        else if (xx == 0 || xx == width - 1) {
+          pixels[xx + yy * width] = GameColors.GAME_MENU_LABEL_TEXT;
+        }
+      }
+    }
+    return new Sprite(pixels, width, height);
   }
   
   private void setButtonSounds() {
     hoverSound = SoundEffects.BUTTON_HOVER;
     clickSound = SoundEffects.BUTTON_CLICK;
+  }
+  
+  @Override
+  protected void hover() {
+    super.hover();
+    fontInfo.setColor(new Color(GameColors.GAME_MENU_DEFAULT_TEXT));
+  }
+  
+  @Override
+  protected void setDefault() {
+    super.setDefault();
+    fontInfo.setColor(new Color(GameColors.GAME_MENU_LABEL_TEXT));
   }
   
   @Override
