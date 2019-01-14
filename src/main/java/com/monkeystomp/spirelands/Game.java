@@ -12,6 +12,13 @@ import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.awt.Cursor;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 /**
  * The main class for the application. Spirelands is a 2D RPG game for PC produced by Monkey Stomp Games.
@@ -32,6 +39,7 @@ public class Game extends GLCanvas implements Runnable {
   private Screen screen;
   private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = new Mouse();
+  private Cursor cursor;
   
   private ViewManager view = ViewManager.getViewManager();
 
@@ -62,6 +70,17 @@ public class Game extends GLCanvas implements Runnable {
       manager.addToInventory(Item.BLOOD_AXE);
       manager.addToInventory(Item.COMMON_SWORD);
     }
+    frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
+  }
+  
+  private Image loadImage() {
+    try {
+      return ImageIO.read(new File("./resources/gui/cursor.png"));
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   private synchronized void start() {
