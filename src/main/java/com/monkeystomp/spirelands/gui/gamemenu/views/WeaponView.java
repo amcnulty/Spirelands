@@ -32,7 +32,7 @@ public class WeaponView extends DisplayView {
     showingWeaponDetailCard = true;
     card.clearCard();
   });
-  private final CharacterWeaponDetailCard weaponDetailCard = new CharacterWeaponDetailCard();
+  private final CharacterWeaponDetailCard weaponDetailCard = new CharacterWeaponDetailCard(item -> showItemDetails(item));
   private boolean showingWeaponDetailCard = true;
   
   private void showItemDetails(Item item) {
@@ -85,6 +85,7 @@ public class WeaponView extends DisplayView {
 
   @Override
   public void exitingView() {
+    weaponDetailCard.closePopover();
     showingWeaponDetailCard = true;
   }
   

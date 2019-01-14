@@ -5,9 +5,14 @@ package com.monkeystomp.spirelands.gui.styles;
  * @author Aaron Michael McNulty
  */
 public class GameColors {
-  //
-  // Base Colors
-  //
+  /**       
+   *        !!##################################!!
+   *        !!                                  !!
+   *        !!           Base Colors            !!
+   *        !!                                  !!
+   *        !!##################################!!
+   */
+  
   /**
    * Fully transparent color #00000000.
    */
@@ -28,9 +33,13 @@ public class GameColors {
    * Blue #0xFF0000FF
    */
   public static final int BLUE = 0xFF0000FF;
-  //
-  // UI, Menu, lightmap, particle colors
-  //
+  /**
+   *        !!##################################################!!
+   *        !!                                                  !!
+   *        !!      UI, Menu, light map, particles colors       !!
+   *        !!                                                  !!
+   *        !!##################################################!!
+   */
   /**
    * Underline color for health bar #0xFFB20000
    */
@@ -96,12 +105,28 @@ public class GameColors {
    */
   public static final int PRIMARY_BUTTON_BLUE_DOWN = 0xFF001366;
   /**
+   * Danger button default color #0xFFD22233
+   */
+  public static final int DANGER_BUTTON_RED = 0xFFD22233;
+  /**
+   * Danger button hover color #0xFF99000D
+   */
+  public static final int DANGER_BUTTON_HOVER = 0xFF99000D;
+  /**
+   * Danger button down color #0xFF6C0000
+   */
+  public static final int DANGER_BUTTON_DOWN = 0xFF6C0000;
+  /**
    * Dialog box background color #0xFFEFEFEF
    */
   public static final int DIALOG_BOX_BACKGROUND = 0xFFEFEFEF;
-  //
-  //  Font Colors
-  //
+  /**
+   *        !!########################################!!
+   *        !!                                        !!
+   *        !!              Font Colors               !!
+   *        !!                                        !!
+   *        !!########################################!!
+   */
   /**
    * Primary text color for light backgrounds #0xFF323232
    */

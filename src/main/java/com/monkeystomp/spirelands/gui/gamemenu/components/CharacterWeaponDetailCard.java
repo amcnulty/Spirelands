@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -28,6 +29,7 @@ public class CharacterWeaponDetailCard {
     Character.SPEED,
     Character.LUCK
   };
+  private final Consumer<Item> IShowItemDetail;
   private final Supplier[] ILabelValueGetters = {
     () -> {
       attackStat = character.getCombinedAttack();
@@ -69,9 +71,21 @@ public class CharacterWeaponDetailCard {
               speedStat,
               luckStat;
   private Sprite thumbnail;
+  private final EquippedItemSlot equippedWeaponSlot = new EquippedItemSlot(
+    cardCenterHoriz,
+    140,
+    () -> character.getEquippedWeapon(),
+    () -> showEquippedItemDetails(),
+    () -> character.removeEquippedWeapon()
+  );
   
-  public CharacterWeaponDetailCard() {
+  public CharacterWeaponDetailCard(Consumer<Item> IShowItemDetail) {
+    this.IShowItemDetail = IShowItemDetail;
     name.setY(cardTop + sidePadding + 1);
+  }
+  
+  private void showEquippedItemDetails() {
+    IShowItemDetail.accept(character.getEquippedWeapon());
   }
   
   private void setDetails() {
@@ -107,6 +121,10 @@ public class CharacterWeaponDetailCard {
     if (attackStat != character.getCombinedAttack()) setStatValues();
   }
   
+  public void closePopover() {
+    equippedWeaponSlot.closePopover();
+  }
+  
   public Character getCharacter() {
     return this.character;
   }
@@ -118,6 +136,7 @@ public class CharacterWeaponDetailCard {
   
   public void update() {
     checkStats();
+    equippedWeaponSlot.update();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -130,6 +149,7 @@ public class CharacterWeaponDetailCard {
       for (FontInfo info: statValues) {
         screen.renderFonts(info);
       }
+      equippedWeaponSlot.render(screen, gl);
     }
   }
 
