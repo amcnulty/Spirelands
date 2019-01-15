@@ -17,6 +17,8 @@ public class Sprite {
   
   private int width,
               height,
+              rawWidth,
+              rawHeight,
               x,
               y;
   private int[] pixels;
@@ -103,8 +105,8 @@ public class Sprite {
    * @param sheet The sprite sheet to cut the sprite from.
    */
   public Sprite(int size, int x, int y, SpriteSheet sheet) {
-    this.width = size;
-    this.height = size;
+    this.width = this.rawWidth = size;
+    this.height = this.rawHeight = size;
     this.pixels = new int[width * height];
     this.sheet = sheet;
     this.x = x * width;
@@ -118,8 +120,8 @@ public class Sprite {
    * @param color The hexadecimal color value of the sprite.
    */
   public Sprite(int width, int height, int color) {
-    this.width = width;
-    this.height = height;
+    this.width = this.rawWidth = width;
+    this.height = this.rawHeight = height;
     this.pixels = new int[width * height];
     for (int i = 0; i < pixels.length; i++) {
       pixels[i] = color;
@@ -132,8 +134,8 @@ public class Sprite {
    * @param height The height of the sprite.
    */
   public Sprite(int[] pixels, int width, int height) {
-    this.width = width;
-    this.height = height;
+    this.width = this.rawWidth = width;
+    this.height = this.rawHeight = height;
     this.pixels = new int[width * height];
     for (int i = 0; i < pixels.length; i++) {
       this.pixels[i] = pixels[i];
@@ -146,10 +148,29 @@ public class Sprite {
   public Sprite(String path) {
     try {
       BufferedImage image = ImageIO.read(new File(path));
-      this.width = image.getWidth();
-      this.height = image.getHeight();
+      this.width = this.rawWidth = image.getWidth();
+      this.height = this.rawHeight = image.getHeight();
       this.pixels = new int[width * height];
       image.getRGB(0, 0, width, height, pixels, 0, width);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+  /**
+   * Creates a sprite that is scaled up or down to match the render size. This will create a square sprite.
+   * @param path The path to the image resource to create the new sprite from.
+   * @param renderSize The width and height in pixels this sprite should render at.
+   */
+  public Sprite(String path, int renderSize) {
+    try {
+      BufferedImage image = ImageIO.read(new File(path));
+      this.width = renderSize;
+      this.height = renderSize;
+      this.rawWidth = image.getWidth();
+      this.rawHeight = image.getHeight();
+      this.pixels = new int[rawWidth * rawHeight];
+      image.getRGB(0, 0, rawWidth, rawHeight, pixels, 0, rawWidth);
     }
     catch (IOException e) {
       e.printStackTrace();
@@ -178,8 +199,8 @@ public class Sprite {
   }
   
   private void setTexture() {
-    BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-    image.setRGB(0, 0, width, height, pixels, 0, width);
+    BufferedImage image = new BufferedImage(rawWidth, rawHeight, BufferedImage.TYPE_INT_ARGB);
+    image.setRGB(0, 0, rawWidth, rawHeight, pixels, 0, rawWidth);
     texture = AWTTextureIO.newTexture(GLProfile.getGL2GL3(), image, false);
   }
   

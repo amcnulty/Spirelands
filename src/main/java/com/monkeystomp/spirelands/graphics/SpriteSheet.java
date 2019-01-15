@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 /**
- * Sprite sheets are used as a collection of sprites that can be used accross the application.
+ * Sprite sheets are used as a collection of sprites that can be used across the application.
  * @author Aaron Michael McNulty
  */
 public class SpriteSheet {
