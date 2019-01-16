@@ -50,7 +50,7 @@ public class SpawnLevel extends Level {
     NPCConfig femalePurple = new NPCConfig();
     femalePurple.setX(512);
     femalePurple.setY(170);
-    femalePurple.setMessages(new String[] {"Hi! Are you having fun today?", "I'm having a great day! Want to know why?", "Because I'm thinkin 'bout my ah-mazing boyfriend...that's right. He's soooo great. He's not lonely like that elf back there because I always come back after my adventures."});
+    femalePurple.setMessages(new String[] {"Hi! Are you having fun today?", "I'm having a great day! Want to know why?", "Because I'm thinkin 'bout my ah-mazing boyfriend...that's right. He's soooo great."});
     NPC npc = new BasicNPC(femalePurple, BasicNPC.FEMALE_PURPLEHAIR);
     solidEntities.add(npc);
     npc.initLevel(this);

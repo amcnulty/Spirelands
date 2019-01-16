@@ -32,7 +32,7 @@ public class WeaponView extends DisplayView {
     showingWeaponDetailCard = true;
     card.clearCard();
   });
-  private final CharacterWeaponDetailCard weaponDetailCard = new CharacterWeaponDetailCard(item -> showItemDetails(item));
+  private final CharacterWeaponDetailCard weaponDetailCard = new CharacterWeaponDetailCard(item -> showItemDetails(item), nextCharacter -> setCharacter(nextCharacter));
   private boolean showingWeaponDetailCard = true;
   
   private void showItemDetails(Item item) {

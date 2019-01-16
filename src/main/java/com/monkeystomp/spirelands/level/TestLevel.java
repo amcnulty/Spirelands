@@ -93,7 +93,7 @@ public class TestLevel extends Level {
     lonelyMaleElf.setRoutePoint(200, 250, 1);
     lonelyMaleElf.setRoutePoint(190, 130, 4);
     lonelyMaleElf.setRoutePoint(160, 160, 1);
-    lonelyMaleElf.setMessages(new String[] {"Hi how are you? I'm all alone up here.. I haven't seen anyone around for quite some time.", "Not many people come this way, so I'm guessing that you're a traveler!", "My wife and I used to be travelers until one day she left on what she said was an important adventure. I haven't seen her since she left several months ago. I'm lonely without her."});
+    lonelyMaleElf.setMessages(new String[] {"Happy Elf: I love Steph! She is the best wife in the whole world.", "She is so great I can't ever stop thinking about her. Do you know what I mean?", "Oh? Who is Steph? That's my awesome wife! She is the best."});
     npc = new BasicNPC(lonelyMaleElf, BasicNPC.MALE_ELF);
     solidEntities.add(npc);
     npc.initLevel(this);

@@ -22,7 +22,7 @@ public class DialogBox {
                     DIALOG_PADDING_TOP = 10,
                     DIALOG_PADDING_SIDES = 6,
                     DIALOG_PADDING_BOTTOM = 12,
-                    MESSAGE_SPEED = 3,
+                    MESSAGE_SPEED = 2,
                     BACKGROUND_COLOR = GameColors.DIALOG_BOX_BACKGROUND;
   private final String  DOWN_TRIANGLE = "\u25BE";
   private String[] messages;
