@@ -77,23 +77,23 @@ public class GuardPlayer extends Player {
   protected void setupCharacterActions() {
     // Fill the characterActions hashmap with all the sprites associated with various string action keys.
     // Standing sprites.
-    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, 7, 7, characterSheet));
-    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, 7, 6, characterSheet));
-    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, 7, 4, characterSheet));
-    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, 7, 5, characterSheet));
+    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 7, characterSheet));
+    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 6, characterSheet));
+    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 4, characterSheet));
+    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 5, characterSheet));
     // Walking sprites.
     // Up
-    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, 6, 7, characterSheet));
-    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, 8, 7, characterSheet));
+    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 7, characterSheet));
+    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 7, characterSheet));
     // Right
-    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, 6, 6, characterSheet));
-    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, 8, 6, characterSheet));
+    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 6, characterSheet));
+    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 6, characterSheet));
     // Down
-    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, 6, 4, characterSheet));
-    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, 8, 4, characterSheet));
+    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 4, characterSheet));
+    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 4, characterSheet));
     // Left
-    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, 6, 5, characterSheet));
-    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, 8, 5, characterSheet));
+    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 5, characterSheet));
+    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 5, characterSheet));
   }
   
   private void handleSpaceKeyPress(KeyEvent e) {

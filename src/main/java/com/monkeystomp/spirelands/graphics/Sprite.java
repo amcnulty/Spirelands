@@ -24,7 +24,13 @@ public class Sprite {
   private int[] pixels;
   private SpriteSheet sheet;
   private Texture texture;
-  //Particles
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!          Particles             !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   /**
    * Dust particle for floating particles on level.
    */
@@ -37,7 +43,13 @@ public class Sprite {
    * Gold pieces for chest opening effect.
    */
   public static final Sprite GOLD = new Sprite(2, 2, GameColors.GOLD_PARTICLE_COLOR);
-  // Objects
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!            Objects             !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   /**
    * The gold indicator icon.
    */
@@ -83,12 +95,24 @@ public class Sprite {
    * Top piece for corners of walls.
    */
   public static final Sprite WALLTOP_DRYWALL_CORNER = new Sprite("./resources/textures/building/walltop_drywall_corner.png");
-  // Level Transition
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!        Level Transition        !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   /**
    * The transition sprite that is the size of the entire screen.
    */
   public static final Sprite TRANSITION = new Sprite(Screen.getWidth(), Screen.getHeight(), GameColors.BLACK);
-  // GUI
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!              GUI               !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   /**
    * The background and border for the game menu.
    */
@@ -99,18 +123,21 @@ public class Sprite {
   public static final Sprite GAME_MENU_RIGHT_ARROW = new Sprite("./resources/gui/arrow.png");
   /**
    * Creates a Sprite object of equal width and height from a specific point cut from a sprite sheet.
-   * @param size The width and height in pixels of the sprite to cut from the given sprite sheet.
+   * @param rawSize The width and height in pixels of the sprite to cut from the given sprite sheet. This is the size of the sprite on the sheet.
+   * @param renderSize The size to render this sprite at. This will set the width and height of the sprite.
    * @param x The x coordinate of the sprite on the sprite sheet in sprite precision.
    * @param y The y coordinate of the sprite on the sprite sheet in sprite precision.
    * @param sheet The sprite sheet to cut the sprite from.
    */
-  public Sprite(int size, int x, int y, SpriteSheet sheet) {
-    this.width = this.rawWidth = size;
-    this.height = this.rawHeight = size;
-    this.pixels = new int[width * height];
+  public Sprite(int rawSize, int renderSize, int x, int y, SpriteSheet sheet) {
+    this.width = renderSize;
+    this.height = renderSize;
+    this.rawWidth = rawSize;
+    this.rawHeight = rawSize;
+    this.pixels = new int[rawWidth * rawHeight];
     this.sheet = sheet;
-    this.x = x * width;
-    this.y = y * height;
+    this.x = x * rawWidth;
+    this.y = y * rawHeight;
     cutSpriteFromSheet();
   }
   /**
@@ -205,9 +232,9 @@ public class Sprite {
   }
   
   private void cutSpriteFromSheet() {
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        pixels[x + y * width] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
+    for (int y = 0; y < rawHeight; y++) {
+      for (int x = 0; x < rawWidth; x++) {
+        pixels[x + y * rawWidth] = sheet.getPixels()[(x + this.x) + (y + this.y) * sheet.getWidth()];
       }
     }
   }

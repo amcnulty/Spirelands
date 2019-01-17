@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -25,7 +26,7 @@ public class ItemsView extends DisplayView {
   private final int startingY = 35,
                     spaceBetweenRows = 16;
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
-  private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> {card.clearCard();});
+  private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> card.clearCard());
   
   private void showItemDetails(Item item) {
     itemDetailCard.setItem(item);
@@ -40,7 +41,10 @@ public class ItemsView extends DisplayView {
           itemsMap.get(key),
           startingY + listItems.size() * this.spaceBetweenRows,
           "Use",
-          item -> System.out.println(item.getTitle() + " has been clicked on in the item's view."),
+          item -> {
+            EquipmentItem thisItem = (EquipmentItem) item;
+            thisItem.useItem();
+          },
           item -> showItemDetails(item))
       );
     });

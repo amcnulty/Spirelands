@@ -32,6 +32,10 @@ public class SpriteSheet {
    */
   public static SpriteSheet itemsSheet = new SpriteSheet("./resources/textures/sheets/items_sheet.png");
   /**
+   * A collection of weapon item sprites.
+   */
+  public static SpriteSheet weaponsSheet = new SpriteSheet("./resources/textures/sheets/weapons_sheet.png");
+  /**
    * Creates a SpriteSheet of the given path.
    * @param path - Path to the sprite sheet resource.
    */

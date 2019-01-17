@@ -45,6 +45,7 @@ public class WeaponView extends DisplayView {
     character.removeEquippedWeapon();
     character.setEquippedWeapon(weapon);
     weapon.removeFromInventory();
+    createListItems(manager.getItemsByType(Item.WEAPON));
   }
   
   private void createListItems(Map<Integer, InventoryReference> itemsMap) {
@@ -62,12 +63,12 @@ public class WeaponView extends DisplayView {
           item -> showItemDetails(item))
       );
     });
+    itemCount = manager.getItemsByType(Item.WEAPON).size();
   }
   
   private void checkItemCount() {
     if (itemCount != manager.getItemsByType(Item.WEAPON).size()) {
       createListItems(manager.getItemsByType(Item.WEAPON));
-      itemCount = manager.getItemsByType(Item.WEAPON).size();
     }
   }
   

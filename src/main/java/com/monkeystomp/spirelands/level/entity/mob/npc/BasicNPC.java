@@ -55,23 +55,23 @@ public class BasicNPC extends NPC {
     
     // Fill the characterActions hashmap with all the sprites associated with various string action keys.
     // Standing sprites.
-    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY, characterSheet));
-    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 1, characterSheet));
-    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 2, characterSheet));
-    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, sheetX + 1, sheetY + 3, characterSheet));
+    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 1, sheetY, characterSheet));
+    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 1, sheetY + 1, characterSheet));
+    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 1, sheetY + 2, characterSheet));
+    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 1, sheetY + 3, characterSheet));
     // Walking sprites.
     // Up
-    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, sheetX, sheetY, characterSheet));
-    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY, characterSheet));
+    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX, sheetY, characterSheet));
+    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 2, sheetY, characterSheet));
     // Right
-    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 1, characterSheet));
-    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 1, characterSheet));
+    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX, sheetY + 1, characterSheet));
+    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 2, sheetY + 1, characterSheet));
     // Down
-    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 2, characterSheet));
-    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 2, characterSheet));
+    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX, sheetY + 2, characterSheet));
+    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 2, sheetY + 2, characterSheet));
     // Left
-    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, sheetX, sheetY + 3, characterSheet));
-    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, sheetX + 2, sheetY + 3, characterSheet));
+    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX, sheetY + 3, characterSheet));
+    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 2, sheetY + 3, characterSheet));
     setBounds();
   }
     

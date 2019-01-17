@@ -70,6 +70,13 @@ public class Game extends GLCanvas implements Runnable {
       manager.addToInventory(Item.BLOOD_AXE);
       manager.addToInventory(Item.COMMON_SWORD);
     }
+    manager.addToInventory(Item.SWORD_OF_THE_SPIRE);
+    manager.addToInventory(Item.DRAGON_SWORD);
+    manager.addToInventory(Item.SKY_SABER);
+    manager.addToInventory(Item.DARK_SWORD);
+    manager.addToInventory(Item.SPELLBLADE);
+    manager.addToInventory(Item.CRUSADER_SWORD);
+    manager.addToInventory(Item.KATANA_SWORD);
     frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
   }
   

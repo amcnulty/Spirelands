@@ -31,7 +31,8 @@ public class ItemDetailCard {
                     cardCenterHoriz = 351,
                     cardCenterVert = 100,
                     cardLeft = 307,
-                    cardRight = cardLeft + cardWidth;
+                    cardRight = cardLeft + cardWidth,
+                    attributeListStartingY = 130;
   private boolean itemSet = false;
   private final Consumer<ItemDetailCard> ICloseOperation;
   private final ArrayList<FontInfo> noSelectedInfoList = new ArrayList<>(),
@@ -96,13 +97,13 @@ public class ItemDetailCard {
       FontInfo labelInfo = GameFonts.getGAME_MENU_LABEL_TEXT();
       labelInfo.setText(attributes.get(i).getLabel() + ":");
       labelInfo.setX(cardLeft + sidePadding);
-      labelInfo.setY(120 + i * 7);
+      labelInfo.setY(attributeListStartingY + i * 7);
       attributeLabelList.add(labelInfo);
       
       FontInfo valueInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT();
       valueInfo.setText(attributes.get(i).getValue());
       valueInfo.setX(cardRight - sidePadding);
-      valueInfo.setY(120 + i * 7);
+      valueInfo.setY(attributeListStartingY + i * 7);
       valueInfo.rightAlignText();
       attributeValueList.add(valueInfo);
     }

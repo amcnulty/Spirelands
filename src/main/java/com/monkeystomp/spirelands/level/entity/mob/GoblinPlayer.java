@@ -39,39 +39,39 @@ public class GoblinPlayer extends Player {
   protected void setupCharacterActions() {
     // Fill the characterActions hashmap with all the sprites associated with various string action keys.
     // Standing sprites.
-    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, 6, 2, characterSheet));
-    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, 6, 1, characterSheet));
-    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, 6, 0, characterSheet));
-    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, 6, 3, characterSheet));
+    characterActions.put("STANDING_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 2, characterSheet));
+    characterActions.put("STANDING_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 1, characterSheet));
+    characterActions.put("STANDING_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 0, characterSheet));
+    characterActions.put("STANDING_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 3, characterSheet));
     // Walking sprites.
     // Up
-    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, 0, 2, characterSheet));
-    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, 1, 2, characterSheet));
-    characterActions.put("WALKING_0_2", new Sprite(SPRITE_SIZE, 2, 2, characterSheet));
-    characterActions.put("WALKING_0_3", new Sprite(SPRITE_SIZE, 3, 2, characterSheet));
-    characterActions.put("WALKING_0_4", new Sprite(SPRITE_SIZE, 4, 2, characterSheet));
-    characterActions.put("WALKING_0_5", new Sprite(SPRITE_SIZE, 5, 2, characterSheet));
+    characterActions.put("WALKING_0_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 2, characterSheet));
+    characterActions.put("WALKING_0_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 2, characterSheet));
+    characterActions.put("WALKING_0_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 2, characterSheet));
+    characterActions.put("WALKING_0_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 2, characterSheet));
+    characterActions.put("WALKING_0_4", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 2, characterSheet));
+    characterActions.put("WALKING_0_5", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 2, characterSheet));
     // Right
-    characterActions.put("WALKING_1_5", new Sprite(SPRITE_SIZE, 0, 1, characterSheet));
-    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, 1, 1, characterSheet));
-    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, 2, 1, characterSheet));
-    characterActions.put("WALKING_1_2", new Sprite(SPRITE_SIZE, 3, 1, characterSheet));
-    characterActions.put("WALKING_1_3", new Sprite(SPRITE_SIZE, 4, 1, characterSheet));
-    characterActions.put("WALKING_1_4", new Sprite(SPRITE_SIZE, 5, 1, characterSheet));
+    characterActions.put("WALKING_1_5", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 1, characterSheet));
+    characterActions.put("WALKING_1_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 1, characterSheet));
+    characterActions.put("WALKING_1_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 1, characterSheet));
+    characterActions.put("WALKING_1_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 1, characterSheet));
+    characterActions.put("WALKING_1_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 1, characterSheet));
+    characterActions.put("WALKING_1_4", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 1, characterSheet));
     // Down
-    characterActions.put("WALKING_2_5", new Sprite(SPRITE_SIZE, 0, 0, characterSheet));
-    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, 1, 0, characterSheet));
-    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, 2, 0, characterSheet));
-    characterActions.put("WALKING_2_2", new Sprite(SPRITE_SIZE, 3, 0, characterSheet));
-    characterActions.put("WALKING_2_3", new Sprite(SPRITE_SIZE, 4, 0, characterSheet));
-    characterActions.put("WALKING_2_4", new Sprite(SPRITE_SIZE, 5, 0, characterSheet));
+    characterActions.put("WALKING_2_5", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 0, characterSheet));
+    characterActions.put("WALKING_2_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 0, characterSheet));
+    characterActions.put("WALKING_2_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 0, characterSheet));
+    characterActions.put("WALKING_2_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 0, characterSheet));
+    characterActions.put("WALKING_2_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 0, characterSheet));
+    characterActions.put("WALKING_2_4", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 0, characterSheet));
     // Left
-    characterActions.put("WALKING_3_5", new Sprite(SPRITE_SIZE, 0, 3, characterSheet));
-    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, 1, 3, characterSheet));
-    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, 2, 3, characterSheet));
-    characterActions.put("WALKING_3_2", new Sprite(SPRITE_SIZE, 3, 3, characterSheet));
-    characterActions.put("WALKING_3_3", new Sprite(SPRITE_SIZE, 4, 3, characterSheet));
-    characterActions.put("WALKING_3_4", new Sprite(SPRITE_SIZE, 5, 3, characterSheet));
+    characterActions.put("WALKING_3_5", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 3, characterSheet));
+    characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 3, characterSheet));
+    characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 3, characterSheet));
+    characterActions.put("WALKING_3_2", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 3, characterSheet));
+    characterActions.put("WALKING_3_3", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 3, characterSheet));
+    characterActions.put("WALKING_3_4", new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 3, characterSheet));
   }
   
   private void checkMovementInput() {

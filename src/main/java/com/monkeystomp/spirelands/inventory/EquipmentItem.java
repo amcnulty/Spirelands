@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class EquipmentItem extends Item {
   
   private final ArrayList<ICallback> actions = new ArrayList<>();
+  private boolean consumable;
   
   public EquipmentItem(ItemBuilder builder) {
     super(builder.type(EQUIPMENT));
@@ -19,20 +20,27 @@ public class EquipmentItem extends Item {
   public void setHealingPoints(int points) {
     actions.add(() -> getCharacter().increaseHealth(points));
     attributes.add(new ItemAttribute(ItemAttribute.HEALTH_RESTORE, points));
+    consumable = true;
   }
   
   public void setManaRestorePoints(int points) {
     actions.add(() -> getCharacter().increaseMana(points));
     attributes.add(new ItemAttribute(ItemAttribute.MANA_RESTORE, points));
+    consumable = true;
   }
 
   @Override
   public ArrayList<ItemAttribute> getAttributes() {
     return attributes;
   }
-  
-  @Override
+  /**
+   * The general method for using an equipment item. If item is consumable it will be consumed. If it is has another purpose it will be used for that.
+   */
   public void useItem() {
+    if (consumable) consumeItem();
+  }
+ 
+  public void consumeItem() {
     for (ICallback action: actions) {
       action.execute();
     }

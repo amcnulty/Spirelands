@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>
@@ -18,11 +19,6 @@ import com.monkeystomp.spirelands.input.ICallback;
  *     .description("A common sword wielded by many townspeople across Spirelands.")
  *     .price(550)
  *     .thumbnail(new Sprite(SPRITE_SIZE, 6, 3, SpriteSheet.itemsSheet))
- *     .type(WEAPON)
- *     .itemAction(() -> {
- *       System.out.println("Performing action of Common Sword");
- *       INVENTORY_MANAGER.removeFromInventory(Item.COMMON_SWORD);
- *     })
  *     .build();}
  * </pre>
  * @author Aaron Michael McNulty
@@ -48,10 +44,6 @@ public class ItemBuilder {
    * The type of the item.
    */
   public int type;
-  /**
-   * The interface that gets called when the item is used.
-   */
-  public ICallback itemAction;
   /**
    * Sets the display title of the item.
    * @param title The string to set as the title of the item.
@@ -80,15 +72,6 @@ public class ItemBuilder {
     return this;
   }
   /**
-   * Sets the interface to be called when this item is used.
-   * @param itemAction Interface to be called when item is used.
-   * @return This ItemBuilder reference.
-   */
-  public ItemBuilder itemAction(ICallback itemAction) {
-    this.itemAction = itemAction;
-    return this;
-  }
-  /**
    * Sets the price of the item.
    * @param price The price to set for this item.
    * @return This ItemBuilder reference.
@@ -108,19 +91,18 @@ public class ItemBuilder {
   }
   /**
    * Builds this item by calling the Item class constructor with this instance of ItemBuilder as the argument.
+   * @param <T> The type of item.
+   * @param itemClass The class reference of the item.
    * @return A newly created Item instance.
    */
   public <T extends Item> T build(Class<T> itemClass) {
-//    return new Item(this);
     try {
       return itemClass.getConstructor(this.getClass()).newInstance(this);
     }
-    catch (Exception e) {
+    catch (IllegalAccessException | IllegalArgumentException | InstantiationException | NoSuchMethodException | SecurityException | InvocationTargetException e) {
       e.printStackTrace();
     }
     return null;
-//    return itemClass.cast(new Item(this));
-//    return new itemClass(this);
   }
   
   public Item build() {

@@ -65,8 +65,8 @@ public class Chest extends Entity {
   }
   
   private void setSprites(int chestType) {
-    chestOpenSprite = new Sprite(SPRITE_SIZE, 0, chestType, SpriteSheet.chestSheet);
-    chestClosedSprite = new Sprite(SPRITE_SIZE, 1, chestType, SpriteSheet.chestSheet);
+    chestOpenSprite = new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, chestType, SpriteSheet.chestSheet);
+    chestClosedSprite = new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, chestType, SpriteSheet.chestSheet);
   }
   
   private void setBounds() {
