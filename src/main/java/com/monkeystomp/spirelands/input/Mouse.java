@@ -19,7 +19,6 @@ public class Mouse implements MouseListener, MouseMotionListener {
    * @return The x pixel location of the mouse.
    */
   public static int getX() {
-//    System.out.println("X: " + mouseX / Screen.getScaleX());
     return mouseX;
   }
   /**
