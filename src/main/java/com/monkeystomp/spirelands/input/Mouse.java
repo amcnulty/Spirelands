@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.input;
 
+import com.monkeystomp.spirelands.graphics.Screen;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -18,6 +19,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
    * @return The x pixel location of the mouse.
    */
   public static int getX() {
+//    System.out.println("X: " + mouseX / Screen.getScaleX());
     return mouseX;
   }
   /**

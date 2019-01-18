@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.input.Mouse;
 import java.io.File;
+import java.util.function.Consumer;
 
 /**
  * Buttons to be used on the UI.
@@ -14,7 +15,9 @@ import java.io.File;
  */
 public class Button {
   
-  private final ICallback CALLBACK;
+  private ICallback CALLBACK;
+  private Consumer consumer;
+  private Object consumable;
   private final SoundEffects SFX = new SoundEffects();
   private int mouseB,
               mouseX,
@@ -99,6 +102,27 @@ public class Button {
     bottom = y + height / 2;
   }
   /**
+   * Creates a Button object with a callback that gets fired when button is clicked.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param width The width of the button.
+   * @param height The height of the button.
+   * @param consumable The object to send with the consumer.
+   * @param consumer The consumer function that fires when the button is clicked on.
+   */
+  public Button(String text, int x, int y, int width, int height, Object consumable, Consumer consumer) {
+    this.buttonText = text;
+    this.width = width;
+    this.height = height;
+    this.x = x - width / 2;
+    this.y = y - height / 2;
+    this.consumable = consumable;
+    this.consumer = consumer;
+    right = x + width / 2;
+    bottom = y + height / 2;
+  }
+  /**
    * Fires when the button is hovered over with the cursor.
    */
   protected void hover() {
@@ -115,9 +139,11 @@ public class Button {
   /**
    * Fires when the button is clicked on. Will execute the callback that was set for this button.
    */
+  @SuppressWarnings("unchecked")
   protected void click() {
     if (clickSound != null) SFX.playSoundEffect(clickSound);
-    CALLBACK.execute();
+    if (CALLBACK != null) CALLBACK.execute();
+    else if (consumer != null) consumer.accept(consumable);
   }
   /**
    * Fires once when the button is not being hovered over or being clicked on to set the default state of the button.
@@ -125,6 +151,22 @@ public class Button {
   protected void setDefault() {
     currentButton = button;
     hovering = false;
+  }
+
+  public int getTop() {
+    return y;
+  }
+
+  public int getRight() {
+    return right;
+  }
+
+  public int getBottom() {
+    return bottom;
+  }
+
+  public int getLeft() {
+    return x;
   }
   
   public boolean isDisabled() {
@@ -145,7 +187,7 @@ public class Button {
       mouseY = (int)(Mouse.getY() / Screen.getScaleY());
       mouseB = Mouse.getMouseButton();
       if (mouseB != 1) {
-        if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
+        if (mouseX >= x && mouseX <= right && mouseY >= y && mouseY <= bottom) {
           hover();
           if (startedOnButton) click();
         }
@@ -156,7 +198,7 @@ public class Button {
         startedOffButton = false;
       }
       else {
-        if (mouseX > x && mouseX < right && mouseY > y && mouseY < bottom) {
+        if (mouseX >= x && mouseX <= right && mouseY >= y && mouseY <= bottom) {
           if (!startedOffButton) {
             startedOffButton = false;
             startedOnButton = true;

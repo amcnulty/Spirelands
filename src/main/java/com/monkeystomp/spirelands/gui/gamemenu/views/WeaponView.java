@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.gui.gamemenu.components.CharacterWeaponDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
+import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
@@ -23,10 +24,13 @@ import java.util.Set;
 public class WeaponView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
-  private ArrayList<InventoryListItem> listItems = new ArrayList<>();
+  private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
+  private final Pagination pagination = new Pagination(pageIndex -> currentPageIndex = pageIndex);
   private int itemCount = 0;
   private final int startingY = 35,
-                    spaceBetweenRows = 16;
+                    spaceBetweenRows = 16,
+                    itemsPerPage = 8;
+  private int currentPageIndex = 0;
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
   private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> {
     showingWeaponDetailCard = true;
@@ -49,21 +53,37 @@ public class WeaponView extends DisplayView {
   }
   
   private void createListItems(Map<Integer, InventoryReference> itemsMap) {
-    listItems = new ArrayList<>();
+    pages.clear();
     Set<Integer> keys = itemsMap.keySet();
+    ArrayList<InventoryReference> refs = new ArrayList<>();
     keys.forEach(key -> {
-      listItems.add(
+      refs.add(itemsMap.get(key));
+    });
+    for (int i = 0; i < refs.size() / itemsPerPage + 1; i++) {
+      ArrayList<InventoryListItem> newPage = new ArrayList<>();
+      for (int j = i * itemsPerPage; j < itemsPerPage + (i * itemsPerPage); j++) {
+        if (refs.size() - 1 < j) break;
+        newPage.add(
         new InventoryListItem(
-          itemsMap.get(key),
-          startingY + listItems.size() * this.spaceBetweenRows,
+          refs.get(j),
+          startingY + newPage.size() * spaceBetweenRows,
           "Equip",
           item -> {
             handleEquipClick((WeaponItem)item);
           },
           item -> showItemDetails(item))
-      );
-    });
+        );
+      }
+      if (newPage.size() > 0) pages.add(newPage);
+    }
     itemCount = manager.getItemsByType(Item.WEAPON).size();
+    pagination.setListLength(itemCount);
+    setCurrentPage();
+  }
+  
+  private void setCurrentPage() {
+    if (currentPageIndex >= pages.size() - 1) currentPageIndex = pages.size() - 1;
+    pagination.highlightCurrentPage(currentPageIndex);
   }
   
   private void checkItemCount() {
@@ -88,27 +108,35 @@ public class WeaponView extends DisplayView {
   public void exitingView() {
     weaponDetailCard.closePopover();
     showingWeaponDetailCard = true;
+    pagination.highlightCurrentPage(0);
+    currentPageIndex = 0;
   }
   
   @Override
   public void update() {
     checkItemCount();
     checkCharacter();
-    for (InventoryListItem item: listItems) {
-      item.update();
+    if (pages.size() > 0) {
+      for (InventoryListItem item: pages.get(currentPageIndex)) {
+        item.update();
+      }
     }
     if (showingWeaponDetailCard) weaponDetailCard.update();
     else itemDetailCard.update();
+    pagination.update();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    for (InventoryListItem item: listItems) {
-      item.render(screen, gl);
-    }
     screen.renderSprite(gl, 306, 23, border, false);
+    if (pages.size() > 0) {
+      for (InventoryListItem item: pages.get(currentPageIndex)) {
+        item.render(screen, gl);
+      }
+    }
     if (showingWeaponDetailCard) weaponDetailCard.render(screen, gl);
     else itemDetailCard.render(screen, gl);
+    pagination.render(screen, gl);
   }
 
 }

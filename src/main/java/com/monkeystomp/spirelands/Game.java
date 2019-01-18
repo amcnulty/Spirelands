@@ -64,19 +64,38 @@ public class Game extends GLCanvas implements Runnable {
     
     // Temporarily add items to player inventory for testing.
     InventoryManager manager = InventoryManager.getInventoryManager();
-    for (int i = 0; i < 27; i++) {
-      manager.addToInventory(Item.COOKIE);
-      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
-      manager.addToInventory(Item.BLOOD_AXE);
-      manager.addToInventory(Item.COMMON_SWORD);
-    }
-    manager.addToInventory(Item.SWORD_OF_THE_SPIRE);
-    manager.addToInventory(Item.DRAGON_SWORD);
-    manager.addToInventory(Item.SKY_SABER);
-    manager.addToInventory(Item.DARK_SWORD);
-    manager.addToInventory(Item.SPELLBLADE);
-    manager.addToInventory(Item.CRUSADER_SWORD);
+    manager.addToInventory(Item.TRAINING_BOOK_V1);
+    manager.addToInventory(Item.TRAINING_BOOK_V2);
+//    for (int i = 0; i < 27; i++) {
+//      manager.addToInventory(Item.COOKIE);
+//      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
+//      manager.addToInventory(Item.BLOOD_AXE);
+//      manager.addToInventory(Item.COMMON_SWORD);
+//    }
+    manager.addToInventory(Item.COMMON_SWORD);
     manager.addToInventory(Item.KATANA_SWORD);
+    manager.addToInventory(Item.SKY_SABER);
+    manager.addToInventory(Item.SCIMITAR_SWORD);
+    manager.addToInventory(Item.CRUSADER_SWORD);
+    manager.addToInventory(Item.TALON_SWORD);
+    manager.addToInventory(Item.SPELLBLADE);
+    manager.addToInventory(Item.DARK_SWORD);
+    manager.addToInventory(Item.POISON_SWORD);
+    manager.addToInventory(Item.LONGSWORD);
+    manager.addToInventory(Item.DRAGON_SWORD);
+    manager.addToInventory(Item.SWORD_OF_THE_SPIRE);
+    manager.addToInventory(Item.BASIC_BOW);
+    manager.addToInventory(Item.SPARROW_BOW);
+    manager.addToInventory(Item.SMALL_CROSSBOW);
+    manager.addToInventory(Item.COMMON_LONGBOW);
+    manager.addToInventory(Item.GOLDEN_HAWK);
+    manager.addToInventory(Item.HEAVY_CROSSBOW);
+    manager.addToInventory(Item.HEAVY_LONGBOW);
+    manager.addToInventory(Item.LIGHTNING_STRIKE);
+    manager.addToInventory(Item.METALLIC_BOW);
+    manager.addToInventory(Item.POWER_BOW);
+    manager.addToInventory(Item.SHORT_BOW);
+    manager.addToInventory(Item.CALAMITY_SHOT);
     frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
   }
   

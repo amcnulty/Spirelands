@@ -80,7 +80,7 @@ public class EquippedItemSlot extends Button {
         else if (xx == 0 || xx == width - 1) {
           pixels[xx + yy * width] = GameColors.GAME_MENU_MUTED_TEXT;
         }
-        else pixels[xx + yy * width] = GameColors.BLACK;
+        else pixels[xx + yy * width] = GameColors.EQUIPPED_ITEM_SLOT_BACKGROUND;
       }
     }
     return new Sprite(pixels, width, height);
@@ -96,7 +96,7 @@ public class EquippedItemSlot extends Button {
         else if (xx == 0 || xx == width - 1) {
           pixels[xx + yy * width] = GameColors.GAME_MENU_DEFAULT_TEXT;
         }
-        else pixels[xx + yy * width] = GameColors.BLACK;
+        else pixels[xx + yy * width] = GameColors.EQUIPPED_ITEM_SLOT_HOVER;
       }
     }
     return new Sprite(pixels, width, height);
@@ -112,7 +112,7 @@ public class EquippedItemSlot extends Button {
         else if (xx == 0 || xx == width - 1) {
           pixels[xx + yy * width] = GameColors.GAME_MENU_LABEL_TEXT;
         }
-        else pixels[xx + yy * width] = GameColors.BLACK;
+        else pixels[xx + yy * width] = GameColors.EQUIPPED_ITEM_SLOT_DOWN;
       }
     }
     return new Sprite(pixels, width, height);

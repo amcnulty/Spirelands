@@ -20,11 +20,11 @@ public class GameMenuNavButton extends Button {
                             HEIGHT = 20,
                             TOP_PADDING = 6,
                             LEFT_PADDING = 10;
-  private final int DEFAULT_TEXT = GameColors.GAME_MENU_DEFAULT_TEXT,
-                    SELECTED_TEXT = GameColors.GAME_MENU_SELECTED_TEXT,
+  private final int defaultText = GameColors.GAME_MENU_DEFAULT_TEXT,
+                    selectedText = GameColors.GAME_MENU_SELECTED_TEXT,
                     FONT_SIZE = 27;
-  private final Sprite SELECTED_BACKGROUND = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);;
-  private final FontInfo FONT_INFO = GameFonts.getGAME_MENU_NAV_BUTTON();
+  private final Sprite selectedBackground = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);
+  private final FontInfo fontInfo = GameFonts.getGAME_MENU_NAV_BUTTON();
   /**
    * Creates a GameMenuNavButton with the given text and with a callback that gets fired when button is clicked.
    * @param text The text to be rendered on the button.
@@ -36,9 +36,9 @@ public class GameMenuNavButton extends Button {
     super(text, x, y, GameMenuNavButton.WIDTH, GameMenuNavButton.HEIGHT, callback);
     createButtonSprites();
     setButtonSounds();
-    FONT_INFO.setText(text);
-    FONT_INFO.setX(this.x + LEFT_PADDING);
-    FONT_INFO.setY(y);
+    fontInfo.setText(text);
+    fontInfo.setX(this.x + LEFT_PADDING);
+    fontInfo.setY(y);
   }
 
   private void createButtonSprites() {
@@ -54,48 +54,29 @@ public class GameMenuNavButton extends Button {
   }
   
   private void setBackground() {
-    button = SELECTED_BACKGROUND;
-    buttonHover = SELECTED_BACKGROUND;
-    buttonDown = SELECTED_BACKGROUND;
-  }
-
-  @Override
-  protected void hover() {
-    super.hover();
-  }
-  
-  @Override
-  protected void down() {
-    super.down();
+    button = selectedBackground;
+    buttonHover = selectedBackground;
+    buttonDown = selectedBackground;
   }
    
   @Override
   protected void click() {
     super.click();
     setBackground();
-    FONT_INFO.setColor(new Color(SELECTED_TEXT));
+    fontInfo.setColor(new Color(selectedText));
     setDisabled(true);
   }
   
-  @Override
-  protected void setDefault() {
-    super.setDefault();
-  }
-  
   public void removeBackground() {
-    FONT_INFO.setColor(new Color(DEFAULT_TEXT));
+    fontInfo.setColor(new Color(defaultText));
     createButtonSprites();
     setDisabled(false);
   }
   
   @Override
-  public void update() {
-    super.update();
-  }
-  
-  @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
-    screen.renderFonts(FONT_INFO);
+    screen.renderFonts(fontInfo);
   }
+  
 }

@@ -45,7 +45,7 @@ public class Item {
    *          !!################################!!
    */
   /**
-   * A basic health potion. (EQUIPMENT)
+   * A basic health potion (EQUIPMENT)
    */
   public static final EquipmentItem
     HEALTH_POTION = new ItemBuilder()
@@ -72,7 +72,27 @@ public class Item {
     COOKIE.setManaRestorePoints(5);
   }
   /**
-   * Basic leather helmet. (ARMOR)
+   * A training book to increase stats (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    TRAINING_BOOK_V1 = new ItemBuilder()
+          .title("Training Book v.1")
+          .description("Volume 1 of the training book series. This book will teach the basic skills that it takes to increase ones overall skills.")
+          .price(1000)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 11, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  /**
+   * A training book to increase stats (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    TRAINING_BOOK_V2 = new ItemBuilder()
+          .title("Training Book v.2")
+          .description("Volume 2 of the training book series. In this installment fighters will learn specific tactics to react the next level of their trainin'g.")
+          .price(2000)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 11, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  /**
+   * Basic leather helmet (ARMOR)
    */
   public static final ArmorItem
     LEATHER_HELMET = new ItemBuilder()
@@ -82,7 +102,7 @@ public class Item {
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 1, SpriteSheet.itemsSheet))
           .build(ArmorItem.class);
   /**
-   * Steel boots. (ARMOR)
+   * Steel boots (ARMOR)
    */
   public static final ArmorItem
     STEEL_BOOTS = new ItemBuilder()
@@ -92,7 +112,7 @@ public class Item {
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 2, SpriteSheet.itemsSheet))
           .build(ArmorItem.class);
   /**
-   * Common sword. (WEAPON)
+   * Common sword (WEAPON)
    */
   public static final WeaponItem
     COMMON_SWORD = new ItemBuilder()
@@ -105,7 +125,7 @@ public class Item {
     COMMON_SWORD.setAttackPower(10);
   }
   /**
-   * Katana sword. (WEAPON)
+   * Katana sword (WEAPON)
    */
   public static final WeaponItem
     KATANA_SWORD = new ItemBuilder()
@@ -118,7 +138,7 @@ public class Item {
     KATANA_SWORD.setAttackPower(25);
   }
   /**
-   * Sky Saber. (WEAPON)
+   * Sky Saber (WEAPON)
    */
   public static final WeaponItem
     SKY_SABER = new ItemBuilder()
@@ -131,7 +151,7 @@ public class Item {
     SKY_SABER.setAttackPower(27);
   }
   /**
-   * Scimitar sword. (WEAPON)
+   * Scimitar sword (WEAPON)
    */
   public static final WeaponItem
     SCIMITAR_SWORD = new ItemBuilder()
@@ -144,7 +164,7 @@ public class Item {
     SCIMITAR_SWORD.setAttackPower(30);
   }
   /**
-   * Crusader sword. (WEAPON)
+   * Crusader sword (WEAPON)
    */
   public static final WeaponItem
     CRUSADER_SWORD = new ItemBuilder()
@@ -157,7 +177,7 @@ public class Item {
     CRUSADER_SWORD.setAttackPower(33);
   }
   /**
-   * Talon sword. (WEAPON)
+   * Talon sword (WEAPON)
    */
   public static final WeaponItem
     TALON_SWORD = new ItemBuilder()
@@ -170,7 +190,7 @@ public class Item {
     TALON_SWORD.setAttackPower(40);
   }
   /**
-   * 'Spellblade'. (WEAPON)
+   * 'Spellblade' (WEAPON)
    */
   public static final WeaponItem
     SPELLBLADE = new ItemBuilder()
@@ -183,7 +203,7 @@ public class Item {
     SPELLBLADE.setAttackPower(38);
   }
   /**
-   * Dark Sword. (WEAPON)
+   * Dark Sword (WEAPON)
    */
   public static final WeaponItem
     DARK_SWORD = new ItemBuilder()
@@ -196,7 +216,7 @@ public class Item {
     DARK_SWORD.setAttackPower(50);
   }
   /**
-   * Poison Sword. (WEAPON)
+   * Poison Sword (WEAPON)
    */
   public static final WeaponItem
     POISON_SWORD = new ItemBuilder()
@@ -209,7 +229,7 @@ public class Item {
     POISON_SWORD.setAttackPower(55);
   }
   /**
-   * 'Longsword'. (WEAPON)
+   * 'Longsword' (WEAPON)
    */
   public static final WeaponItem
     LONGSWORD = new ItemBuilder()
@@ -222,7 +242,7 @@ public class Item {
     LONGSWORD.setAttackPower(60);
   }
   /**
-   * Dragon Sword. (WEAPON)
+   * Dragon Sword (WEAPON)
    */
   public static final WeaponItem
     DRAGON_SWORD = new ItemBuilder()
@@ -235,7 +255,7 @@ public class Item {
     DRAGON_SWORD.setAttackPower(65);
   }
   /**
-   * Sword Of The Spire. (WEAPON)
+   * Sword Of The Spire (WEAPON)
    */
   public static final WeaponItem
     SWORD_OF_THE_SPIRE = new ItemBuilder()
@@ -246,6 +266,162 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SWORD_OF_THE_SPIRE.setAttackPower(80);
+  }
+  /**
+   * Basic Bow (WEAPON)
+   */
+  public static final WeaponItem
+    BASIC_BOW = new ItemBuilder()
+          .title("Basic Bow")
+          .description("A basic short bow with a reflex shape. This lightweight, cheap, and easy to use weapon is a great beginners bow.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    BASIC_BOW.setAttackPower(10);
+  }
+  /**
+   * Sparrow Bow (Weapon)
+   */
+  public static final WeaponItem
+    SPARROW_BOW = new ItemBuilder()
+          .title("Sparrow Bow")
+          .description("This bow features a smooth curved body with a solid grip. It is a medium range bow that offers a great balance of weight, range, and arrow speed.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SPARROW_BOW.setAttackPower(15);
+  }
+  /**
+   * Small Crossbow (WEAPON)
+   */
+  public static final WeaponItem
+    SMALL_CROSSBOW = new ItemBuilder()
+          .title("Small Crossbow")
+          .description("Due to its light weight and medium recoil this small crossbow is easy to use. What it lacks in shooting power it makes up for in its fast reload time and compact small design.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SMALL_CROSSBOW.setAttackPower(20);
+  }
+  /**
+   * Short Bow (WEAPON)
+   */
+  public static final WeaponItem
+    SHORT_BOW = new ItemBuilder()
+          .title("Short Bow")
+          .description("Once thought of as a less than desireable weapon, the Short Bow has the unique advantages of being better in tight spaces and traveling long distances where weight is an issue.")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SHORT_BOW.setAttackPower(25);
+  }
+  /**
+   * Common Longbow (WEAPON)
+   */
+  public static final WeaponItem
+    COMMON_LONGBOW = new ItemBuilder()
+          .title("Common Longbow")
+          .description("A mainstay weapon of large armies. Standing at six feet tall the Longbow has superior range and arrow speed which allow arrows shot from it to penetrate metal armor.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    COMMON_LONGBOW.setAttackPower(30);
+  }
+  /**
+   * Lightning Strike (WEAPON)
+   */
+  public static final WeaponItem
+    LIGHTNING_STRIKE = new ItemBuilder()
+          .title("Lightning Strike")
+          .description("It is said the arrows that fly from this bow are equal to the bolts of lightning that are thrown from the heavens by the gods. One can feel the energy coming from this weapon if close enough.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    LIGHTNING_STRIKE.setAttackPower(35);
+  }
+  /**
+   * Heavy Crossbow (WEAPON)
+   */
+  public static final WeaponItem
+    HEAVY_CROSSBOW = new ItemBuilder()
+          .title("Heavy Crossbow")
+          .description("A serious crossbow with serious attacking power. Due to its bulky frame shots fired from this weapon have the ability to penetrate metal armor and to knock back opponents.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    HEAVY_CROSSBOW.setAttackPower(40);
+  }
+  /**
+   * Metallic Bow (WEAPON)
+   */
+  public static final WeaponItem
+    METALLIC_BOW = new ItemBuilder()
+          .title("Metallic Bow")
+          .description("This special bow has a body crafted out of metal. It is heavier than a wood bow, but for those strong enough to use it the power that it generates is unparalleled.")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    METALLIC_BOW.setAttackPower(50);
+  }
+  /**
+   * Heavy Longbow (WEAPON)
+   */
+  public static final WeaponItem
+    HEAVY_LONGBOW = new ItemBuilder()
+          .title("Heavy Longbow")
+          .description("A more powerful variant of the Common Longbow with increased range and arrow speed. This bow requires both a strong and tall user to effectively harness its power.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    HEAVY_LONGBOW.setAttackPower(55);
+  }
+  /**
+   * Power Bow (WEAPON)
+   */
+  public static final WeaponItem
+    POWER_BOW = new ItemBuilder()
+          .title("Power Bow")
+          .description("Built by a master weapon maker the Power Bow is unique in all of Spirelands. Its design produces a powerful shot and the ability to stab enemies should the user be engaged in melee combat.")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    POWER_BOW.setAttackPower(60);
+  }
+  /**
+   * Golden Hawk (WEAPON)
+   */
+  public static final WeaponItem
+    GOLDEN_HAWK = new ItemBuilder()
+          .title("Golden Hawk")
+          .description("A truely stunning bow! Highly accurate, powerful, compact and beautifully guilded in gold this bow is as much a joy to use as it is to look at.")
+          .price(5000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GOLDEN_HAWK.setAttackPower(65);
+  }
+  /**
+   * Calamity Shot (WEAPON)
+   */
+  public static final WeaponItem
+    CALAMITY_SHOT = new ItemBuilder()
+          .title("Calamity Shot")
+          .description("The Calamity Shot is a weapon of legend. It is said that the first shot ever taken from this bow caused a 100 year war between nations. Where this bow goes disaster follows in its wake.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 1, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    CALAMITY_SHOT.setAttackPower(80);
   }
   /**
    * The blood axe. (WEAPON)

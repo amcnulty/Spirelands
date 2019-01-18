@@ -77,9 +77,21 @@ public class GameColors {
    */
   public static final int GAME_MENU_BACKGROUND = 0xFF1E1E1E;
   /**
-   * Border color used in the game menu #0xE2E2E2.
+   * Border color used in the game menu #0xFFE2E2E2.
    */
   public static final int GAME_MENU_BORDER = 0xFFE2E2E2;
+  /**
+   * Background color for equipped item slot #0xFF393939.
+   */
+  public static final int EQUIPPED_ITEM_SLOT_BACKGROUND = 0xFF393939;
+  /**
+   * Background color for hovering equipped item slot #0xFF454545.
+   */
+  public static final int EQUIPPED_ITEM_SLOT_HOVER = 0xFF454545;
+  /**
+   * Background color for down state on equipped item slot #0xFF515151.
+   */
+  public static final int EQUIPPED_ITEM_SLOT_DOWN = 0xFF515151;
   /**
    * Color of the light map for night time effect #0xFF121212
    */

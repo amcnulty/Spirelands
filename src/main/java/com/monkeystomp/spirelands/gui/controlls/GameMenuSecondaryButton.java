@@ -29,6 +29,24 @@ public class GameMenuSecondaryButton extends Button {
    */
   public GameMenuSecondaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
+    fontInfo = GameFonts.getlightText_bold_23();
+    setFontInfo();
+    createButtonSprites();
+    setButtonSounds();
+  }
+  /**
+   * Creates a new GameMneuSecondaryButton.
+   * @param text The text to be rendered on the button.
+   * @param info The font info to use for the button text.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param width The width of the button.
+   * @param height The height of the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
+  public GameMenuSecondaryButton(String text, FontInfo info, int x, int y, int width, int height, ICallback callback) {
+    super(text, x, y, width, height, callback);
+    fontInfo = info;
     setFontInfo();
     createButtonSprites();
     setButtonSounds();
@@ -39,7 +57,6 @@ public class GameMenuSecondaryButton extends Button {
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
-    fontInfo = GameFonts.getlightText_bold_23();
     fontInfo.setText(buttonText);
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
