@@ -578,6 +578,174 @@ public class Item {
     GOLDEN_TOUCH.setAttackPower(70);
   }
   /**
+   * Wooden Staff (WEAPON)
+   */
+  public static final WeaponItem
+    WOODEN_STAFF = new ItemBuilder()
+          .title("Wooden Staff")
+          .description("A wooden staff to be used by a magic user. Though it is very simple in design and presentation it still holds some magical quality about it.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    WOODEN_STAFF.setAttackPower(1);
+    WOODEN_STAFF.setMagicAttackPower(8);
+  }
+  /**
+   * Ancient Staff (WEAPON)
+   */
+  public static final WeaponItem
+    ANCIENT_STAFF = new ItemBuilder()
+          .title("Ancient Staff")
+          .description("A staff as old as time. Once held by a great king wizard that ruled thousands of years ago this staff has stood the test of time and remained intact bound by the magical energy within.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    WOODEN_STAFF.setAttackPower(1);
+    WOODEN_STAFF.setMagicAttackPower(16);
+  }
+  /**
+   * Caterpillar Staff (WEAPON)
+   */
+  public static final WeaponItem
+    CATERPILLAR = new ItemBuilder()
+          .title("Caterpillar")
+          .description("Named after the green caterpillars found in the woods of the region this magical staff embodies the power of the insets and small animals of the forest.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    CATERPILLAR.setAttackPower(4);
+    CATERPILLAR.setMagicAttackPower(24);
+  }
+  /**
+   * Solar Staff (WEAPON)
+   */
+  public static final WeaponItem
+    SOLAR_STAFF = new ItemBuilder()
+          .title("Solar Staff")
+          .description("This staff draws its magical powers from the star it is nearest. This means that in Spirelands the staff's power will remain mostly constant since there is only one star nearby.")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SOLAR_STAFF.setAttackPower(7);
+    SOLAR_STAFF.setMagicAttackPower(31);
+  }
+  /**
+   * Life Staff (WEAPON)
+   */
+  public static final WeaponItem
+    LIFE_STAFF = new ItemBuilder()
+          .title("Life Staff")
+          .description("All life around this staff embues it with power to create a strong magical aura. The Life Staff responds to the life energy like a well tuned chord making it resonate at times of high energy.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    LIFE_STAFF.setAttackPower(9);
+    LIFE_STAFF.setMagicAttackPower(35);
+  }
+  /**
+   * Metal Staff (WEAPON)
+   */
+  public static final WeaponItem
+    METAL_STAFF = new ItemBuilder()
+          .title("Metal Staff")
+          .description("The alloy that makes this staff is unique. It was forged by a great wizard out of special high quality metals such as platinum and silver. No one truely knows how it was made.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    METAL_STAFF.setAttackPower(18);
+    METAL_STAFF.setMagicAttackPower(40);
+  }
+  /**
+   * Enchanted Rod (WEAPON)
+   */
+  public static final WeaponItem
+    ENCHANTED_ROD = new ItemBuilder()
+          .title("Enchanted Rod")
+          .description("Don't let the appearance of this staff deceive you, it is a powerful magical staff that is strong and light. Skilled users can summon more power by quickly spinning the rod overhead")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    ENCHANTED_ROD.setAttackPower(14);
+    ENCHANTED_ROD.setMagicAttackPower(45);
+  }
+  /**
+   * Necromancer Staff (WEAPON)
+   */
+  public static final WeaponItem
+    NECROMANCER_STAFF = new ItemBuilder()
+          .title("Necromancer")
+          .description("Evil energy pulsates out of this dark and mysterious staff. It has the power to summon the dead to do its user's bidding. The dark power can consumer the user if they are weak spirited.")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    NECROMANCER_STAFF.setAttackPower(25);
+    NECROMANCER_STAFF.setMagicAttackPower(50);
+  }
+  /**
+   * Fire Staff (WEAPON)
+   */
+  public static final WeaponItem
+    FIRE_STAFF = new ItemBuilder()
+          .title("Fire Staff")
+          .description("Harness the power of fire with this staff! Fire energy swarms around the user improving their ability to cast fire type magic spells and attacks.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    FIRE_STAFF.setAttackPower(29);
+    FIRE_STAFF.setMagicAttackPower(55);
+  }
+  /**
+   * Shock Staff (WEAPON)
+   */
+  public static final WeaponItem
+    SHOCK_STAFF = new ItemBuilder()
+          .title("Shock Staff")
+          .description("Send shockwaves of electrical energy out in all directions with increased power using this lightning based staff. Increases lightning spells and attacks")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SHOCK_STAFF.setAttackPower(32);
+    SHOCK_STAFF.setMagicAttackPower(60);
+  }
+  /**
+   * Tsunami Staff (WEAPON)
+   */
+  public static final WeaponItem
+    TSUNAMI_STAFF = new ItemBuilder()
+          .title("Tsunami")
+          .description("Oceans of power are bestowed upon the user of this great enchanted staff. Within it the power of the ocean tides, currents, and the animals of the deap are unlocked.")
+          .price(5000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    TSUNAMI_STAFF.setAttackPower(35);
+    TSUNAMI_STAFF.setMagicAttackPower(65);
+  }
+  /**
+   * Sorcerer's Heart Staff (WEAPON)
+   */
+  public static final WeaponItem
+    SORCERERS_HEART = new ItemBuilder()
+          .title("Sorcerer's Heart")
+          .description("Once crafted by a legendar master Sorcerer this staff is designed to bring out the one true power that lies hidden inside each one of us. Only a true master wizard can use the powers of this staff.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 3, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SORCERERS_HEART.setAttackPower(38);
+    SORCERERS_HEART.setMagicAttackPower(80);
+  }
+  /**
    * The blood axe. (WEAPON)
    */
   public static final WeaponItem

@@ -17,6 +17,10 @@ public class ItemAttribute {
    * Attack power of a weapon. Used on offensive weapons that modify a characters total attack stat.
    */
   public static final String ATTACK_POWER = "Attack Power";
+  /**
+   * Magic power of a weapon. Used on offensive weapons that modify a characters total magic attack stat.
+   */
+  public static final String MAGIC_POWER = "Magic Power";
   private final String  label,
                         value;
   /**
