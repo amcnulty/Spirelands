@@ -201,6 +201,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SPELLBLADE.setAttackPower(38);
+    SPELLBLADE.setMagicAttackPower(25);
   }
   /**
    * Dark Sword (WEAPON)
@@ -214,6 +215,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     DARK_SWORD.setAttackPower(50);
+    DARK_SWORD.setMagicAttackPower(10);
   }
   /**
    * Poison Sword (WEAPON)
@@ -266,6 +268,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SWORD_OF_THE_SPIRE.setAttackPower(80);
+    SWORD_OF_THE_SPIRE.setMagicAttackPower(30);
   }
   /**
    * Basic Bow (WEAPON)
@@ -344,6 +347,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     LIGHTNING_STRIKE.setAttackPower(35);
+    LIGHTNING_STRIKE.setMagicAttackPower(5);
   }
   /**
    * Heavy Crossbow (WEAPON)
@@ -409,6 +413,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GOLDEN_HAWK.setAttackPower(65);
+    GOLDEN_HAWK.setMagicAttackPower(10);
   }
   /**
    * Calamity Shot (WEAPON)
@@ -422,6 +427,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     CALAMITY_SHOT.setAttackPower(80);
+    CALAMITY_SHOT.setMagicAttackPower(15);
   }
   /**
    * Field Dagger (WEAPON)
@@ -524,6 +530,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SHADOW_BLADE.setAttackPower(45);
+    SHADOW_BLADE.setMagicAttackPower(8);
   }
   /**
    * Poison Dagger (WEAPON)
@@ -537,6 +544,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     POISON_DAGGER.setAttackPower(50);
+    POISON_DAGGER.setMagicAttackPower(15);
   }
   /**
    * Kings Short Blade (WEAPON)
@@ -576,6 +584,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GOLDEN_TOUCH.setAttackPower(70);
+    GOLDEN_TOUCH.setMagicAttackPower(20);
   }
   /**
    * Wooden Staff (WEAPON)
