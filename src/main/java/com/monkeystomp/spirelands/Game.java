@@ -38,7 +38,7 @@ public class Game extends GLCanvas implements Runnable {
               scaleY = 3;
   private Screen screen;
   private Keyboard key = Keyboard.getKeyboard();
-  private Mouse mouse = new Mouse();
+  private Mouse mouse = Mouse.getMouse();
   private Cursor cursor;
   
   private ViewManager view = ViewManager.getViewManager();

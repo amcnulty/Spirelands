@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class Keyboard implements KeyListener {
 
-  private static Keyboard instance = new Keyboard();
-  private ArrayList<INotify> keyPressedNotifiers = new ArrayList<>();
+  private final static Keyboard INSTANCE = new Keyboard();
+  private final ArrayList<INotify> keyPressedNotifiers = new ArrayList<>();
 
   private Keyboard() {}
   /**
@@ -19,7 +19,7 @@ public class Keyboard implements KeyListener {
    * @return The singleton instance of the Keyboard class.
    */
   public static Keyboard getKeyboard() {
-    return instance;
+    return INSTANCE;
   }
   /**
    * The 'W' key.

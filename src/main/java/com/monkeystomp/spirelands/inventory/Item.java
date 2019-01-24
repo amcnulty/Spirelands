@@ -424,6 +424,160 @@ public class Item {
     CALAMITY_SHOT.setAttackPower(80);
   }
   /**
+   * Field Dagger (WEAPON)
+   */
+  public static final WeaponItem
+    FIELD_DAGGER = new ItemBuilder()
+          .title("Field Dagger")
+          .description("A basic weapon for a basic purpose, protection. This knife is commonly used by pesants who work in the field for protection from wildlife and robbers.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    FIELD_DAGGER.setAttackPower(7);
+  }
+  /**
+   * Shank Dagger (WEAPON)
+   */
+  public static final WeaponItem
+    SHANK_DAGGER = new ItemBuilder()
+          .title("Shank Dagger")
+          .description("Simple in design, the Shank Dagger is a perfect travel companion as it is easy to carry and store. This dagger can be useful as a hunting knife or for personal protection.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SHANK_DAGGER.setAttackPower(12);
+  }
+  /**
+   * Bowie Knife (WEAPON)
+   */
+  public static final WeaponItem
+    BOWIE_KNIFE = new ItemBuilder()
+          .title("Bowie Knife")
+          .description("This knife has a long curved thick blade with a tipped point and features a crossguard on the grip so you can press hard into what you are stabbing into.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    BOWIE_KNIFE.setAttackPower(20);
+  }
+  /**
+   * 'Stumpblade' dagger (WEAPON)
+   */
+  public static final WeaponItem
+    STUMPBLADE_DAGGER = new ItemBuilder()
+          .title("Stumpblade")
+          .description("Short and wide double edged blade with a high quality handle. The wideness of the blade adds weight which translates to harder hitting power but with reduced speed")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    STUMPBLADE_DAGGER.setAttackPower(25);
+  }
+  
+  public static final WeaponItem
+    SERRATOR_DAGGER = new ItemBuilder()
+          .title("Serrator")
+          .description("Rip your enemies to shreds while you feel like you are slicing them like bread. With this blade at your side you are always ready to kill or just be useful in the kitchen.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SERRATOR_DAGGER.setAttackPower(30);
+  }
+  /**
+   * Stiletto (WEAPON)
+   */
+  public static final WeaponItem
+    STILETTO = new ItemBuilder()
+          .title("Stiletto")
+          .description("This long skinny dagger is quick to cut its foes due to its light weight. The Stiletto's extra length gives it the advantage of acting more like a short sword that does less damage.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    STILETTO.setAttackPower(35);
+  }
+  /**
+   * Dragon Claw (WEAPON)
+   */
+  public static final WeaponItem
+    DRAGON_CLAW = new ItemBuilder()
+          .title("Dragon Claw")
+          .description("It is said that this knife has the same effect as a dragon impaling you with one of its deadly claws. The deadly inward curved tip of the blade digs into those that it is cutting.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    DRAGON_CLAW.setAttackPower(40);
+  }
+  /**
+   * Shadow Blade (WEAPON)
+   */
+  public static final WeaponItem
+    SHADOW_BLADE = new ItemBuilder()
+          .title("Shadow Blade")
+          .description("An evil blade that fills those who get near it with horror. He who holds the Shadow Blade may find themselves surrounded with shadows from the dark relm who looking to wreak havoc in this world.")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SHADOW_BLADE.setAttackPower(45);
+  }
+  /**
+   * Poison Dagger (WEAPON)
+   */
+  public static final WeaponItem
+    POISON_DAGGER = new ItemBuilder()
+          .title("Poison Dagger")
+          .description("There is a legend of a blade so sinister that whoever owns it is cursed by a fatal tragedy. Said to be over 2000 years old the Poison Blade was the most powerful weapon in the world at the time.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    POISON_DAGGER.setAttackPower(50);
+  }
+  /**
+   * Kings Short Blade (WEAPON)
+   */
+  public static final WeaponItem
+    KINGS_SHORTBLADE = new ItemBuilder()
+          .title("King's Shortblade")
+          .description("A noble weapon that blurs the line between dagger and sword. It's long double edge blade with protective hand guard makes it a superior sidearm for close combat situations.")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    KINGS_SHORTBLADE.setAttackPower(55);
+  }
+  /**
+   * Crippler (WEAPON)
+   */
+  public static final WeaponItem
+    CRIPPLER = new ItemBuilder()
+          .title("The Crippler")
+          .description("This dagger does massive internal damage to those who are stabbed by it. The dramatic ribbed sides of the blade help tear through flesh while stabbing or slashing enemies.")
+          .price(5000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    CRIPPLER.setAttackPower(60);
+  }
+  /**
+   * Golden Touch (WEAPON)
+   */
+  public static final WeaponItem
+    GOLDEN_TOUCH = new ItemBuilder()
+          .title("Golden Touch")
+          .description("The Golden Touch is a beautifuly crafted weapon that is equally as deadly. Unlike the name insinuates the blade does not turn everything it touches into gold, however, it will save your life in a fight.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 2, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GOLDEN_TOUCH.setAttackPower(70);
+  }
+  /**
    * The blood axe. (WEAPON)
    */
   public static final WeaponItem

@@ -1,16 +1,26 @@
 package com.monkeystomp.spirelands.input;
 
-import com.monkeystomp.spirelands.graphics.Screen;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * The Mouse class responds to mouse events that happen on the game window.
  * @author Aaron Michael McNulty
  */
 public class Mouse implements MouseListener, MouseMotionListener {
+  
+  private final static Mouse INSTANCE = new Mouse();
+  private final ArrayList<Consumer<MouseEvent>> mouseListeners = new ArrayList<>();
 
+  private Mouse() {}
+  
+  public static Mouse getMouse() {
+    return INSTANCE;
+  }
+  
   private static int  mouseX,
                       mouseY,
                       mouseB;
@@ -34,6 +44,21 @@ public class Mouse implements MouseListener, MouseMotionListener {
    */
   public static int getMouseButton() {
     return mouseB;
+  }
+  
+  public void addMouseClickListener(Consumer<MouseEvent> listener) {
+    mouseListeners.add(listener);
+  }
+  
+  public void removeMouseClickListener(Consumer<MouseEvent> listener) {
+    mouseListeners.remove(listener);
+  }
+  
+  private void callMouseListeners(MouseEvent e) {
+    System.out.println(mouseListeners.size());
+    for (Consumer<MouseEvent> listener: mouseListeners) {
+      listener.accept(e);
+    }
   }
   /**
    * {@inheritDoc}
@@ -64,7 +89,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
   public void mousePressed(MouseEvent e) {
     mouseX = e.getX();
     mouseY = e.getY();
-		mouseB = e.getButton();
+    mouseB = e.getButton();
+    callMouseListeners(e);
   }
   /**
    * {@inheritDoc}

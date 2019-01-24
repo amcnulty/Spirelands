@@ -8,7 +8,10 @@ import com.monkeystomp.spirelands.gui.controlls.DangerButton;
 import com.monkeystomp.spirelands.gui.controlls.GameMenuPrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.input.ICallback;
+import com.monkeystomp.spirelands.input.Mouse;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.awt.event.MouseEvent;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
@@ -23,11 +26,14 @@ public class EquippedItemSlot extends Button {
   private Item item;
   private GameMenuPrimaryButton info;
   private DangerButton unequip;
-  private boolean popoverShowing = false;
+  private boolean popoverShowing = false,
+                  markPopoverForClose = false,
+                  mouseListenerSet = false;
   private final Sprite  popoverBackground = new Sprite("./resources/gui/popoverBackground.png"),
                         popoverBackgroundHover = new Sprite("./resources/gui/popoverBackgroundHover.png"),
                         popoverBackgroundDown = new Sprite("./resources/gui/popoverBackgroundDown.png");
   private Sprite currentPopoverBackground = popoverBackground;
+  private final Consumer<MouseEvent> mouseListener = event -> {if (popoverShowing) checkForClickOutside(event);};
   
   public EquippedItemSlot(int x, int y, Supplier<Item> IGetEquipment, ICallback handleInfo, ICallback handleUnequip) {
     super("", x, y, 19, 19, () -> {});
@@ -118,6 +124,39 @@ public class EquippedItemSlot extends Button {
     return new Sprite(pixels, width, height);
   }
   
+  private void addMouseListener() {
+    Mouse.getMouse().addMouseClickListener(mouseListener);
+    mouseListenerSet = true;
+  }
+  
+  private void removeMouseListener() {
+    Mouse.getMouse().removeMouseClickListener(mouseListener);
+    mouseListenerSet = false;
+  }
+  
+  private void checkForClickOutside(MouseEvent event) {
+    int top = y + 17,
+        right = x - currentPopoverBackground.getWidth() / 2 + width / 2 + currentPopoverBackground.getWidth(),
+        bottom = y + 17 + currentPopoverBackground.getHeight(),
+        left = x - currentPopoverBackground.getWidth() / 2 + width / 2;
+    if (!(
+        (   event.getX() / Screen.getScaleX() >= left
+        &&  event.getX() / Screen.getScaleX() <= right
+        &&  event.getY() / Screen.getScaleY() >= top
+        &&  event.getY() / Screen.getScaleY() <= bottom
+        )
+        ||
+        (
+            event.getX() / Screen.getScaleX() >= x
+        &&  event.getX() / Screen.getScaleX() <= x + width
+        &&  event.getY() / Screen.getScaleY() >= y
+        &&  event.getY() / Screen.getScaleY() <= y + height
+        )
+        )) {
+      markPopoverForClose = true;
+    }
+  }
+  
   @Override
   protected void hover() {
     super.hover();
@@ -140,6 +179,8 @@ public class EquippedItemSlot extends Button {
   protected void click() {
     super.click();
     if (item != null) togglePopover();
+    if (popoverShowing && !mouseListenerSet) addMouseListener();
+    else if (!popoverShowing && mouseListenerSet) removeMouseListener();
   }
   
   private void togglePopover() {
@@ -150,6 +191,8 @@ public class EquippedItemSlot extends Button {
    */
   public void closePopover() {
     popoverShowing = false;
+    markPopoverForClose = false;
+    removeMouseListener();
   }
   
   private void checkItem() {
@@ -159,6 +202,7 @@ public class EquippedItemSlot extends Button {
   public void update() {
     super.update();
     checkItem();
+    if (markPopoverForClose) closePopover();
     if (popoverShowing) {
       info.update();
       unequip.update();
