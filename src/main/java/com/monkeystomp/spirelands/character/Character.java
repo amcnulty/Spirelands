@@ -214,7 +214,10 @@ public class Character {
   }
   
   public int getCombinedIntellect() {
-    return intellect;
+    if (equippedWeapon != null) {
+      return equippedWeapon.getMagicPower() + intellect;
+    }
+    else return intellect;
   }
   
   public int getCombinedSpirit() {

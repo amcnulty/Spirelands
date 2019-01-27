@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.awt.Color;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -17,7 +18,8 @@ import java.awt.geom.Rectangle2D;
  */
 public class GameMenuSecondaryButton extends Button {
   
-  private FontInfo fontInfo;
+  private final FontInfo fontInfo;
+  private boolean disabled = false;
   /**
    * Creates a new GameMneuSecondaryButton.
    * @param text The text to be rendered on the button.
@@ -72,6 +74,16 @@ public class GameMenuSecondaryButton extends Button {
   private void setButtonSounds() {
     hoverSound = SoundEffects.BUTTON_HOVER;
     clickSound = SoundEffects.BUTTON_CLICK;
+  }
+  
+  @Override
+  public void update() {
+    super.update();
+    if (isDisabled() != disabled) {
+      if (isDisabled()) fontInfo.setColor(new Color(GameColors.GAME_MENU_MUTED_TEXT));
+      else fontInfo.setColor(new Color(GameColors.GAME_MENU_DEFAULT_TEXT));
+      disabled = isDisabled();
+    }
   }
   
   @Override

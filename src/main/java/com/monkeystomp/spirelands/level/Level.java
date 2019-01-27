@@ -57,7 +57,7 @@ public class Level implements Runnable {
                   isPortalSet = false,
                   gameMenuOpen = false;
   private Portal exitPortal;
-  private final GameMenu GAME_MENU = new GameMenu();
+  private final GameMenu GAME_MENU = new GameMenu(() -> closeGameMenu());
   private Keyboard keyboard = Keyboard.getKeyboard();
   private INotify notifier = (e) -> handleKeypress(e);
   private ArrayList<Tile> textureData = new ArrayList<>();
