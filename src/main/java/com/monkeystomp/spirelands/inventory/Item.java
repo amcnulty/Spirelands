@@ -755,6 +755,163 @@ public class Item {
     SORCERERS_HEART.setMagicAttackPower(80);
   }
   /**
+   * Simple Axe (WEAPON)
+   */
+  public static final WeaponItem
+    SIMPLE_AXE = new ItemBuilder()
+          .title("Simple Axe")
+          .description("A small battle axe with a single sided blade that can easily be used with one hand. Not the most impressive weapon, but it comes in handy whenever you need to do some chopping.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SIMPLE_AXE.setAttackPower(10);
+  }
+  /**
+   * Sledgehammer (WEAPON)
+   */
+  public static final WeaponItem
+    SLEDGEHAMMER = new ItemBuilder()
+          .title("Sledgehammer")
+          .description("You must be strong and skilled to properly use this hammer in combat. This hammer is very heavy and costs a lot of energy to swing suggesting that it may be better served as a tool.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SLEDGEHAMMER.setAttackPower(17);
+  }
+  /**
+   * Broad axe (WEAPON)
+   */
+  public static final WeaponItem
+    BROADAXE = new ItemBuilder()
+          .title("Broadaxe")
+          .description("The blade on this axe is actually two normal sized blades that have been forged together to create one broad blade. A larger blade makes for more damage with each hit.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    BROADAXE.setAttackPower(25);
+  }
+  /**
+   * Twin Crescent (WEAPON)
+   */
+  public static final WeaponItem
+    TWIN_CRESCENT = new ItemBuilder()
+          .title("Twin Crescent")
+          .description("A long handled battle axe with a twin blade. Designed for hand to hand combat coming from all sides with its long reach and sharp, deadly, double sided blade.")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    TWIN_CRESCENT.setAttackPower(30);
+  }
+  /**
+   * 'Masakari' axe (WEAPON)
+   */
+  public static final WeaponItem
+    MASAKARI_AXE = new ItemBuilder()
+          .title("Masakari")
+          .description("Made with destruction in mind, this deadly weapon has a long, uniquely curved blade affixed to a short handle. Perfect for close combat situations where a light deadly weapon is needed.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    MASAKARI_AXE.setAttackPower(35);
+  }
+  /**
+   * Obsidian Axe (WEAPON)
+   */
+  public static final WeaponItem
+    OBSIDIAN_AXE = new ItemBuilder()
+          .title("Obsidian Axe")
+          .description("This one of a kind weapon is both destructive and beautiful. A double sided axe blade made from carefully sharpened obsidian with a long rosewood handle makes this a weapon to be proud of.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    OBSIDIAN_AXE.setAttackPower(40);
+  }
+  /**
+   * Twin Broad blade axe (WEAPON)
+   */
+  public static final WeaponItem
+    TWIN_BROADBLADE = new ItemBuilder()
+          .title("Twin Broadblade")
+          .description("The Twin Broadblade is a weapon for a serious warrior. The long cutting edges, and its supprising light weight are what stand out most about its design.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    TWIN_BROADBLADE.setAttackPower(45);
+  }
+  /**
+   * Doom Hammer (WEAPON)
+   */
+  public static final WeaponItem
+    DOOM_HAMMER = new ItemBuilder()
+          .title("Doom Hammer")
+          .description("This is known by ledgend as 'the hammer of doom and destruction'. Only evil can come from those who use it and it is said to be the only weapon that can kill purely evil spirits.")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    DOOM_HAMMER.setAttackPower(50);
+  }
+  /**
+   * Kings Axe (WEAPON)
+   */
+  public static final WeaponItem
+    KINGS_AXE = new ItemBuilder()
+          .title("Kings Axe")
+          .description("An axe forged for a great king nearly two centuries ago. It is constructed with golden blades and its handle is adorned with golden hand grips and end pieces. A stunning and unique weapon.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    KINGS_AXE.setAttackPower(55);
+  }
+  /**
+   * Dragon Slayer (WEAPON)
+   */
+  public static final WeaponItem
+    DRAGON_SLAYER = new ItemBuilder()
+          .title("Dragon Slayer")
+          .description("The dragon slayer is certainly powerful enough to live up to its name. The blades are shaped like the wings of a dragon in flight and forged with light weight and durable metals.")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    DRAGON_SLAYER.setAttackPower(60);
+  }
+  /**
+   * Golden Brute (WEAPON)
+   */
+  public static final WeaponItem
+    GOLDEN_BRUTE = new ItemBuilder()
+          .title("Golden Brute")
+          .description("A rare axe created entirely from gold. The brilliance of this weapon will stun enemies on the battle field. A unique treasure that is also capable of doing great amounts of damage.")
+          .price(5000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GOLDEN_BRUTE.setAttackPower(65);
+  }
+  /**
+   * Gods Hammer (WEAPON)
+   */
+  public static final WeaponItem
+    GODS_HAMMER = new ItemBuilder()
+          .title("Gods Hammer")
+          .description("The ultimate weapon for anyone who has mastered the art of the axe and hammer. God's Hammer is made for the gods themselves and to use it is to be one with them.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 4, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GODS_HAMMER.setAttackPower(80);
+    GODS_HAMMER.setMagicAttackPower(20);
+  }
+  /**
    * The blood axe. (WEAPON)
    */
   public static final WeaponItem
