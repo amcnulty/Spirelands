@@ -912,6 +912,163 @@ public class Item {
     GODS_HAMMER.setMagicAttackPower(20);
   }
   /**
+   * Pupil Wand (WEAPON)
+   */
+  public static final WeaponItem
+    PUPIL_WAND = new ItemBuilder()
+          .title("The Pupil")
+          .description("This is the first wand that students of magic receive when they train at the school of wizardry. It is designed to use low level magic targeted for the budding wizard.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    PUPIL_WAND.setMagicAttackPower(8);
+  }
+  /**
+   * Graduate Wand (WEAPON)
+   */
+  public static final WeaponItem
+    GRADUATE_WAND = new ItemBuilder()
+          .title("The Graduate")
+          .description("This wand is issued by the school of wizardry to those deserving students who have proven their skills in magic and made it to graduation.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GRADUATE_WAND.setMagicAttackPower(15);
+  }
+  /**
+   * Tri-Coil Wand (WEAPON)
+   */
+  public static final WeaponItem
+    TRI_COIL_WAND = new ItemBuilder()
+          .title("Tri-Coil Want")
+          .description("An interesting wand that features a board tip wrapped in three distinct coils. These three coils radiate magical energy out of the wand which produces powerful attacks and spells.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    TRI_COIL_WAND.setMagicAttackPower(24);
+  }
+  /**
+   * Blunt Tip Wand (WEAPON)
+   */
+  public static final WeaponItem
+    BLUNT_TIP_WAND = new ItemBuilder()
+          .title("Blunt Tip Wand")
+          .description("Some may mistake this wand for a hammer or some sort of gardening tool, but it is infact a wizard's wand to be used in casting magic spells. It can also be used as a hammer...")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    BLUNT_TIP_WAND.setAttackPower(8);
+    BLUNT_TIP_WAND.setMagicAttackPower(30);
+  }
+  /**
+   * Earth Power (WEAPON)
+   */
+  public static final WeaponItem
+    EARTH_POWER = new ItemBuilder()
+          .title("Earth Power")
+          .description("Harness the natural energy of the earth with this wand. Your allies are the plants and animals of nature that lend their power to the holder of this special magic wand.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    EARTH_POWER.setMagicAttackPower(35);
+  }
+  /**
+   * Rainbow Wand (WEAPON)
+   */
+  public static final WeaponItem
+    RAINBOW_WAND = new ItemBuilder()
+          .title("Rainbow Wand")
+          .description("Is this a toy? Is this a weapon? Is anyone supposed to take this thing seriously? Find out for yourself by trying the rainbow wand in your next encounter with a monster or a villain.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    RAINBOW_WAND.setMagicAttackPower(40);
+  }
+  /**
+   * 'Aquastrike' Wand (WEAPON)
+   */
+  public static final WeaponItem
+    AQUASTRIKE_WAND = new ItemBuilder()
+          .title("Aquastrike")
+          .description("The aquastrike is a wand that specializes in harnessing the power of water. At first thought water may not seem all that powerful, however, the power of the tides is not to be underestimated.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    AQUASTRIKE_WAND.setMagicAttackPower(45);
+  }
+  /**
+   * Voodoo Wand (WEAPON)
+   */
+  public static final WeaponItem
+    VOODOO_WAND = new ItemBuilder()
+          .title("Voodoo Wand")
+          .description("Those who use black magic are said to be in line with the devil or do the devils work. This wand was found in the home of three evil witches hundreds of years ago. Who knows what horror this wand has unleashed.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    VOODOO_WAND.setMagicAttackPower(50);
+  }
+  /**
+   * Wand Of Riches (WEAPON)
+   */
+  public static final WeaponItem
+    WAND_OF_RICHES = new ItemBuilder()
+          .title("Wand Of Riches")
+          .description("The Wand Of Riches has been sought out by those looking for fortune and glory. Tales of this wand say that whomever uses it can create gold out of thin air!")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    WAND_OF_RICHES.setMagicAttackPower(55);
+  }
+  /**
+   * Electro Wand (WEAPON)
+   */
+  public static final WeaponItem
+    ELECTRO_WAND = new ItemBuilder()
+          .title("Electro")
+          .description("There is a warning labeled on this wand that the electrical energy that this produces can kill the spellcaster if they are not careful. Better make sure you are properly grounded before use.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    ELECTRO_WAND.setMagicAttackPower(60);
+  }
+  /**
+   * Azula's Wand (WEAPON)
+   */
+  public static final WeaponItem
+    AZULAS_WAND = new ItemBuilder()
+          .title("Azula's Wand")
+          .description("Azula was a powerful wizard from a long time ago. Not much is known about her but her wand has survived the ages. Magical energy surges from the wand in an almost uncontrollable frenzy.")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    AZULAS_WAND.setMagicAttackPower(65);
+  }
+  /**
+   * Fire Element (WEAPON)
+   */
+  public static final WeaponItem
+    FIRE_ELEMENT = new ItemBuilder()
+          .title("Fire Element")
+          .description("A powerful wand that radiates intense heat and is capable of sending out waves of fire in all directions. Some say this wand rivals the power of the sun.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 5, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    FIRE_ELEMENT.setMagicAttackPower(80);
+  }
+  /**
    * The blood axe. (WEAPON)
    */
   public static final WeaponItem
