@@ -1069,6 +1069,163 @@ public class Item {
     FIRE_ELEMENT.setMagicAttackPower(80);
   }
   /**
+   * Wood Club (WEAPON)
+   */
+  public static final WeaponItem
+    WOOD_CLUB = new ItemBuilder()
+          .title("Wood Club")
+          .description("A primitive wood club to be used as an offensive weapon. Beat your foes into submission with this oversized stick, but just don't expect it to do much damage.")
+          .price(550)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    WOOD_CLUB.setAttackPower(8);
+  }
+  /**
+   * Small Mace (WEAPON)
+   */
+  public static final WeaponItem
+    SMALL_MACE = new ItemBuilder()
+          .title("Small Mace")
+          .description("This mace is perfect travel companion due to its small size and light weight. As far as maces go it is a bit on the too small size but can still be an effective weapon for self defense.")
+          .price(750)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SMALL_MACE.setAttackPower(16);
+  }
+  /**
+   * Steel Mace (WEAPON)
+   */
+  public static final WeaponItem
+    STEEL_MACE = new ItemBuilder()
+          .title("Steel Mace")
+          .description("The head of this mace is made from steel that has been formed into a egg-like shape with a rough surface. The overall weight of this weapon makes each attack a slow methodical procedure.")
+          .price(1000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    STEEL_MACE.setAttackPower(25);
+  }
+  /**
+   * Snaggletooth Mace (WEAPON)
+   */
+  public static final WeaponItem
+    SNAGGLETOOTH_MACE = new ItemBuilder()
+          .title("Snaggletooth")
+          .description("Holding this weapon you might feel like you belong to a band of wandering raiders. The Snaggletooth is a wood club with shards of metal sticking out of the top, which, have a tendency to get caught on things.")
+          .price(1500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    SNAGGLETOOTH_MACE.setAttackPower(30);
+  }
+  /**
+   * Copperhead Mace (WEAPON)
+   */
+  public static final WeaponItem
+    COPPERHEAD_MACE = new ItemBuilder()
+          .title("Copperhead")
+          .description("An interesting mace made of a special, strong copper alloy. At first it may seem a strange idea to make a weapon out of copper but the weight to strength ratio pays of in this case.")
+          .price(2000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    COPPERHEAD_MACE.setAttackPower(35);
+  }
+  /**
+   * Mad Ball Mac (WEAPON)
+   */
+  public static final WeaponItem
+    MAD_BALL_MACE = new ItemBuilder()
+          .title("Mad Ball")
+          .description("Featuring a long handle with an intimidating metal head with sharp protruding spikes this mace is standard issue for many armies in the region. Truly a combat ready weapon.")
+          .price(2500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    MAD_BALL_MACE.setAttackPower(40);
+  }
+  /**
+   * Blue Steel (WEAPON)
+   */
+  public static final WeaponItem
+    BLUE_STEEL = new ItemBuilder()
+          .title("Blue Steel")
+          .description("The Blue Steel is a professional's weapon of choice. This mace is constructed with the finest of materials to create a both lightweight and strong metal shaped into a sleek and deadly design.")
+          .price(3000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    BLUE_STEEL.setAttackPower(45);
+  }
+  /**
+   * Ebony Mace (WEAPON)
+   */
+  public static final WeaponItem
+    EBONY_MACE = new ItemBuilder()
+          .title("Ebony Mace")
+          .description("This all black weapon is as dark as it's origins. Said to be used in the war between good and evil, the Ebony Mace was often seen in the hands of the evil forces hellbent on destruction.")
+          .price(3500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    EBONY_MACE.setAttackPower(50);
+  }
+  /**
+   * Gold Mace (WEAPON)
+   */
+  public static final WeaponItem
+    GOLD_MACE = new ItemBuilder()
+          .title("Gold Mace")
+          .description("A mace gilded with gold and adorned with gold on its handle. The creator of this weapon wanted to make a something with the elegance fit for a king and the power to destroy any adversary.")
+          .price(4000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GOLD_MACE.setAttackPower(55);
+  }
+  /**
+   * Axe Club (WEAPON)
+   */
+  public static final WeaponItem
+    AXE_CLUB = new ItemBuilder()
+          .title("Axe Club")
+          .description("Not quite an axe and not quite a club, it's the Axe Club! A unique combination of weapons come together to make this light and powerful weapon that can be used to slash and bash all in one!")
+          .price(4500)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    AXE_CLUB.setAttackPower(60);
+  }
+  /**
+   * Golden Nugget (WEAPON)
+   */
+  public static final WeaponItem
+    GOLDEN_NUGGET = new ItemBuilder()
+          .title("Golden Nugget")
+          .description("Originally made for a wealthy prince who liked to spend his money on extravagant weapons this mace features a head that is made of a solid gold head. Your foes will become gold striken by it...literally.")
+          .price(5000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    GOLDEN_NUGGET.setAttackPower(65);
+  }
+  /**
+   * Power Orb (WEAPON)
+   */
+  public static final WeaponItem
+    POWER_ORB_MACE = new ItemBuilder()
+          .title("Power Orb Mace")
+          .description("A one of a kind treasure. The Power Orb is a mace with a magical orb as the head that is able to unleash spells and deadly physical attacks. Only a master of blunt weaponry should use the Power Orb.")
+          .price(7000)
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 6, SpriteSheet.weaponsSheet))
+          .build(WeaponItem.class);
+  static {
+    POWER_ORB_MACE.setAttackPower(80);
+    POWER_ORB_MACE.setMagicAttackPower(20);
+  }
+  /**
    * The blood axe. (WEAPON)
    */
   public static final WeaponItem
