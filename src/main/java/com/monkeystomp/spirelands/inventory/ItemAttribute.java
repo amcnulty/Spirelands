@@ -21,6 +21,18 @@ public class ItemAttribute {
    * Magic power of a weapon. Used on offensive weapons that modify a characters total magic attack stat.
    */
   public static final String MAGIC_POWER = "Magic Power";
+  /**
+   * Physical defense of armor. Used on armor to protect against physical attacks.
+   */
+  public static final String PHYSICAL_DEFENSE = "Physical Defense";
+  /**
+   * Magic defense of armor. Used on armor to protect against magic attacks.
+   */
+  public static final String MAGIC_DEFENSE = "Magic Defense";
+  /**
+   * Speed penalty of item. Reduces the wearer's speed stat.
+   */
+  public static final String SPEED_PENALTY = "Speed Penalty";
   private final String  label,
                         value;
   /**

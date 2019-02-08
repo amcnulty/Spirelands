@@ -29,10 +29,10 @@ public class EquipmentItem extends Item {
     consumable = true;
   }
 
-  @Override
-  public ArrayList<ItemAttribute> getAttributes() {
-    return attributes;
-  }
+//  @Override
+//  public ArrayList<ItemAttribute> getAttributes() {
+//    return attributes;
+//  }
   /**
    * The general method for using an equipment item. If item is consumable it will be consumed. If it is has another purpose it will be used for that.
    */

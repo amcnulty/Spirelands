@@ -45,6 +45,13 @@ public class Item {
    *          !!################################!!
    */
   /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!        Equipment Items         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
    * A basic health potion (EQUIPMENT)
    */
   public static final EquipmentItem
@@ -91,6 +98,73 @@ public class Item {
           .price(2000)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 11, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
+  
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!           Armor Items          !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
+   * Leather Jacket (ARMOR ITEM)
+   */
+  public static final ArmorItem
+    LEATHER_JACKET = new ItemBuilder()
+          .title("Leather Jacket")
+          .description("A protective leather jacket. While wearing it you feel like you could win a knife fight. Provides level 1 protection.")
+          .price(300)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    LEATHER_JACKET.setPhysicalDefense(5);
+    LEATHER_JACKET.setMagicalDefense(1);
+  }
+  /**
+   * War Tunic (ARMOR)
+   */
+  public static final ArmorItem
+    WAR_TUNIC = new ItemBuilder()
+          .title("War Tunic")
+          .description("A heavy weight yet flexible material makes this warrior's armor. Provides level 2 protection.")
+          .price(600)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    WAR_TUNIC.setPhysicalDefense(10);
+    WAR_TUNIC.setMagicalDefense(2);
+    WAR_TUNIC.setSpeedPenalty(2);
+  }
+  /**
+   * Metal Vest (ARMOR)
+   */
+  public static final ArmorItem
+    METAL_VEST = new ItemBuilder()
+          .title("Metal Vest")
+          .description("This chest plate is made of solid strong metal. It is very heavy but offers level 3 protection.")
+          .price(900)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    METAL_VEST.setPhysicalDefense(15);
+    METAL_VEST.setMagicalDefense(3);
+    METAL_VEST.setSpeedPenalty(6);
+  }
+  /**
+   * Gold Tunic (ARMOR)
+   */
+  public static final ArmorItem
+    GOLD_TUNIC = new ItemBuilder()
+          .title("Gold Chestplate")
+          .description("A chestplate of armor made from rare gold. Offers level 4 protection.")
+          .price(1200)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    GOLD_TUNIC.setPhysicalDefense(20);
+    GOLD_TUNIC.setMagicalDefense(5);
+    GOLD_TUNIC.setSpeedPenalty(9);
+  }
   /**
    * Basic leather helmet (ARMOR)
    */
@@ -98,19 +172,122 @@ public class Item {
     LEATHER_HELMET = new ItemBuilder()
           .title("Leather Helmet")
           .description("A basic leather helmet used for defense.")
-          .price(300)
+          .price(100)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 1, SpriteSheet.itemsSheet))
           .build(ArmorItem.class);
+  static {
+    LEATHER_HELMET.setPhysicalDefense(3);
+    LEATHER_HELMET.setMagicalDefense(1);
+  }
+  /**
+   * War helmet (ARMOR)
+   */
+  public static final ArmorItem
+    WAR_HELMET = new ItemBuilder()
+          .title("War Helmet")
+          .description("A warriors helmet this will provide level 2 protection.")
+          .price(200)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 1, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    WAR_HELMET.setPhysicalDefense(6);
+    WAR_HELMET.setMagicalDefense(2);
+  }
+  /**
+   * Metal Helmet (ARMOR)
+   */
+  public static final ArmorItem
+    METAL_HELMET = new ItemBuilder()
+          .title("Metal Helmet")
+          .description("A metal helmet that looks like it was designed for a king's knight. This will provide level 3 protection.")
+          .price(300)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 1, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    METAL_HELMET.setPhysicalDefense(9);
+    METAL_HELMET.setMagicalDefense(3);
+  }
+  /**
+   * Gold Helmet (ARMOR)
+   */
+  public static final ArmorItem
+    GOLD_HELMET = new ItemBuilder()
+          .title("Gold Helmet")
+          .description("A helmet made from gold. This will provide level 4 protection.")
+          .price(400)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 1, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    GOLD_HELMET.setPhysicalDefense(12);
+    GOLD_HELMET.setMagicalDefense(4);
+  }
+  /**
+   * Leather Boots (ARMOR)
+   */
+  public static final ArmorItem
+    LEATHER_BOOTS = new ItemBuilder()
+          .title("Leather Boots")
+          .description("These leather boots look like they have gone around the block a few times, however, they offer protection level 1.")
+          .price(100)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 2, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    LEATHER_BOOTS.setPhysicalDefense(3);
+    LEATHER_BOOTS.setMagicalDefense(1);
+    LEATHER_BOOTS.setSpeedPenalty(1);
+  }
+  /**
+   * War Boots (ARMOR)
+   */
+  public static final ArmorItem
+    WAR_BOOTS = new ItemBuilder()
+          .title("War Boots")
+          .description("Boots that are made for combat. These boots offer level 2 protection.")
+          .price(200)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 2, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    WAR_BOOTS.setPhysicalDefense(6);
+    WAR_BOOTS.setMagicalDefense(2);
+    WAR_BOOTS.setSpeedPenalty(2);
+  }
   /**
    * Steel boots (ARMOR)
    */
   public static final ArmorItem
     STEEL_BOOTS = new ItemBuilder()
           .title("Steel Boots")
-          .description("Military grade steel boots. Goes best with a matching suit of armor.")
-          .price(2500)
+          .description("Military grade steel boots. Goes best with a matching suit of armor. Offers level 3 protection.")
+          .price(300)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 2, SpriteSheet.itemsSheet))
           .build(ArmorItem.class);
+  static {
+    STEEL_BOOTS.setPhysicalDefense(9);
+    STEEL_BOOTS.setMagicalDefense(3);
+    STEEL_BOOTS.setSpeedPenalty(5);
+  }
+  /**
+   * Gold Boots (ARMOR)
+   */
+  public static final ArmorItem
+    GOLD_BOOTS = new ItemBuilder()
+          .title("Gold Boots")
+          .description("Boots made from solid gold. You feel like a god wearing these shoes. Overs level 4 protection.")
+          .price(400)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 2, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    GOLD_BOOTS.setPhysicalDefense(12);
+    GOLD_BOOTS.setMagicalDefense(4);
+    GOLD_BOOTS.setSpeedPenalty(7);
+  }
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!           Weapon Items         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   /**
    * Common sword (WEAPON)
    */

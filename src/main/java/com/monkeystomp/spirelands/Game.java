@@ -96,6 +96,24 @@ public class Game extends GLCanvas implements Runnable {
     manager.addToInventory(Item.POWER_BOW);
     manager.addToInventory(Item.SHORT_BOW);
     manager.addToInventory(Item.CALAMITY_SHOT);
+    
+    // Armor
+    
+    manager.addToInventory(Item.LEATHER_HELMET);
+    manager.addToInventory(Item.WAR_HELMET);
+    manager.addToInventory(Item.METAL_HELMET);
+    manager.addToInventory(Item.GOLD_HELMET);
+    manager.addToInventory(Item.LEATHER_JACKET);
+    manager.addToInventory(Item.WAR_TUNIC);
+    manager.addToInventory(Item.METAL_VEST);
+    manager.addToInventory(Item.GOLD_TUNIC);
+    manager.addToInventory(Item.LEATHER_BOOTS);
+    manager.addToInventory(Item.WAR_BOOTS);
+    manager.addToInventory(Item.STEEL_BOOTS);
+    manager.addToInventory(Item.GOLD_BOOTS);
+    
+    
+    
     frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
   }
   
