@@ -69,7 +69,7 @@ public class TestLevel extends Level {
   protected void addChests() {
     Chest chest;
     
-    chest = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
+    chest = new Chest(64, 64, Chest.COMMON_METAL_CHEST, Item.SMALL_HP_POTION);
     solidEntities.add(chest);
     chest.initLevel(this);
     

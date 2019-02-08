@@ -64,13 +64,24 @@ public class Game extends GLCanvas implements Runnable {
     
     // Temporarily add items to player inventory for testing.
     InventoryManager manager = InventoryManager.getInventoryManager();
-    manager.addToInventory(Item.TRAINING_BOOK_V1);
-    manager.addToInventory(Item.TRAINING_BOOK_V2);
+    // Equipment
+    
     for (int i = 0; i < 27; i++) {
+      manager.addToInventory(Item.SMALL_HP_POTION);
+      manager.addToInventory(Item.MEDIUM_HP_POTION);
+      manager.addToInventory(Item.HEALTH_BOTTLE);
+      manager.addToInventory(Item.MANA_VILE);
+      manager.addToInventory(Item.MANA_POTION);
+      manager.addToInventory(Item.MANA_BOTTLE);
+      manager.addToInventory(Item.RIBS);
+      manager.addToInventory(Item.APPLE);
+      manager.addToInventory(Item.BANANA);
+      manager.addToInventory(Item.DRAGON_TOOTH);
+      manager.addToInventory(Item.FEATHER);
       manager.addToInventory(Item.COOKIE);
-      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
-      manager.addToInventory(Item.BLOOD_AXE);
-      manager.addToInventory(Item.COMMON_SWORD);
+      manager.addToInventory(Item.SPECIAL_CANDY);
+      manager.addToInventory(Item.TRAINING_BOOK_V1);
+      manager.addToInventory(Item.TRAINING_BOOK_V2);
     }
     manager.addToInventory(Item.COMMON_SWORD);
     manager.addToInventory(Item.KATANA_SWORD);

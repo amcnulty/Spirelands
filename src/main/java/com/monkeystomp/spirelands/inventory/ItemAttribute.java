@@ -33,6 +33,35 @@ public class ItemAttribute {
    * Speed penalty of item. Reduces the wearer's speed stat.
    */
   public static final String SPEED_PENALTY = "Speed Penalty";
+  /**
+   * Strength stat increase. Used for strength up items.
+   */
+  public static final String STRENGTH_UP = "Stregth Increase";
+  /**
+   * Defense stat increase. Used for defense up items.
+   */
+  public static final String DEFENSE_UP = "Defense Increase";
+  /**
+   * Intellect stat increase. Used for magic up items.
+   */
+  public static final String INTELLECT_UP = "Intellect Increase";
+  /**
+   * Spirit stat increase. Used for spirit up items.
+   */
+  public static final String SPIRIT_UP = "Increase Spirit";
+  /**
+   * Speed stat increase. Used for speed up items.
+   */
+  public static final String SPEED_UP = "Speed Increase";
+  /**
+   * Level increase. Used for level up items.
+   */
+  public static final String LEVEL_UP = "Level Increase";
+  /**
+   * Luck stat increase. Used for luck up items.
+   */
+  public static final String LUCK_UP = "Luck Increase";
+  
   private final String  label,
                         value;
   /**

@@ -55,28 +55,170 @@ public class Item {
    * A basic health potion (EQUIPMENT)
    */
   public static final EquipmentItem
-    HEALTH_POTION = new ItemBuilder()
-          .title("Health Potion")
+    SMALL_HP_POTION = new ItemBuilder()
+          .title("Small HP Potion")
           .description("A basic health potion for replenishing HP.")
-          .price(100)
-          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 8, SpriteSheet.itemsSheet))
+          .price(50)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 9, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
-    HEALTH_POTION.setHealingPoints(100);
+    SMALL_HP_POTION.setHealingPoints(100);
   }
   /**
-   * A cookie (EQUIPMENT)
+   * Medium Health Potion (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    MEDIUM_HP_POTION = new ItemBuilder()
+          .title("Medium Potion")
+          .description("A medium size health potion for replenishing HP.")
+          .price(150)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 9, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    MEDIUM_HP_POTION.setHealingPoints(400);
+  }
+  /**
+   * Health Bottle Potion (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    HEALTH_BOTTLE = new ItemBuilder()
+          .title("Health Bottle")
+          .description("A bottle of healing potion. What a life saver!")
+          .price(500)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 9, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    HEALTH_BOTTLE.setHealingPoints(1200);
+  }
+  /**
+   * Mana Vile (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    MANA_VILE = new ItemBuilder()
+          .title("Mana Vile")
+          .description("A vile of mana potion for a small increase in magic power.")
+          .price(200)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    MANA_VILE.setManaRestorePoints(20);
+  }
+  /**
+   * Mana Potion (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    MANA_POTION = new ItemBuilder()
+          .title("Mana Potion")
+          .description("A wonderful potion used to restore drained magic power.")
+          .price(800)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    MANA_POTION.setManaRestorePoints(80);
+  }
+  /**
+   * Mana Bottle (EQUIPMENT)
+   */
+  public static final EquipmentItem
+    MANA_BOTTLE = new ItemBuilder()
+          .title("Mana Bottle")
+          .description("A bottle of mana restoring liquid. This potion is expensive but really useful in long battles where quick mana restoring is required.")
+          .price(2000)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    MANA_BOTTLE.setManaRestorePoints(200);
+  }
+  /**
+   * Ribs (EQUIPMENT - STRENGTH UP)
+   */
+  public static final EquipmentItem
+    RIBS = new ItemBuilder()
+          .title("Ribs")
+          .description("Delicious ribs that bolsters ones strength.")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 7, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    RIBS.setStrengthUp(1);
+  }
+  /**
+   * Apple (EQUIPMENT - DEFENSE UP)
+   */
+  public static final EquipmentItem
+    APPLE = new ItemBuilder()
+          .title("Apple")
+          .description("A perfectly grown apple. Very sweet and healthy too.")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 0, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    APPLE.setDefenseUp(1);
+  }
+  /**
+   * Banana (EQUIPMENT - INTELLECT UP)
+   */
+  public static final EquipmentItem
+    BANANA = new ItemBuilder()
+          .title("Banana")
+          .description("The most wonderful food there is. The banana is a great traveling snack and it will increase your metal capacity.")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 1, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    BANANA.setIntellectUp(1);
+  }
+  /**
+   * Dragon Tooth (EQUIPMENT - SPIRIT UP)
+   */
+  public static final EquipmentItem
+    DRAGON_TOOTH = new ItemBuilder()
+          .title("Dragon Tooth")
+          .description("A huge tooth from a flying dragon. Keeping this on your person is said to increase your spirit.")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 9, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    DRAGON_TOOTH.setSpiritUp(1);
+  }
+  /**
+   * Feather (EQUIPMENT - SPEED UP)
+   */
+  public static final EquipmentItem
+    FEATHER = new ItemBuilder()
+          .title("Feather")
+          .description("As light as a feather is all you need to think and then you will be able to run with the wind!")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 9, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    FEATHER.setSpeedUp(1);
+  }
+  /**
+   * A cookie (EQUIPMENT - LUCK UP)
    */
   public static final EquipmentItem
     COOKIE = new ItemBuilder()
           .title("Cookie")
           .description("A freshly baked cookie. Looks delicious.")
-          .price(100)
+          .price(250)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 8, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
-    COOKIE.setHealingPoints(5);
-    COOKIE.setManaRestorePoints(5);
+    COOKIE.setLuckUp(1);
+  }
+  /**
+   * Special Candy (EQUIPMENT - LEVEL UP)
+   */
+  public static final EquipmentItem
+    SPECIAL_CANDY = new ItemBuilder()
+          .title("Special Candy")
+          .description("A very special candy indeed. This lovely little treat will increase your level by 1!")
+          .price(5000)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 8, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    SPECIAL_CANDY.setLevelUp(1);
   }
   /**
    * A training book to increase stats (EQUIPMENT)
@@ -85,9 +227,17 @@ public class Item {
     TRAINING_BOOK_V1 = new ItemBuilder()
           .title("Training Book v.1")
           .description("Volume 1 of the training book series. This book will teach the basic skills that it takes to increase ones overall skills.")
-          .price(1000)
+          .price(1500)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 11, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
+  static {
+    TRAINING_BOOK_V1.setStrengthUp(1);
+    TRAINING_BOOK_V1.setDefenseUp(1);
+    TRAINING_BOOK_V1.setIntellectUp(1);
+    TRAINING_BOOK_V1.setSpiritUp(1);
+    TRAINING_BOOK_V1.setSpeedUp(1);
+    TRAINING_BOOK_V1.setLuckUp(1);
+  }
   /**
    * A training book to increase stats (EQUIPMENT)
    */
@@ -98,6 +248,15 @@ public class Item {
           .price(2000)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 11, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
+  static {
+    TRAINING_BOOK_V2.setStrengthUp(2);
+    TRAINING_BOOK_V2.setDefenseUp(2);
+    TRAINING_BOOK_V2.setIntellectUp(2);
+    TRAINING_BOOK_V2.setSpiritUp(2);
+    TRAINING_BOOK_V2.setSpeedUp(2);
+    TRAINING_BOOK_V2.setLuckUp(2);
+    TRAINING_BOOK_V2.setLevelUp(1);
+  }
   
   /**
    *          !!################################!!

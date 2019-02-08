@@ -32,6 +32,8 @@ public class Character {
    * Luck stat name for displaying stats.
    */
   public static final String LUCK = "Luck";
+  // The max for any stat other than mana or HP
+  private final int statMax = 255;
   // Character name
   private String name;
   // Character level
@@ -271,6 +273,62 @@ public class Character {
   public void decreaseMana(int amount) {
     mana -= amount;
     if (mana < 0) mana = 0;
+  }
+  /**
+   * Increases the strength stat of this character.
+   * @param amount The amount to change strength by.
+   */
+  public void increaseStrength(int amount) {
+    strength += amount;
+    if (strength > statMax) strength = statMax;
+  }
+  /**
+   * Increase the defense stat of this character.
+   * @param amount The amount to change defense by.
+   */
+  public void increaseDefense(int amount) {
+    defense += amount;
+    if (defense > statMax) defense = statMax;
+  }
+  /**
+   * Increase the intellect stat of this character.
+   * @param amount The amount to change intellect by.
+   */
+  public void increaseIntellect(int amount) {
+    intellect += amount;
+    if (intellect > statMax) intellect = statMax;
+  }
+  /**
+   * Increase the spirit stat of this character.
+   * @param amount The amount to change spirit by.
+   */
+  public void increaseSpirit(int amount) {
+    spirit += amount;
+    if (spirit > statMax) spirit = statMax;
+  }
+  /**
+   * Increase the speed stat of this character.
+   * @param amount The amount to change speed by.
+   */
+  public void increaseSpeed(int amount) {
+    speed += amount;
+    if (speed > statMax) speed = statMax;
+  }
+  /**
+   * Increase the luck stat of this character.
+   * @param amount The amount to change luck by.
+   */
+  public void increaseLuck(int amount) {
+    luck += amount;
+    if (luck > statMax) luck = statMax;
+  }
+  /**
+   * Increase the level stat of this character
+   * @param amount The amount to change level by.
+   */
+  public void increaseLevel(int amount) {
+    level += level;
+    if (level > 100) level = 100;
   }
     
 }

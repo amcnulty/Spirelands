@@ -29,10 +29,47 @@ public class EquipmentItem extends Item {
     consumable = true;
   }
 
-//  @Override
-//  public ArrayList<ItemAttribute> getAttributes() {
-//    return attributes;
-//  }
+  public void setStrengthUp(int level) {
+    actions.add(() -> getCharacter().increaseStrength(level));
+    attributes.add(new ItemAttribute(ItemAttribute.STRENGTH_UP, level));
+    consumable = true;
+  }
+  
+  public void setDefenseUp(int level) {
+    actions.add(() -> getCharacter().increaseDefense(level));
+    attributes.add(new ItemAttribute(ItemAttribute.DEFENSE_UP, level));
+    consumable = true;
+  }
+  
+  public void setIntellectUp(int level) {
+    actions.add(() -> getCharacter().increaseIntellect(level));
+    attributes.add(new ItemAttribute(ItemAttribute.INTELLECT_UP, level));
+    consumable = true;
+  }
+  
+  public void setSpiritUp(int level) {
+    actions.add(() -> getCharacter().increaseSpirit(level));
+    attributes.add(new ItemAttribute(ItemAttribute.SPIRIT_UP, level));
+    consumable = true;
+  }
+  
+  public void setSpeedUp(int level) {
+    actions.add(() -> getCharacter().increaseSpeed(level));
+    attributes.add(new ItemAttribute(ItemAttribute.SPEED_UP, level));
+    consumable = true;
+  }
+  
+  public void setLuckUp(int level) {
+    actions.add(() -> getCharacter().increaseLuck(level));
+    attributes.add(new ItemAttribute(ItemAttribute.LUCK_UP, level));
+    consumable = true;
+  }
+  
+  public void setLevelUp(int level) {
+    actions.add(() -> getCharacter().increaseLevel(level));
+    attributes.add(new ItemAttribute(ItemAttribute.LEVEL_UP, level));
+    consumable = true;
+  }
   /**
    * The general method for using an equipment item. If item is consumable it will be consumed. If it is has another purpose it will be used for that.
    */

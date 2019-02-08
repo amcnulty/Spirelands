@@ -13,11 +13,11 @@ import org.junit.Test;
 public class ChestTest {
   @Test
   public void interactingWithChestIncreasesInventoryTest() {
-    Chest testChest = new Chest(0, 0, Chest.COMMON_METAL_CHEST, Item.HEALTH_POTION);
-    int healthPotionStock = InventoryManager.getInventoryManager().getAmountById(Item.HEALTH_POTION.getId());
+    Chest testChest = new Chest(0, 0, Chest.COMMON_METAL_CHEST, Item.SMALL_HP_POTION);
+    int healthPotionStock = InventoryManager.getInventoryManager().getAmountById(Item.SMALL_HP_POTION.getId());
     Assert.assertEquals("Should equal zero before chest is interacted with", 0, healthPotionStock);
     testChest.interact();
-    healthPotionStock = InventoryManager.getInventoryManager().getAmountById(Item.HEALTH_POTION.getId());
+    healthPotionStock = InventoryManager.getInventoryManager().getAmountById(Item.SMALL_HP_POTION.getId());
     Assert.assertEquals("Should equal 1 after interacting with chest", 1, healthPotionStock);
   }
   @Test
