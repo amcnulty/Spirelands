@@ -327,7 +327,7 @@ public class Character {
    * @param amount The amount to change level by.
    */
   public void increaseLevel(int amount) {
-    level += level;
+    level += amount;
     if (level > 100) level = 100;
   }
     

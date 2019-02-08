@@ -10,12 +10,14 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemOnCharacterButton;
+import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -27,11 +29,15 @@ import java.util.Set;
 public class ItemsView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
+  private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
+  private final Pagination pagination = new Pagination(pageIndex -> currentPageIndex = pageIndex);
   private ArrayList<InventoryListItem> listItems = new ArrayList<>();
   private int itemCount = 0,
               selectedItemAmount = 0;
   private final int startingY = 35,
-                    spaceBetweenRows = 16;
+                    spaceBetweenRows = 16,
+                    itemsPerPage = 8;
+  private int currentPageIndex = 0;
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
   private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> card.clearCard());
   private boolean selectingCharacter = false;
@@ -61,21 +67,52 @@ public class ItemsView extends DisplayView {
   }
   
   private void createListItems(Map<Integer, InventoryReference> itemsMap) {
+    pages.clear();
     listItems = new ArrayList<>();
     Set<Integer> keys = itemsMap.keySet();
+    ArrayList<InventoryReference> refs = new ArrayList<>();
     keys.forEach(key -> {
-      listItems.add(
+      refs.add(itemsMap.get(key));
+    });
+    for (int i = 0; i < refs.size() / itemsPerPage + 1; i++) {
+      ArrayList<InventoryListItem> newPage = new ArrayList<>();
+      for (int j = i * itemsPerPage; j < itemsPerPage + (i * itemsPerPage); j++) {
+        if (refs.size() - 1 < j) break;
+        newPage.add(
         new InventoryListItem(
-          itemsMap.get(key),
-          startingY + listItems.size() * this.spaceBetweenRows,
+          refs.get(j),
+          startingY + newPage.size() * spaceBetweenRows,
           "Use",
           item -> {
             EquipmentItem thisItem = (EquipmentItem) item;
             handleUseItem(thisItem);
           },
           item -> showItemDetails(item))
-      );
-    });
+        );
+      }
+      if (newPage.size() > 0) pages.add(newPage);
+    }
+    itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
+    pagination.setListLength(itemCount);
+    setCurrentPage();
+//    keys.forEach(key -> {
+//      listItems.add(
+//        new InventoryListItem(
+//          itemsMap.get(key),
+//          startingY + listItems.size() * this.spaceBetweenRows,
+//          "Use",
+//          item -> {
+//            EquipmentItem thisItem = (EquipmentItem) item;
+//            handleUseItem(thisItem);
+//          },
+//          item -> showItemDetails(item))
+//      );
+//    });
+  }
+  
+  private void setCurrentPage() {
+    if (currentPageIndex >= pages.size() - 1) currentPageIndex = pages.size() - 1;
+    pagination.highlightCurrentPage(currentPageIndex);
   }
   
   private void handleUseItem(EquipmentItem item) {
@@ -127,14 +164,18 @@ public class ItemsView extends DisplayView {
   public void exitingView() {
     itemDetailCard.clearCard();
     selectingCharacter = false;
+    pagination.highlightCurrentPage(0);
+    currentPageIndex = 0;
   }
   
   @Override
   public void update() {
     checkItemCount();
     if (!selectingCharacter) {
-      for (InventoryListItem item: listItems) {
-        item.update();
+      if (pages.size() > 0) {
+        for (InventoryListItem item: pages.get(currentPageIndex)) {
+          item.update();
+        }
       }
     }
     itemDetailCard.update();
@@ -145,13 +186,16 @@ public class ItemsView extends DisplayView {
         button.update();
       }
     }
+    pagination.update();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
     if (!selectingCharacter) {
-      for (InventoryListItem item: listItems) {
-        item.render(screen, gl);
+      if (pages.size() > 0) {
+        for (InventoryListItem item: pages.get(currentPageIndex)) {
+          item.render(screen, gl);
+        }
       }
     }
     screen.renderSprite(gl, 306, 23, border, false);
@@ -165,6 +209,7 @@ public class ItemsView extends DisplayView {
         button.render(screen, gl);
       }
     }
+    pagination.render(screen, gl);
   }
   
 }

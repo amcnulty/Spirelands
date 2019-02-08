@@ -85,6 +85,7 @@ public class PartyMemberButton extends Button {
   private void updateStatText() {
     this.characterHealthFont.setText(character.getHealth() + " / " + character.getHealthMax());
     this.characterManaFont.setText(character.getMana() + " / " + character.getManaMax());
+    this.characterLevelFont.setText("LV: " + character.getLevel());
   }
   
   private void updateStatBars() {
