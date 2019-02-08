@@ -14,12 +14,11 @@ import java.util.function.Consumer;
  */
 public class DefaultView extends DisplayView {
   
-  // Buttons for each player
-  private final int PLAYER_BUTTON_X = 260,
-                    PLAYER_BUTTON_STARTING_Y = 49,
-                    VERTICAL_SPACING = 52;
-  private final CharacterManager CHARACTER_MANAGER = CharacterManager.getCharacterManager();
-  private ArrayList<PartyMemberButton> buttons = new ArrayList<>();
+  private final int playerButtonX = 260,
+                    playerButtonStartingY = 49,
+                    verticalSpacing = 52;
+  private final CharacterManager characterManager = CharacterManager.getCharacterManager();
+  private final ArrayList<PartyMemberButton> buttons = new ArrayList<>();
   private Consumer<Character> openViewWithCharacter;
   /**
    * Creates a DefaultView object that displays the party member buttons.
@@ -30,8 +29,8 @@ public class DefaultView extends DisplayView {
   
   private void createCharacterButtons() {
     int i = 0;
-    for (Character partyMember : CHARACTER_MANAGER.getPartyMembers()) {
-      buttons.add(new PartyMemberButton(partyMember, PLAYER_BUTTON_X, PLAYER_BUTTON_STARTING_Y + VERTICAL_SPACING * i, () -> {handleButtonClick(partyMember);}));
+    for (Character partyMember : characterManager.getPartyMembers()) {
+      buttons.add(new PartyMemberButton(partyMember, playerButtonX, playerButtonStartingY + verticalSpacing * i, () -> {handleButtonClick(partyMember);}));
       buttons.get(i).setDisabled(true);
       i++;
     }

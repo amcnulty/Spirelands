@@ -66,12 +66,12 @@ public class Game extends GLCanvas implements Runnable {
     InventoryManager manager = InventoryManager.getInventoryManager();
     manager.addToInventory(Item.TRAINING_BOOK_V1);
     manager.addToInventory(Item.TRAINING_BOOK_V2);
-//    for (int i = 0; i < 27; i++) {
-//      manager.addToInventory(Item.COOKIE);
-//      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
-//      manager.addToInventory(Item.BLOOD_AXE);
-//      manager.addToInventory(Item.COMMON_SWORD);
-//    }
+    for (int i = 0; i < 27; i++) {
+      manager.addToInventory(Item.COOKIE);
+      if (i % 5 == 0) manager.addToInventory(Item.HEALTH_POTION);
+      manager.addToInventory(Item.BLOOD_AXE);
+      manager.addToInventory(Item.COMMON_SWORD);
+    }
     manager.addToInventory(Item.COMMON_SWORD);
     manager.addToInventory(Item.KATANA_SWORD);
     manager.addToInventory(Item.SKY_SABER);

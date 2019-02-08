@@ -40,7 +40,7 @@ public class EquipmentItem extends Item {
     if (consumable) consumeItem();
   }
  
-  public void consumeItem() {
+  private void consumeItem() {
     for (ICallback action: actions) {
       action.execute();
     }

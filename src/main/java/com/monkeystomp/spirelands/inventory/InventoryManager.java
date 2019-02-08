@@ -12,7 +12,7 @@ public class InventoryManager {
   
   private int gold = 0;
   
-  private final HashMap<Integer, InventoryReference> ITEM_MAP = new HashMap<>();
+  private final HashMap<Integer, InventoryReference> itemMap = new HashMap<>();
   
   private static final InventoryManager INSTANCE = new InventoryManager();
 
@@ -29,16 +29,16 @@ public class InventoryManager {
    * @param item The item to add to the inventory.
    */
   public void addToInventory(Item item) {
-    if (ITEM_MAP.containsKey(item.getId())) ITEM_MAP.get(item.getId()).increaseAmount();
-    else ITEM_MAP.put(item.getId(), new InventoryReference(item, 1));
+    if (itemMap.containsKey(item.getId())) itemMap.get(item.getId()).increaseAmount();
+    else itemMap.put(item.getId(), new InventoryReference(item, 1));
   }
   /**
    * Removes an item from the inventory.
    * @param item The item to be removed from the inventory.
    */
   public void removeFromInventory(Item item) {
-    ITEM_MAP.get(item.getId()).decreaseAmount();
-    if (ITEM_MAP.get(item.getId()).getAmount() == 0) ITEM_MAP.remove(item.getId());
+    itemMap.get(item.getId()).decreaseAmount();
+    if (itemMap.get(item.getId()).getAmount() == 0) itemMap.remove(item.getId());
   }
   /**
    * Gets all the items by a type. This is returned as a map.
@@ -54,7 +54,7 @@ public class InventoryManager {
    * @return The map of items based on the given type.
    */
   public Map<Integer, InventoryReference> getItemsByType(int type) {
-    return ITEM_MAP.entrySet().stream()
+    return itemMap.entrySet().stream()
       .filter(map -> map.getValue().getItem().getType()== type)
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
@@ -64,8 +64,16 @@ public class InventoryManager {
    * @return The amount of the item of the given id.
    */
   public int getAmountById(int id) {
-    if (ITEM_MAP.containsKey(id)) return ITEM_MAP.get(id).getAmount();
+    if (itemMap.containsKey(id)) return itemMap.get(id).getAmount();
     return 0;
+  }
+  /**
+   * Gets the inventory reference for the given item id.
+   * @param id Item id to get reference for.
+   * @return The InventoryReference object associated with the given item id.
+   */
+  public InventoryReference getInventoryReferenceById(int id) {
+    return itemMap.get(id);
   }
   
   public void setGold(int amount) {

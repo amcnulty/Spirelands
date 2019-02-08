@@ -203,6 +203,14 @@ public class Sprite {
       e.printStackTrace();
     }
   }
+  
+  public Sprite(Sprite original, int renderSize) {
+    this.width = renderSize;
+    this.height = renderSize;
+    this.rawWidth = original.getWidth();
+    this.rawHeight = original.getHeight();
+    this.pixels = original.getPixels();
+  }
   /**
    * Creates an array of Sprites from a sprite sheet.
    * @param sheet The sheet to generate sprites from.

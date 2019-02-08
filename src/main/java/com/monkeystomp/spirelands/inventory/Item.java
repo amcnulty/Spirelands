@@ -690,7 +690,7 @@ public class Item {
   public static final WeaponItem
     NECROMANCER_STAFF = new ItemBuilder()
           .title("Necromancer")
-          .description("Evil energy pulsates out of this dark and mysterious staff. It has the power to summon the dead to do its user's bidding. The dark power can consumer the user if they are weak spirited.")
+          .description("Evil energy pulsates out of this dark and mysterious staff. It has the power to summon the dead to do its user's bidding. The dark power can consume the user if they are weak spirited.")
           .price(3500)
           .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
