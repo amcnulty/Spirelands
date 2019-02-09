@@ -73,7 +73,17 @@ public class SoundEffects {
    * An automobile engine starting then running for a short amount of time.
    */
   public static final File TRUCK_ENGINE = new File("./resources/audio/sfx/truck_engine.wav");
-  // ### UI SOUNDS ###
+  /**
+   * A healing item sound.
+   */
+  public static final File HEALING_SOUND = new File("./resources/audio/sfx/item_healing.wav");
+  /**
+   *          !!######################################!!
+   *          !!                                      !!
+   *          !!              UI Sounds               !!
+   *          !!                                      !!
+   *          !!######################################!!
+   */
   /**
    * UI sound to confirm a selection.
    */

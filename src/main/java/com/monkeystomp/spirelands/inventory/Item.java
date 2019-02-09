@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.character.Character;
@@ -63,6 +64,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     SMALL_HP_POTION.setHealingPoints(100);
+    SMALL_HP_POTION.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Medium Health Potion (EQUIPMENT)
@@ -76,6 +78,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     MEDIUM_HP_POTION.setHealingPoints(400);
+    MEDIUM_HP_POTION.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Health Bottle Potion (EQUIPMENT)
@@ -89,6 +92,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     HEALTH_BOTTLE.setHealingPoints(1200);
+    HEALTH_BOTTLE.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Mana Vile (EQUIPMENT)
@@ -102,6 +106,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     MANA_VILE.setManaRestorePoints(20);
+    MANA_VILE.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Mana Potion (EQUIPMENT)
@@ -115,6 +120,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     MANA_POTION.setManaRestorePoints(80);
+    MANA_POTION.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Mana Bottle (EQUIPMENT)
@@ -128,6 +134,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     MANA_BOTTLE.setManaRestorePoints(200);
+    MANA_BOTTLE.setUseItemSound(SoundEffects.HEALING_SOUND);
   }
   /**
    * Ribs (EQUIPMENT - STRENGTH UP)

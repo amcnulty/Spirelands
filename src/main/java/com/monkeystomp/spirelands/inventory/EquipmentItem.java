@@ -1,6 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -12,9 +14,15 @@ public class EquipmentItem extends Item {
   
   private final ArrayList<ICallback> actions = new ArrayList<>();
   private boolean consumable;
+  private final SoundEffects sfx = new SoundEffects();
+  private File useSound;
   
   public EquipmentItem(ItemBuilder builder) {
     super(builder.type(EQUIPMENT));
+  }
+  
+  public void setUseItemSound(File soundEffect) {
+    this.useSound = soundEffect;
   }
   
   public void setHealingPoints(int points) {
@@ -78,6 +86,7 @@ public class EquipmentItem extends Item {
   }
  
   private void consumeItem() {
+    if (useSound != null) sfx.playSoundEffect(useSound);
     for (ICallback action: actions) {
       action.execute();
     }

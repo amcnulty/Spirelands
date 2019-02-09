@@ -56,7 +56,10 @@ public class CharacterArmorDetailCard extends CharacterEquipmentCard {
   }
   
   public void closePopovers() {
-    System.out.println("Closing popovers here!");
+    helmetSlot.closePopover();
+    chestplateSlot.closePopover();
+    shieldSlot.closePopover();
+    bootSlot.closePopover();
   }
   
   @Override

@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -17,7 +18,6 @@ import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
-import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -31,7 +31,6 @@ public class ItemsView extends DisplayView {
   private final InventoryManager manager = InventoryManager.getInventoryManager();
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
   private final Pagination pagination = new Pagination(pageIndex -> currentPageIndex = pageIndex);
-  private ArrayList<InventoryListItem> listItems = new ArrayList<>();
   private int itemCount = 0,
               selectedItemAmount = 0;
   private final int startingY = 35,
@@ -40,13 +39,14 @@ public class ItemsView extends DisplayView {
   private int currentPageIndex = 0;
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
   private final ItemDetailCard itemDetailCard = new ItemDetailCard(card -> card.clearCard());
-  private boolean selectingCharacter = false;
+  private boolean selectingCharacter = false,
+                  checkAnimationsBeforeClose = false;
   private final FontInfo  characterSelectorHeader = GameFonts.getlightText_bold_23(),
                           selectedItemAmountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private final PrimaryButton returnToListButton = new PrimaryButton(
           "Back To List",
           280,
-          TOP + 27,
+          TOP + 21,
           39,
           11,
           () -> selectingCharacter = false
@@ -54,11 +54,12 @@ public class ItemsView extends DisplayView {
   private EquipmentItem selectedItem;
   private InventoryReference selectedRef;
   private final ArrayList<ItemOnCharacterButton> itemOnCharacterButtons = new ArrayList<>();
+  private final SoundEffects sfx = new SoundEffects();
   
   public ItemsView() {
     characterSelectorHeader.setText("Select Character To Use Item");
     characterSelectorHeader.setX(215);
-    characterSelectorHeader.setY(TOP + 10);
+    characterSelectorHeader.setY(TOP + 7);
     characterSelectorHeader.centerText();
   }
   
@@ -68,7 +69,6 @@ public class ItemsView extends DisplayView {
   
   private void createListItems(Map<Integer, InventoryReference> itemsMap) {
     pages.clear();
-    listItems = new ArrayList<>();
     Set<Integer> keys = itemsMap.keySet();
     ArrayList<InventoryReference> refs = new ArrayList<>();
     keys.forEach(key -> {
@@ -95,19 +95,6 @@ public class ItemsView extends DisplayView {
     itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
     pagination.setListLength(itemCount);
     setCurrentPage();
-//    keys.forEach(key -> {
-//      listItems.add(
-//        new InventoryListItem(
-//          itemsMap.get(key),
-//          startingY + listItems.size() * this.spaceBetweenRows,
-//          "Use",
-//          item -> {
-//            EquipmentItem thisItem = (EquipmentItem) item;
-//            handleUseItem(thisItem);
-//          },
-//          item -> showItemDetails(item))
-//      );
-//    });
   }
   
   private void setCurrentPage() {
@@ -128,7 +115,7 @@ public class ItemsView extends DisplayView {
   private void setSelectedFont() {
     selectedItemAmountFont.setText(": " + String.valueOf(selectedRef.getAmount()));
     selectedItemAmountFont.setX(228);
-    selectedItemAmountFont.setY(TOP + 27);
+    selectedItemAmountFont.setY(TOP + 21);
     selectedItemAmountFont.rightAlignText();
   }
   
@@ -138,7 +125,7 @@ public class ItemsView extends DisplayView {
       itemOnCharacterButtons.add(new ItemOnCharacterButton(
         "",
         215,
-        80 + itemOnCharacterButtons.size() * 32,
+        74 + itemOnCharacterButtons.size() * 33,
         32,
         32,
         partyMember,
@@ -148,9 +135,23 @@ public class ItemsView extends DisplayView {
   }
   
   private void handleCharacterButtonPress(Character targetCharacter) {
+    if (selectedRef.getAmount() == 0) {
+      checkAnimationsBeforeClose = true;
+      return;
+    }
     selectedItem.setCharacter(targetCharacter);
     selectedItem.useItem();
-    if (selectedRef.getAmount() == 0) selectingCharacter = false;
+  }
+  
+  private void checkAnimations() {
+    boolean isAnimating = false;
+    for (ItemOnCharacterButton button: itemOnCharacterButtons) {
+      if (button.animating()) {
+        isAnimating = true;
+        break;
+      }
+    }
+    selectingCharacter = isAnimating;
   }
   
   private void checkItemCount() {
@@ -181,6 +182,7 @@ public class ItemsView extends DisplayView {
     itemDetailCard.update();
     if (selectingCharacter) {
       if (selectedItemAmount != selectedRef.getAmount()) setSelectedFont();
+      if (checkAnimationsBeforeClose) checkAnimations();
       returnToListButton.update();
       for (ItemOnCharacterButton button: itemOnCharacterButtons) {
         button.update();
@@ -202,7 +204,7 @@ public class ItemsView extends DisplayView {
     itemDetailCard.render(screen, gl);
     if (selectingCharacter) {
       screen.renderFonts(characterSelectorHeader);
-      screen.renderSprite(gl, 200, TOP + 20, selectedItem.getThumbnail(), false);
+      screen.renderSprite(gl, 200, TOP + 14, selectedItem.getThumbnail(), false);
       screen.renderFonts(selectedItemAmountFont);
       returnToListButton.render(screen, gl);
       for (ItemOnCharacterButton button: itemOnCharacterButtons) {

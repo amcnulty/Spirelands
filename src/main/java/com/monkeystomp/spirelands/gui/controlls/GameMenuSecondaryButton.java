@@ -72,7 +72,6 @@ public class GameMenuSecondaryButton extends Button {
   }
   
   private void setButtonSounds() {
-    hoverSound = SoundEffects.BUTTON_HOVER;
     clickSound = SoundEffects.BUTTON_CLICK;
   }
   
