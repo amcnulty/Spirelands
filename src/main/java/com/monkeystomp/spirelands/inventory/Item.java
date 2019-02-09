@@ -278,6 +278,7 @@ public class Item {
   static {
     LEATHER_JACKET.setPhysicalDefense(5);
     LEATHER_JACKET.setMagicalDefense(1);
+    LEATHER_JACKET.setArmorType(ArmorItem.CHESTPLATE);
   }
   /**
    * War Tunic (ARMOR)
@@ -293,6 +294,7 @@ public class Item {
     WAR_TUNIC.setPhysicalDefense(10);
     WAR_TUNIC.setMagicalDefense(2);
     WAR_TUNIC.setSpeedPenalty(2);
+    WAR_TUNIC.setArmorType(ArmorItem.CHESTPLATE);
   }
   /**
    * Metal Vest (ARMOR)
@@ -308,6 +310,7 @@ public class Item {
     METAL_VEST.setPhysicalDefense(15);
     METAL_VEST.setMagicalDefense(3);
     METAL_VEST.setSpeedPenalty(6);
+    METAL_VEST.setArmorType(ArmorItem.CHESTPLATE);
   }
   /**
    * Gold Tunic (ARMOR)
@@ -323,6 +326,7 @@ public class Item {
     GOLD_TUNIC.setPhysicalDefense(20);
     GOLD_TUNIC.setMagicalDefense(5);
     GOLD_TUNIC.setSpeedPenalty(9);
+    GOLD_TUNIC.setArmorType(ArmorItem.CHESTPLATE);
   }
   /**
    * Basic leather helmet (ARMOR)
@@ -337,6 +341,7 @@ public class Item {
   static {
     LEATHER_HELMET.setPhysicalDefense(3);
     LEATHER_HELMET.setMagicalDefense(1);
+    LEATHER_HELMET.setArmorType(ArmorItem.HELMET);
   }
   /**
    * War helmet (ARMOR)
@@ -351,6 +356,7 @@ public class Item {
   static {
     WAR_HELMET.setPhysicalDefense(6);
     WAR_HELMET.setMagicalDefense(2);
+    WAR_HELMET.setArmorType(ArmorItem.HELMET);
   }
   /**
    * Metal Helmet (ARMOR)
@@ -365,6 +371,7 @@ public class Item {
   static {
     METAL_HELMET.setPhysicalDefense(9);
     METAL_HELMET.setMagicalDefense(3);
+    METAL_HELMET.setArmorType(ArmorItem.HELMET);
   }
   /**
    * Gold Helmet (ARMOR)
@@ -379,6 +386,7 @@ public class Item {
   static {
     GOLD_HELMET.setPhysicalDefense(12);
     GOLD_HELMET.setMagicalDefense(4);
+    GOLD_HELMET.setArmorType(ArmorItem.HELMET);
   }
   /**
    * Leather Boots (ARMOR)
@@ -394,6 +402,7 @@ public class Item {
     LEATHER_BOOTS.setPhysicalDefense(3);
     LEATHER_BOOTS.setMagicalDefense(1);
     LEATHER_BOOTS.setSpeedPenalty(1);
+    LEATHER_BOOTS.setArmorType(ArmorItem.BOOTS);
   }
   /**
    * War Boots (ARMOR)
@@ -409,6 +418,7 @@ public class Item {
     WAR_BOOTS.setPhysicalDefense(6);
     WAR_BOOTS.setMagicalDefense(2);
     WAR_BOOTS.setSpeedPenalty(2);
+    WAR_BOOTS.setArmorType(ArmorItem.BOOTS);
   }
   /**
    * Steel boots (ARMOR)
@@ -424,6 +434,7 @@ public class Item {
     STEEL_BOOTS.setPhysicalDefense(9);
     STEEL_BOOTS.setMagicalDefense(3);
     STEEL_BOOTS.setSpeedPenalty(5);
+    STEEL_BOOTS.setArmorType(ArmorItem.BOOTS);
   }
   /**
    * Gold Boots (ARMOR)
@@ -436,9 +447,70 @@ public class Item {
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 2, SpriteSheet.itemsSheet))
           .build(ArmorItem.class);
   static {
-    GOLD_BOOTS.setPhysicalDefense(12);
+    GOLD_BOOTS.setPhysicalDefense(5);
     GOLD_BOOTS.setMagicalDefense(4);
     GOLD_BOOTS.setSpeedPenalty(7);
+    GOLD_BOOTS.setArmorType(ArmorItem.BOOTS);
+  }
+  /**
+   * Wood Shield (ARMOR)
+   */
+  public static final ArmorItem
+    WOOD_SHIELD = new ItemBuilder()
+          .title("Wood Shield")
+          .description("A basic wood shield used for protection in combat. This provides level 1 protection.")
+          .price(250)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    WOOD_SHIELD.setPhysicalDefense(5);
+    WOOD_SHIELD.setSpeedPenalty(2);
+    WOOD_SHIELD.setArmorType(ArmorItem.SHIELD);
+  }
+  /**
+   * War Shield (ARMOR)
+   */
+  public static final ArmorItem
+    WAR_SHIELD = new ItemBuilder()
+          .title("War Shield")
+          .description("The shield of a warrior. This is used by fighters all across Spirelands and is standard issue for many militias. You can rely on this shield to provide level 2 protection.")
+          .price(500)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    WAR_SHIELD.setPhysicalDefense(10);
+    WAR_SHIELD.setSpeedPenalty(3);
+    WAR_SHIELD.setArmorType(ArmorItem.SHIELD);
+  }
+  /**
+   * Metal Shield (ARMOR)
+   */
+  public static final ArmorItem
+    METAL_SHIELD = new ItemBuilder()
+          .title("Metal Shield")
+          .description("A metal shield to be used in combat. You must be in great shape to use this heavy shield in combat to get the benefits of its level 3 protection.")
+          .price(750)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 0, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    METAL_SHIELD.setPhysicalDefense(15);
+    METAL_SHIELD.setSpeedPenalty(5);
+    METAL_SHIELD.setArmorType(ArmorItem.SHIELD);
+  }
+  /**
+   * King's Shield (ARMOR)
+   */
+  public static final ArmorItem
+    KINGS_SHIELD = new ItemBuilder()
+          .title("King's Shield")
+          .description("The shield of a great king! It is as large as it is noble and offers level 4 protection due to its great size and strength.")
+          .price(1000)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 1, SpriteSheet.itemsSheet))
+          .build(ArmorItem.class);
+  static {
+    KINGS_SHIELD.setPhysicalDefense(20);
+    KINGS_SHIELD.setSpeedPenalty(8);
+    KINGS_SHIELD.setArmorType(ArmorItem.SHIELD);
   }
   /**
    *          !!################################!!

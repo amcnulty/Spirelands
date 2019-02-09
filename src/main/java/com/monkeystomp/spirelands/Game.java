@@ -122,6 +122,10 @@ public class Game extends GLCanvas implements Runnable {
     manager.addToInventory(Item.WAR_BOOTS);
     manager.addToInventory(Item.STEEL_BOOTS);
     manager.addToInventory(Item.GOLD_BOOTS);
+    manager.addToInventory(Item.WOOD_SHIELD);
+    manager.addToInventory(Item.WAR_SHIELD);
+    manager.addToInventory(Item.METAL_SHIELD);
+    manager.addToInventory(Item.KINGS_SHIELD);
     
     
     

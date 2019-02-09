@@ -21,25 +21,30 @@ import java.util.function.Supplier;
 public class EquippedItemSlot extends Button {
 
   private final Supplier<Item> IGetEquipment;
-  private final ICallback handleUnequip,
-                          handleInfo;
+  private final ICallback handleUnequip;
+  private final Consumer<Item> handleInfo;
   private Item item;
   private GameMenuPrimaryButton info;
   private DangerButton unequip;
   private boolean popoverShowing = false,
                   markPopoverForClose = false,
                   mouseListenerSet = false;
+  private final boolean showPopoverTop;
   private final Sprite  popoverBackground = new Sprite("./resources/gui/popoverBackground.png"),
                         popoverBackgroundHover = new Sprite("./resources/gui/popoverBackgroundHover.png"),
-                        popoverBackgroundDown = new Sprite("./resources/gui/popoverBackgroundDown.png");
+                        popoverBackgroundDown = new Sprite("./resources/gui/popoverBackgroundDown.png"),
+                        popoverBackgroundTop = new Sprite("./resources/gui/popoverBackground_top.png"),
+                        popoverBackgroundHoverTop = new Sprite("./resources/gui/popoverBackgroundHover_top.png"),
+                        popoverBackgroundDownTop = new Sprite("./resources/gui/popoverBackgroundDown_top.png");
   private Sprite currentPopoverBackground = popoverBackground;
   private final Consumer<MouseEvent> mouseListener = event -> {if (popoverShowing) checkForClickOutside(event);};
   
-  public EquippedItemSlot(int x, int y, Supplier<Item> IGetEquipment, ICallback handleInfo, ICallback handleUnequip) {
+  public EquippedItemSlot(int x, int y, Supplier<Item> IGetEquipment, Consumer<Item> handleInfo, ICallback handleUnequip, Boolean showPopoverTop) {
     super("", x, y, 19, 19, () -> {});
     this.IGetEquipment = IGetEquipment;
     this.handleInfo = handleInfo;
     this.handleUnequip = handleUnequip;
+    this.showPopoverTop = showPopoverTop;
     createButtons();
     createButtonSprites();
   }
@@ -48,18 +53,18 @@ public class EquippedItemSlot extends Button {
     info = new GameMenuPrimaryButton(
       "Info",
       x + width / 2 - 14,
-      y + height / 2 + 17,
+      showPopoverTop ? y + height /  2 - 19 : y + height / 2 + 19,
       25,
       11,
       () -> {
         closePopover();
-        handleInfo.execute();
+        handleInfo.accept(item);
       }
     );
     unequip = new DangerButton(
       "Unequip",
       x + width / 2 + 14,
-      y + height / 2 + 17,
+      showPopoverTop ? y + height /  2 - 19 : y + height / 2 + 19,
       25,
       11,
       () -> {
@@ -135,9 +140,9 @@ public class EquippedItemSlot extends Button {
   }
   
   private void checkForClickOutside(MouseEvent event) {
-    int top = y + 17,
+    int top = showPopoverTop ? y - 19 : y + 17,
         right = x - currentPopoverBackground.getWidth() / 2 + width / 2 + currentPopoverBackground.getWidth(),
-        bottom = y + 17 + currentPopoverBackground.getHeight(),
+        bottom = showPopoverTop ? y - 19 + currentPopoverBackground.getHeight() : y + 17 + currentPopoverBackground.getHeight(),
         left = x - currentPopoverBackground.getWidth() / 2 + width / 2;
     if (!(
         (   event.getX() / Screen.getScaleX() >= left
@@ -160,19 +165,19 @@ public class EquippedItemSlot extends Button {
   @Override
   protected void hover() {
     super.hover();
-    currentPopoverBackground = popoverBackgroundHover;
+    currentPopoverBackground = showPopoverTop ? popoverBackgroundHoverTop : popoverBackgroundHover;
   }
   
   @Override
   protected void down() {
     super.down();
-    currentPopoverBackground = popoverBackgroundDown;
+    currentPopoverBackground = showPopoverTop ? popoverBackgroundDownTop : popoverBackgroundDown;
   }
   
   @Override
   protected void setDefault() {
     super.setDefault();
-    currentPopoverBackground = popoverBackground;
+    currentPopoverBackground = showPopoverTop ? popoverBackgroundTop : popoverBackground;
   }
   
   @Override
@@ -215,7 +220,7 @@ public class EquippedItemSlot extends Button {
       screen.renderSprite(gl, x + 1, y + 1, item.getThumbnail(), false);
     }
     if (popoverShowing) {
-      screen.renderSprite(gl, x - currentPopoverBackground.getWidth() / 2 + width / 2, y + 17, currentPopoverBackground, false);
+      screen.renderSprite(gl, x - currentPopoverBackground.getWidth() / 2 + width / 2, showPopoverTop ? y - 19 : y + 17, currentPopoverBackground, false);
       info.render(screen, gl);
       unequip.render(screen, gl);
     }

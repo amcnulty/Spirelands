@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.character;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
 
 /**
@@ -64,6 +65,14 @@ public class Character {
   private Sprite thumbnail;
   // The currently equipped weapon
   private WeaponItem equippedWeapon;
+  // The currently equipped helmet.
+  private ArmorItem equippedHelmet;
+  // The currently equipped chestplate.
+  private ArmorItem equippedChestplate;
+  // The currently equipped shield.
+  private ArmorItem equippedShield;
+  // The currently equipped boots.
+  private ArmorItem equippedBoots;
 
   public String getName() {
     return name;
@@ -180,17 +189,113 @@ public class Character {
   public WeaponItem getEquippedWeapon() {
     return equippedWeapon;
   }
-
-  public void setEquippedWeapon(WeaponItem equippedWeapon) {
+  /**
+   * Equip this character with the given weapon.
+   * @param equippedWeapon Weapon to equip this character with.
+   */
+  public void equipWeapon(WeaponItem equippedWeapon) {
+    unequipWeapon();
     this.equippedWeapon = equippedWeapon;
+    equippedWeapon.removeFromInventory();
   }
-  
-  public void removeEquippedWeapon() {
+  /**
+   * Unequip this character's weapon.
+   */
+  public void unequipWeapon() {
     if (equippedWeapon != null) {
       equippedWeapon.addToInventory();
       equippedWeapon = null;
     }
   }
+
+  public ArmorItem getEquippedHelmet() {
+    return equippedHelmet;
+  }
+  /**
+   * Equip this character with the given helmet.
+   * @param equippedHelmet The helmet to equip this character with.
+   */
+  public void equipHelmet(ArmorItem equippedHelmet) {
+    unequipHelmet();
+    this.equippedHelmet = equippedHelmet;
+    equippedHelmet.removeFromInventory();
+  }
+  /**
+   * Unequip this character's helmet.
+   */
+  public void unequipHelmet() {
+    if (equippedHelmet != null) {
+      equippedHelmet.addToInventory();
+      equippedHelmet = null;
+    }
+  }
+
+  public ArmorItem getEquippedChestplate() {
+    return equippedChestplate;
+  }
+  /**
+   * Equip this character with the given chestplate.
+   * @param equippedChestplate The chestplate to equip this character with.
+   */
+  public void equipChestplate(ArmorItem equippedChestplate) {
+    unequipChestplate();
+    this.equippedChestplate = equippedChestplate;
+    equippedChestplate.removeFromInventory();
+  }
+  /**
+   * Unequip this character's chestplate.
+   */
+  public void unequipChestplate() {
+    if (equippedChestplate != null) {
+      equippedChestplate.addToInventory();
+      equippedChestplate = null;
+    }
+  }
+
+  public ArmorItem getEquippedShield() {
+    return equippedShield;
+  }
+  /**
+   * Equip this character with the given shield.
+   * @param equippedShield The shield to equip this character with.
+   */
+  public void equipShield(ArmorItem equippedShield) {
+    unequipShield();
+    this.equippedShield = equippedShield;
+    equippedShield.removeFromInventory();
+  }
+  /**
+   * Unequip this character's shield.
+   */
+  public void unequipShield() {
+    if (equippedShield != null) {
+      equippedShield.addToInventory();
+      equippedShield = null;
+    }
+  }
+
+  public ArmorItem getEquippedBoots() {
+    return equippedBoots;
+  }
+  /**
+   * Equip this character with the given boots.
+   * @param equippedBoots The shield to equip this character with.
+   */
+  public void equipBoots(ArmorItem equippedBoots) {
+    unequipBoots();
+    this.equippedBoots = equippedBoots;
+    equippedBoots.removeFromInventory();
+  }
+  /**
+   * Unequip this character's boots.
+   */
+  public void unequipBoots() {
+    if (equippedBoots != null) {
+      equippedBoots.addToInventory();
+      equippedBoots = null;
+    }
+  }
+  
   
   /**
    *      !!################################################!!
@@ -210,9 +315,25 @@ public class Character {
     }
     else return strength;
   }
-  
+  /**
+   * Gets the combined defense stat for this character which is a figure based on the defense stat and the physical defense of all combined armor.
+   * @return The combined defense stat for this character.
+   */
   public int getCombinedDefense() {
-    return defense;
+    int combinedDefense = defense;
+    if (equippedHelmet != null) {
+      combinedDefense += equippedHelmet.getPhysicalDefense();
+    }
+    if (equippedChestplate != null) {
+      combinedDefense += equippedChestplate.getPhysicalDefense();
+    }
+    if (equippedShield != null) {
+      combinedDefense += equippedShield.getPhysicalDefense();
+    }
+    if (equippedBoots != null) {
+      combinedDefense += equippedBoots.getPhysicalDefense();
+    }
+    return combinedDefense;
   }
   
   public int getCombinedIntellect() {
@@ -223,11 +344,38 @@ public class Character {
   }
   
   public int getCombinedSpirit() {
-    return spirit;
+    int combinedSpirit = spirit;
+    if (equippedHelmet != null) {
+      combinedSpirit += equippedHelmet.getMagicalDefense();
+    }
+    if (equippedChestplate != null) {
+      combinedSpirit += equippedChestplate.getMagicalDefense();
+    }
+    if (equippedShield != null) {
+      combinedSpirit += equippedShield.getMagicalDefense();
+    }
+    if (equippedBoots != null) {
+      combinedSpirit += equippedBoots.getMagicalDefense();
+    }
+    return combinedSpirit;
   }
   
   public int getCombinedSpeed() {
-    return speed;
+    int combinedSpeed = speed;
+    if (equippedHelmet != null) {
+      combinedSpeed -= equippedHelmet.getSpeedPenalty();
+    }
+    if (equippedChestplate != null) {
+      combinedSpeed -= equippedChestplate.getSpeedPenalty();
+    }
+    if (equippedShield != null) {
+      combinedSpeed -= equippedShield.getSpeedPenalty();
+    }
+    if (equippedBoots != null) {
+      combinedSpeed -= equippedBoots.getSpeedPenalty();
+    }
+    if (combinedSpeed < 0) combinedSpeed = 0;
+    return combinedSpeed;
   }
   
   public int getCombinedLuck() {

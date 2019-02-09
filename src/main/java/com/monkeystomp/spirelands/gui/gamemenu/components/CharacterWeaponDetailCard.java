@@ -17,8 +17,9 @@ public class CharacterWeaponDetailCard extends CharacterEquipmentCard {
     cardCenterHoriz,
     140,
     () -> character.getEquippedWeapon(),
-    () -> showEquippedItemDetails(),
-    () -> character.removeEquippedWeapon()
+    item -> showEquippedItemDetails(item),
+    () -> character.unequipWeapon(),
+    false
   );
   
   public CharacterWeaponDetailCard(Consumer<Item> IShowItemDetail, Consumer<Character> ICharacterChanger) {
@@ -26,8 +27,8 @@ public class CharacterWeaponDetailCard extends CharacterEquipmentCard {
     this.IShowItemDetail = IShowItemDetail;
   }
   
-  private void showEquippedItemDetails() {
-    IShowItemDetail.accept(character.getEquippedWeapon());
+  private void showEquippedItemDetails(Item item) {
+    IShowItemDetail.accept(item);
   }
   
   public void closePopover() {

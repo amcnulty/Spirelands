@@ -46,9 +46,7 @@ public class WeaponView extends DisplayView {
   
   private void handleEquipClick(WeaponItem weapon) {
     showingWeaponDetailCard = true;
-    character.removeEquippedWeapon();
-    character.setEquippedWeapon(weapon);
-    weapon.removeFromInventory();
+    character.equipWeapon(weapon);
     createListItems(manager.getItemsByType(Item.WEAPON));
   }
   

@@ -13,8 +13,10 @@ import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  *
@@ -35,8 +37,16 @@ public class ArmorView extends DisplayView {
     showingArmorDetailCard = true;
     card.clearCard();
   });
-  private final CharacterArmorDetailCard armorDetailCard = new CharacterArmorDetailCard(nextCharacter -> setCharacter(nextCharacter));
+  private final CharacterArmorDetailCard armorDetailCard = new CharacterArmorDetailCard(item -> showItemDetails(item), nextCharacter -> setCharacter(nextCharacter));
   private boolean showingArmorDetailCard = true;
+  private HashMap<String, Consumer<ArmorItem>> equipCommandMap = new HashMap<>();
+  
+  public ArmorView() {
+    equipCommandMap.put(ArmorItem.HELMET, item -> character.equipHelmet(item));
+    equipCommandMap.put(ArmorItem.CHESTPLATE, item -> character.equipChestplate(item));
+    equipCommandMap.put(ArmorItem.SHIELD, item -> character.equipShield(item));
+    equipCommandMap.put(ArmorItem.BOOTS, item -> character.equipBoots(item));
+  }
   
   private void showItemDetails(Item item) {
     itemDetailCard.setItem(item);
@@ -45,10 +55,7 @@ public class ArmorView extends DisplayView {
   
   private void handleEquipClick(ArmorItem armor) {
     showingArmorDetailCard = true;
-    System.out.println("Equip Armor to character here!");
-//    character.removeEquippedWeapon();
-//    character.setEquippedWeapon(weapon);
-//    weapon.removeFromInventory();
+    equipCommandMap.get(armor.getArmorType()).accept(armor);
     createListItems(manager.getItemsByType(Item.ARMOR));
   }
   
