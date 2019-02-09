@@ -24,11 +24,11 @@ public class ButtonPanel {
 
   private void createNavButtons() {
     navButtons.add(new GameMenuNavButton("Weapons", 70, 39, () -> {
-      this.nextViewChanger.accept(DisplayPanel.WEAPON);
+      nextViewChanger.accept(DisplayPanel.WEAPON);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Armor", 70, 59, () -> {
-      System.out.println("Armor Button Clicked");
+      nextViewChanger.accept(DisplayPanel.ARMOR);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Spells", 70, 79, () -> {
@@ -36,7 +36,7 @@ public class ButtonPanel {
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Items", 70, 99, () -> {
-      this.viewChanger.accept(DisplayPanel.ITEMS);
+      viewChanger.accept(DisplayPanel.ITEMS);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Collectables", 70, 119, () -> {

@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.panels;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.gamemenu.views.ArmorView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
@@ -26,10 +27,15 @@ public class DisplayPanel {
    * The weapon view.
    */
   public static final String WEAPON = "weapon";
+  /**
+   * The armor view.
+   */
+  public static final String ARMOR = "armor";
   
   private final DisplayView defaultView = new DefaultView();
   private final DisplayView itemsView = new ItemsView();
-   private final DisplayView weaponView = new WeaponView();
+  private final DisplayView weaponView = new WeaponView();
+  private final DisplayView armorView = new ArmorView(); 
   // private final DisplayPanelView MAGIC_VIEW = new DisplayPanelView();
   private DisplayView currentView;
   private final ICallback IViewChanged;
@@ -53,6 +59,7 @@ public class DisplayPanel {
     viewMap.put(DEFAULT, defaultView);
     viewMap.put(ITEMS, itemsView);
     viewMap.put(WEAPON, weaponView);
+    viewMap.put(ARMOR, armorView);
   }
   /**
    * WARNING! DO NOT CALL THIS METHOD DIRECTLY!! Use changeView() method because it will call exitingView() on the current view.
