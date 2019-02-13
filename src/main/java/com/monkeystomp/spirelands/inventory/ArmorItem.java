@@ -1,5 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
+import java.io.File;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -22,6 +25,9 @@ public class ArmorItem extends Item {
    */
   public static final String BOOTS = "Boots";
   
+  private final SoundEffects sfx = new SoundEffects();
+  private final File  equipSound = SoundEffects.EQUIP_ARMOR,
+                      unequipSound = SoundEffects.UNEQUIP_ARMOR;
   private int physicalDefence,
               magicalDefence,
               speedPenalty;
@@ -29,6 +35,22 @@ public class ArmorItem extends Item {
   
   public ArmorItem(ItemBuilder builder) {
     super(builder.type(Item.ARMOR));
+  }
+  /**
+   * Plays the equip sound for this item.
+   */
+  public void playEquipSound() {
+    if (equipSound != null) {
+      sfx.playSoundEffect(equipSound);
+    }
+  }
+  /**
+   * Plays the unequip sound for this item.
+   */
+  public void playUnequipSound() {
+    if (unequipSound != null) {
+      sfx.playSoundEffect(unequipSound);
+    }
   }
   
   public void setPhysicalDefense(int power) {

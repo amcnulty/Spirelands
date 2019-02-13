@@ -72,6 +72,7 @@ public class EquippedItemSlot extends Button {
         handleUnequip.execute();
       }
     );
+    unequip.disableButtonClickSound();
   }
 
   private void createButtonSprites() {

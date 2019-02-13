@@ -173,6 +173,10 @@ public class Button {
     return this.disabled;
   }
   
+  public void disableButtonClickSound() {
+    this.clickSound = null;
+  }
+  
   public void setDisabled(boolean disabled) {
     this.disabled = disabled;
     if (this.disabled && disabledButton != null) currentButton = disabledButton;

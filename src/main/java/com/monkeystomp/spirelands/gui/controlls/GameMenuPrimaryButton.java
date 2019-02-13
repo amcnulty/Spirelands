@@ -84,6 +84,10 @@ public class GameMenuPrimaryButton extends Button {
     fontInfo.setColor(new Color(GameColors.GAME_MENU_LABEL_TEXT));
   }
   
+  public void disableButtonClickSound() {
+    clickSound = null;
+  }
+  
   @Override
   public void update() {
     super.update();

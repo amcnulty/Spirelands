@@ -74,9 +74,24 @@ public class SoundEffects {
    */
   public static final File TRUCK_ENGINE = new File("./resources/audio/sfx/truck_engine.wav");
   /**
+   *          !!######################################!!
+   *          !!                                      !!
+   *          !!             Item Sounds              !!
+   *          !!                                      !!
+   *          !!######################################!!
+   */
+  /**
    * A healing item sound.
    */
-  public static final File HEALING_SOUND = new File("./resources/audio/sfx/item_healing.wav");
+  public static final File HEALING_SOUND = new File("./resources/audio/sfx/items/item_healing.wav");
+  /**
+   * An armor equip sound.
+   */
+  public static final File EQUIP_ARMOR = new File("./resources/audio/sfx/items/equip_armor.wav");
+  /**
+   * An armor unequip sound.
+   */
+  public static final File UNEQUIP_ARMOR = new File("./resources/audio/sfx/items/unequip_armor.wav");
   /**
    *          !!######################################!!
    *          !!                                      !!

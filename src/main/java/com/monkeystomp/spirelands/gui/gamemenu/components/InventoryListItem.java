@@ -61,6 +61,7 @@ public class InventoryListItem {
   private void addButtons() {
     infoButton = new GameMenuPrimaryButton("Info", x + 148, y, 19, 11, () -> IShowItemDetails.accept(item));
     useButton = new PrimaryButton(primaryButtonText, x + 126, y, 19, 11, () -> IHandlePrimaryClick.accept(item));
+    useButton.disableButtonClickSound();
   }
   
   private void checkAmount() {

@@ -317,15 +317,17 @@ public class Character {
    * @param equippedHelmet The helmet to equip this character with.
    */
   public void equipHelmet(ArmorItem equippedHelmet) {
-    unequipHelmet();
+    unequipHelmet(false);
     this.equippedHelmet = equippedHelmet;
+    equippedHelmet.playEquipSound();
     equippedHelmet.removeFromInventory();
   }
   /**
    * Unequip this character's helmet.
    */
-  public void unequipHelmet() {
+  public void unequipHelmet(boolean playAudio) {
     if (equippedHelmet != null) {
+      if (playAudio) equippedHelmet.playUnequipSound();
       equippedHelmet.addToInventory();
       equippedHelmet = null;
     }
@@ -339,15 +341,17 @@ public class Character {
    * @param equippedChestplate The chestplate to equip this character with.
    */
   public void equipChestplate(ArmorItem equippedChestplate) {
-    unequipChestplate();
+    unequipChestplate(false);
     this.equippedChestplate = equippedChestplate;
+    equippedChestplate.playEquipSound();
     equippedChestplate.removeFromInventory();
   }
   /**
    * Unequip this character's chestplate.
    */
-  public void unequipChestplate() {
+  public void unequipChestplate(boolean playAudio) {
     if (equippedChestplate != null) {
+      if (playAudio) equippedChestplate.playUnequipSound();
       equippedChestplate.addToInventory();
       equippedChestplate = null;
     }
@@ -361,15 +365,17 @@ public class Character {
    * @param equippedShield The shield to equip this character with.
    */
   public void equipShield(ArmorItem equippedShield) {
-    unequipShield();
+    unequipShield(false);
     this.equippedShield = equippedShield;
+    equippedShield.playEquipSound();
     equippedShield.removeFromInventory();
   }
   /**
    * Unequip this character's shield.
    */
-  public void unequipShield() {
+  public void unequipShield(boolean playAudio) {
     if (equippedShield != null) {
+      if (playAudio) equippedShield.playUnequipSound();
       equippedShield.addToInventory();
       equippedShield = null;
     }
@@ -383,15 +389,17 @@ public class Character {
    * @param equippedBoots The shield to equip this character with.
    */
   public void equipBoots(ArmorItem equippedBoots) {
-    unequipBoots();
+    unequipBoots(false);
     this.equippedBoots = equippedBoots;
+    equippedBoots.playEquipSound();
     equippedBoots.removeFromInventory();
   }
   /**
    * Unequip this character's boots.
    */
-  public void unequipBoots() {
+  public void unequipBoots(boolean playAudio) {
     if (equippedBoots != null) {
+      if (playAudio) equippedBoots.playUnequipSound();
       equippedBoots.addToInventory();
       equippedBoots = null;
     }

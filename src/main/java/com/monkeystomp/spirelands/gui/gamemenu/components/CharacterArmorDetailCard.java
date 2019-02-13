@@ -18,7 +18,7 @@ public class CharacterArmorDetailCard extends CharacterEquipmentCard {
     135,
     () -> character.getEquippedHelmet(),
     item -> showEquippedItemDetails(item),
-    () -> character.unequipHelmet(),
+    () -> character.unequipHelmet(true),
     true
   ),
   chestplateSlot = new EquippedItemSlot(
@@ -26,7 +26,7 @@ public class CharacterArmorDetailCard extends CharacterEquipmentCard {
     135,
     () -> character.getEquippedChestplate(),
     item -> showEquippedItemDetails(item),
-    () -> character.unequipChestplate(),
+    () -> character.unequipChestplate(true),
     true
   ),
   shieldSlot = new EquippedItemSlot(
@@ -34,7 +34,7 @@ public class CharacterArmorDetailCard extends CharacterEquipmentCard {
     159,
     () -> character.getEquippedShield(),
     item -> showEquippedItemDetails(item),
-    () -> character.unequipShield(),
+    () -> character.unequipShield(true),
     false
   ),
   bootSlot = new EquippedItemSlot(
@@ -42,7 +42,7 @@ public class CharacterArmorDetailCard extends CharacterEquipmentCard {
     159,
     () -> character.getEquippedBoots(),
     item -> showEquippedItemDetails(item),
-    () -> character.unequipBoots(),
+    () -> character.unequipBoots(true),
     false
   );
   
