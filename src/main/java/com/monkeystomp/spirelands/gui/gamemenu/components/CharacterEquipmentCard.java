@@ -23,7 +23,7 @@ public class CharacterEquipmentCard {
   private final ArrayList<FontInfo> statLabels = new ArrayList<>(),
                                     statValues = new ArrayList<>();
   private final String[] labelNames = {
-    Character.ATTACK,
+    Character.STRENGTH,
     Character.DEFENSE,
     Character.INTELLECT,
     Character.SPIRIT,

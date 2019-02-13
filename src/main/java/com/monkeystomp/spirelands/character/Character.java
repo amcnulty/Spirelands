@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.character;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
+import java.util.HashMap;
 
 /**
  * A Character defines the name and stats of a group member that can be used in the player's party.
@@ -10,9 +11,17 @@ import com.monkeystomp.spirelands.inventory.WeaponItem;
  */
 public class Character {
   /**
+   * Health stat name for displaying stats.
+   */
+  public static final String HP = "HP";
+  /**
+   * Mana stat name for displaying stats.
+   */
+  public static final String MANA = "Mana";
+  /**
    * Attack stat name for displaying stats.
    */
-  public static final String ATTACK = "Attack";
+  public static final String STRENGTH = "Strength";
   /**
    * Defense stat name for displaying stats.
    */
@@ -33,8 +42,32 @@ public class Character {
    * Luck stat name for displaying stats.
    */
   public static final String LUCK = "Luck";
+  /**
+   * Very low stat weight for setting values on level up.
+   */
+  public static final String VERY_LOW = "Very Low";
+  /**
+   * Low stat weight for setting values on level up.
+   */
+  public static final String LOW = "Low";
+  /**
+   * Average stat weight for setting values on level up.
+   */
+  public static final String AVERAGE = "Average";
+  /**
+   * High stat weight for setting values on level up.
+   */
+  public static final String HIGH = "High";
+  /**
+   * Very high stat weight for setting values on level up.
+   */
+  public static final String VERY_HIGH = "Very High";
   // The max for any stat other than mana or HP
   private final int statMax = 255;
+  // The modifier for when health stat is increased
+  private final int healthWeightIncreaseModifier = 40;
+  // The modifier for when mana stat is increased
+  private final int manaWeightIncreaseModifier = 8;
   // Character name
   private String name;
   // Character level
@@ -45,22 +78,38 @@ public class Character {
   private int health;
   // Hit point max
   private int healthMax;
+  // Stat weight for health stat
+  private String healthWeight;
   // Current mana points
   private int mana;
   // Max mana points
   private int manaMax;
-  // Physical attack stat
+  // Stat weight for mana stat
+  private String manaWeight;
+  // Physical strength stat
   private int strength;
+  // Stat weight for strength stat
+  private String strengthWeight;
   // Physical attack resistance
   private int defense;
+  // Stat weight for defense stat
+  private String defenseWeight;
   // Magic attack stat
   private int intellect;
+  // Stat weight for intellect stat
+  private String intellectWeight;
   // Magic attack resistance
   private int spirit;
+  // Stat weight for spirit stat
+  private String spiritWeight;
   // Character speed
   private int speed;
+  // Stat weight for speed stat
+  private String speedWeight;
   // Luck
   private int luck;
+  // Stat weight for luck stat
+  private String luckWeight;
   // Thumbnail image for character
   private Sprite thumbnail;
   // The currently equipped weapon
@@ -73,6 +122,16 @@ public class Character {
   private ArmorItem equippedShield;
   // The currently equipped boots.
   private ArmorItem equippedBoots;
+  // Map of stat weight to array values.
+  private final HashMap<String, int[]> statWeightToValuesMap = new HashMap<>();
+  
+  public Character() {
+    statWeightToValuesMap.put(Character.VERY_LOW, new int[]{1, 1, 1, 1});
+    statWeightToValuesMap.put(Character.LOW, new int[]{1, 2, 1, 1});
+    statWeightToValuesMap.put(Character.AVERAGE, new int[]{1, 2, 1, 2});
+    statWeightToValuesMap.put(Character.HIGH, new int[]{1, 2, 2, 2});
+    statWeightToValuesMap.put(Character.VERY_HIGH, new int[]{2, 2, 2, 2});
+  }
 
   public String getName() {
     return name;
@@ -113,6 +172,15 @@ public class Character {
   public void setHealthMax(int healthMax) {
     this.healthMax = healthMax;
   }
+  
+  private void increaseHealthMax(int amount) {
+    increaseHealth(amount);
+    setHealthMax(healthMax + amount);
+  }
+  
+  public void setHealthWeight(String weight) {
+    this.healthWeight = weight;
+  }
 
   public int getMana() {
     return mana;
@@ -129,6 +197,15 @@ public class Character {
   public void setManaMax(int manaMax) {
     this.manaMax = manaMax;
   }
+  
+  private void increaseManaMax(int amount) {
+    increaseMana(amount);
+    setManaMax(manaMax + amount);
+  }
+  
+  public void setManaWeight(String weight) {
+    this.manaWeight = weight;
+  }
 
   public int getStrength() {
     return strength;
@@ -136,6 +213,10 @@ public class Character {
 
   public void setStrength(int strength) {
     this.strength = strength;
+  }
+  
+  public void setStrengthWeight(String weight) {
+    this.strengthWeight = weight;
   }
 
   public int getDefense() {
@@ -145,6 +226,10 @@ public class Character {
   public void setDefense(int defense) {
     this.defense = defense;
   }
+  
+  public void setDefenseWeight(String weight) {
+    this.defenseWeight = weight;
+  }
 
   public int getIntellect() {
     return intellect;
@@ -152,6 +237,10 @@ public class Character {
 
   public void setIntellect(int intellect) {
     this.intellect = intellect;
+  }
+  
+  public void setIntellectWeight(String weight) {
+    this.intellectWeight = weight;
   }
 
   public int getSpirit() {
@@ -161,6 +250,10 @@ public class Character {
   public void setSpirit(int spirit) {
     this.spirit = spirit;
   }
+  
+  public void setSpiritWeight(String weight) {
+    this.spiritWeight = weight;
+  }
 
   public int getSpeed() {
     return speed;
@@ -169,6 +262,10 @@ public class Character {
   public void setSpeed(int speed) {
     this.speed = speed;
   }
+  
+  public void setSpeedWeight(String weight) {
+    this.speedWeight = weight;
+  }
 
   public int getLuck() {
     return luck;
@@ -176,6 +273,10 @@ public class Character {
 
   public void setLuck(int luck) {
     this.luck = luck;
+  }
+  
+  public void setLuckWeight(String weight) {
+    this.luckWeight = weight;
   }
 
   public Sprite getThumbnail() {
@@ -477,6 +578,16 @@ public class Character {
   public void increaseLevel(int amount) {
     level += amount;
     if (level > 100) level = 100;
+    else {
+      increaseHealthMax(statWeightToValuesMap.get(healthWeight)[level % 4] * healthWeightIncreaseModifier);
+      increaseManaMax(statWeightToValuesMap.get(manaWeight)[level % 4] * manaWeightIncreaseModifier);
+      increaseStrength(statWeightToValuesMap.get(strengthWeight)[level % 4]);
+      increaseDefense(statWeightToValuesMap.get(defenseWeight)[level % 4]);
+      increaseIntellect(statWeightToValuesMap.get(intellectWeight)[level % 4]);
+      increaseSpirit(statWeightToValuesMap.get(spiritWeight)[level % 4]);
+      increaseSpeed(statWeightToValuesMap.get(speedWeight)[level % 4]);
+      increaseLuck(statWeightToValuesMap.get(luckWeight)[level % 4]);    
+    }
   }
     
 }

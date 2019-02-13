@@ -59,14 +59,22 @@ public class CharacterManager {
     character.setExperience(Integer.parseInt(stats.get("experience").toString()));
     character.setHealth(Integer.parseInt(stats.get("health").toString()));
     character.setHealthMax(Integer.parseInt(stats.get("healthMax").toString()));
+    character.setHealthWeight((String)stats.get("healthWeight"));
     character.setMana(Integer.parseInt(stats.get("mana").toString()));
     character.setManaMax(Integer.parseInt(stats.get("manaMax").toString()));
+    character.setManaWeight((String)stats.get("manaWeight"));
     character.setStrength(Integer.parseInt(stats.get("strength").toString()));
+    character.setStrengthWeight((String)stats.get("strengthWeight"));
     character.setDefense(Integer.parseInt(stats.get("defense").toString()));
+    character.setDefenseWeight((String)stats.get("defenseWeight"));
     character.setIntellect(Integer.parseInt(stats.get("intellect").toString()));
+    character.setIntellectWeight((String)stats.get("intellectWeight"));
     character.setSpirit(Integer.parseInt(stats.get("spirit").toString()));
+    character.setSpiritWeight((String)stats.get("spiritWeight"));
     character.setSpeed(Integer.parseInt(stats.get("speed").toString()));
+    character.setSpeedWeight((String)stats.get("speedWeight"));
     character.setLuck(Integer.parseInt(stats.get("luck").toString()));
+    character.setLuckWeight((String)stats.get("luckWeight"));
     character.setThumbnail(new Sprite((String)stats.get("thumbnail")));
     return character;
   }
