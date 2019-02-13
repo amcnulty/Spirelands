@@ -1,7 +1,11 @@
 {
   "Luke": {
-    "stats": {
+    "details": {
       "name": "Luke McLovin",
+      "thumbnail": "./resources/characters/thumbnails/luke.png",
+      "weaponType": "Sword"
+    },
+    "stats": {
       "level": 1,
       "experience": 0,
       "health": 10,
@@ -21,16 +25,19 @@
       "speed": 10,
       "speedWeight": "High",
       "luck": 5,
-      "luckWeight": "Very Low",
-      "thumbnail": "./resources/characters/thumbnails/luke.png"
+      "luckWeight": "Very Low"
     },
     "partyInfo": {
       "inParty": true
     }
   },
   "Sara": {
-    "stats": {
+    "details": {
       "name": "Sara Snowbridge",
+      "thumbnail": "./resources/characters/thumbnails/sara.png",
+      "weaponType": "Wand"
+    },
+    "stats": {
       "level": 1,
       "experience": 0,
       "health": 60,
@@ -50,16 +57,19 @@
       "speed": 9,
       "speedWeight": "Average",
       "luck": 4,
-      "luckWeight": "Low",
-      "thumbnail": "./resources/characters/thumbnails/sara.png"
+      "luckWeight": "Low"
     },
     "partyInfo": {
       "inParty": true
     }
   },
   "William": {
-    "stats": {
+    "details": {
       "name": "William Wallace",
+      "thumbnail": "./resources/characters/thumbnails/william.png",
+      "weaponType": "Blunt"
+    },
+    "stats": {
       "level": 1,
       "experience": 0,
       "health": 73,
@@ -79,8 +89,7 @@
       "speed": 7,
       "speedWeight": "Very Low",
       "luck": 2,
-      "luckWeight": "Average",
-      "thumbnail": "./resources/characters/thumbnails/william.png"
+      "luckWeight": "Average"
     },
     "partyInfo": {
       "inParty": true

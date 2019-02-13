@@ -31,7 +31,7 @@ public class Item {
                           ARMOR = 1,
                           EQUIPMENT = 2,
                           SPECIAL = 3;
-  private static final HashMap<Integer, String> TYPE_MAP = new HashMap<>();
+  protected static final HashMap<Integer, String> TYPE_MAP = new HashMap<>();
   static {
     TYPE_MAP.put(WEAPON, "Weapon");
     TYPE_MAP.put(ARMOR, "Armor");
@@ -538,6 +538,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     COMMON_SWORD.setAttackPower(10);
+    COMMON_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Katana sword (WEAPON)
@@ -551,6 +552,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     KATANA_SWORD.setAttackPower(25);
+    KATANA_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Sky Saber (WEAPON)
@@ -564,6 +566,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SKY_SABER.setAttackPower(27);
+    SKY_SABER.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Scimitar sword (WEAPON)
@@ -577,6 +580,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SCIMITAR_SWORD.setAttackPower(30);
+    SCIMITAR_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Crusader sword (WEAPON)
@@ -590,6 +594,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     CRUSADER_SWORD.setAttackPower(33);
+    CRUSADER_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Talon sword (WEAPON)
@@ -603,6 +608,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     TALON_SWORD.setAttackPower(40);
+    TALON_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * 'Spellblade' (WEAPON)
@@ -617,6 +623,7 @@ public class Item {
   static {
     SPELLBLADE.setAttackPower(38);
     SPELLBLADE.setMagicAttackPower(25);
+    SPELLBLADE.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Dark Sword (WEAPON)
@@ -631,6 +638,7 @@ public class Item {
   static {
     DARK_SWORD.setAttackPower(50);
     DARK_SWORD.setMagicAttackPower(10);
+    DARK_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Poison Sword (WEAPON)
@@ -644,6 +652,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     POISON_SWORD.setAttackPower(55);
+    POISON_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * 'Longsword' (WEAPON)
@@ -657,6 +666,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     LONGSWORD.setAttackPower(60);
+    LONGSWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Dragon Sword (WEAPON)
@@ -670,6 +680,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     DRAGON_SWORD.setAttackPower(65);
+    DRAGON_SWORD.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Sword Of The Spire (WEAPON)
@@ -684,6 +695,7 @@ public class Item {
   static {
     SWORD_OF_THE_SPIRE.setAttackPower(80);
     SWORD_OF_THE_SPIRE.setMagicAttackPower(30);
+    SWORD_OF_THE_SPIRE.setWeaponType(WeaponItem.SWORD);
   }
   /**
    * Basic Bow (WEAPON)
@@ -697,6 +709,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     BASIC_BOW.setAttackPower(10);
+    BASIC_BOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Sparrow Bow (Weapon)
@@ -710,6 +723,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SPARROW_BOW.setAttackPower(15);
+    SPARROW_BOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Small Crossbow (WEAPON)
@@ -723,6 +737,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SMALL_CROSSBOW.setAttackPower(20);
+    SMALL_CROSSBOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Short Bow (WEAPON)
@@ -736,6 +751,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SHORT_BOW.setAttackPower(25);
+    SHORT_BOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Common Longbow (WEAPON)
@@ -749,6 +765,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     COMMON_LONGBOW.setAttackPower(30);
+    COMMON_LONGBOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Lightning Strike (WEAPON)
@@ -763,6 +780,7 @@ public class Item {
   static {
     LIGHTNING_STRIKE.setAttackPower(35);
     LIGHTNING_STRIKE.setMagicAttackPower(5);
+    LIGHTNING_STRIKE.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Heavy Crossbow (WEAPON)
@@ -776,6 +794,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     HEAVY_CROSSBOW.setAttackPower(40);
+    HEAVY_CROSSBOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Metallic Bow (WEAPON)
@@ -789,6 +808,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     METALLIC_BOW.setAttackPower(50);
+    METALLIC_BOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Heavy Longbow (WEAPON)
@@ -802,6 +822,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     HEAVY_LONGBOW.setAttackPower(55);
+    HEAVY_LONGBOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Power Bow (WEAPON)
@@ -815,6 +836,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     POWER_BOW.setAttackPower(60);
+    POWER_BOW.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Golden Hawk (WEAPON)
@@ -829,6 +851,7 @@ public class Item {
   static {
     GOLDEN_HAWK.setAttackPower(65);
     GOLDEN_HAWK.setMagicAttackPower(10);
+    GOLDEN_HAWK.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Calamity Shot (WEAPON)
@@ -843,6 +866,7 @@ public class Item {
   static {
     CALAMITY_SHOT.setAttackPower(80);
     CALAMITY_SHOT.setMagicAttackPower(15);
+    CALAMITY_SHOT.setWeaponType(WeaponItem.BOW);
   }
   /**
    * Field Dagger (WEAPON)
@@ -856,6 +880,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     FIELD_DAGGER.setAttackPower(7);
+    FIELD_DAGGER.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Shank Dagger (WEAPON)
@@ -869,6 +894,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SHANK_DAGGER.setAttackPower(12);
+    SHANK_DAGGER.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Bowie Knife (WEAPON)
@@ -882,6 +908,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     BOWIE_KNIFE.setAttackPower(20);
+    BOWIE_KNIFE.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * 'Stumpblade' dagger (WEAPON)
@@ -895,6 +922,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     STUMPBLADE_DAGGER.setAttackPower(25);
+    STUMPBLADE_DAGGER.setWeaponType(WeaponItem.DAGGER);
   }
   
   public static final WeaponItem
@@ -906,6 +934,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SERRATOR_DAGGER.setAttackPower(30);
+    SERRATOR_DAGGER.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Stiletto (WEAPON)
@@ -919,6 +948,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     STILETTO.setAttackPower(35);
+    STILETTO.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Dragon Claw (WEAPON)
@@ -932,6 +962,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     DRAGON_CLAW.setAttackPower(40);
+    DRAGON_CLAW.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Shadow Blade (WEAPON)
@@ -946,6 +977,7 @@ public class Item {
   static {
     SHADOW_BLADE.setAttackPower(45);
     SHADOW_BLADE.setMagicAttackPower(8);
+    SHADOW_BLADE.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Poison Dagger (WEAPON)
@@ -960,6 +992,7 @@ public class Item {
   static {
     POISON_DAGGER.setAttackPower(50);
     POISON_DAGGER.setMagicAttackPower(15);
+    POISON_DAGGER.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Kings Short Blade (WEAPON)
@@ -973,6 +1006,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     KINGS_SHORTBLADE.setAttackPower(55);
+    KINGS_SHORTBLADE.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Crippler (WEAPON)
@@ -986,6 +1020,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     CRIPPLER.setAttackPower(60);
+    CRIPPLER.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Golden Touch (WEAPON)
@@ -1000,6 +1035,7 @@ public class Item {
   static {
     GOLDEN_TOUCH.setAttackPower(70);
     GOLDEN_TOUCH.setMagicAttackPower(20);
+    GOLDEN_TOUCH.setWeaponType(WeaponItem.DAGGER);
   }
   /**
    * Wooden Staff (WEAPON)
@@ -1014,6 +1050,7 @@ public class Item {
   static {
     WOODEN_STAFF.setAttackPower(1);
     WOODEN_STAFF.setMagicAttackPower(8);
+    WOODEN_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Ancient Staff (WEAPON)
@@ -1026,8 +1063,9 @@ public class Item {
           .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
-    WOODEN_STAFF.setAttackPower(1);
-    WOODEN_STAFF.setMagicAttackPower(16);
+    ANCIENT_STAFF.setAttackPower(1);
+    ANCIENT_STAFF.setMagicAttackPower(16);
+    ANCIENT_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Caterpillar Staff (WEAPON)
@@ -1042,6 +1080,7 @@ public class Item {
   static {
     CATERPILLAR.setAttackPower(4);
     CATERPILLAR.setMagicAttackPower(24);
+    CATERPILLAR.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Solar Staff (WEAPON)
@@ -1056,6 +1095,7 @@ public class Item {
   static {
     SOLAR_STAFF.setAttackPower(7);
     SOLAR_STAFF.setMagicAttackPower(31);
+    SOLAR_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Life Staff (WEAPON)
@@ -1070,6 +1110,7 @@ public class Item {
   static {
     LIFE_STAFF.setAttackPower(9);
     LIFE_STAFF.setMagicAttackPower(35);
+    LIFE_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Metal Staff (WEAPON)
@@ -1084,6 +1125,7 @@ public class Item {
   static {
     METAL_STAFF.setAttackPower(18);
     METAL_STAFF.setMagicAttackPower(40);
+    METAL_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Enchanted Rod (WEAPON)
@@ -1098,6 +1140,7 @@ public class Item {
   static {
     ENCHANTED_ROD.setAttackPower(14);
     ENCHANTED_ROD.setMagicAttackPower(45);
+    ENCHANTED_ROD.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Necromancer Staff (WEAPON)
@@ -1112,6 +1155,7 @@ public class Item {
   static {
     NECROMANCER_STAFF.setAttackPower(25);
     NECROMANCER_STAFF.setMagicAttackPower(50);
+    NECROMANCER_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Fire Staff (WEAPON)
@@ -1126,6 +1170,7 @@ public class Item {
   static {
     FIRE_STAFF.setAttackPower(29);
     FIRE_STAFF.setMagicAttackPower(55);
+    FIRE_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Shock Staff (WEAPON)
@@ -1140,6 +1185,7 @@ public class Item {
   static {
     SHOCK_STAFF.setAttackPower(32);
     SHOCK_STAFF.setMagicAttackPower(60);
+    SHOCK_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Tsunami Staff (WEAPON)
@@ -1154,6 +1200,7 @@ public class Item {
   static {
     TSUNAMI_STAFF.setAttackPower(35);
     TSUNAMI_STAFF.setMagicAttackPower(65);
+    TSUNAMI_STAFF.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Sorcerer's Heart Staff (WEAPON)
@@ -1168,6 +1215,7 @@ public class Item {
   static {
     SORCERERS_HEART.setAttackPower(38);
     SORCERERS_HEART.setMagicAttackPower(80);
+    SORCERERS_HEART.setWeaponType(WeaponItem.STAFF);
   }
   /**
    * Simple Axe (WEAPON)
@@ -1181,6 +1229,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SIMPLE_AXE.setAttackPower(10);
+    SIMPLE_AXE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Sledgehammer (WEAPON)
@@ -1194,6 +1243,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SLEDGEHAMMER.setAttackPower(17);
+    SLEDGEHAMMER.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Broad axe (WEAPON)
@@ -1207,6 +1257,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     BROADAXE.setAttackPower(25);
+    BROADAXE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Twin Crescent (WEAPON)
@@ -1220,6 +1271,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     TWIN_CRESCENT.setAttackPower(30);
+    TWIN_CRESCENT.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * 'Masakari' axe (WEAPON)
@@ -1233,6 +1285,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     MASAKARI_AXE.setAttackPower(35);
+    MASAKARI_AXE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Obsidian Axe (WEAPON)
@@ -1246,6 +1299,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     OBSIDIAN_AXE.setAttackPower(40);
+    OBSIDIAN_AXE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Twin Broad blade axe (WEAPON)
@@ -1259,6 +1313,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     TWIN_BROADBLADE.setAttackPower(45);
+    TWIN_BROADBLADE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Doom Hammer (WEAPON)
@@ -1272,6 +1327,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     DOOM_HAMMER.setAttackPower(50);
+    DOOM_HAMMER.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Kings Axe (WEAPON)
@@ -1285,6 +1341,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     KINGS_AXE.setAttackPower(55);
+    KINGS_AXE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Dragon Slayer (WEAPON)
@@ -1298,6 +1355,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     DRAGON_SLAYER.setAttackPower(60);
+    DRAGON_SLAYER.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Golden Brute (WEAPON)
@@ -1311,6 +1369,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GOLDEN_BRUTE.setAttackPower(65);
+    GOLDEN_BRUTE.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Gods Hammer (WEAPON)
@@ -1325,6 +1384,7 @@ public class Item {
   static {
     GODS_HAMMER.setAttackPower(80);
     GODS_HAMMER.setMagicAttackPower(20);
+    GODS_HAMMER.setWeaponType(WeaponItem.BATTLE_AXE);
   }
   /**
    * Pupil Wand (WEAPON)
@@ -1338,6 +1398,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     PUPIL_WAND.setMagicAttackPower(8);
+    PUPIL_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Graduate Wand (WEAPON)
@@ -1351,6 +1412,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GRADUATE_WAND.setMagicAttackPower(15);
+    GRADUATE_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Tri-Coil Wand (WEAPON)
@@ -1364,6 +1426,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     TRI_COIL_WAND.setMagicAttackPower(24);
+    TRI_COIL_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Blunt Tip Wand (WEAPON)
@@ -1378,6 +1441,7 @@ public class Item {
   static {
     BLUNT_TIP_WAND.setAttackPower(8);
     BLUNT_TIP_WAND.setMagicAttackPower(30);
+    BLUNT_TIP_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Earth Power (WEAPON)
@@ -1391,6 +1455,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     EARTH_POWER.setMagicAttackPower(35);
+    EARTH_POWER.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Rainbow Wand (WEAPON)
@@ -1404,6 +1469,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     RAINBOW_WAND.setMagicAttackPower(40);
+    RAINBOW_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * 'Aquastrike' Wand (WEAPON)
@@ -1417,6 +1483,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     AQUASTRIKE_WAND.setMagicAttackPower(45);
+    AQUASTRIKE_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Voodoo Wand (WEAPON)
@@ -1430,6 +1497,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     VOODOO_WAND.setMagicAttackPower(50);
+    VOODOO_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Wand Of Riches (WEAPON)
@@ -1443,6 +1511,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     WAND_OF_RICHES.setMagicAttackPower(55);
+    WAND_OF_RICHES.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Electro Wand (WEAPON)
@@ -1456,6 +1525,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     ELECTRO_WAND.setMagicAttackPower(60);
+    ELECTRO_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Azula's Wand (WEAPON)
@@ -1469,6 +1539,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     AZULAS_WAND.setMagicAttackPower(65);
+    AZULAS_WAND.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Fire Element (WEAPON)
@@ -1482,6 +1553,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     FIRE_ELEMENT.setMagicAttackPower(80);
+    FIRE_ELEMENT.setWeaponType(WeaponItem.WAND);
   }
   /**
    * Wood Club (WEAPON)
@@ -1495,6 +1567,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     WOOD_CLUB.setAttackPower(8);
+    WOOD_CLUB.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Small Mace (WEAPON)
@@ -1508,6 +1581,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SMALL_MACE.setAttackPower(16);
+    SMALL_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Steel Mace (WEAPON)
@@ -1521,6 +1595,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     STEEL_MACE.setAttackPower(25);
+    STEEL_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Snaggletooth Mace (WEAPON)
@@ -1534,6 +1609,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     SNAGGLETOOTH_MACE.setAttackPower(30);
+    SNAGGLETOOTH_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Copperhead Mace (WEAPON)
@@ -1547,6 +1623,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     COPPERHEAD_MACE.setAttackPower(35);
+    COPPERHEAD_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Mad Ball Mac (WEAPON)
@@ -1560,6 +1637,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     MAD_BALL_MACE.setAttackPower(40);
+    MAD_BALL_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Blue Steel (WEAPON)
@@ -1573,6 +1651,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     BLUE_STEEL.setAttackPower(45);
+    BLUE_STEEL.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Ebony Mace (WEAPON)
@@ -1586,6 +1665,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     EBONY_MACE.setAttackPower(50);
+    EBONY_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Gold Mace (WEAPON)
@@ -1599,6 +1679,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GOLD_MACE.setAttackPower(55);
+    GOLD_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Axe Club (WEAPON)
@@ -1612,6 +1693,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     AXE_CLUB.setAttackPower(60);
+    AXE_CLUB.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Golden Nugget (WEAPON)
@@ -1625,6 +1707,7 @@ public class Item {
           .build(WeaponItem.class);
   static {
     GOLDEN_NUGGET.setAttackPower(65);
+    GOLDEN_NUGGET.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * Power Orb (WEAPON)
@@ -1639,19 +1722,7 @@ public class Item {
   static {
     POWER_ORB_MACE.setAttackPower(80);
     POWER_ORB_MACE.setMagicAttackPower(20);
-  }
-  /**
-   * The blood axe. (WEAPON)
-   */
-  public static final WeaponItem
-    BLOOD_AXE = new ItemBuilder()
-          .title("Blood Axe")
-          .description("The blood axe of lore. Its blade is stained by the blood of its victims.")
-          .price(3300)
-          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 5, SpriteSheet.itemsSheet))
-          .build(WeaponItem.class);
-  static {
-    BLOOD_AXE.setAttackPower(50);
+    POWER_ORB_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
    * A briefcase to hold more items. (SPECIAL)

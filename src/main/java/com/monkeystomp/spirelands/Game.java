@@ -83,6 +83,8 @@ public class Game extends GLCanvas implements Runnable {
       manager.addToInventory(Item.TRAINING_BOOK_V1);
       manager.addToInventory(Item.TRAINING_BOOK_V2);
     }
+    
+    // Weapons
     manager.addToInventory(Item.COMMON_SWORD);
     manager.addToInventory(Item.KATANA_SWORD);
     manager.addToInventory(Item.SKY_SABER);
@@ -95,18 +97,33 @@ public class Game extends GLCanvas implements Runnable {
     manager.addToInventory(Item.LONGSWORD);
     manager.addToInventory(Item.DRAGON_SWORD);
     manager.addToInventory(Item.SWORD_OF_THE_SPIRE);
-    manager.addToInventory(Item.BASIC_BOW);
-    manager.addToInventory(Item.SPARROW_BOW);
-    manager.addToInventory(Item.SMALL_CROSSBOW);
-    manager.addToInventory(Item.COMMON_LONGBOW);
-    manager.addToInventory(Item.GOLDEN_HAWK);
-    manager.addToInventory(Item.HEAVY_CROSSBOW);
-    manager.addToInventory(Item.HEAVY_LONGBOW);
-    manager.addToInventory(Item.LIGHTNING_STRIKE);
-    manager.addToInventory(Item.METALLIC_BOW);
-    manager.addToInventory(Item.POWER_BOW);
-    manager.addToInventory(Item.SHORT_BOW);
-    manager.addToInventory(Item.CALAMITY_SHOT);
+    
+    manager.addToInventory(Item.PUPIL_WAND);
+    manager.addToInventory(Item.GRADUATE_WAND);
+    manager.addToInventory(Item.TRI_COIL_WAND);
+    manager.addToInventory(Item.BLUNT_TIP_WAND);
+    manager.addToInventory(Item.EARTH_POWER);
+    manager.addToInventory(Item.RAINBOW_WAND);
+    manager.addToInventory(Item.AQUASTRIKE_WAND);
+    manager.addToInventory(Item.VOODOO_WAND);
+    manager.addToInventory(Item.WAND_OF_RICHES);
+    manager.addToInventory(Item.ELECTRO_WAND);
+    manager.addToInventory(Item.AZULAS_WAND);
+    manager.addToInventory(Item.FIRE_ELEMENT);
+    
+    manager.addToInventory(Item.WOOD_CLUB);
+    manager.addToInventory(Item.SMALL_MACE);
+    manager.addToInventory(Item.STEEL_MACE);
+    manager.addToInventory(Item.SNAGGLETOOTH_MACE);
+    manager.addToInventory(Item.COPPERHEAD_MACE);
+    manager.addToInventory(Item.MAD_BALL_MACE);
+    manager.addToInventory(Item.BLUE_STEEL);
+    manager.addToInventory(Item.EBONY_MACE);
+    manager.addToInventory(Item.GOLD_MACE);
+    manager.addToInventory(Item.AXE_CLUB);
+    manager.addToInventory(Item.GOLDEN_NUGGET);
+    manager.addToInventory(Item.POWER_ORB_MACE);
+    
     
     // Armor
     

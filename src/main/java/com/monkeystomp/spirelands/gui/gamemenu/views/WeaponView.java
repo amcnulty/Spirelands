@@ -47,7 +47,7 @@ public class WeaponView extends DisplayView {
   private void handleEquipClick(WeaponItem weapon) {
     showingWeaponDetailCard = true;
     character.equipWeapon(weapon);
-    createListItems(manager.getItemsByType(Item.WEAPON));
+    createListItems(manager.getWeaponsByType(character.getWeaponType()));
   }
   
   private void createListItems(Map<Integer, InventoryReference> itemsMap) {
@@ -74,7 +74,7 @@ public class WeaponView extends DisplayView {
       }
       if (newPage.size() > 0) pages.add(newPage);
     }
-    itemCount = manager.getItemsByType(Item.WEAPON).size();
+    itemCount = manager.getWeaponsByType(character.getWeaponType()).size();
     pagination.setListLength(itemCount);
     setCurrentPage();
   }
@@ -85,8 +85,8 @@ public class WeaponView extends DisplayView {
   }
   
   private void checkItemCount() {
-    if (itemCount != manager.getItemsByType(Item.WEAPON).size()) {
-      createListItems(manager.getItemsByType(Item.WEAPON));
+    if (itemCount != manager.getWeaponsByType(character.getWeaponType()).size()) {
+      createListItems(manager.getWeaponsByType(character.getWeaponType()));
     }
   }
   
@@ -99,6 +99,10 @@ public class WeaponView extends DisplayView {
   @Override
   public void setCharacter(Character character) {
     super.setCharacter(character);
+    createListItems(manager.getWeaponsByType(character.getWeaponType()));
+    // Start on page one when switching characters.
+    pagination.highlightCurrentPage(0);
+    currentPageIndex = 0;
     weaponDetailCard.setCharacter(character);
   }
 

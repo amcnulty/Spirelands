@@ -53,8 +53,11 @@ public class CharacterManager {
   
   private Character setupCharacter(JSONObject data) {
     Character character = new Character();
+    JSONObject details = (JSONObject)data.get("details");
     JSONObject stats = (JSONObject)data.get("stats");
-    character.setName((String)stats.get("name"));
+    character.setName((String)details.get("name"));
+    character.setThumbnail(new Sprite((String)details.get("thumbnail")));
+    character.setWeaponType((String)details.get("weaponType"));
     character.setLevel(Integer.parseInt(stats.get("level").toString()));
     character.setExperience(Integer.parseInt(stats.get("experience").toString()));
     character.setHealth(Integer.parseInt(stats.get("health").toString()));
@@ -75,7 +78,6 @@ public class CharacterManager {
     character.setSpeedWeight((String)stats.get("speedWeight"));
     character.setLuck(Integer.parseInt(stats.get("luck").toString()));
     character.setLuckWeight((String)stats.get("luckWeight"));
-    character.setThumbnail(new Sprite((String)stats.get("thumbnail")));
     return character;
   }
   

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 public class InventoryManager {
   
   private int gold = 0;
-  
+  // A map of all items id to their inventory reference object.
   private final HashMap<Integer, InventoryReference> itemMap = new HashMap<>();
   
   private static final InventoryManager INSTANCE = new InventoryManager();
@@ -56,6 +56,27 @@ public class InventoryManager {
   public Map<Integer, InventoryReference> getItemsByType(int type) {
     return itemMap.entrySet().stream()
       .filter(map -> map.getValue().getItem().getType()== type)
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
+  /**
+   * Gets all the weapons of the given type. This is returned as a map.
+   * <p>
+   * Example Usage:
+   * </p>
+   * <pre>
+   * {@code
+   * Map<Integer, InventoryReference> swords = manager.getWeaponsByType(WeaponItem.SWORD);
+   * }
+   * </pre>
+   * @param type The type of weapons to get.
+   * @return The map of the weapons based on the given type.
+   */
+  public Map<Integer, InventoryReference> getWeaponsByType(String type) {
+    Map<Integer, InventoryReference> weapons = itemMap.entrySet().stream()
+      .filter(map -> map.getValue().getItem().getType() == Item.WEAPON)
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return weapons.entrySet().stream()
+      .filter(map -> ((WeaponItem) map.getValue().getItem()).getWeaponType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
   /**

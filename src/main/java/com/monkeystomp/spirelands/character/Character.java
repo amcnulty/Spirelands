@@ -70,6 +70,10 @@ public class Character {
   private final int manaWeightIncreaseModifier = 8;
   // Character name
   private String name;
+  // Thumbnail image for character
+  private Sprite thumbnail;
+  // Character weapon type
+  private String weaponType;
   // Character level
   private int level;
   // Experience points
@@ -110,8 +114,6 @@ public class Character {
   private int luck;
   // Stat weight for luck stat
   private String luckWeight;
-  // Thumbnail image for character
-  private Sprite thumbnail;
   // The currently equipped weapon
   private WeaponItem equippedWeapon;
   // The currently equipped helmet.
@@ -139,6 +141,22 @@ public class Character {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Sprite getThumbnail() {
+    return thumbnail;
+  }
+
+  public void setThumbnail(Sprite thumbnail) {
+    this.thumbnail = thumbnail;
+  }
+  
+  public void setWeaponType(String weaponType) {
+    this.weaponType = weaponType;
+  }
+  
+  public String getWeaponType() {
+    return weaponType;
   }
 
   public int getLevel() {
@@ -279,14 +297,6 @@ public class Character {
     this.luckWeight = weight;
   }
 
-  public Sprite getThumbnail() {
-    return thumbnail;
-  }
-
-  public void setThumbnail(Sprite thumbnail) {
-    this.thumbnail = thumbnail;
-  }
-
   public WeaponItem getEquippedWeapon() {
     return equippedWeapon;
   }
@@ -372,6 +382,7 @@ public class Character {
   }
   /**
    * Unequip this character's shield.
+   * @param playAudio Flag for if the unequip sounds should be played with this action.
    */
   public void unequipShield(boolean playAudio) {
     if (equippedShield != null) {
