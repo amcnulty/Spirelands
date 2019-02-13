@@ -13,12 +13,29 @@ import java.util.HashMap;
  */
 public class Item {
 
+  /**
+   * Weapon type item
+   */
+  public static final String WEAPON = "Weapon";
+  /**
+   * Armor type item
+   */
+  public static final String ARMOR = "Armor";
+  /**
+   * Equipment type item
+   */
+  public static final String EQUIPMENT = "Equipment";
+  /**
+   * Special type item
+   */
+  public static final String SPECIAL = "Special";
+  
   private final String  title,
-                        description;
+                        description,
+                        type;
   private final Sprite thumbnail;
   private final int id,
-                    price,
-                    type;
+                    price;
   private static int nextId = 0;
   private Character character;
   protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
@@ -26,18 +43,6 @@ public class Item {
   private static final int  SPRITE_SIZE = 16,
                             WEAPON_SPRITE_SIZE = 32,
                             NO_PRICE = -1;
-  // The types to assign items.
-  public static final int WEAPON = 0,
-                          ARMOR = 1,
-                          EQUIPMENT = 2,
-                          SPECIAL = 3;
-  protected static final HashMap<Integer, String> TYPE_MAP = new HashMap<>();
-  static {
-    TYPE_MAP.put(WEAPON, "Weapon");
-    TYPE_MAP.put(ARMOR, "Armor");
-    TYPE_MAP.put(EQUIPMENT, "Equipment");
-    TYPE_MAP.put(SPECIAL, "Special");
-  }
   /**
    *          !!################################!!
    *          !!                                !!
@@ -1765,7 +1770,7 @@ public class Item {
     return title;
   }
   
-  public int getType() {
+  public String getType() {
     return type;
   }
 
@@ -1775,14 +1780,6 @@ public class Item {
   
   public Character getCharacter() {
     return character;
-  }
-  /**
-   * Returns the type of this item as a string to be displayed.
-   * @param type The type of this item to use to lookup the string type.
-   * @return The string type of this item in a displayable format.
-   */
-  public String getTypeAsString(int type) {
-    return TYPE_MAP.get(type);
   }
   
   public ArrayList<ItemAttribute> getAttributes() {

@@ -7,8 +7,10 @@ import com.monkeystomp.spirelands.gui.controlls.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.gui.util.TextUtil;
+import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.ItemAttribute;
+import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -71,7 +73,17 @@ public class ItemDetailCard {
     titleFont.setY(30);
     titleFont.centerText();
     
-    typeFont.setText(item.getTypeAsString(item.getType()));
+    switch (item.getType()) {
+      case Item.WEAPON:
+        typeFont.setText(((WeaponItem)item).getWeaponType());
+        break;
+      case Item.ARMOR:
+        typeFont.setText(((ArmorItem)item).getArmorType());
+        break;
+      default:
+        typeFont.setText(item.getType());
+        break;
+    }
     typeFont.setX(cardCenterHoriz);
     typeFont.setY(65);
     typeFont.centerText();

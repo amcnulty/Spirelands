@@ -87,11 +87,5 @@ public class ArmorItem extends Item {
   public void setArmorType(String armorType) {
     this.armorType = armorType;
   }
-  
-  @Override
-  public String getTypeAsString(int type) {
-    if (armorType != null) return armorType;
-    else return TYPE_MAP.get(getType());
-  }
 
 }

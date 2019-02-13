@@ -34,7 +34,7 @@ public class InventoryManagerTest {
   
   @Test
   public void addDifferentWeaponTypeTest() {
-    Item testWeapon = Item.BLOOD_AXE;
+    Item testWeapon = Item.AXE_CLUB;
     int quantity;
     try {
       quantity = manager.getItemsByType(Item.WEAPON).get(testWeapon.getId()).getAmount();

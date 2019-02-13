@@ -1,7 +1,6 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.input.ICallback;
 import java.lang.reflect.InvocationTargetException;
 
 /**
@@ -43,7 +42,7 @@ public class ItemBuilder {
   /**
    * The type of the item.
    */
-  public int type;
+  public String type;
   /**
    * Sets the display title of the item.
    * @param title The string to set as the title of the item.
@@ -85,7 +84,7 @@ public class ItemBuilder {
    * @param type The type to set for this item
    * @return This ItemBuilder reference.
    */
-  public ItemBuilder type(int type) {
+  public ItemBuilder type(String type) {
     this.type = type;
     return this;
   }

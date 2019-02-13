@@ -53,9 +53,9 @@ public class InventoryManager {
    * @param type The type of item to fetch results for.
    * @return The map of items based on the given type.
    */
-  public Map<Integer, InventoryReference> getItemsByType(int type) {
+  public Map<Integer, InventoryReference> getItemsByType(String type) {
     return itemMap.entrySet().stream()
-      .filter(map -> map.getValue().getItem().getType()== type)
+      .filter(map -> map.getValue().getItem().getType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
   /**
@@ -73,7 +73,7 @@ public class InventoryManager {
    */
   public Map<Integer, InventoryReference> getWeaponsByType(String type) {
     Map<Integer, InventoryReference> weapons = itemMap.entrySet().stream()
-      .filter(map -> map.getValue().getItem().getType() == Item.WEAPON)
+      .filter(map -> map.getValue().getItem().getType().equals(Item.WEAPON))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     return weapons.entrySet().stream()
       .filter(map -> ((WeaponItem) map.getValue().getItem()).getWeaponType().equals(type))

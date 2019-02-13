@@ -69,10 +69,4 @@ public class WeaponItem extends Item {
     return magicPower;
   }
   
-  @Override
-  public String getTypeAsString(int type) {
-    if (weaponType != null) return weaponType;
-    else return TYPE_MAP.get(getType());
-  }
-  
 }
