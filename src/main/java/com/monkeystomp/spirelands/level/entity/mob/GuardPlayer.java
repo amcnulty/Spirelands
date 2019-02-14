@@ -104,16 +104,47 @@ public class GuardPlayer extends Player {
   }
   
   private void checkForInteractableEntities() {
-    int dy = ((direction + 3) % 2) * 2 - (4 * (((direction + 3) % 4) / 3)),
-        dx = (direction % 2) * 2 - (4 * (direction / 3));
     for (int i = 0; i < level.getSolidEntities().size(); i++) {
       for (int j = 0; j < 10; j++) {
-        if (level.getSolidEntities().get(i).entityHere(x + dx * j, y + dy * j) && !level.getSolidEntities().get(i).equals(this)) {
-          level.getSolidEntities().get(i).interact();
-          return;
+        switch (direction) {
+          case 0:
+            if ((level.getSolidEntities().get(i).entityHere(x - 10, y - 2 * j)
+                    || level.getSolidEntities().get(i).entityHere(x, y - 2 * j)
+                    || level.getSolidEntities().get(i).entityHere(x + 10, y - 2 * j))
+                    && !level.getSolidEntities().get(i).equals(this)) {
+              level.getSolidEntities().get(i).interact();
+              return;
+            } break;
+          case 1:
+            if ((level.getSolidEntities().get(i).entityHere(x + 8 + 2 * j, y - 1)
+                    || level.getSolidEntities().get(i).entityHere(x + 8 + 2 * j, y + 7)
+                    || level.getSolidEntities().get(i).entityHere(x + 8 + 2 * j, y + 15))
+                    && !level.getSolidEntities().get(i).equals(this)) {
+              level.getSolidEntities().get(i).interact();
+              return;
+            } break;
+          case 2:
+            if ((level.getSolidEntities().get(i).entityHere(x - 10, y + 8 + 2 * j)
+                    || level.getSolidEntities().get(i).entityHere(x, y + 8 + 2 * j)
+                    || level.getSolidEntities().get(i).entityHere(x + 10, y + 8 + 2 * j))
+                    && !level.getSolidEntities().get(i).equals(this)) {
+              level.getSolidEntities().get(i).interact();
+              return;
+            } break;
+          case 3:
+            if ((level.getSolidEntities().get(i).entityHere(x - 8 - 2 * j, y - 1)
+                    || level.getSolidEntities().get(i).entityHere(x - 8 - 2 * j, y + 7)
+                    || level.getSolidEntities().get(i).entityHere(x - 8 - 2 * j, y + 15))
+                    && !level.getSolidEntities().get(i).equals(this)) {
+              level.getSolidEntities().get(i).interact();
+              return;
+            } break;
+          default:
+            break;
         }
       }
     }
+    
   }
   
   private void checkMovementInput() {

@@ -210,8 +210,6 @@ public class Sprite {
    */
   public Sprite(Sprite original, double percentage) {
     this.width = (int)(original.getWidth() * (percentage / 100.0));
-    System.out.println(width);
-    System.out.println(original.getWidth());
     this.height = (int)(original.getHeight() * (percentage / 100.0));
     this.rawWidth = original.getWidth();
     this.rawHeight = original.getHeight();

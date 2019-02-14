@@ -77,24 +77,24 @@ public class BasicNPC extends NPC {
     
   protected void setBounds() {
     quad.setQuadBounds(
-      y - SPRITE_SIZE / 2,
-      x + SPRITE_SIZE / 2,
-      y + SPRITE_SIZE / 2,
-      x - SPRITE_SIZE / 2
+      y - 1,
+      x + 10,
+      y + 15,
+      x - 10
     );
     bounds.add(quad);
-    moveBounds[0] = SPRITE_SIZE / 2;
-    moveBounds[1] = SPRITE_SIZE / 2;
-    moveBounds[2] = SPRITE_SIZE / 2;
-    moveBounds[3] = SPRITE_SIZE / 2;
+    moveBounds[0] = 1;
+    moveBounds[1] = 10;
+    moveBounds[2] = 15;
+    moveBounds[3] = 10;
   }
   
   protected void updateBounds() {
     quad.setQuadBounds(
-      y - SPRITE_SIZE / 2,
-      x + SPRITE_SIZE / 2,
-      y + SPRITE_SIZE / 2,
-      x - SPRITE_SIZE / 2
+      y - 1,
+      x + 10,
+      y + 15,
+      x - 10
     );
   }
   
