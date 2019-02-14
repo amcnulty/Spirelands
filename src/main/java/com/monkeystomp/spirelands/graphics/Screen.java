@@ -71,6 +71,28 @@ public class Screen {
 //    gl.glFlush();
   }
   /**
+   * Renders the title screen background at the given float coordinates.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   */
+  public void renderTitleScreenBackground(GL2 gl, float xp, float yp, Sprite sprite) {
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+  }
+  /**
    * Renders a sprite to the screen at the given coordinates. If fixed is set to true the sprite will be rendered at a specific location on the map otherwise the coordinates will be in relation to the screen.
    * @param gl Instance of the GL2 class.
    * @param xp X position to start rendering of the sprite.

@@ -203,6 +203,20 @@ public class Sprite {
       e.printStackTrace();
     }
   }
+  /**
+   * Creates a scaled sprite from an existing one based on a percentage value.
+   * @param original The original sprite to form the new sprite from.
+   * @param percentage Percentage to scale new image range from 1.0 and up
+   */
+  public Sprite(Sprite original, double percentage) {
+    this.width = (int)(original.getWidth() * (percentage / 100.0));
+    System.out.println(width);
+    System.out.println(original.getWidth());
+    this.height = (int)(original.getHeight() * (percentage / 100.0));
+    this.rawWidth = original.getWidth();
+    this.rawHeight = original.getHeight();
+    this.pixels = original.getPixels();
+  }
   
   public Sprite(Sprite original, int renderSize) {
     this.width = renderSize;

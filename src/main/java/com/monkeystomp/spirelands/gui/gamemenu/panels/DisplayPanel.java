@@ -36,7 +36,6 @@ public class DisplayPanel {
   private final DisplayView itemsView = new ItemsView();
   private final DisplayView weaponView = new WeaponView();
   private final DisplayView armorView = new ArmorView(); 
-  // private final DisplayPanelView MAGIC_VIEW = new DisplayPanelView();
   private DisplayView currentView;
   private final ICallback IViewChanged;
   private String nextViewKey;

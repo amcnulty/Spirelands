@@ -55,7 +55,7 @@ public class GameMenuSecondaryButton extends Button {
   }
   
   private void setFontInfo() {
-    Rectangle2D rect = GameFonts.getGameMenuPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    Rectangle2D rect = GameFonts.getlightText_bold_23().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;

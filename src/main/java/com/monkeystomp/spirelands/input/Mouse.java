@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.input;
 
+import com.monkeystomp.spirelands.graphics.Screen;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
