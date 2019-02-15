@@ -36,6 +36,10 @@ public class SpriteSheet {
    */
   public static SpriteSheet weaponsSheet = new SpriteSheet("./resources/textures/sheets/weapons_sheet.png");
   /**
+   * A collection of gui elements for the settings screen.
+   */
+  public static SpriteSheet settingsGuiSheet = new SpriteSheet("./resources/gui/settings_controls.png");
+  /**
    * Creates a SpriteSheet of the given path.
    * @param path - Path to the sprite sheet resource.
    */

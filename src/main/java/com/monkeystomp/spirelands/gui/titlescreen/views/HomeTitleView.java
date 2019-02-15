@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.view.LevelView;
@@ -15,15 +16,15 @@ import java.util.function.Consumer;
  */
 public class HomeTitleView extends TitleView {
   
-  private final Sprite buttonBackdrop = new Sprite(120, 100, 0xDDFFFFFF);
+  private final Sprite buttonBackdrop = new Sprite(120, 100, GameColors.TITLE_SCREEN_MENU_BACKDROP);
   private final PrimaryButton newGameButton,
                               loadGameButton,
                               settingsButton,
                               exitButton;
   private final int spaceBetweenButtons = 12;
   
-  public HomeTitleView(Consumer<LevelView> ILevelViewSetter) {
-    super(ILevelViewSetter);
+  public HomeTitleView(Consumer<LevelView> ILevelViewSetter, Consumer<TitleView> ITitleViewSetter, Consumer<Float> IVolumeSetter) {
+    super(ILevelViewSetter, ITitleViewSetter, IVolumeSetter);
     newGameButton = new PrimaryButton("New Game", Screen.getWidth() / 2, Screen.getHeight() / 2 - 29, 60, 15, () -> handleStartButtonClick());
     loadGameButton = new PrimaryButton("Load Game", Screen.getWidth() / 2, newGameButton.getBottom() + spaceBetweenButtons, 60, 15, () -> handleLoadClick());
     settingsButton = new PrimaryButton("Settings", Screen.getWidth() / 2, loadGameButton.getBottom() + spaceBetweenButtons, 60, 15, () -> handleSettingsClick());
@@ -45,7 +46,7 @@ public class HomeTitleView extends TitleView {
   }
   
   private void handleSettingsClick() {
-    
+    ITitleViewSetter.accept(new SettingsView(ILevelViewSetter, ITitleViewSetter, IVolumeSetter));
   }
   
   private void handleExitClick() {

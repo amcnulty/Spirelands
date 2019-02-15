@@ -4,7 +4,7 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.FloatControl;
 
 /**
  * <p>
@@ -83,6 +83,7 @@ public class Music {
       clip.open(ais);
       clip.loop(Clip.LOOP_CONTINUOUSLY);
       ais.close();
+//      setVolume();
       clip.start();
     }
     catch (Exception e) {
@@ -119,6 +120,14 @@ public class Music {
       clip.start();
       clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
+  }
+  
+  public void setVolume(float volume) {
+    System.out.println("setting volume");
+    FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+    float range = control.getMaximum() - control.getMinimum();
+    float gain = (range * volume) + control.getMinimum();
+    control.setValue(gain);
   }
   
   public boolean isPlaying() {

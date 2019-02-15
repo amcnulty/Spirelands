@@ -4,6 +4,7 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 
 /**
@@ -146,6 +147,16 @@ public class SoundEffects {
       clip = AudioSystem.getClip();
       clip.open(ais);
       ais.close();
+      
+      
+      // volume settings
+      FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+      float range = control.getMaximum() - control.getMinimum();
+      // volume from settings
+      float volume = 1f;
+      float gain = (range * volume) + control.getMinimum();
+      control.setValue(gain);
+      
       clip.start();
       clip.addLineListener((LineEvent e) -> {
         if (e.getType() == LineEvent.Type.STOP){

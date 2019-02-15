@@ -133,6 +133,10 @@ public class GameColors {
    */
   public static final int DIALOG_BOX_BACKGROUND = 0xFFEFEFEF;
   /**
+   * Backdrop color for the title screen menus #0xDDFFFFFF
+   */
+  public static final int TITLE_SCREEN_MENU_BACKDROP = 0xDDFFFFFF;
+  /**
    *        !!########################################!!
    *        !!                                        !!
    *        !!              Font Colors               !!

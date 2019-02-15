@@ -25,7 +25,11 @@ public class TitleScreen extends GameView {
               backgroundY = 0,
               deltaX = 0,
               deltaY = 0;
-  private TitleView currentView = new HomeTitleView(levelView -> viewManager.changeView(levelView));
+  private TitleView currentView = new HomeTitleView(
+    levelView -> viewManager.changeView(levelView),
+    titleView -> changeTitleView(titleView),
+    volume -> music.setVolume(volume)
+  );
   
   public TitleScreen() {
     startMusic();

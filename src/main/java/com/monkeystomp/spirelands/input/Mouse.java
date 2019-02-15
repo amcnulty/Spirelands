@@ -91,6 +91,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
     mouseY = e.getY();
     mouseB = e.getButton();
     callMouseListeners(e);
+//    System.out.println("X: " + mouseX / Screen.getScaleX() + " Y: " + mouseY / Screen.getScaleY());
   }
   /**
    * {@inheritDoc}
