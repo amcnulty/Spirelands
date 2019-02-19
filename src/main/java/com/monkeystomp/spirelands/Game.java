@@ -151,7 +151,7 @@ public class Game extends GLCanvas implements Runnable {
   
   private Image loadImage() {
     try {
-      return ImageIO.read(new File("./resources/gui/cursor.png"));
+      return ImageIO.read(new File("./resources/gui/fantasy_cursor.png"));
     }
     catch (IOException e) {
       e.printStackTrace();

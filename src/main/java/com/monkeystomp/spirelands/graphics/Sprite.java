@@ -122,6 +122,18 @@ public class Sprite {
    */
   public static final Sprite GAME_MENU_RIGHT_ARROW = new Sprite("./resources/gui/arrow.png");
   /**
+   * The hand cursor.
+   */
+  public static final Sprite HAND_CURSOR = new Sprite(new Sprite("./resources/gui/hand_cursor.png"), 16);
+  /**
+   * The white cursor.
+   */
+  public static final Sprite WHITE_CURSOR = new Sprite(new Sprite("./resources/gui/white_cursor.png"), 16);
+  /**
+   * The fantasy cursor.
+   */
+  public static final Sprite FANTASY_CURSOR = new Sprite(new Sprite("./resources/gui/fantasy_cursor.png"), 16);
+  /**
    * Creates a Sprite object of equal width and height from a specific point cut from a sprite sheet.
    * @param rawSize The width and height in pixels of the sprite to cut from the given sprite sheet. This is the size of the sprite on the sheet.
    * @param renderSize The size to render this sprite at. This will set the width and height of the sprite.
