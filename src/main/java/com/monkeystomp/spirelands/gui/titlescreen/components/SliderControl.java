@@ -88,6 +88,7 @@ public class SliderControl {
     }
     displayValue = (int)(controlValue * 100);
     controlValue = (double)(thumbX + 4 - leftBound) / (double)(rightBound - leftBound);
+    if (controlValue > 1) controlValue = 1;
   }
   
   public void setValue(float value) {
@@ -99,6 +100,7 @@ public class SliderControl {
     }
     displayValue = (int)(controlValue * 100);
     controlValue = (double)(thumbX + 4 - leftBound) / (double)(rightBound - leftBound);
+    if (controlValue > 1) controlValue = 1;
     IValueSetter.accept((float)controlValue);
   }
   

@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.audio;
 
+import com.monkeystomp.spirelands.settings.SettingsManager;
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -83,7 +84,7 @@ public class Music {
       clip.open(ais);
       clip.loop(Clip.LOOP_CONTINUOUSLY);
       ais.close();
-//      setVolume();
+      setVolume(SettingsManager.getSettingsManager().getMusicVolume());
       clip.start();
     }
     catch (Exception e) {
@@ -123,7 +124,6 @@ public class Music {
   }
   
   public void setVolume(float volume) {
-    System.out.println("setting volume");
     FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
     float range = control.getMaximum() - control.getMinimum();
     float gain = (range * volume) + control.getMinimum();

@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.audio;
 
+import com.monkeystomp.spirelands.settings.SettingsManager;
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -153,7 +154,7 @@ public class SoundEffects {
       FloatControl control = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
       float range = control.getMaximum() - control.getMinimum();
       // volume from settings
-      float volume = 1f;
+      float volume = SettingsManager.getSettingsManager().getSfxVolume();
       float gain = (range * volume) + control.getMinimum();
       control.setValue(gain);
       

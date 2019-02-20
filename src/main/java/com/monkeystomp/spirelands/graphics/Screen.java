@@ -45,7 +45,7 @@ public class Screen {
    * @param scaleX The horizontal scaling factor to size the final screen.
    * @param scaleY The vertical scaling factor to size the final screen.
    */
-  public Screen(int width, int height, int scaleX, int scaleY) {
+  public Screen(int width, int height, float scaleX, float scaleY) {
     this.width = width;
     this.height = height;
     this.scaleX = scaleX;

@@ -12,6 +12,7 @@ import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.settings.SettingsManager;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
@@ -26,7 +27,7 @@ import javax.swing.JFrame;
  */
 public class Game extends GLCanvas implements Runnable {
   
-  private JFrame frame;
+  private static JFrame frame;
   private boolean running;
   private Thread thread;
   private String  title = "Spirelands";
@@ -34,21 +35,25 @@ public class Game extends GLCanvas implements Runnable {
               height = width * 9 / 16,
               updatesPerSecond = 60,
               framesPerSecond = 90;
-  private int scaleX = 3,
-              scaleY = 3;
+  private float scaleX = 3,
+                scaleY = 3;
   private Screen screen;
   private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = Mouse.getMouse();
-  private Cursor cursor;
   
   private ViewManager view = ViewManager.getViewManager();
+  private static final SettingsManager settingsManager = SettingsManager.getSettingsManager();
 
   private Game(GLCapabilities caps) {
     super(caps);
     // Create the window.
     frame = new JFrame();
     // Set the window size.
-    setSize(width * scaleX, height * scaleY);
+    if (!settingsManager.isFullScreen()) {
+      scaleX = settingsManager.getWidth() / (float)width;
+      scaleY = settingsManager.getHeight() / (float)height;
+    }
+    setSize((int)(width * scaleX), (int)(height * scaleY));
     // Set the title
     frame.setTitle(title);
     // Create the screen
@@ -145,18 +150,25 @@ public class Game extends GLCanvas implements Runnable {
     manager.addToInventory(Item.KINGS_SHIELD);
     
     
-    
-    frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
+    if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor(); 
   }
   
-  private Image loadImage() {
+  private static Image loadImage() {
     try {
-      return ImageIO.read(new File("./resources/gui/fantasy_cursor.png"));
+      return ImageIO.read(new File(SettingsManager.getSettingsManager().getPathToCursor()));
     }
     catch (IOException e) {
       e.printStackTrace();
     }
     return null;
+  }
+  
+  public static void setCursor() {
+    frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
+  }
+  
+  public static void setDefaultCursor() {
+    frame.getContentPane().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
   }
 
   private synchronized void start() {
@@ -236,15 +248,19 @@ public class Game extends GLCanvas implements Runnable {
     GLCapabilities caps = new GLCapabilities(glp);
     Game game = new Game(caps);
     
-//    game.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-//    game.frame.setUndecorated(true);
-    game.frame.setResizable(true);
+    if (settingsManager.isFullScreen()) {
+      game.frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+      game.frame.setUndecorated(true);
+    }
+    game.frame.setResizable(false);
     game.frame.add(game);
     game.frame.pack();
     game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     game.frame.setLocationRelativeTo(null);
     game.frame.setVisible(true);
     game.requestFocus();
+    
+//    (new TitleScreen()).setView();
     
     game.start();
   }
