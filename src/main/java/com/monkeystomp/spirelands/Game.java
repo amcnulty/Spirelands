@@ -150,7 +150,8 @@ public class Game extends GLCanvas implements Runnable {
     manager.addToInventory(Item.KINGS_SHIELD);
     
     
-    if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor(); 
+    if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor();
+    setIconImage();
   }
   
   private static Image loadImage() {
@@ -165,6 +166,16 @@ public class Game extends GLCanvas implements Runnable {
   
   public static void setCursor() {
     frame.getContentPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(loadImage(), new Point(0, 0), "my custom cursor"));
+  }
+  
+  private void setIconImage() {
+    try {
+      Image icon = ImageIO.read(Game.class.getResource("/icon/icon_image_clouds.png"));
+      frame.setIconImage(icon);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   
   public static void setDefaultCursor() {

@@ -18,7 +18,7 @@ import java.awt.Color;
 public class TitleScreen extends GameView {
 
   private final Sprite titleScreenBackground = new Sprite("./resources/backgrounds/title_screen.jpg");
-  private final Sprite logo = new Sprite(new Sprite("./resources/logo/spirelands_logo.png"), 25.0);
+  private final Sprite logo = new Sprite(new Sprite("./resources/logo/spirelands_logo_new.png"), 25.0);
   private final FontInfo copyright = GameFonts.getPrimaryButtonText();
   private final Music music = new Music();
   private float backgroundX = 0,
