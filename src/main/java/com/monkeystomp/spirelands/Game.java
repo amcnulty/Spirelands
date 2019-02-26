@@ -13,6 +13,7 @@ import com.monkeystomp.spirelands.graphics.EventListener;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.settings.SettingsManager;
+import com.monkeystomp.spirelands.view.BrandView;
 import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.Point;
@@ -61,7 +62,8 @@ public class Game extends GLCanvas implements Runnable {
     // Add GL event listner
     addGLEventListener(new EventListener(screen, (GL2)getGL()));
     // Start the title screen.
-    (new TitleScreen()).setView();
+    (new BrandView()).setView();
+//    (new TitleScreen()).setView();
 
     addKeyListener(key);
     addMouseListener(mouse);
@@ -270,8 +272,6 @@ public class Game extends GLCanvas implements Runnable {
     game.frame.setLocationRelativeTo(null);
     game.frame.setVisible(true);
     game.requestFocus();
-    
-//    (new TitleScreen()).setView();
     
     game.start();
   }

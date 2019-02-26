@@ -24,7 +24,11 @@ import javax.sound.sampled.LineEvent;
  */
 public class SoundEffects {
   /**
-   * The sound of birds chirping;
+   * Monkey stomp sound.
+   */
+  public static final File MONKEY_STOMP_SOUND = new File("./resources/audio/sfx/monkey_stomp_sound.wav");
+  /**
+   * The sound of birds chirping.
    */
   public static final File BIRDS_CHIRPING = new File("./resources/audio/sfx/birds_chirping.wav");
   /**

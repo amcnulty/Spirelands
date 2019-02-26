@@ -60,8 +60,8 @@ public class Screen {
    * Renders the title screen background.
    * @param gl Instance of the GL2 class.
    */
-  public void renderTitleScreenBackground(GL2 gl) {
-    gl.glColor4f(1, 0, 0, 1);
+  public void renderBlackBackground(GL2 gl) {
+    gl.glColor4f(0, 0, 0, 1);
     gl.glBegin(GL2.GL_QUADS);
       gl.glVertex2f(0, 0);
       gl.glVertex2f(width, 0);
@@ -186,6 +186,46 @@ public class Screen {
     gl.glEnd();
 //    gl.glFlush();
     gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+  }
+  /**
+   * Renders a sprite to the screen at the given coordinates with a set alpha transparency. If fixed is set to true the sprite will be rendered at a specific location on the map otherwise the coordinates will be in relation to the screen.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param alpha The transparency to be applied over the whole sprite.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   * @param scale The scale to render this sprite. Values of 1 are 100%, .5 50% etc.
+   */
+  public void renderSprite(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed, float scale) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    
+    gl.glPushMatrix();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, alpha);
+    gl.glLoadIdentity();
+    gl.glTranslatef(xp + sprite.getWidth() / 2, yp + sprite.getHeight() / 2, 0);
+    gl.glScalef(scale, scale, 1);
+    gl.glTranslatef(-xp - sprite.getWidth() / 2, -yp - sprite.getHeight() / 2, 0);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+    gl.glPopMatrix();
   }
   /**
    * Binds the tile texture. This is best called just before rendering all of the tiles so each tile render doesn't require rebinding with another resource.
