@@ -4,10 +4,11 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.input.Mouse;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.function.Consumer;
 import javax.imageio.ImageIO;
 
 /**
@@ -16,43 +17,76 @@ import javax.imageio.ImageIO;
  */
 public class BrandView extends GameView {
   
-  private Sprite foot;
-  private float scale = 1.5f,
-                step = .5f / 20;
-  private int delay = 0;
+  private Sprite  foot,
+                  impactFoot,
+                  currentFoot;
+  private float startingScale = 3f,
+                scale = startingScale,
+                endingScale = 1f;
+  private double  animationDuration = 24.0,
+                  animationFrame = 0.0;
+  private int ticks = 0,
+              animationDelay = 120,
+              impactTime = 8,
+              totalViewLength = 300;
   private boolean animating = false;
+  private final Consumer<MouseEvent> listener = event -> exitView();
   private SoundEffects SFX = new SoundEffects();
 
   public BrandView() {
     try {
       BufferedImage footImg = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot.png"));
-      int[] pixels = new int[468 * 593];
-      footImg.getRGB(0, 0, 468, 593, pixels, 0, 468);
-      foot = new Sprite(new Sprite(pixels, 468, 593), 100);
-    } catch (IOException ex) {
-      Logger.getLogger(BrandView.class.getName()).log(Level.SEVERE, null, ex);
+      int[] pixels = new int[667 * 615];
+      footImg.getRGB(0, 0, 667, 615, pixels, 0, 667);
+      foot = new Sprite(new Sprite(pixels, 667, 615), 100);
+      footImg = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot_impact.png"));
+      footImg.getRGB(0, 0, 667, 615, pixels, 0, 667);
+      impactFoot = new Sprite(new Sprite(pixels, 667, 615), 100);
+      currentFoot = foot;
+    } catch (IOException e) {
+      e.printStackTrace();
     }
+    Mouse.getMouse().addMouseClickListener(listener);
+  }
+  
+  private void exitView() {
+    (new TitleScreen()).setView();
+  }
+  
+  private void updateAnimation() {
+    if (ticks == animationDelay) {
+      animating = true;
+      SFX.playSoundEffect(SoundEffects.MONKEY_STOMP_SOUND);
+    }
+    if (animating) {
+      if (animationFrame <= animationDuration) scale = startingScale - ((startingScale - endingScale) * (float)(Math.pow(animationFrame++ / animationDuration, 3.0)));
+      else if (ticks == animationDelay + animationFrame) currentFoot = impactFoot;
+      else if (ticks == animationDelay + animationFrame + impactTime) currentFoot = foot;
+    }
+    if (ticks == totalViewLength) {
+//      Uncomment to loop beginning animation.
+//      scale = startingScale;
+//      animationFrame = 0.0;
+//      ticks = 0;
+//      animating = false;
+    exitView();
+    }
+    ticks++;
+  }
+  
+  @Override
+  public void leaveView() {
+    Mouse.getMouse().removeMouseClickListener(listener);
   }
   
   @Override
   public void update() {
-    if (delay++ > 120 && !animating) {
-      animating = true;
-      if (delay == 122) SFX.playSoundEffect(SoundEffects.MONKEY_STOMP_SOUND);
-    }
-    if (animating) {
-      scale -= step;
-      if (scale <= 1) {
-        scale = 1;
-        animating = false;
-      }
-    }
-    if (delay == 300) (new TitleScreen()).setView();
+    updateAnimation();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
     screen.renderBlackBackground(gl);
-    if (animating || delay > 120) screen.renderSprite(gl, Screen.getWidth() / 2 - foot.getWidth() / 2, Screen.getHeight() / 2 - foot.getHeight() / 2, foot, 1, false, scale);
+    if (animating || ticks > 120) screen.renderSprite(gl, Screen.getWidth() / 2 - currentFoot.getWidth() / 2, Screen.getHeight() / 2 - currentFoot.getHeight() / 2, currentFoot, 1, false, scale);
   }
 }
