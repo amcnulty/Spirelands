@@ -56,8 +56,8 @@ public class Mouse implements MouseListener, MouseMotionListener {
   }
   
   private void callMouseListeners(MouseEvent e) {
-    for (Consumer<MouseEvent> listener: mouseListeners) {
-      listener.accept(e);
+    for (int i = 0; i < mouseListeners.size(); i++) {
+      mouseListeners.get(i).accept(e);
     }
   }
   /**

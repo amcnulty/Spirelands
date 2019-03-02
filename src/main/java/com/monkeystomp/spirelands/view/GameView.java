@@ -13,7 +13,15 @@ public class GameView {
 
   public GameView() {
   }
-  
+  /**
+   * Used to change view when there is an existing view in place.
+   */
+  public void changeView() {
+    viewManager.changeView(this);
+  }
+  /**
+   * Used to set a view for the first time.
+   */
   public void setView() {
     viewManager.setView(this);
   }

@@ -19,7 +19,9 @@ public class BrandView extends GameView {
   
   private Sprite  foot,
                   impactFoot,
-                  currentFoot;
+                  currentFoot,
+                  monkeyStomp,
+                  games;
   private float startingScale = 3f,
                 scale = startingScale,
                 endingScale = 1f;
@@ -35,14 +37,24 @@ public class BrandView extends GameView {
 
   public BrandView() {
     try {
-      BufferedImage footImg = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot.png"));
+      BufferedImage img = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot.png"));
       int[] pixels = new int[667 * 615];
-      footImg.getRGB(0, 0, 667, 615, pixels, 0, 667);
+      img.getRGB(0, 0, 667, 615, pixels, 0, 667);
       foot = new Sprite(new Sprite(pixels, 667, 615), 100);
-      footImg = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot_impact.png"));
-      footImg.getRGB(0, 0, 667, 615, pixels, 0, 667);
+      img = ImageIO.read(BrandView.class.getResource("/intro/monkey_foot_impact.png"));
+      img.getRGB(0, 0, 667, 615, pixels, 0, 667);
       impactFoot = new Sprite(new Sprite(pixels, 667, 615), 100);
       currentFoot = foot;
+      
+      pixels = new int[6565 * 789];
+      img = ImageIO.read(BrandView.class.getResource("/intro/monkey_stomp.png"));
+      img.getRGB(0, 0, 6565, 789, pixels, 0, 6565);
+      monkeyStomp = new Sprite(new Sprite(pixels, 6565, 789), 6.0);
+      
+      pixels = new int[2975 * 789];
+      img = ImageIO.read(BrandView.class.getResource("/intro/games.png"));
+      img.getRGB(0, 0, 2975, 789, pixels, 0, 2975);
+      games = new Sprite(new Sprite(pixels, 2975, 789), 6.0);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -50,7 +62,7 @@ public class BrandView extends GameView {
   }
   
   private void exitView() {
-    (new TitleScreen()).setView();
+    (new TitleScreen()).changeView();
   }
   
   private void updateAnimation() {
@@ -69,7 +81,7 @@ public class BrandView extends GameView {
 //      animationFrame = 0.0;
 //      ticks = 0;
 //      animating = false;
-    exitView();
+      exitView();
     }
     ticks++;
   }
@@ -88,5 +100,8 @@ public class BrandView extends GameView {
   public void render(Screen screen, GL2 gl) {
     screen.renderBlackBackground(gl);
     if (animating || ticks > 120) screen.renderSprite(gl, Screen.getWidth() / 2 - currentFoot.getWidth() / 2, Screen.getHeight() / 2 - currentFoot.getHeight() / 2, currentFoot, 1, false, scale);
+    screen.renderSprite(gl, Screen.getWidth() / 2 - monkeyStomp.getWidth() / 2, 10, monkeyStomp, false);
+    screen.renderSprite(gl, Screen.getWidth() / 2 - games.getWidth() / 2, Screen.getHeight() - 50, games, false);
   }
+  
 }

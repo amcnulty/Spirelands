@@ -9,7 +9,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
  */
 public class ViewManager {
   
-  private static ViewManager instance = new ViewManager();
+  private static final ViewManager INSTANCE = new ViewManager();
 
   private GameView view;
 
@@ -17,7 +17,7 @@ public class ViewManager {
   }
 
   public static ViewManager getViewManager() {
-    return instance;
+    return INSTANCE;
   }
   
   public void update() {
@@ -27,12 +27,18 @@ public class ViewManager {
   public void render(Screen screen, GL2 gl) {
     view.render(screen, gl);
   }
-  
+  /**
+   * Method used to change to a new view. This will call leaveView() lifecycle method.
+   * @param newView The view to change to.
+   */
   public void changeView(GameView newView) {
     view.leaveView();
     setView(newView);
   }
-  
+  /**
+   * Used to set a view for the first time on game startup. WARNING! DO NOT CALL THIS METHOD DIRECTLY USE changeView() INSTEAD.
+   * @param view The view to set as the current view.
+   */
   public void setView(GameView view) {
     this.view = view;
   }
