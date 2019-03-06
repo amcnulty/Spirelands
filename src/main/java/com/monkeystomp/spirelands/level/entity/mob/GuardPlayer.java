@@ -4,11 +4,14 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.input.GameController;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
+import net.java.games.input.Event;
 
 /**
  *
@@ -18,6 +21,7 @@ public class GuardPlayer extends Player {
   
   private String currentAction = "STANDING_2";
   private short anim = 0;
+  private GameController gameController = GameController.getGameController();
   
   private final int PLAYER_WALKING_SPEED = 1,
                     PLAYER_RUNNING_SPEED = 2,
@@ -31,12 +35,14 @@ public class GuardPlayer extends Player {
               animMax = walkingSteps * framesPerStep - 2;
   private Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
   private INotify notifier = (KeyEvent e) -> handleSpaceKeyPress(e);
+  private Consumer<Event> constrollerListener = (Event e) -> handleControllerPress(e);
   private Bounds quad = new Bounds();
   
   public GuardPlayer(int x, int y) {
     super(x, y);
     setBounds();
     Keyboard.getKeyboard().addKeyPressNotifier(notifier);
+    gameController.addControllerListener(constrollerListener);
   }
   
   @Override
@@ -97,10 +103,17 @@ public class GuardPlayer extends Player {
   }
   
   private void handleSpaceKeyPress(KeyEvent e) {
-    if (e.getKeyCode() == Keyboard.SPACE_KEY) {
+    if (e.getKeyCode() == Keyboard.SPACE_KEY) fireActionButton();
+  }
+  
+  private void handleControllerPress(Event e) {
+    if (e.getComponent().getName().equals("Button 1")) fireActionButton();
+  }
+  
+  private void fireActionButton() {
       if (level.getDialogOpen()) level.getDialogBox().handleSpaceKey();
       else checkForInteractableEntities();
-    }
+    
   }
   
   private void checkForInteractableEntities() {
@@ -151,14 +164,21 @@ public class GuardPlayer extends Player {
     xDir = 0;
     yDir = 0;
     playerVelocity = Keyboard.isKeyPressed(Keyboard.LEFT_SHIFT_KEY) ? PLAYER_RUNNING_SPEED : PLAYER_WALKING_SPEED;
+    playerVelocity = gameController.getR1() == 1 ? PLAYER_RUNNING_SPEED : PLAYER_WALKING_SPEED;
     if (Keyboard.isKeyPressed(Keyboard.A_KEY) || Keyboard.isKeyPressed(Keyboard.LEFT_KEY)) xDir -= playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.D_KEY) || Keyboard.isKeyPressed(Keyboard.RIGHT_KEY)) xDir += playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.W_KEY) || Keyboard.isKeyPressed(Keyboard.UP_KEY)) yDir -= playerVelocity;
     if (Keyboard.isKeyPressed(Keyboard.S_KEY) || Keyboard.isKeyPressed(Keyboard.DOWN_KEY)) yDir += playerVelocity;
+    if (gameController.getXAxis() != 0) xDir = gameController.getXAxis() * playerVelocity;
+    if (gameController.getYAxis() != 0) yDir = gameController.getYAxis() * playerVelocity;
     // If moving call move method.
     if (xDir != 0 || yDir != 0) move(xDir, yDir, moveBounds);
     // Else not moving.
     else walking = false;
+  }
+  
+  private void checkControllerActions() {
+    
   }
   /**
    * Sets the currentAction string based on action requirements. Movement, fighting, injured etc.
@@ -206,6 +226,7 @@ public class GuardPlayer extends Player {
     if (anim > animMax) anim = 0;
     else anim++;
     checkMovementInput();
+    checkControllerActions();
     setCurrentAction();
     checkForPortals();
     updateBounds();

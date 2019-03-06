@@ -7,9 +7,9 @@ import com.jogamp.opengl.awt.GLCanvas;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.input.Mouse;
-import com.monkeystomp.spirelands.view.TitleScreen;
 import com.monkeystomp.spirelands.view.ViewManager;
 import com.monkeystomp.spirelands.graphics.EventListener;
+import com.monkeystomp.spirelands.input.GameController;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.settings.SettingsManager;
@@ -20,6 +20,9 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import static java.lang.System.setProperty;
+import java.lang.reflect.Field;
+import java.nio.file.Paths;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 /**
@@ -41,6 +44,7 @@ public class Game extends GLCanvas implements Runnable {
   private Screen screen;
   private Keyboard key = Keyboard.getKeyboard();
   private Mouse mouse = Mouse.getMouse();
+  private GameController gameController = GameController.getGameController();
   
   private ViewManager view = ViewManager.getViewManager();
   private static final SettingsManager settingsManager = SettingsManager.getSettingsManager();
@@ -244,6 +248,7 @@ public class Game extends GLCanvas implements Runnable {
   private void update() {
     // Update the view.
     view.update();
+    gameController.update();
   }
   /**
    * Handles rendering to the window.
@@ -251,6 +256,17 @@ public class Game extends GLCanvas implements Runnable {
   private void render() {
     // Display the GLCanvas
     display();
+  }
+  static {
+    setProperty("java.library.path", Paths.get("lib").toAbsolutePath().toString());
+    try {
+      Field fieldSysPath = ClassLoader.class.getDeclaredField( "sys_paths" );
+      fieldSysPath.setAccessible( true );
+      fieldSysPath.set( null, null );
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   /**
    * The main method of the application.
