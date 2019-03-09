@@ -8,7 +8,7 @@ import net.java.games.input.ControllerEnvironment;
 import net.java.games.input.Event;
 
 /**
- *
+ * Class for handling game controller input.
  * @author Aaron Michael McNulty
  */
 public class GameController {
@@ -77,7 +77,6 @@ public class GameController {
       if (component.getName().equals("Button 1")) x = Math.abs(component.getPollData() - component.getDeadZone()) > .5f ? (int)Math.ceil(component.getPollData()) : 0;
       if (component.getName().equals("Button 9")) start = Math.abs(component.getPollData() - component.getDeadZone()) > .5f ? (int)Math.ceil(component.getPollData()) : 0;
       if (Math.abs(component.getPollData() - component.getDeadZone()) > .5f) {
-//        System.out.println(component.getName());
         if (component.getName().equals("Button 5") && r1 == 1) {
           Event event = new Event();
           event.set(component, 1f, System.nanoTime());

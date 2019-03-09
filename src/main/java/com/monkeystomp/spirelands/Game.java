@@ -248,7 +248,6 @@ public class Game extends GLCanvas implements Runnable {
   private void update() {
     // Update the view.
     view.update();
-    gameController.update();
   }
   /**
    * Handles rendering to the window.
@@ -257,6 +256,7 @@ public class Game extends GLCanvas implements Runnable {
     // Display the GLCanvas
     display();
   }
+  // Set property for lib folder with third party libraries.
   static {
     setProperty("java.library.path", Paths.get("lib").toAbsolutePath().toString());
     try {
