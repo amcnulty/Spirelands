@@ -5,7 +5,6 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.character.Character;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * The Item class holds information about game items and has an interface for interacting with the inventory for the item.

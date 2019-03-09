@@ -1,6 +1,7 @@
 .gradle
 /build/
 /distributions/
+/lib/META-INF/
 
 # Ignore Gradle GUI config
 gradle-app.setting

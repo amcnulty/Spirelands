@@ -42,7 +42,7 @@ public class HomeTitleView extends TitleView {
   }
   
   private void handleLoadClick() {
-    
+    ITitleViewSetter.accept(new LoadGameView(ILevelViewSetter, ITitleViewSetter, IVolumeSetter));
   }
   
   private void handleSettingsClick() {
@@ -52,6 +52,9 @@ public class HomeTitleView extends TitleView {
   private void handleExitClick() {
     System.exit(0);
   }
+  
+  @Override
+  public void exitingView() {}
   
   @Override
   public void update() {
