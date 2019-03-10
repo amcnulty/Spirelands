@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -13,21 +14,21 @@ import org.json.simple.parser.JSONParser;
  */
 public class CharacterManager {
   
-  private ArrayList<Character> gameCharacters = new ArrayList<>();
-  private ArrayList<Character> partyCharacters = new ArrayList<>();
-  private JSONObject json;
-  private JSONParser parser = new JSONParser();
+  private final ArrayList<Character> gameCharacters = new ArrayList<>();
+  private final ArrayList<Character> partyCharacters = new ArrayList<>();
+  private JSONObject characterBaseInformation;
+  private final JSONParser parser = new JSONParser();
   
   private static final CharacterManager INSTANCE = new CharacterManager();
   
   private CharacterManager() {
     loadJSON();
-    createCharacters();
+    createCharacters(SaveDataManager.getSaveDataManager().getCharacters());
   }
   
   private void loadJSON() {
     try {
-      json = (JSONObject) parser.parse(new FileReader(getClass().getResource("/gameData/characters/characters.json").getFile()));
+      characterBaseInformation = (JSONObject) parser.parse(new FileReader(getClass().getResource("/gameData/characters/characters.json").getFile()));
     }
     catch (Exception e) {
       e.printStackTrace();
@@ -41,48 +42,53 @@ public class CharacterManager {
     return INSTANCE;
   }
   
-  private void createCharacters() {
-    Set<?> keys = json.keySet();
+  private void createCharacters(JSONObject characterDetails) {
+    Set<?> keys = characterBaseInformation.keySet();
     keys.forEach((key) -> {
-      Character character = setupCharacter((JSONObject)json.get(key));
+      Character character = setupCharacter((JSONObject)characterBaseInformation.get(key), (JSONObject)characterDetails.get(key));
       gameCharacters.add(character);
-      if ((boolean)((JSONObject)((JSONObject)json.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(character);
+      if ((boolean)((JSONObject)((JSONObject)characterDetails.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(character);
     });
     
   }
   
-  private Character setupCharacter(JSONObject data) {
+  private Character setupCharacter(JSONObject baseInfo, JSONObject detailInfo) {
     Character character = new Character();
-    JSONObject details = (JSONObject)data.get("details");
-    JSONObject stats = (JSONObject)data.get("stats");
-    character.setName((String)details.get("name"));
-    character.setThumbnail(new Sprite((String)details.get("thumbnail")));
-    character.setWeaponType((String)details.get("weaponType"));
-    character.setLevel(Integer.parseInt(stats.get("level").toString()));
-    character.setExperience(Integer.parseInt(stats.get("experience").toString()));
-    character.setHealth(Integer.parseInt(stats.get("health").toString()));
-    character.setHealthMax(Integer.parseInt(stats.get("healthMax").toString()));
-    character.setHealthWeight((String)stats.get("healthWeight"));
-    character.setMana(Integer.parseInt(stats.get("mana").toString()));
-    character.setManaMax(Integer.parseInt(stats.get("manaMax").toString()));
-    character.setManaWeight((String)stats.get("manaWeight"));
-    character.setStrength(Integer.parseInt(stats.get("strength").toString()));
-    character.setStrengthWeight((String)stats.get("strengthWeight"));
-    character.setDefense(Integer.parseInt(stats.get("defense").toString()));
-    character.setDefenseWeight((String)stats.get("defenseWeight"));
-    character.setIntellect(Integer.parseInt(stats.get("intellect").toString()));
-    character.setIntellectWeight((String)stats.get("intellectWeight"));
-    character.setSpirit(Integer.parseInt(stats.get("spirit").toString()));
-    character.setSpiritWeight((String)stats.get("spiritWeight"));
-    character.setSpeed(Integer.parseInt(stats.get("speed").toString()));
-    character.setSpeedWeight((String)stats.get("speedWeight"));
-    character.setLuck(Integer.parseInt(stats.get("luck").toString()));
-    character.setLuckWeight((String)stats.get("luckWeight"));
+    JSONObject baseDetails = (JSONObject)baseInfo.get("details");
+    JSONObject baseStats = (JSONObject)baseInfo.get("stats");
+    JSONObject detailStats = (JSONObject)detailInfo.get("stats");
+    character.setName((String)baseDetails.get("name"));
+    character.setThumbnail(new Sprite((String)baseDetails.get("thumbnail")));
+    character.setWeaponType((String)baseDetails.get("weaponType"));
+    character.setLevel(Integer.parseInt(detailStats.get("level").toString()));
+    character.setExperience(Integer.parseInt(detailStats.get("experience").toString()));
+    character.setHealth(Integer.parseInt(detailStats.get("health").toString()));
+    character.setHealthMax(Integer.parseInt(detailStats.get("healthMax").toString()));
+    character.setHealthWeight((String)baseStats.get("healthWeight"));
+    character.setMana(Integer.parseInt(detailStats.get("mana").toString()));
+    character.setManaMax(Integer.parseInt(detailStats.get("manaMax").toString()));
+    character.setManaWeight((String)baseStats.get("manaWeight"));
+    character.setStrength(Integer.parseInt(detailStats.get("strength").toString()));
+    character.setStrengthWeight((String)baseStats.get("strengthWeight"));
+    character.setDefense(Integer.parseInt(detailStats.get("defense").toString()));
+    character.setDefenseWeight((String)baseStats.get("defenseWeight"));
+    character.setIntellect(Integer.parseInt(detailStats.get("intellect").toString()));
+    character.setIntellectWeight((String)baseStats.get("intellectWeight"));
+    character.setSpirit(Integer.parseInt(detailStats.get("spirit").toString()));
+    character.setSpiritWeight((String)baseStats.get("spiritWeight"));
+    character.setSpeed(Integer.parseInt(detailStats.get("speed").toString()));
+    character.setSpeedWeight((String)baseStats.get("speedWeight"));
+    character.setLuck(Integer.parseInt(detailStats.get("luck").toString()));
+    character.setLuckWeight((String)baseStats.get("luckWeight"));
     return character;
   }
   
   public ArrayList<Character> getPartyMembers() {
     return partyCharacters;
+  }
+  
+  public ArrayList<Character> getCharacters() {
+    return gameCharacters;
   }
 
 }

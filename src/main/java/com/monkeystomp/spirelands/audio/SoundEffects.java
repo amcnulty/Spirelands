@@ -1,6 +1,6 @@
 package com.monkeystomp.spirelands.audio;
 
-import com.monkeystomp.spirelands.settings.SettingsManager;
+import com.monkeystomp.spirelands.gamedata.settings.SettingsManager;
 import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

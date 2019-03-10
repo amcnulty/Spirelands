@@ -11,7 +11,7 @@ import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.gui.titlescreen.components.SliderControl;
 import com.monkeystomp.spirelands.gui.util.TextUtil;
-import com.monkeystomp.spirelands.settings.SettingsManager;
+import com.monkeystomp.spirelands.gamedata.settings.SettingsManager;
 import com.monkeystomp.spirelands.view.LevelView;
 import java.awt.Color;
 import java.util.ArrayList;

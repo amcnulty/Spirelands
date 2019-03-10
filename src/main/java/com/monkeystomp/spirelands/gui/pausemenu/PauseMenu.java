@@ -34,7 +34,7 @@ public class PauseMenu {
                           saveView = new SaveView(IPauseViewSetter),
                           confirmExitView = new ConfirmExitView(IPauseViewSetter);
   private final HashMap<String, PauseView> pauseViewMap = new HashMap<>();
-  private PauseView currentView = new HomeView(IPauseViewSetter);
+  private PauseView currentView = homeView;
   private final SoundEffects sfx = new SoundEffects();
 
   public PauseMenu() {

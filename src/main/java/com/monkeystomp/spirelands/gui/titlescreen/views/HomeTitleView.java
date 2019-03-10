@@ -5,7 +5,8 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.TestLevel;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.view.LevelView;
 import java.util.function.Consumer;
@@ -36,7 +37,7 @@ public class HomeTitleView extends TitleView {
 // left of house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
 // top left corner
-    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(100, 100, 2))));
+    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel(TestLevel.LEVEL_ID, new SpawnCoordinate(100, 100, 2))));
 // inside house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.FIRST_FLOOR_ENTRANCE)));
   }

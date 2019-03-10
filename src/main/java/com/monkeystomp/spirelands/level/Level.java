@@ -6,7 +6,7 @@ import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.tile.Tile;
 import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -30,7 +30,14 @@ import javax.imageio.ImageIO;
  * @author Aaron Michael McNulty
  */
 public class Level implements Runnable {
-  
+  /**
+   * The display name of the level.
+   */
+  protected String levelName;
+  /**
+   * The id of the level.
+   */
+  protected String levelId;
   private String path;
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;
@@ -174,6 +181,14 @@ public class Level implements Runnable {
   
   public ArrayList<Entity> getSolidEntities() {
     return solidEntities;
+  }
+
+  public String getLevelName() {
+    return levelName;
+  }
+
+  public String getLevelId() {
+    return levelId;
   }
   
   public boolean getDialogOpen() {

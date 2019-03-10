@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.level.coordinate;
+package com.monkeystomp.spirelands.level.location.coordinate;
 
 /**
  * Spawn Coordinate class is used to hold coordinate information for where to place the player on levels.
@@ -6,9 +6,9 @@ package com.monkeystomp.spirelands.level.coordinate;
  */
 public class SpawnCoordinate {
    
-  private int x,
-              y,
-              direction;
+  private final int x,
+                    y,
+                    direction;
   /**
    * Creates a new SpawnCoordinate object with the given x, y, and directional information.
    * @param x The x pixel coordinate to set.

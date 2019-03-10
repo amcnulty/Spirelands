@@ -4,7 +4,7 @@ import com.monkeystomp.spirelands.level.entity.fixed.House;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.entity.fixed.StreetLamp;
 import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
@@ -28,6 +28,10 @@ import java.util.ArrayList;
  */
 public class TestLevel extends Level {
 
+  /**
+   * Id used for save and load game.
+   */
+  public static final String LEVEL_ID = "TEST_LEVEL";
   private final String LEVEL_NAME = "Sandbox area for testing!";
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0;
@@ -41,6 +45,8 @@ public class TestLevel extends Level {
   
   public TestLevel(SpawnCoordinate coordinate) {
     this.spawnCoordinate = coordinate;
+    this.levelName = LEVEL_NAME;
+    this.levelId = LEVEL_ID;
     loadLevel(BITMAP_PATH);
 //    shadowLevel = .7f;
   }

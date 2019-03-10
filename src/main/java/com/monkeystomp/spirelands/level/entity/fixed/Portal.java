@@ -1,7 +1,7 @@
 package com.monkeystomp.spirelands.level.entity.fixed;
 
 import com.monkeystomp.spirelands.level.util.LevelFactory;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 

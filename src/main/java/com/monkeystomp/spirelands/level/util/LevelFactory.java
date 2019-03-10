@@ -5,7 +5,7 @@ import com.monkeystomp.spirelands.level.HouseLevelUpstairs;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.level.SpawnLevel;
 import com.monkeystomp.spirelands.level.TestLevel;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import java.util.HashMap;
 
 /**
@@ -45,17 +45,17 @@ public class LevelFactory {
 //    S create(T obj1, R obj2);
 //  }
   
-  private static HashMap<String, Factory<Level, SpawnCoordinate>> factoryMap = new HashMap<>();
+  private static final HashMap<String, Factory<Level, SpawnCoordinate>> FACTORY_MAP = new HashMap<>();
   
   static {
-    factoryMap.put("SPAWN_LEVEL", SpawnLevel::new);
-    factoryMap.put("TEST_LEVEL", TestLevel::new);
-    factoryMap.put("HOUSE_LEVEL", HouseLevel::new);
-    factoryMap.put("HOUSE_LEVEL_UPSTAIRS", HouseLevelUpstairs::new);
+    FACTORY_MAP.put(SpawnLevel.LEVEL_ID, SpawnLevel::new);
+    FACTORY_MAP.put(TestLevel.LEVEL_ID, TestLevel::new);
+    FACTORY_MAP.put(HouseLevel.LEVEL_ID, HouseLevel::new);
+    FACTORY_MAP.put(HouseLevelUpstairs.LEVEL_ID, HouseLevelUpstairs::new);
   }
   
   public static Level createLevel(String key, SpawnCoordinate coordinate) {
-    return factoryMap.get(key).create(coordinate);
+    return FACTORY_MAP.get(key).create(coordinate);
   }
   
   private interface Factory<T, R> {

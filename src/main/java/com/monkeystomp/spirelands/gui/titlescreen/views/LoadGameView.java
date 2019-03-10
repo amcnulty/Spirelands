@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
@@ -8,7 +9,11 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.view.LevelView;
+import java.io.IOException;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -28,6 +33,7 @@ public class LoadGameView extends TitleView {
   private final PrimaryButton
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     loadButton = new PrimaryButton("Load", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleLoadClick());
+  private final DataLoader loader = new DataLoader();
   
   public LoadGameView(Consumer<LevelView> ILevelViewSetter, Consumer<TitleView> ITitleViewSetter, Consumer<Float> IVolumeSetter) {
     super(ILevelViewSetter, ITitleViewSetter, IVolumeSetter);
@@ -54,7 +60,17 @@ public class LoadGameView extends TitleView {
   }
   
   private void handleLoadClick() {
-    
+    try {
+      ILevelViewSetter.accept(loader.getLevelView("slot1.json"));
+    } catch (IOException e) {
+      e.printStackTrace();
+      // TODO : update this error message with the actual filename
+      System.out.println("Problem loading file at saves/slot1.json");
+    } catch (ParseException e) {
+      e.printStackTrace();
+      // TODO : update this error message with the actual filename.
+      System.out.println("Problem reading data in file saves/slot1.json");
+    }
   }
   
   private void handleCancelClick() {

@@ -5,7 +5,7 @@ import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
-import com.monkeystomp.spirelands.level.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
@@ -27,6 +27,10 @@ import java.util.HashMap;
  */
 public class HouseLevel extends Level {
   
+  /**
+   * Id used for save and load game.
+   */
+  public static final String LEVEL_ID = "HOUSE_LEVEL";
   protected final String LEVEL_NAME = "Villager's Home";
   private HashMap<String, Scene> sceneMap = new HashMap<>();
   private Scene currentScene;
@@ -47,6 +51,8 @@ public class HouseLevel extends Level {
     setUpstairsScene();
     currentScene = sceneMap.get(HouseLevel.FIRST_FLOOR_KEY);
     this.spawnCoordinate = spawnCoordinate;
+    this.levelName = LEVEL_NAME;
+    this.levelId = LEVEL_ID;
     loadLevel(FIRST_FLOOR_BITMAP);
   }
   

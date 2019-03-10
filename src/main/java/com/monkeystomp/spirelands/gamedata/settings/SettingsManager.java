@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.settings;
+package com.monkeystomp.spirelands.gamedata.settings;
 
 import java.io.File;
 import java.io.FileReader;
@@ -17,7 +17,7 @@ public class SettingsManager {
   private JSONObject  json,
                       resolution,
                       cursor;
-  private JSONParser parser = new JSONParser();
+  private final JSONParser parser = new JSONParser();
   private boolean customCursor,
                   fullScreen;
   private String pathToCursor;

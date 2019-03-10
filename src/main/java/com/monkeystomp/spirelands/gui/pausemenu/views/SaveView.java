@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.pausemenu.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
@@ -8,7 +9,10 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
+import java.io.IOException;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,7 +58,11 @@ public class SaveView extends PauseView {
   }
   
   private void handleSaveClick() {
-    
+    try {
+      SaveDataManager.getSaveDataManager().saveGame();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
   
   private void handleCancelClick() {

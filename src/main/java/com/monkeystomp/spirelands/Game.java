@@ -12,7 +12,7 @@ import com.monkeystomp.spirelands.graphics.EventListener;
 import com.monkeystomp.spirelands.input.GameController;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
-import com.monkeystomp.spirelands.settings.SettingsManager;
+import com.monkeystomp.spirelands.gamedata.settings.SettingsManager;
 import com.monkeystomp.spirelands.view.BrandView;
 import java.awt.Cursor;
 import java.awt.Image;

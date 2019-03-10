@@ -6,29 +6,14 @@
       "weaponType": "Sword"
     },
     "stats": {
-      "level": 1,
-      "experience": 0,
-      "health": 10,
-      "healthMax": 120,
       "healthWeight": "High",
-      "mana": 20,
-      "manaMax": 40,
       "manaWeight": "Average",
-      "strength": 12,
       "strengthWeight": "Very High",
-      "defense": 6,
       "defenseWeight": "High",
-      "intellect": 8,
       "intellectWeight": "High",
-      "spirit": 6,
       "spiritWeight": "Average",
-      "speed": 10,
       "speedWeight": "High",
-      "luck": 5,
       "luckWeight": "Very Low"
-    },
-    "partyInfo": {
-      "inParty": true
     }
   },
   "Sara": {
@@ -38,29 +23,14 @@
       "weaponType": "Wand"
     },
     "stats": {
-      "level": 1,
-      "experience": 0,
-      "health": 60,
-      "healthMax": 100,
       "healthWeight": "Average",
-      "mana": 40,
-      "manaMax": 45,
       "manaWeight": "Very High",
-      "strength": 8,
       "strengthWeight": "Low",
-      "defense": 5,
       "defenseWeight": "Very Low",
-      "intellect": 8,
       "intellectWeight": "High",
-      "spirit": 8,
       "spiritWeight": "Very High",
-      "speed": 9,
       "speedWeight": "Average",
-      "luck": 4,
       "luckWeight": "Low"
-    },
-    "partyInfo": {
-      "inParty": true
     }
   },
   "William": {
@@ -70,29 +40,14 @@
       "weaponType": "Blunt"
     },
     "stats": {
-      "level": 1,
-      "experience": 0,
-      "health": 73,
-      "healthMax": 110,
       "healthWeight": "Very High",
-      "mana": 14,
-      "manaMax": 30,
       "manaWeight": "Very Low",
-      "strength": 11,
       "strengthWeight": "Very High",
-      "defense": 7,
       "defenseWeight": "Very High"
-      "intellect": 3,
       "intellectWeight": "Very Low",
-      "spirit": 3,
       "spiritWeight": "Low",
-      "speed": 7,
       "speedWeight": "Very Low",
-      "luck": 2,
       "luckWeight": "Average"
-    },
-    "partyInfo": {
-      "inParty": true
     }
   }
 }
