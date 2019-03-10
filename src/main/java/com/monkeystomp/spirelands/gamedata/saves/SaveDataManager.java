@@ -24,11 +24,7 @@ public class SaveDataManager {
   private String fileName;
   private static final SaveDataManager INSTANCE = new SaveDataManager();
   
-  private SaveDataManager() {
-    initSaveObject();
-  }
-  
-  private void initSaveObject() {
+  public void initSaveObject() {
     try {
       saveObject = (JSONObject) parser.parse(new FileReader(getClass().getResource("/gameData/saveData/newGame.json").getFile()));
     } catch (IOException | ParseException e) {

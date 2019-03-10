@@ -23,10 +23,10 @@ public class ChestTest {
   @Test
   public void chestOpenFlagIsWorkingAfterInteractingWithChestTest() {
     Chest testChest = new Chest(0, 0, Chest.WOODEN_CHEST, Item.BRIEFCASE);
-    boolean isChestOpen = testChest.isIsChestOpen();
+    boolean isChestOpen = testChest.isChestOpen();
     Assert.assertFalse("Should be false before chest has been opened", isChestOpen);
     testChest.interact();
-    isChestOpen = testChest.isIsChestOpen();
+    isChestOpen = testChest.isChestOpen();
     Assert.assertTrue("Should be true after interacting with chest", isChestOpen);
   }
   @Test

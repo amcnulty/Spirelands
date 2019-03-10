@@ -2,9 +2,11 @@ package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.SaveSlotButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
@@ -30,9 +32,23 @@ public class LoadGameView extends TitleView {
                           slot1Font = GameFonts.getDarkText_plain_18(),
                           slot2Font = GameFonts.getDarkText_plain_18(),
                           slot3Font = GameFonts.getDarkText_plain_18();
+  private String selectedSlot;
   private final PrimaryButton
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     loadButton = new PrimaryButton("Load", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleLoadClick());
+  private final SaveSlotButton
+    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, () -> {
+      selectedSlot = "slot1.json";
+      resetSlotButtons();
+    }),
+    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, () -> {
+      selectedSlot = "slot2.json";
+      resetSlotButtons();
+    }),
+    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, () -> {
+      selectedSlot = "slot3.json";
+      resetSlotButtons();
+    });
   private final DataLoader loader = new DataLoader();
   
   public LoadGameView(Consumer<LevelView> ILevelViewSetter, Consumer<TitleView> ITitleViewSetter, Consumer<Float> IVolumeSetter) {
@@ -47,29 +63,27 @@ public class LoadGameView extends TitleView {
     displayFont.centerText();
     slot1Font.setText("Slot 1");
     slot1Font.setX(Screen.getWidth() / 5);
-    slot1Font.setY(headingY + 30);
+    slot1Font.setY(headingY + 15);
     slot1Font.centerText();
     slot2Font.setText("Slot 2");
     slot2Font.setX(Screen.getWidth() / 2);
-    slot2Font.setY(headingY + 30);
+    slot2Font.setY(headingY + 15);
     slot2Font.centerText();
     slot3Font.setText("Slot 3");
     slot3Font.setX(Screen.getWidth() * 4 / 5);
-    slot3Font.setY(headingY + 30);
+    slot3Font.setY(headingY + 15);
     slot3Font.centerText();
   }
   
   private void handleLoadClick() {
     try {
-      ILevelViewSetter.accept(loader.getLevelView("slot1.json"));
+      ILevelViewSetter.accept(loader.getLevelView(selectedSlot));
     } catch (IOException e) {
       e.printStackTrace();
-      // TODO : update this error message with the actual filename
-      System.out.println("Problem loading file at saves/slot1.json");
+      System.out.println("Problem loading file at saves/" + selectedSlot);
     } catch (ParseException e) {
       e.printStackTrace();
-      // TODO : update this error message with the actual filename.
-      System.out.println("Problem reading data in file saves/slot1.json");
+      System.out.println("Problem reading data in file saves/" + selectedSlot);
     }
   }
   
@@ -78,13 +92,22 @@ public class LoadGameView extends TitleView {
     ITitleViewSetter.accept(new HomeTitleView(ILevelViewSetter, ITitleViewSetter, IVolumeSetter));
   }
   
+  private void resetSlotButtons() {
+    slot1.reset();
+    slot2.reset();
+    slot3.reset();
+  }
+  
   @Override
   public void exitingView() {
-    
+    resetSlotButtons();
   }
   
   @Override
   public void update() {
+    slot1.update();
+    slot2.update();
+    slot3.update();
     cancelButton.update();
     loadButton.update();
   }
@@ -96,6 +119,9 @@ public class LoadGameView extends TitleView {
     screen.renderFonts(slot1Font);
     screen.renderFonts(slot2Font);
     screen.renderFonts(slot3Font);
+    slot1.render(screen, gl);
+    slot2.render(screen, gl);
+    slot3.render(screen, gl);
     cancelButton.render(screen, gl);
     loadButton.render(screen, gl);
   }
