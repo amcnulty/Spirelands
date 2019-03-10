@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.level;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
@@ -15,7 +16,10 @@ import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
+import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
+import com.monkeystomp.spirelands.level.location.Location;
+import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.level.util.TransitionFader;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -23,6 +27,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 /**
@@ -50,8 +56,10 @@ public class Level implements Runnable {
   protected LightMap lightMap = new LightMap();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
-    // Solid Entities
-    protected ArrayList<Entity> solidEntities = new ArrayList<>();
+  // Solid Entities
+  protected ArrayList<Entity> solidEntities = new ArrayList<>();
+  // Chests
+  protected List<Entity> chests;
   protected SpawnCoordinate spawnCoordinate;
   private int levelTileWidth,
               levelTileHeight,
@@ -136,11 +144,14 @@ public class Level implements Runnable {
     addPortals();
     // Additional hooks can be added here eg. addNPCs() | addChests()
     addChests();
+    chests = solidEntities.stream().filter(entity -> entity.getClass() == Chest.class)
+            .collect(Collectors.<Entity>toList());
     addNpcs();
     addSolidEntities();
     addPlayer();
     startMusic();
     finalLevelSetup();
+    setChestState();
     transitionFader.startTransitionIn();
   }
 
@@ -165,6 +176,16 @@ public class Level implements Runnable {
 
   protected void finalLevelSetup() {}
   
+  private void setChestState() {
+    boolean[] openedChests = SaveDataManager.getSaveDataManager().getChests(levelId);
+    if (openedChests != null) {
+      for (int i = 0; i < openedChests.length; i++) {
+        Chest chest = (Chest) chests.get(i);
+        chest.setChestOpen(openedChests[i]);
+      }
+    }
+  }
+  
   private void openGameMenu() {
     GAME_MENU.openMenu();
     gameMenuOpen = true;
@@ -173,6 +194,36 @@ public class Level implements Runnable {
   private void closeGameMenu() {
     GAME_MENU.closeMenu();
     gameMenuOpen = false;
+  }
+  /**
+   * Saves the current state of the level to the save data manager.
+   */
+  public void saveLevelState() {
+    savePlayerLocation();
+    saveChestState();
+  }
+  
+  private void savePlayerLocation() {
+    LocationManager.getLocationManager().setCurrentLocation(
+      new Location(
+        new SpawnCoordinate(
+          player.getX(),
+          player.getY(),
+          player.getDirection()
+        ),
+        levelName,
+        levelId
+      )
+    );
+  }
+  
+  private void saveChestState() {
+    boolean[] chestData = new boolean[chests.size()];
+    for (int i = 0; i < chestData.length; i++) {
+      Chest chest = (Chest) chests.get(i);
+      chestData[i] = chest.isChestOpen();
+    }
+    SaveDataManager.getSaveDataManager().setChests(levelId, chestData);
   }
 
   public ArrayList<Portal> getPortals() {
@@ -277,6 +328,7 @@ public class Level implements Runnable {
     // Stop music playing
     music.stop();
     keyboard.removeKeyPressNotifier(notifier);
+    saveLevelState();
     if (isPortalSet) exitPortal.enterPortal();
   }
   

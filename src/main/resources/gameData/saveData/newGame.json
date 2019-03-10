@@ -58,6 +58,7 @@
       }
     }
   },
+  "Levels": {},
   "Location": {
     "Level Key": "TEST_LEVEL",
     "Level Name": "Sandbox area for testing!",

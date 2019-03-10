@@ -6,9 +6,6 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import com.monkeystomp.spirelands.input.INotify;
-import com.monkeystomp.spirelands.level.location.Location;
-import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
-import com.monkeystomp.spirelands.level.util.LocationManager;
 import java.awt.event.KeyEvent;
 
 /**
@@ -52,17 +49,7 @@ public class LevelView extends GameView {
   private void pauseLevel() {
     pauseMenu.openMenu();
     level.getMusicPlayer().pause();
-    LocationManager.getLocationManager().setCurrentLocation(
-      new Location(
-        new SpawnCoordinate(
-          level.getPlayer().getX(),
-          level.getPlayer().getY(),
-          level.getPlayer().getDirection()
-        ),
-        level.getLevelName(),
-        level.getLevelId()
-      )
-    );
+    level.saveLevelState();
     gamePaused = true;
   }
   

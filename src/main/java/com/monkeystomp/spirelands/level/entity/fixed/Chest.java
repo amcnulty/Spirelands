@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.level.entity.fixed;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -27,14 +28,14 @@ public class Chest extends Entity {
                   chestClosedSprite,
                   currentSprite;
   private final Item treasure;
-  private boolean isChestOpen = false,
+  private boolean chestOpen = false,
                   showingItem = false,
                   showingGold = false;
-  private Random random = new Random();
+  private final Random random = new Random();
   private int anim = 0,
               animY = 0,
               gold = 0;
-  private ArrayList<ProjectileParticle> particles = new ArrayList<>();
+  private final ArrayList<ProjectileParticle> particles = new ArrayList<>();
   /**
    * A wood sided chest.
    */
@@ -84,7 +85,7 @@ public class Chest extends Entity {
   }
   
   private void setCurrentSprite() {
-    if (isChestOpen) currentSprite = chestOpenSprite;
+    if (chestOpen) currentSprite = chestOpenSprite;
     else currentSprite = chestClosedSprite;
   }
   
@@ -100,7 +101,7 @@ public class Chest extends Entity {
       InventoryManager.getInventoryManager().addGold(gold);
     }
     sfx.playSoundEffect(SoundEffects.CHEST_OPENING);
-    isChestOpen = true;
+    chestOpen = true;
     setCurrentSprite();
   }
   
@@ -143,30 +144,25 @@ public class Chest extends Entity {
     this.gold = gold;
   }
   
-  public boolean isIsChestOpen() {
-    return isChestOpen;
+  public boolean isChestOpen() {
+    return chestOpen;
   }
 
-  public void setIsChestOpen(boolean isChestOpen) {
-    this.isChestOpen = isChestOpen;
+  public void setChestOpen(boolean isChestOpen) {
+    this.chestOpen = isChestOpen;
+    setCurrentSprite();
   }
-  /**
-   * {@inheritDoc}
-   */
+  
   @Override
   public int getOverlapY() {
     return overlapY;
   }
-  /**
-   * {@inheritDoc}
-   */
+  
   @Override
   public void interact() {
-    if (!isChestOpen) openChest();
+    if (!chestOpen) openChest();
   }
-  /**
-   * {@inheritDoc}
-   */
+  
   @Override
   public void update() {
     for (int i = 0; i < particles.size(); i++) {
@@ -195,9 +191,7 @@ public class Chest extends Entity {
       anim++;
     }
   }
-  /**
-   * {@inheritDoc}
-   */
+  
   @Override
   public void render(Screen screen, GL2 gl) {
     screen.renderSprite(gl, x - SPRITE_SIZE / 2, y - SPRITE_SIZE / 2, currentSprite, true);

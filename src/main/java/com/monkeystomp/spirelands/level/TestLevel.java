@@ -11,6 +11,7 @@ import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
 import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
@@ -149,16 +150,6 @@ public class TestLevel extends Level {
     config.setRightCorner(false);
     wall.createHorizontalWall(config);
     solidEntities.add(wall);
-  }
-  
-  @Override
-  protected void startMusic() {
-    music.play(Music.SIMPLE_TOWN);
-  }
-  
-  @Override
-  protected void finalLevelSetup() {
-    lightMap.enableLightMap(LightMapType.BLENDED);
     
     Entity entity = new StreetLamp(210, 75);
     solidEntities.add(entity);
@@ -192,11 +183,21 @@ public class TestLevel extends Level {
     solidEntities.add(entity);
     entity.initLevel(this);
     
-    particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, "EMBER");
     
     entity = new House(240, 412);
     solidEntities.add(entity);
     entity.initLevel(this);
+  }
+  
+  @Override
+  protected void startMusic() {
+    music.play(Music.SIMPLE_TOWN);
+  }
+  
+  @Override
+  protected void finalLevelSetup() {
+    lightMap.enableLightMap(LightMapType.BLENDED);
+    particles = ParticleOverlay.createParticleOverlay(getLevelPixelWidth(), getLevelPixelHeight(), 60, "EMBER");
   }
 
   @Override

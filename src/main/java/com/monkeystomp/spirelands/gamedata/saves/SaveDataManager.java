@@ -2,13 +2,10 @@ package com.monkeystomp.spirelands.gamedata.saves;
 
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -21,7 +18,8 @@ import org.json.simple.parser.ParseException;
 public class SaveDataManager {
   
   private final String pathToSave = "./saves/";
-  private JSONObject saveObject;
+  private JSONObject  saveObject,
+                      levels;
   private final JSONParser parser = new JSONParser();
   private String fileName;
   private static final SaveDataManager INSTANCE = new SaveDataManager();
@@ -66,6 +64,41 @@ public class SaveDataManager {
    */
   public JSONObject getLocation() {
     return (JSONObject)saveObject.get("Location");
+  }
+  /**
+   * Gets the chests data portion of the current save object
+   * @param levelKey Level which the chests data is location
+   * @return Array of booleans that represent if the chest has been opened.
+   */
+  public boolean[] getChests(String levelKey) {
+    levels = (JSONObject) saveObject.get("Levels");
+    JSONObject myLevel = (JSONObject) levels.get(levelKey);
+    if (myLevel == null) return null;
+    else {
+      JSONArray array = (JSONArray) myLevel.get("chests");
+      boolean[] values = new boolean[array.size()];
+      for (int i = 0; i < values.length; i++) {
+        values[i] = (boolean)array.get(i);
+      }
+      return values;
+    }
+  }
+  /**
+   * Saves the state of the chests on the level that matches the given level key to the given data.
+   * @param levelKey Key to the level which chest data will be set.
+   * @param data Array of boolean values indicating if chest at that index has been opened.
+   */
+  public void setChests(String levelKey, boolean[] data) {
+    JSONObject level = (JSONObject) levels.get(levelKey);
+    if (level == null) {
+      levels.put(levelKey, new JSONObject());
+      level = (JSONObject) levels.get(levelKey);
+    }
+    JSONArray array = new JSONArray();
+    for (int i = 0; i < data.length; i++) {
+      array.add(data[i]);
+    }
+    level.put("chests", array);
   }
   /**
    * Main save game method.
