@@ -37,15 +37,15 @@ public class LoadGameView extends TitleView {
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     loadButton = new PrimaryButton("Load", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleLoadClick());
   private final SaveSlotButton
-    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, () -> {
+    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, "slot1.json", () -> {
       selectedSlot = "slot1.json";
       resetSlotButtons();
     }),
-    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, () -> {
+    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, "slot2.json", () -> {
       selectedSlot = "slot2.json";
       resetSlotButtons();
     }),
-    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, () -> {
+    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, "slot3.json", () -> {
       selectedSlot = "slot3.json";
       resetSlotButtons();
     });

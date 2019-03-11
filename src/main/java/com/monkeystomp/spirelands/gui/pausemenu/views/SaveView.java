@@ -32,15 +32,15 @@ public class SaveView extends PauseView {
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     saveButton = new PrimaryButton("Save", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleSaveClick());
   private final SaveSlotButton
-    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2, () -> {
+    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2, "slot1.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot1.json");
       resetSlotButtons();
     }),
-    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2, () -> {
+    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2, "slot2.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot2.json");
       resetSlotButtons();
     }),
-    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2, () -> {
+    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2, "slot3.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot3.json");
       resetSlotButtons();
     });
