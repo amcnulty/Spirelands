@@ -275,9 +275,9 @@ public class SettingsView extends TitleView {
     for (CheckButton button: cursorButtons) {
       button.render(screen, gl);
     }
-    screen.renderSprite(gl, cursorCheckX + 10, 82, Sprite.HAND_CURSOR, true);
-    screen.renderSprite(gl, cursorCheckX + 10, 112, Sprite.WHITE_CURSOR, true);
-    screen.renderSprite(gl, cursorCheckX + 10, 142, Sprite.FANTASY_CURSOR, true);
+    screen.renderSprite(gl, cursorCheckX + 10, 82, Sprite.HAND_CURSOR, false);
+    screen.renderSprite(gl, cursorCheckX + 10, 112, Sprite.WHITE_CURSOR, false);
+    screen.renderSprite(gl, cursorCheckX + 10, 142, Sprite.FANTASY_CURSOR, false);
     musicVolumeSlider.render(screen, gl);
     sfxVolumeSlider.render(screen, gl);
     acceptButton.render(screen, gl);

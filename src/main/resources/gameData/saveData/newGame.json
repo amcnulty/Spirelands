@@ -1,6 +1,7 @@
 {
   "Characters": {
     "Luke": {
+      "id": "luke01",
       "partyInfo": {
         "inParty": true
       },
@@ -20,6 +21,7 @@
       }
     },
     "Sara": {
+      "id": "sara02",
       "partyInfo": {
         "inParty": true
       },
@@ -39,6 +41,7 @@
       }
     },
     "William": {
+      "id": "will03",
       "partyInfo": {
         "inParty": true
       },
@@ -65,5 +68,8 @@
     "X": 100,
     "Y": 100,
     "Direction": 2
+  },
+  "Inventory": {
+    "gold": 0
   }
 }

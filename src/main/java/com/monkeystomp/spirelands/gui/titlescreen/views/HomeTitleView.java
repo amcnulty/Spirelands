@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -11,6 +12,7 @@ import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.view.LevelView;
 import java.util.function.Consumer;
+import org.json.simple.JSONObject;
 
 /**
  *
@@ -35,6 +37,7 @@ public class HomeTitleView extends TitleView {
 
   private void handleStartButtonClick() {
     SaveDataManager.getSaveDataManager().initSaveObject();
+    CharacterManager.getCharacterManager().setupCharactersDetails((JSONObject)SaveDataManager.getSaveDataManager().getSaveObject().get("Characters"));
 //    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
 // left of house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));

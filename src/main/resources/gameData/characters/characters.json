@@ -1,5 +1,6 @@
 {
   "Luke": {
+    "id": "luke01",
     "details": {
       "name": "Luke McLovin",
       "thumbnail": "./resources/characters/thumbnails/luke.png",
@@ -17,6 +18,7 @@
     }
   },
   "Sara": {
+    "id": "sara02",
     "details": {
       "name": "Sara Snowbridge",
       "thumbnail": "./resources/characters/thumbnails/sara.png",
@@ -33,7 +35,8 @@
       "luckWeight": "Low"
     }
   },
-  "William": {
+  "William": {,
+    "id": "will03",
     "details": {
       "name": "William Wallace",
       "thumbnail": "./resources/characters/thumbnails/william.png",

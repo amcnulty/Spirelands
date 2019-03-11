@@ -23,7 +23,8 @@ public class CharacterManager {
   
   private CharacterManager() {
     loadJSON();
-    createCharacters(SaveDataManager.getSaveDataManager().getCharacters());
+    createBaseCharacters();
+//    createCharacters(SaveDataManager.getSaveDataManager().getCharacters());
   }
   
   private void loadJSON() {
@@ -42,45 +43,61 @@ public class CharacterManager {
     return INSTANCE;
   }
   
-  private void createCharacters(JSONObject characterDetails) {
+  private void createBaseCharacters() {
     Set<?> keys = characterBaseInformation.keySet();
-    keys.forEach((key) -> {
-      Character character = setupCharacter((JSONObject)characterBaseInformation.get(key), (JSONObject)characterDetails.get(key));
+    keys.forEach(key -> {
+      Character character = setupBaseCharacter((JSONObject)characterBaseInformation.get(key));
       gameCharacters.add(character);
-      if ((boolean)((JSONObject)((JSONObject)characterDetails.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(character);
     });
-    
   }
   
-  private Character setupCharacter(JSONObject baseInfo, JSONObject detailInfo) {
+  private Character setupBaseCharacter(JSONObject baseInfo) {
     Character character = new Character();
     JSONObject baseDetails = (JSONObject)baseInfo.get("details");
     JSONObject baseStats = (JSONObject)baseInfo.get("stats");
-    JSONObject detailStats = (JSONObject)detailInfo.get("stats");
+    character.setId((String)baseInfo.get("id"));
     character.setName((String)baseDetails.get("name"));
     character.setThumbnail(new Sprite((String)baseDetails.get("thumbnail")));
     character.setWeaponType((String)baseDetails.get("weaponType"));
+    character.setHealthWeight((String)baseStats.get("healthWeight"));
+    character.setManaWeight((String)baseStats.get("manaWeight"));
+    character.setStrengthWeight((String)baseStats.get("strengthWeight"));
+    character.setDefenseWeight((String)baseStats.get("defenseWeight"));
+    character.setIntellectWeight((String)baseStats.get("intellectWeight"));
+    character.setSpiritWeight((String)baseStats.get("spiritWeight"));
+    character.setSpeedWeight((String)baseStats.get("speedWeight"));
+    character.setLuckWeight((String)baseStats.get("luckWeight"));
+    return character;
+  }
+  
+  public void setupCharactersDetails(JSONObject characterDetails) {
+    Set<?> keys = characterDetails.keySet();
+    keys.forEach(key -> {
+      JSONObject character = (JSONObject)characterDetails.get(key);
+      gameCharacters.forEach(gameCharacter -> {
+        if (gameCharacter.getId().equals((String)character.get("id"))) {
+          setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
+          System.out.println(character.get("partyInfo"));
+          if ((boolean)((JSONObject)((JSONObject)characterDetails.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(gameCharacter);
+        }
+      });
+    });
+  }
+  
+  private void setupCharacterDetails(Character character, JSONObject detailInfo) {
+    JSONObject detailStats = (JSONObject)detailInfo.get("stats");
     character.setLevel(Integer.parseInt(detailStats.get("level").toString()));
     character.setExperience(Integer.parseInt(detailStats.get("experience").toString()));
     character.setHealth(Integer.parseInt(detailStats.get("health").toString()));
     character.setHealthMax(Integer.parseInt(detailStats.get("healthMax").toString()));
-    character.setHealthWeight((String)baseStats.get("healthWeight"));
     character.setMana(Integer.parseInt(detailStats.get("mana").toString()));
     character.setManaMax(Integer.parseInt(detailStats.get("manaMax").toString()));
-    character.setManaWeight((String)baseStats.get("manaWeight"));
     character.setStrength(Integer.parseInt(detailStats.get("strength").toString()));
-    character.setStrengthWeight((String)baseStats.get("strengthWeight"));
     character.setDefense(Integer.parseInt(detailStats.get("defense").toString()));
-    character.setDefenseWeight((String)baseStats.get("defenseWeight"));
     character.setIntellect(Integer.parseInt(detailStats.get("intellect").toString()));
-    character.setIntellectWeight((String)baseStats.get("intellectWeight"));
     character.setSpirit(Integer.parseInt(detailStats.get("spirit").toString()));
-    character.setSpiritWeight((String)baseStats.get("spiritWeight"));
     character.setSpeed(Integer.parseInt(detailStats.get("speed").toString()));
-    character.setSpeedWeight((String)baseStats.get("speedWeight"));
     character.setLuck(Integer.parseInt(detailStats.get("luck").toString()));
-    character.setLuckWeight((String)baseStats.get("luckWeight"));
-    return character;
   }
   
   public ArrayList<Character> getPartyMembers() {

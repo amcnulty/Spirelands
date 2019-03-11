@@ -68,6 +68,8 @@ public class Character {
   private final int healthWeightIncreaseModifier = 40;
   // The modifier for when mana stat is increased
   private final int manaWeightIncreaseModifier = 8;
+  // The unique id for this character
+  private String id;
   // Character name
   private String name;
   // Thumbnail image for character
@@ -133,6 +135,14 @@ public class Character {
     statWeightToValuesMap.put(Character.AVERAGE, new int[]{1, 2, 1, 2});
     statWeightToValuesMap.put(Character.HIGH, new int[]{1, 2, 2, 2});
     statWeightToValuesMap.put(Character.VERY_HIGH, new int[]{2, 2, 2, 2});
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getName() {

@@ -33,6 +33,9 @@ public class DataLoader {
   public LevelView getLevelView(String fileName) throws IOException, ParseException {
     loadFile(fileName);
     location = (JSONObject) json.get("Location");
+    characters = (JSONObject) json.get("Characters");
+    setSaveManager(fileName);
+    setCharacterData();
     levelKey = (String)location.get("Level Key");
     x = Math.toIntExact((long)location.get("X"));
     y = Math.toIntExact((long)location.get("Y"));
@@ -42,8 +45,15 @@ public class DataLoader {
   
   private void loadFile(String fileName) throws IOException, ParseException {
     json = (JSONObject) parser.parse(new FileReader(new File("./saves/" + fileName)));
+  }
+  
+  private void setSaveManager(String fileName) {
     SaveDataManager.getSaveDataManager().setSaveObject(json);
     SaveDataManager.getSaveDataManager().setFileName(fileName);
+  }
+  
+  private void setCharacterData() {
+    CharacterManager.getCharacterManager().setupCharactersDetails(characters);
   }
 
 }
