@@ -71,14 +71,14 @@ public class CharacterManager {
   }
   
   public void setupCharactersDetails(JSONObject characterDetails) {
+    partyCharacters.clear();
     Set<?> keys = characterDetails.keySet();
     keys.forEach(key -> {
       JSONObject character = (JSONObject)characterDetails.get(key);
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get("id"))) {
           setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
-          System.out.println(character.get("partyInfo"));
-          if ((boolean)((JSONObject)((JSONObject)characterDetails.get(key)).get("partyInfo")).get("inParty")) partyCharacters.add(gameCharacter);
+          if ((boolean)((JSONObject)character.get("partyInfo")).get("inParty")) partyCharacters.add(gameCharacter);
         }
       });
     });

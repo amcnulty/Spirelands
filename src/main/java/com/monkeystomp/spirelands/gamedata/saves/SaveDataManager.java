@@ -1,10 +1,14 @@
 package com.monkeystomp.spirelands.gamedata.saves;
 
+import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
+import com.monkeystomp.spirelands.character.Character;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -100,13 +104,14 @@ public class SaveDataManager {
    * Main save game method.
    */
   public void saveGame() throws IOException {
-    setLocation();
+    saveLocation();
+    saveStats();
     FileWriter file = new FileWriter(pathToSave + fileName);
     file.write(saveObject.toJSONString());
     file.flush();
   }
   
-  private void setLocation() {
+  private void saveLocation() {
     Location currentLocation = LocationManager.getLocationManager().getCurrentLocation();
     JSONObject location = getLocation();
     location.put("Level Key", currentLocation.getLevelId());
@@ -114,6 +119,33 @@ public class SaveDataManager {
     location.put("X", currentLocation.getCoordinate().getX());
     location.put("Y", currentLocation.getCoordinate().getY());
     location.put("Direction", currentLocation.getCoordinate().getDirection());
+  }
+  
+  private void saveStats() {
+    JSONObject characters = (JSONObject) saveObject.get("Characters");
+    ArrayList<Character> gameCharacters = CharacterManager.getCharacterManager().getCharacters();
+    Set<?> keys = characters.keySet();
+    keys.forEach(key -> {
+      JSONObject character = (JSONObject) characters.get(key);
+      JSONObject stats = (JSONObject) character.get("stats");
+      gameCharacters.forEach(gameCharacter -> {
+        if (gameCharacter.getId().equals((String)character.get("id"))) {
+          stats.put("level", gameCharacter.getLevel());
+          stats.put("experience", gameCharacter.getExperience());
+          stats.put("health", gameCharacter.getHealth());
+          stats.put("healthMax", gameCharacter.getHealthMax());
+          stats.put("mana", gameCharacter.getMana());
+          stats.put("manaMax", gameCharacter.getManaMax());
+          stats.put("strength", gameCharacter.getStrength());
+          stats.put("intellect", gameCharacter.getIntellect());
+          stats.put("defense", gameCharacter.getDefense());
+          stats.put("spirit", gameCharacter.getSpirit());
+          stats.put("speed", gameCharacter.getSpeed());
+          stats.put("luck", gameCharacter.getLuck());
+                  
+        }
+      });
+    });
   }
 
 }
