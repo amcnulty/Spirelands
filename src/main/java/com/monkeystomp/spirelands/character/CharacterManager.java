@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -20,6 +21,7 @@ public class CharacterManager {
   private final ArrayList<Character> partyCharacters = new ArrayList<>();
   private JSONObject characterBaseInformation;
   private final JSONParser parser = new JSONParser();
+  private final JSONUtil jsonUtil = new JSONUtil();
   
   private static final CharacterManager INSTANCE = new CharacterManager();
   
@@ -57,18 +59,18 @@ public class CharacterManager {
     Character character = new Character();
     JSONObject baseDetails = (JSONObject)baseInfo.get("details");
     JSONObject baseStats = (JSONObject)baseInfo.get("stats");
-    character.setId((String)baseInfo.get("id"));
-    character.setName((String)baseDetails.get("name"));
-    character.setThumbnail(new Sprite((String)baseDetails.get("thumbnail")));
-    character.setWeaponType((String)baseDetails.get("weaponType"));
-    character.setHealthWeight((String)baseStats.get("healthWeight"));
-    character.setManaWeight((String)baseStats.get("manaWeight"));
-    character.setStrengthWeight((String)baseStats.get("strengthWeight"));
-    character.setDefenseWeight((String)baseStats.get("defenseWeight"));
-    character.setIntellectWeight((String)baseStats.get("intellectWeight"));
-    character.setSpiritWeight((String)baseStats.get("spiritWeight"));
-    character.setSpeedWeight((String)baseStats.get("speedWeight"));
-    character.setLuckWeight((String)baseStats.get("luckWeight"));
+    character.setId(jsonUtil.getNestedString(baseInfo, new String[]{"id"}));
+    character.setName(jsonUtil.getNestedString(baseInfo, new String[]{"details", "name"}));
+    character.setThumbnail(new Sprite(jsonUtil.getNestedString(baseInfo, new String[]{"details", "thumbnail"})));
+    character.setWeaponType(jsonUtil.getNestedString(baseInfo, new String[]{"details", "weaponType"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "healthWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "manaWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "strengthWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "defenseWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "intellectWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "spiritWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "speedWeight"}));
+    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "luckWeight"}));
     return character;
   }
   
@@ -80,7 +82,7 @@ public class CharacterManager {
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get("id"))) {
           setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
-          if ((boolean)((JSONObject)character.get("partyInfo")).get("inParty")) partyCharacters.add(gameCharacter);
+          if (jsonUtil.getNestedBoolean(character, new String[]{"partyInfo", "inParty"})) partyCharacters.add(gameCharacter);
         }
       });
     });
@@ -89,36 +91,36 @@ public class CharacterManager {
   private void setupCharacterDetails(Character character, JSONObject detailInfo) {
     JSONObject detailStats = (JSONObject)detailInfo.get("stats");
     JSONObject equipment = (JSONObject) detailInfo.get("equipment");
-    character.setLevel(Integer.parseInt(detailStats.get("level").toString()));
-    character.setExperience(Integer.parseInt(detailStats.get("experience").toString()));
-    character.setHealth(Integer.parseInt(detailStats.get("health").toString()));
-    character.setHealthMax(Integer.parseInt(detailStats.get("healthMax").toString()));
-    character.setMana(Integer.parseInt(detailStats.get("mana").toString()));
-    character.setManaMax(Integer.parseInt(detailStats.get("manaMax").toString()));
-    character.setStrength(Integer.parseInt(detailStats.get("strength").toString()));
-    character.setDefense(Integer.parseInt(detailStats.get("defense").toString()));
-    character.setIntellect(Integer.parseInt(detailStats.get("intellect").toString()));
-    character.setSpirit(Integer.parseInt(detailStats.get("spirit").toString()));
-    character.setSpeed(Integer.parseInt(detailStats.get("speed").toString()));
-    character.setLuck(Integer.parseInt(detailStats.get("luck").toString()));
+    character.setLevel(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "level"}));
+    character.setExperience(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "experience"}));
+    character.setHealth(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "health"}));
+    character.setHealthMax(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "healthMax"}));
+    character.setMana(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "mana"}));
+    character.setManaMax(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "manaMax"}));
+    character.setStrength(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "strength"}));
+    character.setDefense(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "defense"}));
+    character.setIntellect(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "intellect"}));
+    character.setSpirit(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "spirit"}));
+    character.setSpeed(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "speed"}));
+    character.setLuck(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "luck"}));
     if (equipment.get("weapon") != null)
-      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("weapon"))));
+      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "weapon"})));
     else
       character.setEquippedWeapon(null);
     if (equipment.get("helmet") != null)
-      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("helmet"))));
+      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "helmet"})));
     else
       character.setEquippedHelmet(null);
     if (equipment.get("chestplate") != null)
-      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("chestplate"))));
+      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "chestplate"})));
     else
       character.setEquippedChestplate(null);
     if (equipment.get("shield") != null)
-      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("shield"))));
+      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "chestplate"})));
     else
       character.setEquippedShield(null);
     if (equipment.get("boots") != null)
-      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("boots"))));
+      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "boots"})));
     else
       character.setEquippedBoots(null);
   }
