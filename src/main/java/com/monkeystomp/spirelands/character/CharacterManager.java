@@ -1,7 +1,9 @@
 package com.monkeystomp.spirelands.character;
 
-import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.inventory.ArmorItem;
+import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Set;
@@ -86,6 +88,7 @@ public class CharacterManager {
   
   private void setupCharacterDetails(Character character, JSONObject detailInfo) {
     JSONObject detailStats = (JSONObject)detailInfo.get("stats");
+    JSONObject equipment = (JSONObject) detailInfo.get("equipment");
     character.setLevel(Integer.parseInt(detailStats.get("level").toString()));
     character.setExperience(Integer.parseInt(detailStats.get("experience").toString()));
     character.setHealth(Integer.parseInt(detailStats.get("health").toString()));
@@ -98,6 +101,26 @@ public class CharacterManager {
     character.setSpirit(Integer.parseInt(detailStats.get("spirit").toString()));
     character.setSpeed(Integer.parseInt(detailStats.get("speed").toString()));
     character.setLuck(Integer.parseInt(detailStats.get("luck").toString()));
+    if (equipment.get("weapon") != null)
+      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("weapon"))));
+    else
+      character.setEquippedWeapon(null);
+    if (equipment.get("helmet") != null)
+      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("helmet"))));
+    else
+      character.setEquippedHelmet(null);
+    if (equipment.get("chestplate") != null)
+      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("chestplate"))));
+    else
+      character.setEquippedChestplate(null);
+    if (equipment.get("shield") != null)
+      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("shield"))));
+    else
+      character.setEquippedShield(null);
+    if (equipment.get("boots") != null)
+      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(Math.toIntExact((long)equipment.get("boots"))));
+    else
+      character.setEquippedBoots(null);
   }
   
   public ArrayList<Character> getPartyMembers() {

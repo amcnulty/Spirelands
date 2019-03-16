@@ -132,6 +132,7 @@ public class SaveDataManager {
     keys.forEach(key -> {
       JSONObject character = (JSONObject) characters.get(key);
       JSONObject stats = (JSONObject) character.get("stats");
+      JSONObject equipment = (JSONObject) character.get("equipment");
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get("id"))) {
           stats.put("level", gameCharacter.getLevel());
@@ -146,7 +147,16 @@ public class SaveDataManager {
           stats.put("spirit", gameCharacter.getSpirit());
           stats.put("speed", gameCharacter.getSpeed());
           stats.put("luck", gameCharacter.getLuck());
-                  
+          if (gameCharacter.getEquippedWeapon() != null)
+            equipment.put("weapon", gameCharacter.getEquippedWeapon().getId());
+          if (gameCharacter.getEquippedHelmet() != null)
+            equipment.put("helmet", gameCharacter.getEquippedHelmet().getId());
+          if (gameCharacter.getEquippedChestplate() != null)
+            equipment.put("chestplate", gameCharacter.getEquippedChestplate().getId());
+          if (gameCharacter.getEquippedShield() != null)
+            equipment.put("shield", gameCharacter.getEquippedShield().getId());
+          if (gameCharacter.getEquippedBoots() != null)
+            equipment.put("boots", gameCharacter.getEquippedBoots().getId());
         }
       });
     });

@@ -311,6 +311,14 @@ public class Character {
     return equippedWeapon;
   }
   /**
+   * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip weapon from inventory use equipWeapon().
+   * @param equippedWeapon Weapon item to set as equipped weapon.
+   * @see #equipWeapon(WeaponItem)
+   */
+  public void setEquippedWeapon(WeaponItem equippedWeapon) {
+    this.equippedWeapon = equippedWeapon;
+  }
+  /**
    * Equip this character with the given weapon.
    * @param equippedWeapon Weapon to equip this character with.
    */
@@ -333,6 +341,14 @@ public class Character {
     return equippedHelmet;
   }
   /**
+   * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip helmet from inventory use equipHelmet().
+   * @param equippedHelmet Armor item to set as equipped helmet.
+   * @see #equipHelmet(ArmorItem)
+   */
+  public void setEquippedHelmet(ArmorItem equippedHelmet) {
+    this.equippedHelmet = equippedHelmet;
+  }
+  /**
    * Equip this character with the given helmet.
    * @param equippedHelmet The helmet to equip this character with.
    */
@@ -344,6 +360,7 @@ public class Character {
   }
   /**
    * Unequip this character's helmet.
+   * @param playAudio Flag to check if audio should be played while doing this operation.
    */
   public void unequipHelmet(boolean playAudio) {
     if (equippedHelmet != null) {
@@ -357,6 +374,14 @@ public class Character {
     return equippedChestplate;
   }
   /**
+   * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip chestplate from inventory use equipChestplate().
+   * @param equippedChestplate Armor item to set as equipped chestplate.
+   * @see #equipChestplate(ArmorItem)
+   */
+  public void setEquippedChestplate(ArmorItem equippedChestplate) {
+    this.equippedChestplate = equippedChestplate;
+  }
+  /**
    * Equip this character with the given chestplate.
    * @param equippedChestplate The chestplate to equip this character with.
    */
@@ -368,6 +393,7 @@ public class Character {
   }
   /**
    * Unequip this character's chestplate.
+   * @param playAudio Flag to check if audio should be played while doing this operation.
    */
   public void unequipChestplate(boolean playAudio) {
     if (equippedChestplate != null) {
@@ -381,6 +407,14 @@ public class Character {
     return equippedShield;
   }
   /**
+   * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip shield from inventory use equipShield().
+   * @param equippedShield Armor item to set as equipped shield.
+   * @see #equipShield(ArmorItem)
+   */
+  public void setEquippedShield(ArmorItem equippedShield) {
+    this.equippedShield = equippedShield;
+  }
+  /**
    * Equip this character with the given shield.
    * @param equippedShield The shield to equip this character with.
    */
@@ -392,7 +426,7 @@ public class Character {
   }
   /**
    * Unequip this character's shield.
-   * @param playAudio Flag for if the unequip sounds should be played with this action.
+   * @param playAudio Flag to check if audio should be played while doing this operation.
    */
   public void unequipShield(boolean playAudio) {
     if (equippedShield != null) {
@@ -406,6 +440,14 @@ public class Character {
     return equippedBoots;
   }
   /**
+   * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip boots from inventory use equipBoots().
+   * @param equippedBoots Armor item to set as equipped boots.
+   * @see #equipBoots(ArmorItem)
+   */
+  public void setEquippedBoots(ArmorItem equippedBoots) {
+    this.equippedBoots = equippedBoots;
+  }
+  /**
    * Equip this character with the given boots.
    * @param equippedBoots The shield to equip this character with.
    */
@@ -417,6 +459,7 @@ public class Character {
   }
   /**
    * Unequip this character's boots.
+   * @param playAudio Flag to check if audio should be played while doing this operation.
    */
   public void unequipBoots(boolean playAudio) {
     if (equippedBoots != null) {

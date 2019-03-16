@@ -80,7 +80,6 @@ public class Game extends GLCanvas implements Runnable {
 //    Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
 //    manager.setGold(2019);
 
-    
     if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor();
     setIconImage();
   }

@@ -32,6 +32,7 @@ public class InventoryManager {
    */
   @SuppressWarnings("unchecked")
   public void setInventoryData(JSONObject inventory) {
+    itemMap.clear();
     setGold(Math.toIntExact((long)(((JSONObject)inventory).get("gold"))));
     JSONArray refs = (JSONArray) inventory.get("refs");
     refs.forEach(ref -> {
