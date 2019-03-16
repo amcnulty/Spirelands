@@ -70,6 +70,14 @@
     "Direction": 2
   },
   "Inventory": {
-    "gold": 0
+    "gold": 643,
+    "refs": [
+      { "id": 3, "amount": 1 },
+      { "id": 0, "amount": 2},
+      { "id": 8, "amount": 1},
+      { "id": 31, "amount": 1},
+      { "id": 91, "amount": 1},
+      { "id": 103, "amount": 1}
+    ]
   }
 }

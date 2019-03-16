@@ -3,6 +3,8 @@ package com.monkeystomp.spirelands.inventory;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 /**
  * Inventory Manager class is a singleton class that is responsible for performing CRUD operations on the inventory in the game.
@@ -25,12 +27,36 @@ public class InventoryManager {
     return INSTANCE;
   }
   /**
+   * Sets up all inventory data for the current game.
+   * @param inventory The JSON data containing the inventory.
+   */
+  @SuppressWarnings("unchecked")
+  public void setInventoryData(JSONObject inventory) {
+    setGold(Math.toIntExact((long)(((JSONObject)inventory).get("gold"))));
+    JSONArray refs = (JSONArray) inventory.get("refs");
+    refs.forEach(ref -> {
+      int id = Math.toIntExact((long)((JSONObject)ref).get("id"));
+      int amount = Math.toIntExact((long)((JSONObject)ref).get("amount"));
+      setInventoryReference(Item.ITEM_MAP.get(id), amount);
+    });
+  }
+  /**
    * Adds an item to the inventory.
    * @param item The item to add to the inventory.
    */
   public void addToInventory(Item item) {
     if (itemMap.containsKey(item.getId())) itemMap.get(item.getId()).increaseAmount();
-    else itemMap.put(item.getId(), new InventoryReference(item, 1));
+//    else itemMap.put(item.getId(), new InventoryReference(item, 1));
+    else setInventoryReference(item, 1);
+  }
+  /**
+   * <p>Adds an inventory reference entry for the given item set at the given amount.</p>
+   * <p>Use this method for inventory creation on start up</p>
+   * @param item Item record to add to inventory.
+   * @param amount The amount of this item to add to inventory.
+   */
+  public void setInventoryReference(Item item, int amount) {
+    itemMap.put(item.getId(), new InventoryReference(item, amount));
   }
   /**
    * Removes an item from the inventory.
@@ -111,4 +137,9 @@ public class InventoryManager {
   public void addGold(int amount) {
     gold += amount;
   }
+
+  public HashMap<Integer, InventoryReference> getItemMap() {
+    return itemMap;
+  }
+  
 }

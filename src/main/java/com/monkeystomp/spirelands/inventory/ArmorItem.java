@@ -87,5 +87,10 @@ public class ArmorItem extends Item {
   public void setArmorType(String armorType) {
     this.armorType = armorType;
   }
+  
+  @Override
+  public int getId() {
+    return super.getId();
+  }
 
 }

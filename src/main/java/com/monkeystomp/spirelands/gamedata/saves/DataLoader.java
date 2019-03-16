@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gamedata.saves;
 
 import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.view.LevelView;
@@ -36,6 +37,7 @@ public class DataLoader {
     characters = (JSONObject) json.get("Characters");
     setSaveManager(fileName);
     setCharacterData();
+    setInventoryData();
     levelKey = (String)location.get("Level Key");
     x = Math.toIntExact((long)location.get("X"));
     y = Math.toIntExact((long)location.get("Y"));
@@ -54,6 +56,11 @@ public class DataLoader {
   
   private void setCharacterData() {
     CharacterManager.getCharacterManager().setupCharactersDetails(characters);
+  }
+  
+  private void setInventoryData() {
+    JSONObject inventory = (JSONObject) json.get("Inventory");
+    InventoryManager.getInventoryManager().setInventoryData(inventory);
   }
 
 }

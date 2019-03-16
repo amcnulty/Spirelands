@@ -4,10 +4,13 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
+import com.monkeystomp.spirelands.inventory.InventoryReference;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Set;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -106,6 +109,7 @@ public class SaveDataManager {
   public void saveGame() throws IOException {
     saveLocation();
     saveStats();
+    saveInventory();
     FileWriter file = new FileWriter(pathToSave + fileName);
     file.write(saveObject.toJSONString());
     file.flush();
@@ -148,4 +152,18 @@ public class SaveDataManager {
     });
   }
 
+  private void saveInventory() {
+    JSONObject inventory = (JSONObject) saveObject.get("Inventory");
+    inventory.put("gold", InventoryManager.getInventoryManager().getGold());
+    JSONArray refs = (JSONArray) inventory.get("refs");
+    refs.clear();
+    HashMap<Integer, InventoryReference> inventoryMap = InventoryManager.getInventoryManager().getItemMap();
+    inventoryMap.forEach((id, ref) -> {
+      JSONObject item = new JSONObject();
+      item.put("amount", ref.getAmount());
+      item.put("id", id);
+      refs.add(item);
+    });
+  }
+  
 }

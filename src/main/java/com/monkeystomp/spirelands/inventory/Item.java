@@ -4,7 +4,13 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.character.Character;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The Item class holds information about game items and has an interface for interacting with the inventory for the item.
@@ -28,6 +34,8 @@ public class Item {
    * Special type item
    */
   public static final String SPECIAL = "Special";
+  
+  public static final HashMap<Integer, Item> ITEM_MAP = new HashMap<>();
   
   private final String  title,
                         description,
@@ -1759,6 +1767,26 @@ public class Item {
     this.price = builder.price;
     this.thumbnail = builder.thumbnail;
     this.type = builder.type;
+  }
+  
+  static {
+    Item.ANCIENT_STAFF.setMap();
+  }
+  
+  public void setMap() {
+    Field[] fields = Item.class.getFields();
+    Item fieldValue;
+    for (Field fieldDef: fields) {
+      try {
+        fieldDef.setAccessible(true);
+        fieldValue = (Item)fieldDef.get(this);
+        Method getId = fieldValue.getClass().getDeclaredMethod("getId", new Class[]{});
+        Item.ITEM_MAP.put((Integer)getId.invoke(fieldValue), fieldValue);
+      } catch (IllegalArgumentException | IllegalAccessException | NoSuchMethodException | SecurityException | InvocationTargetException | ClassCastException ex) {
+        // Fail silently
+        //Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }
   }
   
   private int getNextId() {

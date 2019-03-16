@@ -93,4 +93,9 @@ public class EquipmentItem extends Item {
     INVENTORY_MANAGER.removeFromInventory(this);
   }
   
+  @Override
+  public int getId() {
+    return super.getId();
+  }
+  
 }

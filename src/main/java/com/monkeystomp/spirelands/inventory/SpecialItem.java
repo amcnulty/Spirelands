@@ -9,5 +9,10 @@ public class SpecialItem extends Item {
   public SpecialItem(ItemBuilder builder) {
     super(builder.type(Item.SPECIAL));
   }
-
+  
+  @Override
+  public int getId() {
+    return super.getId();
+  }
+  
 }

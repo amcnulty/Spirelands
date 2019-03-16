@@ -77,84 +77,9 @@ public class Game extends GLCanvas implements Runnable {
     InventoryManager manager = InventoryManager.getInventoryManager();
     // Equipment
     
-    for (int i = 0; i < 27; i++) {
-      manager.addToInventory(Item.SMALL_HP_POTION);
-      manager.addToInventory(Item.MEDIUM_HP_POTION);
-      manager.addToInventory(Item.HEALTH_BOTTLE);
-      manager.addToInventory(Item.MANA_VILE);
-      manager.addToInventory(Item.MANA_POTION);
-      manager.addToInventory(Item.MANA_BOTTLE);
-      manager.addToInventory(Item.RIBS);
-      manager.addToInventory(Item.APPLE);
-      manager.addToInventory(Item.BANANA);
-      manager.addToInventory(Item.DRAGON_TOOTH);
-      manager.addToInventory(Item.FEATHER);
-      manager.addToInventory(Item.COOKIE);
-      manager.addToInventory(Item.SPECIAL_CANDY);
-      manager.addToInventory(Item.TRAINING_BOOK_V1);
-      manager.addToInventory(Item.TRAINING_BOOK_V2);
-    }
-    
-    // Weapons
-    manager.addToInventory(Item.COMMON_SWORD);
-    manager.addToInventory(Item.KATANA_SWORD);
-    manager.addToInventory(Item.SKY_SABER);
-    manager.addToInventory(Item.SCIMITAR_SWORD);
-    manager.addToInventory(Item.CRUSADER_SWORD);
-    manager.addToInventory(Item.TALON_SWORD);
-    manager.addToInventory(Item.SPELLBLADE);
-    manager.addToInventory(Item.DARK_SWORD);
-    manager.addToInventory(Item.POISON_SWORD);
-    manager.addToInventory(Item.LONGSWORD);
-    manager.addToInventory(Item.DRAGON_SWORD);
-    manager.addToInventory(Item.SWORD_OF_THE_SPIRE);
-    
-    manager.addToInventory(Item.PUPIL_WAND);
-    manager.addToInventory(Item.GRADUATE_WAND);
-    manager.addToInventory(Item.TRI_COIL_WAND);
-    manager.addToInventory(Item.BLUNT_TIP_WAND);
-    manager.addToInventory(Item.EARTH_POWER);
-    manager.addToInventory(Item.RAINBOW_WAND);
-    manager.addToInventory(Item.AQUASTRIKE_WAND);
-    manager.addToInventory(Item.VOODOO_WAND);
-    manager.addToInventory(Item.WAND_OF_RICHES);
-    manager.addToInventory(Item.ELECTRO_WAND);
-    manager.addToInventory(Item.AZULAS_WAND);
-    manager.addToInventory(Item.FIRE_ELEMENT);
-    
-    manager.addToInventory(Item.WOOD_CLUB);
-    manager.addToInventory(Item.SMALL_MACE);
-    manager.addToInventory(Item.STEEL_MACE);
-    manager.addToInventory(Item.SNAGGLETOOTH_MACE);
-    manager.addToInventory(Item.COPPERHEAD_MACE);
-    manager.addToInventory(Item.MAD_BALL_MACE);
-    manager.addToInventory(Item.BLUE_STEEL);
-    manager.addToInventory(Item.EBONY_MACE);
-    manager.addToInventory(Item.GOLD_MACE);
-    manager.addToInventory(Item.AXE_CLUB);
-    manager.addToInventory(Item.GOLDEN_NUGGET);
-    manager.addToInventory(Item.POWER_ORB_MACE);
-    
-    
-    // Armor
-    
-    manager.addToInventory(Item.LEATHER_HELMET);
-    manager.addToInventory(Item.WAR_HELMET);
-    manager.addToInventory(Item.METAL_HELMET);
-    manager.addToInventory(Item.GOLD_HELMET);
-    manager.addToInventory(Item.LEATHER_JACKET);
-    manager.addToInventory(Item.WAR_TUNIC);
-    manager.addToInventory(Item.METAL_VEST);
-    manager.addToInventory(Item.GOLD_TUNIC);
-    manager.addToInventory(Item.LEATHER_BOOTS);
-    manager.addToInventory(Item.WAR_BOOTS);
-    manager.addToInventory(Item.STEEL_BOOTS);
-    manager.addToInventory(Item.GOLD_BOOTS);
-    manager.addToInventory(Item.WOOD_SHIELD);
-    manager.addToInventory(Item.WAR_SHIELD);
-    manager.addToInventory(Item.METAL_SHIELD);
-    manager.addToInventory(Item.KINGS_SHIELD);
-    
+//    Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
+//    manager.setGold(2019);
+
     
     if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor();
     setIconImage();

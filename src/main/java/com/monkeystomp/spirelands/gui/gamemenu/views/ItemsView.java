@@ -98,7 +98,10 @@ public class ItemsView extends DisplayView {
   }
   
   private void setCurrentPage() {
-    if (currentPageIndex >= pages.size() - 1) currentPageIndex = pages.size() - 1;
+    if (currentPageIndex >= pages.size() - 1) {
+      currentPageIndex = pages.size() - 1;
+      if (currentPageIndex < 0) currentPageIndex = 0;
+    }
     pagination.highlightCurrentPage(currentPageIndex);
   }
   

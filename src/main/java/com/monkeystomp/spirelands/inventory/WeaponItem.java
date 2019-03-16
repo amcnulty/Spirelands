@@ -69,4 +69,9 @@ public class WeaponItem extends Item {
     return magicPower;
   }
   
+  @Override
+  public int getId() {
+    return super.getId();
+  }
+  
 }

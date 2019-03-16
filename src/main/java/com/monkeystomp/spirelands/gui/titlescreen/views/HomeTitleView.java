@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.TestLevel;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
@@ -36,8 +37,10 @@ public class HomeTitleView extends TitleView {
   }
 
   private void handleStartButtonClick() {
+    // All required setup for starting a new game...
     SaveDataManager.getSaveDataManager().initSaveObject();
     CharacterManager.getCharacterManager().setupCharactersDetails((JSONObject)SaveDataManager.getSaveDataManager().getSaveObject().get("Characters"));
+    InventoryManager.getInventoryManager().setInventoryData((JSONObject)SaveDataManager.getSaveDataManager().getSaveObject().get("Inventory"));
 //    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
 // left of house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
