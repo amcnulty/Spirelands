@@ -16,7 +16,7 @@ public class GoldPanel {
   private final FontInfo goldFont = GameFonts.getlightText_bold_23();
   
   public GoldPanel() {
-    goldFont.setX(255);
+    goldFont.setX(235);
     goldFont.setY(199);
   }
   /**
@@ -25,7 +25,7 @@ public class GoldPanel {
    * @param gl Instance of the GL2 class.
    */
   public void render(Screen screen, GL2 gl) {
-    screen.renderSprite(gl, 222, 193, Sprite.GOLD_INDICATOR, false);
+    screen.renderSprite(gl, 218, 197, Sprite.GOLD_INDICATOR, false);
     // Update gold amount
     goldFont.setText(String.valueOf(InventoryManager.getInventoryManager().getGold()));
     screen.renderFonts(goldFont); 

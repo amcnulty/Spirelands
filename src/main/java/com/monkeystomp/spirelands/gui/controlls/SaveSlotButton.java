@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.gui.controlls;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -31,15 +32,18 @@ public class SaveSlotButton extends Button {
                     spaceBetweenThumbnails = 20;
   private final String  fileName,
                         pathToSave = "./saves/";
-  private final Sprite separator = new Sprite(40, 1, GameColors.GAME_MENU_MUTED_TEXT);
+  private final Sprite  separator = new Sprite(40, 1, GameColors.GAME_MENU_MUTED_TEXT),
+                        smallGoldIndicator = new Sprite(Sprite.GOLD_INDICATOR, 75.0);
   private boolean slotEmpty = true;
   private final FontInfo  levelNameFont = GameFonts.getDarkText_plain_18(),
-                          levelFontInfo = GameFonts.getDarkText_plain_18();
+                          levelFontInfo = GameFonts.getDarkText_plain_18(),
+                          goldFontInfo = GameFonts.getDarkText_plain_18();
   private ArrayList<Sprite> partyMembers = new ArrayList<>();
   private JSONObject  json,
                       characters,
                       location;
   private final JSONParser parser = new JSONParser();
+  private final JSONUtil jsonUtil = new JSONUtil();
   
   public SaveSlotButton(int x, int y, String fileName, ICallback callback) {
     super("", x, y, WIDTH, HEIGHT, callback);
@@ -69,15 +73,17 @@ public class SaveSlotButton extends Button {
     levelNameFont.setX(x + WIDTH / 2);
     levelNameFont.setY(y + 10);
     levelNameFont.centerText();
-    levelFontInfo.setText("Level: " + ((JSONObject)((JSONObject)characters.get("Luke")).get("stats")).get("level").toString());
-    levelFontInfo.setX(x + width / 2);
+    levelFontInfo.setText("Level: " + jsonUtil.getNestedString(characters, new String[]{"Luke", "stats", "level"}));
+    levelFontInfo.setX(x + width / 5);
     levelFontInfo.setY(levelNameFont.getY() + 45);
-    levelFontInfo.centerText();
+    goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{"Inventory", "gold"})));
+    goldFontInfo.setX(x + width / 5 + 17);
+    goldFontInfo.setY(levelFontInfo.getY() + 10);
     Set<?> keys = characters.keySet();
     keys.forEach(characterName -> {
       JSONObject character = (JSONObject)characters.get(characterName);
       JSONObject partyInfo = (JSONObject)character.get("partyInfo");
-      if ((boolean)partyInfo.get("inParty")) {
+      if (jsonUtil.getNestedBoolean(character, new String[]{"partyInfo", "inParty"})) {
         CharacterManager.getCharacterManager().getCharacters().forEach(gameCharacter -> {
           if (gameCharacter.getId().equals((String)character.get("id"))) partyMembers.add(new Sprite(gameCharacter.getThumbnail(), 50f));
         });
@@ -129,6 +135,8 @@ public class SaveSlotButton extends Button {
     if (!slotEmpty) {
       screen.renderFonts(levelNameFont);
       screen.renderFonts(levelFontInfo);
+      screen.renderSprite(gl, goldFontInfo.getX() - 17, goldFontInfo.getY() - 3, Sprite.GOLD_INDICATOR, false);
+      screen.renderFonts(goldFontInfo);
       screen.renderSprite(gl, x + width / 2 - separator.getWidth() / 2, levelNameFont.getY() + 10, separator, false);
       for (int i = 0; i < partyMembers.size(); i++) {
         screen.renderSprite(gl, x + thumbnailX + i * spaceBetweenThumbnails, y + thumbnailY, partyMembers.get(i), false);

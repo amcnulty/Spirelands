@@ -53,7 +53,7 @@ public class Sprite {
   /**
    * The gold indicator icon.
    */
-  public static final Sprite GOLD_INDICATOR = new Sprite("./resources/gui/gold_indicator.png");
+  public static final Sprite GOLD_INDICATOR = new Sprite(new Sprite("./resources/gui/gold_indicator.png"), 50.0);
   /**
    * Wooden stairs that turn left at the end
    */
@@ -217,7 +217,7 @@ public class Sprite {
   }
   /**
    * Creates a scaled sprite from an existing one based on a percentage value.
-   * @param original The original sprite to form the new sprite from.
+   * @param original The original sprite to create the new sprite from.
    * @param percentage Percentage to scale new image range from 1.0 and up
    */
   public Sprite(Sprite original, double percentage) {
@@ -227,7 +227,11 @@ public class Sprite {
     this.rawHeight = original.getHeight();
     this.pixels = original.getPixels();
   }
-  
+  /**
+   * Creates a scaled sprite set to a specific render size. This is used for square sprites.
+   * @param original The original sprite to create the new sprite from.
+   * @param renderSize Pixel size to render image at.
+   */
   public Sprite(Sprite original, int renderSize) {
     this.width = renderSize;
     this.height = renderSize;
