@@ -112,6 +112,11 @@ public class ArmorView extends DisplayView {
   public void setCharacter(com.monkeystomp.spirelands.character.Character character) {
     super.setCharacter(character);
     armorDetailCard.setCharacter(character);
+    createListItems(manager.getItemsByType(Item.ARMOR));
+    // Start on page one when switching characters.
+    pagination.highlightCurrentPage(0);
+    currentPageIndex = 0;
+    armorDetailCard.setCharacter(character);
   }
 
   @Override
