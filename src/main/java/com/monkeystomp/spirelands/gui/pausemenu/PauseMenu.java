@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmExitView;
+import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmQuitToMenuView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmSaveView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.HomeView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.PauseView;
@@ -33,12 +34,17 @@ public class PauseMenu {
    * The confirmation pop up before saving game.
    */
   public static final String CONFIRM_SAVE_VIEW = "Confirm Save";
+  /**
+   * The confirmation pop up before quitting to the main menu from the pause menu.
+   */
+  public static final String CONFIRM_QUIT_TO_MENU_VIEW = "Quit To Menu";
   
   private final Consumer<String> IPauseViewSetter = view -> handleViewChange(view);
   private final PauseView homeView = new HomeView(IPauseViewSetter),
                           saveView = new SaveView(IPauseViewSetter),
                           confirmExitView = new ConfirmExitView(IPauseViewSetter),
-                          confirmSaveView = new ConfirmSaveView(IPauseViewSetter);
+                          confirmSaveView = new ConfirmSaveView(IPauseViewSetter),
+                          confirmQuitToMenuView = new ConfirmQuitToMenuView(IPauseViewSetter);
   private final HashMap<String, PauseView> pauseViewMap = new HashMap<>();
   private PauseView currentView = homeView;
   private final SoundEffects sfx = new SoundEffects();
@@ -48,6 +54,7 @@ public class PauseMenu {
     pauseViewMap.put(SAVE_VIEW, saveView);
     pauseViewMap.put(CONFIRM_EXIT_VIEW, confirmExitView);
     pauseViewMap.put(CONFIRM_SAVE_VIEW, confirmSaveView);
+    pauseViewMap.put(CONFIRM_QUIT_TO_MENU_VIEW, confirmQuitToMenuView);
   }
   /**
    * Sets the callback method that fires when the pause menu gets closed.
@@ -61,7 +68,7 @@ public class PauseMenu {
    * @param callback The callback method that will get fired when the quit to main menu button is pressed.
    */
   public void setQuitToMenuCommand(ICallback callback) {
-    homeView.setQuitToMenuCommand(callback);
+    confirmQuitToMenuView.setQuitToMenuCommand(callback);
   }
   /**
    * Opens the pause menu.

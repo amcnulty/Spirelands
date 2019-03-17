@@ -39,11 +39,11 @@ public class HomeView extends PauseView {
   }
   
   private void handleMenuButtonClick() {
-    quitToMenuCommand.execute();
+    IPauseViewSetter.accept(PauseMenu.CONFIRM_QUIT_TO_MENU_VIEW);
   }
 
   private void handleExitButtonClick() {
-    System.exit(0);
+    IPauseViewSetter.accept(PauseMenu.CONFIRM_EXIT_VIEW);
   }
 
   @Override

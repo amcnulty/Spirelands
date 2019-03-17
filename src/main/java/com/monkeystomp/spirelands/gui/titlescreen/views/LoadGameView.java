@@ -28,23 +28,29 @@ public class LoadGameView extends TitleView {
   private final FontInfo  displayFont = GameFonts.getDarkText_bold_22(),
                           slot1Font = GameFonts.getDarkText_plain_18(),
                           slot2Font = GameFonts.getDarkText_plain_18(),
-                          slot3Font = GameFonts.getDarkText_plain_18();
+                          slot3Font = GameFonts.getDarkText_plain_18(),
+                          warningFont = GameFonts.getWarningText_bold_18();
+  private boolean showWarning = false;
   private String selectedSlot;
   private final PrimaryButton
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     loadButton = new PrimaryButton("Load", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleLoadClick());
+  private SaveSlotButton selectedSlotButton;
   private final SaveSlotButton
     slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, "slot1.json", () -> {
       selectedSlot = "slot1.json";
       resetSlotButtons();
+      selectedSlotButton = this.slot1;
     }),
     slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, "slot2.json", () -> {
       selectedSlot = "slot2.json";
       resetSlotButtons();
+      selectedSlotButton = this.slot2;
     }),
     slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, "slot3.json", () -> {
       selectedSlot = "slot3.json";
       resetSlotButtons();
+      selectedSlotButton = this.slot3;
     });
   private final DataLoader loader = new DataLoader();
   
@@ -72,15 +78,36 @@ public class LoadGameView extends TitleView {
     slot3Font.centerText();
   }
   
+  private void setWarningText(String message) {
+    warningFont.setText(message);
+    warningFont.setX(Screen.getWidth() / 2);
+    warningFont.setY(loadButton.getTop() - 8);
+    warningFont.centerText();
+  }
+  
   private void handleLoadClick() {
-    try {
-      ILevelViewSetter.accept(loader.getLevelView(selectedSlot));
-    } catch (IOException e) {
-      e.printStackTrace();
-      System.out.println("Problem loading file at saves/" + selectedSlot);
-    } catch (ParseException e) {
-      e.printStackTrace();
-      System.out.println("Problem reading data in file saves/" + selectedSlot);
+    if (selectedSlotButton != null) {
+      if (!selectedSlotButton.isSlotEmpty()) {
+        try {
+          ILevelViewSetter.accept(loader.getLevelView(selectedSlot));
+        } catch (IOException e) {
+          e.printStackTrace();
+          showWarning = true;
+          setWarningText("Problem loading file at saves/" + selectedSlot);
+        } catch (ParseException e) {
+          e.printStackTrace();
+          showWarning = true;
+          setWarningText("Problem reading data in file saves/" + selectedSlot);
+        }
+      }
+      else {
+        setWarningText("Selected slot does not contain save data!!");
+        showWarning = true;
+      }
+    }
+    else {
+      setWarningText("Please select a slot to load game!!");
+      showWarning = true;
     }
   }
   
@@ -97,6 +124,7 @@ public class LoadGameView extends TitleView {
 
   @Override
   public void enteringView() {
+    showWarning = false;
   }
   
   @Override
@@ -123,6 +151,7 @@ public class LoadGameView extends TitleView {
     slot1.render(screen, gl);
     slot2.render(screen, gl);
     slot3.render(screen, gl);
+    if (showWarning) screen.renderFonts(warningFont);
     cancelButton.render(screen, gl);
     loadButton.render(screen, gl);
   }

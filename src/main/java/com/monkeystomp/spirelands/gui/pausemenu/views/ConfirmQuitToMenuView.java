@@ -14,26 +14,26 @@ import java.util.function.Consumer;
  *
  * @author Aaron Michael McNulty
  */
-public class ConfirmExitView extends PauseView {
+public class ConfirmQuitToMenuView extends PauseView {
   
   private final Sprite  backdrop = new Sprite(120, 50, GameColors.TITLE_SCREEN_MENU_BACKDROP);
   private final PrimaryButton
-    exitButton = new PrimaryButton("Exit", Screen.getWidth() / 2 + 22, Screen.getHeight() / 2 + 8, 41, 11, () -> {
-      System.exit(0);
+    exitButton = new PrimaryButton("Quit To Menu", Screen.getWidth() / 2 + 22, Screen.getHeight() / 2 + 8, 41, 11, () -> {
+      quitToMenuCommand.execute();
     }),
     cancelButton = new PrimaryButton("Cancel", Screen.getWidth() / 2 - 22, Screen.getHeight() / 2 + 8, 41, 11, () -> {
       IPauseViewSetter.accept(PauseMenu.HOME_VIEW);
     });
   private final FontInfo  headerFont1 = GameFonts.getDarkText_plain_18(),
                           headerFont2 = GameFonts.getDarkText_plain_18();
-
-  public ConfirmExitView(Consumer<String> IPauseViewSetter) {
+  
+  public ConfirmQuitToMenuView(Consumer<String> IPauseViewSetter) {
     super(IPauseViewSetter);
     setupFonts();
   }
   
   private void setupFonts() {
-    headerFont1.setText("Are you sure you want to exit?");
+    headerFont1.setText("Are you sure you want to quit?");
     headerFont1.setX(Screen.getWidth() / 2);
     headerFont1.setY(Screen.getHeight() / 2 - 16);
     headerFont1.centerText();
