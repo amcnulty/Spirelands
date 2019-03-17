@@ -61,6 +61,10 @@ public class HomeTitleView extends TitleView {
   private void handleExitClick() {
     System.exit(0);
   }
+
+  @Override
+  public void enteringView() {
+  }
   
   @Override
   public void exitingView() {}

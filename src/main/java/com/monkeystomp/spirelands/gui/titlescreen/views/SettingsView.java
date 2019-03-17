@@ -221,6 +221,10 @@ public class SettingsView extends TitleView {
     exitingView();
     ITitleViewSetter.accept(new HomeTitleView(ILevelViewSetter, ITitleViewSetter, IVolumeSetter));
   }
+
+  @Override
+  public void enteringView() {
+  }
   
   @Override
   public void exitingView() {

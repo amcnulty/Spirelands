@@ -27,22 +27,32 @@ public class SaveView extends PauseView {
   private final FontInfo  displayFont = GameFonts.getDarkText_bold_22(),
                           slot1Font = GameFonts.getDarkText_plain_18(),
                           slot2Font = GameFonts.getDarkText_plain_18(),
-                          slot3Font = GameFonts.getDarkText_plain_18();
+                          slot3Font = GameFonts.getDarkText_plain_18(),
+                          errorFont = GameFonts.getWarningText_bold_18();
+  private boolean slotSelected = false,
+                  showErrorMessage = false;
   private final PrimaryButton
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     saveButton = new PrimaryButton("Save", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleSaveClick());
+  private SaveSlotButton selectedSlot;
   private final SaveSlotButton
     slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2, "slot1.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot1.json");
       resetSlotButtons();
+      slotSelected = true;
+      selectedSlot = this.slot1;
     }),
     slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2, "slot2.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot2.json");
       resetSlotButtons();
+      slotSelected = true;
+      selectedSlot = this.slot2;
     }),
     slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2, "slot3.json", () -> {
       SaveDataManager.getSaveDataManager().setFileName("slot3.json");
       resetSlotButtons();
+      slotSelected = true;
+      selectedSlot = this.slot3;
     });
     
   
@@ -68,29 +78,58 @@ public class SaveView extends PauseView {
     slot3Font.setX(Screen.getWidth() * 4 / 5);
     slot3Font.setY(headingY + 15);
     slot3Font.centerText();
+    errorFont.setText("Plese select a slot to save game!!");
+    errorFont.setX(Screen.getWidth() / 2);
+    errorFont.setY(saveButton.getTop() - 8);
+    errorFont.centerText();
   }
   
   private void resetSlotButtons() {
     slot1.reset();
     slot2.reset();
     slot3.reset();
+    slotSelected = false;
+    selectedSlot = null;
   }
   
   private void handleSaveClick() {
-    try {
-      SaveDataManager.getSaveDataManager().saveGame();
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (slotSelected && selectedSlot != null) {
+      if (!selectedSlot.isSlotEmpty()) {
+        IPauseViewSetter.accept(PauseMenu.CONFIRM_SAVE_VIEW);
+      }
+      else {
+        try {
+          SaveDataManager.getSaveDataManager().saveGame();
+          initSlots();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    else {
+      showErrorMessage = true;
     }
   }
   
   private void handleCancelClick() {
     IPauseViewSetter.accept(PauseMenu.HOME_VIEW);
   }
+  
+  private void initSlots() {
+    slot1.initSlot();
+    slot2.initSlot();
+    slot3.initSlot();
+  }
+
+  @Override
+  public void enteringView() {
+    initSlots();
+  }
 
   @Override
   public void exitingView() {
     resetSlotButtons();
+    showErrorMessage = false;
   }
   
   @Override
@@ -112,6 +151,7 @@ public class SaveView extends PauseView {
     slot1.render(screen, gl);
     slot2.render(screen, gl);
     slot3.render(screen, gl);
+    if (showErrorMessage && !slotSelected) screen.renderFonts(errorFont);
     cancelButton.render(screen, gl);
     saveButton.render(screen, gl);
   }

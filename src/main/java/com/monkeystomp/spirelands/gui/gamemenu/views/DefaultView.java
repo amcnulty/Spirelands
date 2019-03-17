@@ -63,6 +63,10 @@ public class DefaultView extends DisplayView {
       button.setDisabled(true);
     }
   }
+
+  @Override
+  public void enteringView() {
+  }
   
   @Override
   public void exitingView() {

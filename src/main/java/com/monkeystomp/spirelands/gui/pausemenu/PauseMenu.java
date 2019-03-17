@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmExitView;
+import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmSaveView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.HomeView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.PauseView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.SaveView;
@@ -28,11 +29,16 @@ public class PauseMenu {
    * The confirmation pop up before exiting the game from the pause menu.
    */
   public static final String CONFIRM_EXIT_VIEW = "Confirm Exit";
+  /**
+   * The confirmation pop up before saving game.
+   */
+  public static final String CONFIRM_SAVE_VIEW = "Confirm Save";
   
   private final Consumer<String> IPauseViewSetter = view -> handleViewChange(view);
   private final PauseView homeView = new HomeView(IPauseViewSetter),
                           saveView = new SaveView(IPauseViewSetter),
-                          confirmExitView = new ConfirmExitView(IPauseViewSetter);
+                          confirmExitView = new ConfirmExitView(IPauseViewSetter),
+                          confirmSaveView = new ConfirmSaveView(IPauseViewSetter);
   private final HashMap<String, PauseView> pauseViewMap = new HashMap<>();
   private PauseView currentView = homeView;
   private final SoundEffects sfx = new SoundEffects();
@@ -41,6 +47,7 @@ public class PauseMenu {
     pauseViewMap.put(HOME_VIEW, homeView);
     pauseViewMap.put(SAVE_VIEW, saveView);
     pauseViewMap.put(CONFIRM_EXIT_VIEW, confirmExitView);
+    pauseViewMap.put(CONFIRM_SAVE_VIEW, confirmSaveView);
   }
   /**
    * Sets the callback method that fires when the pause menu gets closed.
@@ -81,6 +88,7 @@ public class PauseMenu {
   private void handleViewChange(String view) {
     currentView.exitingView();
     currentView = pauseViewMap.get(view);
+    currentView.enteringView();
   }
   /**
    * Updates the pause menu.

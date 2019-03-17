@@ -9,6 +9,10 @@ import com.monkeystomp.spirelands.graphics.Screen;
  */
 public interface Viewable {
   /**
+   * Life cycle method that is called when the view is being entered.
+   */
+  public void enteringView();
+  /**
    * Life cycle method that is called when the view is being closed.
    */
   public void exitingView();

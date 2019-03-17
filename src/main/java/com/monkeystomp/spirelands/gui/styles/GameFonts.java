@@ -54,6 +54,13 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, getAdjustedFontSize(18)), new Color(GameColors.DARK_TEXT)));
   }
   /**
+   * Warning text for menu screens.
+   * @return The font info object.
+   */
+  public static FontInfo getWarningText_bold_18() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(18)), new Color(GameColors.DANGER_BUTTON_RED)));
+  }
+  /**
    * Game menu primary text
    * @return The font info object.
    */

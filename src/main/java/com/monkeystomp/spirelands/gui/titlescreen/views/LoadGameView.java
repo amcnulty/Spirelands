@@ -2,7 +2,6 @@ package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
-import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
@@ -13,8 +12,6 @@ import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.view.LevelView;
 import java.io.IOException;
 import java.util.function.Consumer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -96,6 +93,10 @@ public class LoadGameView extends TitleView {
     slot1.reset();
     slot2.reset();
     slot3.reset();
+  }
+
+  @Override
+  public void enteringView() {
   }
   
   @Override

@@ -64,13 +64,13 @@ public class CharacterManager {
     character.setThumbnail(new Sprite(jsonUtil.getNestedString(baseInfo, new String[]{"details", "thumbnail"})));
     character.setWeaponType(jsonUtil.getNestedString(baseInfo, new String[]{"details", "weaponType"}));
     character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "healthWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "manaWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "strengthWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "defenseWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "intellectWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "spiritWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "speedWeight"}));
-    character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "luckWeight"}));
+    character.setManaWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "manaWeight"}));
+    character.setStrengthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "strengthWeight"}));
+    character.setDefenseWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "defenseWeight"}));
+    character.setIntellectWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "intellectWeight"}));
+    character.setSpiritWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "spiritWeight"}));
+    character.setSpeedWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "speedWeight"}));
+    character.setLuckWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "luckWeight"}));
     return character;
   }
   

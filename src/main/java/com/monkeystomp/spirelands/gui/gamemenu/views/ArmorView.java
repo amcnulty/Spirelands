@@ -120,6 +120,10 @@ public class ArmorView extends DisplayView {
   }
 
   @Override
+  public void enteringView() {
+  }
+
+  @Override
   public void exitingView() {
     armorDetailCard.closePopovers();
     showingArmorDetailCard = true;

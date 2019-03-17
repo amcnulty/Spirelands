@@ -47,6 +47,10 @@ public class HomeView extends PauseView {
   }
 
   @Override
+  public void enteringView() {
+  }
+
+  @Override
   public void exitingView() {
   }
 

@@ -110,6 +110,10 @@ public class WeaponView extends DisplayView {
   }
 
   @Override
+  public void enteringView() {
+  }
+
+  @Override
   public void exitingView() {
     weaponDetailCard.closePopover();
     showingWeaponDetailCard = true;

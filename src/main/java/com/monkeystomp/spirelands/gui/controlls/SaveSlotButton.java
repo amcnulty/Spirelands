@@ -61,13 +61,14 @@ public class SaveSlotButton extends Button {
         json = (JSONObject) parser.parse(new FileReader(saveFile));
         characters = (JSONObject) json.get("Characters");
         location = (JSONObject) json.get("Location");
+        createButtonSprites();
         setSlotDisplayData();
       } catch (IOException | ParseException e) {
         e.printStackTrace();
       }
     }
   }
-  
+
   private void setSlotDisplayData() {
     levelNameFont.setText((String)location.get("Level Name"));
     levelNameFont.setX(x + WIDTH / 2);
@@ -79,6 +80,7 @@ public class SaveSlotButton extends Button {
     goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{"Inventory", "gold"})));
     goldFontInfo.setX(x + width / 5 + 17);
     goldFontInfo.setY(levelFontInfo.getY() + 10);
+    partyMembers.clear();
     Set<?> keys = characters.keySet();
     keys.forEach(characterName -> {
       JSONObject character = (JSONObject)characters.get(characterName);
@@ -89,6 +91,16 @@ public class SaveSlotButton extends Button {
         });
       }
     });
+  }
+  /**
+   * Initializes this save slot by checking if the file exists and if it does it will update the label.
+   */
+  public void initSlot() {
+    checkIfFileExists();
+  }
+
+  public boolean isSlotEmpty() {
+    return slotEmpty;
   }
   
   private void createButtonSprites() {

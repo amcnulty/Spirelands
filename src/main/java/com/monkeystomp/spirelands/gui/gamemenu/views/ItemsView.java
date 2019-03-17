@@ -163,6 +163,10 @@ public class ItemsView extends DisplayView {
       itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
     }
   }
+
+  @Override
+  public void enteringView() {
+  }
   
   @Override
   public void exitingView() {
