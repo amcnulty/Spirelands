@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.view;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
@@ -48,14 +49,14 @@ public class LevelView extends GameView {
   
   private void pauseLevel() {
     pauseMenu.openMenu();
-    level.getMusicPlayer().pause();
+    Music.getMusicPlayer().pause();
     level.saveLevelState();
     gamePaused = true;
   }
   
   private void resumeLevel() {
     pauseMenu.closeMenu();
-    level.getMusicPlayer().resume();
+    Music.getMusicPlayer().resume();
     gamePaused = false;
   }
   

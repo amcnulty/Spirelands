@@ -190,7 +190,7 @@ public class TestLevel extends Level {
   
   @Override
   protected void startMusic() {
-    music.play(Music.SIMPLE_TOWN);
+    Music.getMusicPlayer().play(Music.SIMPLE_TOWN);
   }
   
   @Override

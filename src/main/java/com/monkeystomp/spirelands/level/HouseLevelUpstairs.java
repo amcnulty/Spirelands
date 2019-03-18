@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.level;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
@@ -164,6 +165,11 @@ public class HouseLevelUpstairs extends Level {
     wall.createWallFront(config);
     
     solidEntities.add(wall);
+  }
+  
+  @Override
+  protected void startMusic() {
+    Music.getMusicPlayer().play(Music.NEUTRAL_IN_A_HOUSE);
   }
     
   @Override

@@ -50,8 +50,6 @@ public class Level implements Runnable {
   protected DialogBox dialogBox = new DialogBox();
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
-  // Music player
-  protected Music music = new Music();
   // LightMap Manager
   protected LightMap lightMap = new LightMap();
   // Entities
@@ -254,10 +252,6 @@ public class Level implements Runnable {
     return player;
   }
   
-  public Music getMusicPlayer() {
-    return music;
-  }
-  
   public DialogBox getDialogBox() {
     return dialogBox;
   }
@@ -313,8 +307,6 @@ public class Level implements Runnable {
   }
   
   private void exitLevel() {
-    // Stop music playing
-    music.stop();
     keyboard.removeKeyPressNotifier(notifier);
     saveLevelState();
     if (isPortalSet) exitPortal.enterPortal();

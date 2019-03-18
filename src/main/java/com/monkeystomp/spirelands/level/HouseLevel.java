@@ -176,7 +176,7 @@ public class HouseLevel extends Level {
   
   @Override
   protected void startMusic() {
-    if (!music.isPlaying()) music.play(Music.NEUTRAL_IN_A_HOUSE);
+    Music.getMusicPlayer().play(Music.NEUTRAL_IN_A_HOUSE);
   }
   
   @Override

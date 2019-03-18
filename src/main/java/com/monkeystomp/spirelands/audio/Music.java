@@ -71,24 +71,36 @@ public class Music {
    */
   public static String AIRSHIP_SONG = "./resources/audio/music/airship_song_remix.wav";
   
+  private static final Music INSTANCE = new Music();
   private Clip clip;
   private long trackTime;
+  private String currentSong = "";
+  
+  private Music() {}
+  
+  public static Music getMusicPlayer() {
+    return INSTANCE;
+  }
   /**
    * Plays a song on loop.
    * @param path Path to the audio file to load and play.
    */
   public void play(String path) {
-    try {
-      AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
-      clip = AudioSystem.getClip();
-      clip.open(ais);
-      clip.loop(Clip.LOOP_CONTINUOUSLY);
-      ais.close();
-      setVolume(SettingsManager.getSettingsManager().getMusicVolume());
-      clip.start();
-    }
-    catch (Exception e) {
-      e.printStackTrace();
+    if (!path.equals(currentSong)) {
+      stop();
+      currentSong = path;
+      try {
+        AudioInputStream ais = AudioSystem.getAudioInputStream(new File(path));
+        clip = AudioSystem.getClip();
+        clip.open(ais);
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
+        ais.close();
+        setVolume(SettingsManager.getSettingsManager().getMusicVolume());
+        clip.start();
+      }
+      catch (Exception e) {
+        e.printStackTrace();
+      }
     }
   }
   /**

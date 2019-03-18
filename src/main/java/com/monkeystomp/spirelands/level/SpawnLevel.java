@@ -65,7 +65,7 @@ public class SpawnLevel extends Level {
   
   @Override
   protected void startMusic() {
-    music.play(Music.TOWN_JINGLE);
+    Music.getMusicPlayer().play(Music.TOWN_JINGLE);
   }
 
   @Override

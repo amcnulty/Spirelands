@@ -20,7 +20,6 @@ public class TitleScreen extends GameView {
   private final Sprite titleScreenBackground = new Sprite("./resources/backgrounds/title_screen.jpg");
   private final Sprite logo = new Sprite(new Sprite("./resources/logo/spirelands_logo_new.png"), 25.0);
   private final FontInfo copyright = GameFonts.getPrimaryButtonText();
-  private final Music music = new Music();
   private float backgroundX = 0,
               backgroundY = 0,
               deltaX = 0,
@@ -28,7 +27,7 @@ public class TitleScreen extends GameView {
   private TitleView currentView = new HomeTitleView(
     levelView -> viewManager.changeView(levelView),
     titleView -> changeTitleView(titleView),
-    volume -> music.setVolume(volume)
+    volume -> Music.getMusicPlayer().setVolume(volume)
   );
   
   public TitleScreen() {
@@ -41,11 +40,7 @@ public class TitleScreen extends GameView {
   }
   
   private void startMusic() {
-    music.play(Music.TITLE_MUSIC);
-  }
-  
-  private void stopMusic() {
-    music.stop();
+    Music.getMusicPlayer().play(Music.TITLE_MUSIC);
   }
   
   private void updateBackgroundCoords() {
@@ -64,7 +59,6 @@ public class TitleScreen extends GameView {
   
   @Override
   public void leaveView() {
-    stopMusic();
   }
   
   @Override
