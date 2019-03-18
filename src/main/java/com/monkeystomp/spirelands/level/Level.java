@@ -300,18 +300,6 @@ public class Level implements Runnable {
     isPortalSet = true;
   }
   
-  public void changeScenes(Portal portal) {
-    transitionFader.startTransitionOut(() -> {
-      tiles.clear();
-      solidEntities.clear();
-      portals.clear();
-      this.spawnCoordinate = portal.getSpawnCoordinate();
-      changeScenes(portal.getSceneKey());
-    });
-  }
-  
-  protected void changeScenes(String sceneKey) {}
-
   public void setLevelChanger(ILevelChanger IChanger) {
     this.IChanger = IChanger;
   }

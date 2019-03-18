@@ -196,15 +196,9 @@ public class GuardPlayer extends Player {
   }
   
   private void enterPortal(Portal exitPortal) {
-    if (exitPortal.portalExitsLevel()) {
-      level.setExitPortal(exitPortal);
-      destroyPlayer();
-      level.transitionOutOfLevel();
-    }
-    else {
-      destroyPlayer();
-      level.changeScenes(exitPortal);
-    }
+    level.setExitPortal(exitPortal);
+    destroyPlayer();
+    level.transitionOutOfLevel();
   }
   
   private void destroyPlayer() {
