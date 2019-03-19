@@ -21,7 +21,7 @@ public class SpawnLevel extends Level {
   /**
    * Id used for save and load game.
    */
-  public static final String LEVEL_ID = "SPAWN_LEVEL";
+  public static final String LEVEL_ID = "glRtFCx0g6";
   private final String LEVEL_NAME = "Beach Front";
   private final String BITMAP_PATH = "./resources/textures/worlds/beach.png";
   private int time = 0;
@@ -44,7 +44,7 @@ public class SpawnLevel extends Level {
   protected void addPortals() {
     Bounds bounds = new Bounds();
     bounds.setQuadBounds(239, 640, 273, 624);
-    portals.add(new Portal(bounds, TestLevel.westEntrance, "TEST_LEVEL"));
+    portals.add(new Portal(bounds, TestLevel.westEntrance, TestLevel.LEVEL_ID));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);

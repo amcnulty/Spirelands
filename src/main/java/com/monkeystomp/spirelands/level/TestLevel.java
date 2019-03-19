@@ -31,7 +31,7 @@ public class TestLevel extends Level {
   /**
    * Id used for save and load game.
    */
-  public static final String LEVEL_ID = "TEST_LEVEL";
+  public static final String LEVEL_ID = "shoAqugrlW";
   private final String LEVEL_NAME = "Sandbox area for testing!";
   private final String BITMAP_PATH = "./resources/textures/worlds/testLevel.png";
   private int time = 0;
@@ -60,11 +60,11 @@ public class TestLevel extends Level {
   protected void addPortals() {
     Bounds bounds = new Bounds();
     bounds.setQuadBounds(223, 16, 257, 0);
-    portals.add(new Portal(bounds, SpawnLevel.eastEntrance, "SPAWN_LEVEL"));
+    portals.add(new Portal(bounds, SpawnLevel.eastEntrance, SpawnLevel.LEVEL_ID));
     
     Bounds doorBounds = new Bounds();
     doorBounds.setQuadBounds(516, 247, 522, 222);
-    portals.add(new Portal(doorBounds, HouseLevel.ENTRANCE, "HOUSE_LEVEL"));
+    portals.add(new Portal(doorBounds, HouseLevel.ENTRANCE, HouseLevel.LEVEL_ID));
     
     for (int i = 0; i < portals.size(); i++) {
       portals.get(i).initLevel(this);

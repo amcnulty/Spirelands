@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,6 +13,7 @@ import org.json.simple.JSONObject;
  */
 public class InventoryManager {
   
+  private JSONUtil jsonUtil = new JSONUtil();
   private int gold = 0;
   // A map of all items id to their inventory reference object.
   private final HashMap<Integer, InventoryReference> itemMap = new HashMap<>();
@@ -33,11 +35,11 @@ public class InventoryManager {
   @SuppressWarnings("unchecked")
   public void setInventoryData(JSONObject inventory) {
     itemMap.clear();
-    setGold(Math.toIntExact((long)(((JSONObject)inventory).get("gold"))));
-    JSONArray refs = (JSONArray) inventory.get("refs");
+    setGold(jsonUtil.getNestedInt(inventory, new String[]{JSONUtil.GOLD}));
+    JSONArray refs = (JSONArray) inventory.get(JSONUtil.REFS);
     refs.forEach(ref -> {
-      int id = Math.toIntExact((long)((JSONObject)ref).get("id"));
-      int amount = Math.toIntExact((long)((JSONObject)ref).get("amount"));
+      int id = jsonUtil.getNestedInt((JSONObject)ref, new String[]{JSONUtil.ID});
+      int amount = jsonUtil.getNestedInt((JSONObject)ref, new String[]{JSONUtil.AMOUNT});
       setInventoryReference(Item.ITEM_MAP.get(id), amount);
     });
   }

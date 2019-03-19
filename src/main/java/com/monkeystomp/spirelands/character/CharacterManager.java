@@ -57,8 +57,6 @@ public class CharacterManager {
   
   private Character setupBaseCharacter(JSONObject baseInfo) {
     Character character = new Character();
-    JSONObject baseDetails = (JSONObject)baseInfo.get("details");
-    JSONObject baseStats = (JSONObject)baseInfo.get("stats");
     character.setId(jsonUtil.getNestedString(baseInfo, new String[]{"id"}));
     character.setName(jsonUtil.getNestedString(baseInfo, new String[]{"details", "name"}));
     character.setThumbnail(new Sprite(jsonUtil.getNestedString(baseInfo, new String[]{"details", "thumbnail"})));
@@ -80,47 +78,47 @@ public class CharacterManager {
     keys.forEach(key -> {
       JSONObject character = (JSONObject)characterDetails.get(key);
       gameCharacters.forEach(gameCharacter -> {
-        if (gameCharacter.getId().equals((String)character.get("id"))) {
+        if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) {
           setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
-          if (jsonUtil.getNestedBoolean(character, new String[]{"partyInfo", "inParty"})) partyCharacters.add(gameCharacter);
+          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) partyCharacters.add(gameCharacter);
         }
       });
     });
   }
   
   private void setupCharacterDetails(Character character, JSONObject detailInfo) {
-    JSONObject detailStats = (JSONObject)detailInfo.get("stats");
-    JSONObject equipment = (JSONObject) detailInfo.get("equipment");
-    character.setLevel(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "level"}));
-    character.setExperience(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "experience"}));
-    character.setHealth(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "health"}));
-    character.setHealthMax(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "healthMax"}));
-    character.setMana(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "mana"}));
-    character.setManaMax(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "manaMax"}));
-    character.setStrength(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "strength"}));
-    character.setDefense(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "defense"}));
-    character.setIntellect(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "intellect"}));
-    character.setSpirit(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "spirit"}));
-    character.setSpeed(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "speed"}));
-    character.setLuck(jsonUtil.getNestedInt(detailInfo, new String[]{"stats", "luck"}));
-    if (equipment.get("weapon") != null)
-      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "weapon"})));
+    JSONObject detailStats = (JSONObject)detailInfo.get(JSONUtil.STATS);
+    JSONObject equipment = (JSONObject) detailInfo.get(JSONUtil.EQUIPMENT);
+    character.setLevel(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.LEVEL_STAT}));
+    character.setExperience(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.EXPERIENCE}));
+    character.setHealth(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.HEALTH}));
+    character.setHealthMax(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.HEALTH_MAX}));
+    character.setMana(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.MANA}));
+    character.setManaMax(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.MANA_MAX}));
+    character.setStrength(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.STRENGTH}));
+    character.setDefense(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.DEFENSE}));
+    character.setIntellect(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.INTELLECT}));
+    character.setSpirit(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.SPIRIT}));
+    character.setSpeed(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.SPEED}));
+    character.setLuck(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.LUCK}));
+    if (equipment.get(JSONUtil.WEAPON) != null)
+      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.WEAPON})));
     else
       character.setEquippedWeapon(null);
-    if (equipment.get("helmet") != null)
-      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "helmet"})));
+    if (equipment.get(JSONUtil.HELMET) != null)
+      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.HELMET})));
     else
       character.setEquippedHelmet(null);
-    if (equipment.get("chestplate") != null)
-      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "chestplate"})));
+    if (equipment.get(JSONUtil.CHESTPLATE) != null)
+      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.CHESTPLATE})));
     else
       character.setEquippedChestplate(null);
-    if (equipment.get("shield") != null)
-      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "chestplate"})));
+    if (equipment.get(JSONUtil.SHIELD) != null)
+      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.SHIELD})));
     else
       character.setEquippedShield(null);
-    if (equipment.get("boots") != null)
-      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{"equipment", "boots"})));
+    if (equipment.get(JSONUtil.BOOTS) != null)
+      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.BOOTS})));
     else
       character.setEquippedBoots(null);
   }

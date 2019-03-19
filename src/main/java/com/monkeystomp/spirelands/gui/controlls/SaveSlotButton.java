@@ -59,8 +59,8 @@ public class SaveSlotButton extends Button {
     if (!slotEmpty) {
       try {
         json = (JSONObject) parser.parse(new FileReader(saveFile));
-        characters = (JSONObject) json.get("Characters");
-        location = (JSONObject) json.get("Location");
+        characters = (JSONObject) json.get(JSONUtil.CHARACTERS);
+        location = (JSONObject) json.get(JSONUtil.LOCATION);
         createButtonSprites();
         setSlotDisplayData();
       } catch (IOException | ParseException e) {
@@ -70,24 +70,24 @@ public class SaveSlotButton extends Button {
   }
 
   private void setSlotDisplayData() {
-    levelNameFont.setText((String)location.get("Level Name"));
+    levelNameFont.setText((String)location.get(JSONUtil.LEVEL_NAME));
     levelNameFont.setX(x + WIDTH / 2);
     levelNameFont.setY(y + 10);
     levelNameFont.centerText();
-    levelFontInfo.setText("Level: " + jsonUtil.getNestedString(characters, new String[]{"Luke", "stats", "level"}));
+    levelFontInfo.setText("Level: " + jsonUtil.getNestedString(characters, new String[]{JSONUtil.LUKE, JSONUtil.STATS, JSONUtil.LEVEL_STAT}));
     levelFontInfo.setX(x + width / 5);
     levelFontInfo.setY(levelNameFont.getY() + 45);
-    goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{"Inventory", "gold"})));
+    goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{JSONUtil.INVENTORY, JSONUtil.GOLD})));
     goldFontInfo.setX(x + width / 5 + 17);
     goldFontInfo.setY(levelFontInfo.getY() + 10);
     partyMembers.clear();
     Set<?> keys = characters.keySet();
     keys.forEach(characterName -> {
       JSONObject character = (JSONObject)characters.get(characterName);
-      JSONObject partyInfo = (JSONObject)character.get("partyInfo");
-      if (jsonUtil.getNestedBoolean(character, new String[]{"partyInfo", "inParty"})) {
+      JSONObject partyInfo = (JSONObject)character.get(JSONUtil.PARTY_INFO);
+      if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
         CharacterManager.getCharacterManager().getCharacters().forEach(gameCharacter -> {
-          if (gameCharacter.getId().equals((String)character.get("id"))) partyMembers.add(new Sprite(gameCharacter.getThumbnail(), 50f));
+          if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) partyMembers.add(new Sprite(gameCharacter.getThumbnail(), 50f));
         });
       }
     });

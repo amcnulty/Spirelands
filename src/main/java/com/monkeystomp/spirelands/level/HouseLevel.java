@@ -27,7 +27,7 @@ public class HouseLevel extends Level {
   /**
    * Id used for save and load game.
    */
-  public static final String LEVEL_ID = "HOUSE_LEVEL";
+  public static final String LEVEL_ID = "nv5SvpYpDS";
   protected final String LEVEL_NAME = "Villager's Home";
   private final String  bitmapPath = "./resources/textures/worlds/houseLevel.png",
                         lightmapPath = "./resources/textures/worlds/houseLevelLightMap.png";

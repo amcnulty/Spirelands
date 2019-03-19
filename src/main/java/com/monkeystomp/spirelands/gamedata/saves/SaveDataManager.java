@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import java.io.FileReader;
@@ -59,14 +60,14 @@ public class SaveDataManager {
    * @return JSONObject of character information.
    */
   public JSONObject getCharacters() {
-    return (JSONObject)saveObject.get("Characters");
+    return (JSONObject)saveObject.get(JSONUtil.CHARACTERS);
   }
   /**
    * Gets the location data portion of the current save object.
    * @return JSONObject of location data.
    */
   public JSONObject getLocation() {
-    return (JSONObject)saveObject.get("Location");
+    return (JSONObject)saveObject.get(JSONUtil.LOCATION);
   }
   /**
    * Gets the chests data portion of the current save object
@@ -74,11 +75,11 @@ public class SaveDataManager {
    * @return Array of booleans that represent if the chest has been opened.
    */
   public boolean[] getChests(String levelKey) {
-    levels = (JSONObject) saveObject.get("Levels");
+    levels = (JSONObject) saveObject.get(JSONUtil.LEVELS);
     JSONObject myLevel = (JSONObject) levels.get(levelKey);
     if (myLevel == null) return null;
     else {
-      JSONArray array = (JSONArray) myLevel.get("chests");
+      JSONArray array = (JSONArray) myLevel.get(JSONUtil.CHESTS);
       boolean[] values = new boolean[array.size()];
       for (int i = 0; i < values.length; i++) {
         values[i] = (boolean)array.get(i);
@@ -101,7 +102,7 @@ public class SaveDataManager {
     for (int i = 0; i < data.length; i++) {
       array.add(data[i]);
     }
-    level.put("chests", array);
+    level.put(JSONUtil.CHESTS, array);
   }
   /**
    * Main save game method.
@@ -118,60 +119,60 @@ public class SaveDataManager {
   private void saveLocation() {
     Location currentLocation = LocationManager.getLocationManager().getCurrentLocation();
     JSONObject location = getLocation();
-    location.put("Level Key", currentLocation.getLevelId());
-    location.put("Level Name", currentLocation.getLevelName());
-    location.put("X", currentLocation.getCoordinate().getX());
-    location.put("Y", currentLocation.getCoordinate().getY());
-    location.put("Direction", currentLocation.getCoordinate().getDirection());
+    location.put(JSONUtil.LEVEL_KEY, currentLocation.getLevelId());
+    location.put(JSONUtil.LEVEL_NAME, currentLocation.getLevelName());
+    location.put(JSONUtil.X, currentLocation.getCoordinate().getX());
+    location.put(JSONUtil.Y, currentLocation.getCoordinate().getY());
+    location.put(JSONUtil.DIRECTION, currentLocation.getCoordinate().getDirection());
   }
   
   private void saveStats() {
-    JSONObject characters = (JSONObject) saveObject.get("Characters");
+    JSONObject characters = (JSONObject) saveObject.get(JSONUtil.CHARACTERS);
     ArrayList<Character> gameCharacters = CharacterManager.getCharacterManager().getCharacters();
     Set<?> keys = characters.keySet();
     keys.forEach(key -> {
       JSONObject character = (JSONObject) characters.get(key);
-      JSONObject stats = (JSONObject) character.get("stats");
-      JSONObject equipment = (JSONObject) character.get("equipment");
+      JSONObject stats = (JSONObject) character.get(JSONUtil.STATS);
+      JSONObject equipment = (JSONObject) character.get(JSONUtil.EQUIPMENT);
       gameCharacters.forEach(gameCharacter -> {
-        if (gameCharacter.getId().equals((String)character.get("id"))) {
-          stats.put("level", gameCharacter.getLevel());
-          stats.put("experience", gameCharacter.getExperience());
-          stats.put("health", gameCharacter.getHealth());
-          stats.put("healthMax", gameCharacter.getHealthMax());
-          stats.put("mana", gameCharacter.getMana());
-          stats.put("manaMax", gameCharacter.getManaMax());
-          stats.put("strength", gameCharacter.getStrength());
-          stats.put("intellect", gameCharacter.getIntellect());
-          stats.put("defense", gameCharacter.getDefense());
-          stats.put("spirit", gameCharacter.getSpirit());
-          stats.put("speed", gameCharacter.getSpeed());
-          stats.put("luck", gameCharacter.getLuck());
+        if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) {
+          stats.put(JSONUtil.LEVEL_STAT, gameCharacter.getLevel());
+          stats.put(JSONUtil.EXPERIENCE, gameCharacter.getExperience());
+          stats.put(JSONUtil.HEALTH, gameCharacter.getHealth());
+          stats.put(JSONUtil.HEALTH_MAX, gameCharacter.getHealthMax());
+          stats.put(JSONUtil.MANA, gameCharacter.getMana());
+          stats.put(JSONUtil.MANA_MAX, gameCharacter.getManaMax());
+          stats.put(JSONUtil.STRENGTH, gameCharacter.getStrength());
+          stats.put(JSONUtil.INTELLECT, gameCharacter.getIntellect());
+          stats.put(JSONUtil.DEFENSE, gameCharacter.getDefense());
+          stats.put(JSONUtil.SPIRIT, gameCharacter.getSpirit());
+          stats.put(JSONUtil.SPEED, gameCharacter.getSpeed());
+          stats.put(JSONUtil.LUCK, gameCharacter.getLuck());
           if (gameCharacter.getEquippedWeapon() != null)
-            equipment.put("weapon", gameCharacter.getEquippedWeapon().getId());
+            equipment.put(JSONUtil.WEAPON, gameCharacter.getEquippedWeapon().getId());
           if (gameCharacter.getEquippedHelmet() != null)
-            equipment.put("helmet", gameCharacter.getEquippedHelmet().getId());
+            equipment.put(JSONUtil.HELMET, gameCharacter.getEquippedHelmet().getId());
           if (gameCharacter.getEquippedChestplate() != null)
-            equipment.put("chestplate", gameCharacter.getEquippedChestplate().getId());
+            equipment.put(JSONUtil.CHESTPLATE, gameCharacter.getEquippedChestplate().getId());
           if (gameCharacter.getEquippedShield() != null)
-            equipment.put("shield", gameCharacter.getEquippedShield().getId());
+            equipment.put(JSONUtil.SHIELD, gameCharacter.getEquippedShield().getId());
           if (gameCharacter.getEquippedBoots() != null)
-            equipment.put("boots", gameCharacter.getEquippedBoots().getId());
+            equipment.put(JSONUtil.BOOTS, gameCharacter.getEquippedBoots().getId());
         }
       });
     });
   }
 
   private void saveInventory() {
-    JSONObject inventory = (JSONObject) saveObject.get("Inventory");
-    inventory.put("gold", InventoryManager.getInventoryManager().getGold());
-    JSONArray refs = (JSONArray) inventory.get("refs");
+    JSONObject inventory = (JSONObject) saveObject.get(JSONUtil.INVENTORY);
+    inventory.put(JSONUtil.GOLD, InventoryManager.getInventoryManager().getGold());
+    JSONArray refs = (JSONArray) inventory.get(JSONUtil.REFS);
     refs.clear();
     HashMap<Integer, InventoryReference> inventoryMap = InventoryManager.getInventoryManager().getItemMap();
     inventoryMap.forEach((id, ref) -> {
       JSONObject item = new JSONObject();
-      item.put("amount", ref.getAmount());
-      item.put("id", id);
+      item.put(JSONUtil.AMOUNT, ref.getAmount());
+      item.put(JSONUtil.ID, id);
       refs.add(item);
     });
   }

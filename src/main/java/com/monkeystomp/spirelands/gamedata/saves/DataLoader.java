@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gamedata.saves;
 
 import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
@@ -33,15 +34,15 @@ public class DataLoader {
    */
   public LevelView getLevelView(String fileName) throws IOException, ParseException {
     loadFile(fileName);
-    location = (JSONObject) json.get("Location");
-    characters = (JSONObject) json.get("Characters");
+    location = (JSONObject) json.get(JSONUtil.LOCATION);
+    characters = (JSONObject) json.get(JSONUtil.CHARACTERS);
     setSaveManager(fileName);
     setCharacterData();
     setInventoryData();
-    levelKey = (String)location.get("Level Key");
-    x = Math.toIntExact((long)location.get("X"));
-    y = Math.toIntExact((long)location.get("Y"));
-    direction = Math.toIntExact((long)location.get("Direction"));
+    levelKey = (String)location.get(JSONUtil.LEVEL_KEY);
+    x = Math.toIntExact((long)location.get(JSONUtil.X));
+    y = Math.toIntExact((long)location.get(JSONUtil.Y));
+    direction = Math.toIntExact((long)location.get(JSONUtil.DIRECTION));
     return new LevelView(LevelFactory.createLevel(levelKey, new SpawnCoordinate(x, y, direction)));
   }
   
@@ -59,7 +60,7 @@ public class DataLoader {
   }
   
   private void setInventoryData() {
-    JSONObject inventory = (JSONObject) json.get("Inventory");
+    JSONObject inventory = (JSONObject) json.get(JSONUtil.INVENTORY);
     InventoryManager.getInventoryManager().setInventoryData(inventory);
   }
 

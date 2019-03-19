@@ -1,91 +1,91 @@
 {
-  "Characters": {
-    "Luke": {
-      "id": "luke01",
-      "partyInfo": {
-        "inParty": true
+  "awNbSE58uK": {
+    "na2rRC7tcp": {
+      "bHJncPLq94": "luke01",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": true
       },
-      "stats": {
-        "intellect": 8,
-        "luck": 5,
-        "mana": 20,
-        "strength": 12,
-        "level": 1,
-        "manaMax": 40,
-        "defense": 6,
-        "healthMax": 120,
-        "spirit": 6,
-        "health": 10,
-        "experience": 0,
-        "speed": 10
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 8,
+        "kLwwSDho64": 5,
+        "vODbbb8Alx": 20,
+        "yZpYl62ZxQ": 12,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 40,
+        "R1Jgagop66": 6,
+        "uqWyiIdj8r": 120,
+        "0qv84towQw": 6,
+        "JSb14I8V1n": 10,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 10
       },
-      "equipment": {}
+      "8FRT4q5CKl": {}
     },
-    "Sara": {
-      "id": "sara02",
-      "partyInfo": {
-        "inParty": true
+    "0LUWKjxGG7": {
+      "bHJncPLq94": "sara02",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": true
       },
-      "stats": {
-        "intellect": 8,
-        "luck": 4,
-        "mana": 40,
-        "strength": 8,
-        "level": 1,
-        "manaMax": 45,
-        "defense": 5,
-        "healthMax": 100,
-        "spirit": 8,
-        "health": 60,
-        "experience": 0,
-        "speed": 9
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 8,
+        "kLwwSDho64": 4,
+        "vODbbb8Alx": 40,
+        "yZpYl62ZxQ": 8,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 45,
+        "R1Jgagop66": 5,
+        "uqWyiIdj8r": 100,
+        "0qv84towQw": 8,
+        "JSb14I8V1n": 60,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 9
       },
-      "equipment": {}
+      "8FRT4q5CKl": {}
     },
-    "William": {
-      "id": "will03",
-      "partyInfo": {
-        "inParty": true
+    "aRbmU7JFgB": {
+      "bHJncPLq94": "will03",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": true
       },
-      "stats": {
-        "intellect": 3,
-        "luck": 2,
-        "mana": 14,
-        "strength": 11,
-        "level": 1,
-        "manaMax": 30,
-        "defense": 7,
-        "healthMax": 110,
-        "spirit": 3,
-        "health": 73,
-        "experience": 0,
-        "speed": 7
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 3,
+        "kLwwSDho64": 2,
+        "vODbbb8Alx": 14,
+        "yZpYl62ZxQ": 11,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 30,
+        "R1Jgagop66": 7,
+        "uqWyiIdj8r": 110,
+        "0qv84towQw": 3,
+        "JSb14I8V1n": 73,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 7
       },
-      "equipment": {}
+      "8FRT4q5CKl": {}
     }
   },
-  "Levels": {},
-  "Location": {
-    "Level Key": "TEST_LEVEL",
-    "Level Name": "Sandbox area for testing!",
-    "X": 100,
-    "Y": 100,
-    "Direction": 2
+  "DHlVpJMNLN": {},
+  "4VPmsx452s": {
+    "43Djs2IJ3f": "shoAqugrlW",
+    "BKOJJqghnB": "Sandbox area for testing!",
+    "BDqLEP7Yas": 100,
+    "7updRAspaV": 100,
+    "1ozadLPvm2": 2
   },
-  "Inventory": {
-    "gold": 643,
-    "refs": [
-      { "id": 3, "amount": 1 },
-      { "id": 0, "amount": 2},
-      { "id": 8, "amount": 1},
-      { "id": 14, "amount": 22 },
-      { "id": 19, "amount": 3},
-      { "id": 15, "amount": 2},
-      { "id": 27, "amount": 1},
-      { "id": 23, "amount": 3},
-      { "id": 31, "amount": 1},
-      { "id": 91, "amount": 1},
-      { "id": 103, "amount": 1}
+  "5sI67QIas5": {
+    "STlGH2brLY": 643,
+    "gBmuNMUWDb": [
+      { "bHJncPLq94": 3, "DoQd94zuo4": 1 },
+      { "bHJncPLq94": 0, "DoQd94zuo4": 2},
+      { "bHJncPLq94": 8, "DoQd94zuo4": 1},
+      { "bHJncPLq94": 14, "DoQd94zuo4": 22 },
+      { "bHJncPLq94": 19, "DoQd94zuo4": 3},
+      { "bHJncPLq94": 15, "DoQd94zuo4": 2},
+      { "bHJncPLq94": 27, "DoQd94zuo4": 1},
+      { "bHJncPLq94": 23, "DoQd94zuo4": 3},
+      { "bHJncPLq94": 31, "DoQd94zuo4": 1},
+      { "bHJncPLq94": 91, "DoQd94zuo4": 1},
+      { "bHJncPLq94": 103, "DoQd94zuo4": 1}
     ]
   }
 }
