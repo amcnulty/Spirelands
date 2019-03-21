@@ -92,8 +92,25 @@ task copyRes(type: Copy) {
   into "${rootDir}/distributions"
 }
 
+task copySettings(type: Copy) {
+  description 'Copies the settings folder into distribution folder.'
+  
+  from("${rootDir}") {
+    include "settings/**"
+  }
+  into "${rootDir}/distributions"
+}
+
+task createSaveDir() {
+  description 'Creates an empty saves folder in distribution folder.'
+  
+  doFirst {
+    mkdir "distributions/saves"
+  }
+}
+
 task packDist(type: Zip) {
-  description 'Creates a zip archive of the distribution folder'
+  description 'Creates a zip archive of the distribution folder.'
   
   archiveName = 'distributions.zip'
   destinationDir = file("${rootDir}")
@@ -102,7 +119,7 @@ task packDist(type: Zip) {
 }
 
 task cleanRoot(type: Delete) {
-  description 'Cleans the root directory of the leftover distribution folder'
+  description 'Cleans the root directory of the leftover distribution folder.'
   
   delete "${rootDir}/distributions"
 }
@@ -114,11 +131,13 @@ task createDist(dependsOn: ['assembleDist', 'cleanRoot']) {
 }
 
 task cleanRun(dependsOn: ['clean', 'run']) {
-  description 'Cleans then runs';
+  description 'Cleans then runs.';
 }
 
 // Dependency Chain
 createDist.dependsOn assembleDist
 cleanRoot.dependsOn packDist
-packDist.dependsOn copyRes
+packDist.dependsOn createSaveDir
+createSaveDir.dependsOn copySettings
+copySettings.dependsOn copyRes
 copyRes.dependsOn copyArchive

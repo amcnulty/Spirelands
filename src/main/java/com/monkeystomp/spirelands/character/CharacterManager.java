@@ -6,10 +6,13 @@ import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * CharacterManager is a singleton class that is used to perform operations on Character objects.
@@ -33,9 +36,9 @@ public class CharacterManager {
   
   private void loadJSON() {
     try {
-      characterBaseInformation = (JSONObject) parser.parse(new FileReader(getClass().getResource("/gameData/characters/characters.json").getFile()));
+      characterBaseInformation = (JSONObject) parser.parse(new InputStreamReader(getClass().getResourceAsStream("/gameData/characters/characters.json")));
     }
-    catch (Exception e) {
+    catch (IOException | ParseException e) {
       e.printStackTrace();
     }
   }

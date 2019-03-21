@@ -7,9 +7,9 @@ import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -34,7 +34,7 @@ public class SaveDataManager {
   
   public void initSaveObject() {
     try {
-      saveObject = (JSONObject) parser.parse(new FileReader(getClass().getResource("/gameData/saveData/newGame.json").getFile()));
+      saveObject = (JSONObject) parser.parse(new InputStreamReader(getClass().getResourceAsStream("/gameData/saveData/newGame.json")));
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
