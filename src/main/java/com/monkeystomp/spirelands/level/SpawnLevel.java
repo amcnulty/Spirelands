@@ -24,6 +24,7 @@ public class SpawnLevel extends Level {
   public static final String LEVEL_ID = "glRtFCx0g6";
   private final String LEVEL_NAME = "Beach Front";
   private final String BITMAP_PATH = "./resources/textures/worlds/beach.png";
+  private final boolean HAS_BATTLES = true;
   private int time = 0;
   private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi Steph! How are you doing? I think the laundry is almost done. I've been programing this whole time working on adding dialog boxes to the game. Love You! <3"};
   public static final SpawnCoordinate eastEntrance = new SpawnCoordinate(608, 272, 3);
@@ -32,6 +33,10 @@ public class SpawnLevel extends Level {
     this.spawnCoordinate = coordinate;
     this.levelName = LEVEL_NAME;
     this.levelId = LEVEL_ID;
+    this.hasBattles = HAS_BATTLES;
+    this.encounterRate = Level.HEAVY_ENCOUNTERS;
+//    this.encounterRate = Level.NORMAL_ENCOUNTERS;
+//    this.encounterRate = Level.LIGHT_ENCOUNTERS;
     loadLevel(BITMAP_PATH);
   }
   

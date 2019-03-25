@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  * Keyboard class is used to respond to key events that happen during the game. This is a singleton class and that any other class can get reference to.
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 public class Keyboard implements KeyListener {
 
   private final static Keyboard INSTANCE = new Keyboard();
-  private final ArrayList<INotify> keyPressedNotifiers = new ArrayList<>();
+  private final ArrayList<Consumer<KeyEvent>> keyListeners = new ArrayList<>();
 
   private Keyboard() {}
   /**
@@ -83,7 +84,7 @@ public class Keyboard implements KeyListener {
   @Override
   public void keyPressed(KeyEvent e) {
     keys[e.getKeyCode()] = true;
-    callKeyPressedNotifiers(e);
+    callKeyListeners(e);
   }
   /**
    * {@inheritDoc}
@@ -102,22 +103,22 @@ public class Keyboard implements KeyListener {
   }
   /**
    * Adds a callback notifier for when any key is pressed.
-   * @param notifier The INotify callback to be called when key is typed.
+   * @param listener The INotify callback to be called when key is typed.
    */
-  public void addKeyPressNotifier(INotify notifier) {
-    keyPressedNotifiers.add(notifier);
+  public void addKeyListener(Consumer<KeyEvent> listener) {
+    keyListeners.add(listener);
   }
   /**
    * Removes a callback notifier from the list of notifiers that get called when any key is pressed.
-   * @param notifier The INotify instance to remove.
+   * @param listener The INotify instance to remove.
    */
-  public void removeKeyPressNotifier(INotify notifier) {
-    keyPressedNotifiers.remove(notifier);
+  public void removeKeyListener(Consumer<KeyEvent> listener) {
+    keyListeners.remove(listener);
   }
 
-  private void callKeyPressedNotifiers(KeyEvent e) {
-    for (int i = 0; i < keyPressedNotifiers.size(); i++) {
-      keyPressedNotifiers.get(i).notify(e);
+  private void callKeyListeners(KeyEvent e) {
+    for (int i = 0; i < keyListeners.size(); i++) {
+      keyListeners.get(i).accept(e);
     }
   }
 }

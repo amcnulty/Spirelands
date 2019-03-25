@@ -6,8 +6,8 @@ import com.monkeystomp.spirelands.level.Level;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
-import com.monkeystomp.spirelands.input.INotify;
 import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
 
 /**
  *
@@ -17,8 +17,8 @@ public class LevelView extends GameView {
   
   private Level level;
   private boolean gamePaused = false;
-  private PauseMenu pauseMenu = new PauseMenu();
-  private INotify notifier = (e) -> handleKeypress(e);
+  private final PauseMenu pauseMenu = new PauseMenu();
+  private final Consumer<KeyEvent> keyListener = e -> handleKeypress(e);
 
   public LevelView(Level level) {
     initLevel(level);
@@ -35,7 +35,7 @@ public class LevelView extends GameView {
   }
 
   private void setupNotifiers() {
-    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
+    Keyboard.getKeyboard().addKeyListener(keyListener);
     pauseMenu.setCloseCommand(() -> resumeLevel());
     pauseMenu.setQuitToMenuCommand(() -> ViewManager.getViewManager().changeView(new TitleScreen()));
   }
@@ -62,8 +62,8 @@ public class LevelView extends GameView {
   
   @Override
   public void leaveView() {
-    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
-    level.transitionOutOfLevel();
+    Keyboard.getKeyboard().removeKeyListener(keyListener);
+    level.exitLevel();
   }
   
   @Override

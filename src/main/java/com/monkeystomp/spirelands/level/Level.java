@@ -1,8 +1,8 @@
 package com.monkeystomp.spirelands.level;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
-import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
@@ -13,7 +13,6 @@ import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
-import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
@@ -21,6 +20,8 @@ import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.level.util.TransitionFader;
+import com.monkeystomp.spirelands.view.BattleView;
+import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -28,6 +29,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
@@ -37,6 +40,18 @@ import javax.imageio.ImageIO;
  */
 public class Level implements Runnable {
   /**
+   * Infrequent random battle encounters.
+   */
+  public static final int LIGHT_ENCOUNTERS = 2400;
+  /**
+   * Normal amount of random battle encounters.
+   */
+  public static final int NORMAL_ENCOUNTERS = 1200;
+  /**
+   * Frequent random battle encounters.
+   */
+  public static final int HEAVY_ENCOUNTERS = 600;
+  /**
    * The display name of the level.
    */
   protected String levelName;
@@ -44,6 +59,14 @@ public class Level implements Runnable {
    * The id of the level.
    */
   protected String levelId;
+  /**
+   * Flag for checking if this level has random battles.
+   */
+  protected boolean hasBattles = false;
+  /**
+   * Sets the average battle encounter rate for this level.
+   */
+  protected int encounterRate;
   private String path;
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;
@@ -62,8 +85,11 @@ public class Level implements Runnable {
   private int levelTileWidth,
               levelTileHeight,
               xScroll,
-              yScroll;
-  private TransitionFader transitionFader = new TransitionFader();
+              yScroll,
+              ticksSinceLastBattle = 0,
+              randomEncounterModifier;
+  private Random random = new Random();
+  private final TransitionFader transitionFader = new TransitionFader();
   protected Player player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
@@ -71,17 +97,17 @@ public class Level implements Runnable {
                   gameMenuOpen = false;
   private Portal exitPortal;
   private final GameMenu GAME_MENU = new GameMenu(() -> closeGameMenu());
-  private Keyboard keyboard = Keyboard.getKeyboard();
-  private INotify notifier = (e) -> handleKeypress(e);
-  private ArrayList<Tile> textureData = new ArrayList<>();
-  private ArrayList<Float>  xFloat = new ArrayList<>(),
-                            yFloat = new ArrayList<>();
+  private final Keyboard keyboard = Keyboard.getKeyboard();
+  private final Consumer<KeyEvent> keyListener = e -> handleKeypress(e);
+  private final ArrayList<Tile> textureData = new ArrayList<>();
+  private final ArrayList<Float>  xFloat = new ArrayList<>(),
+                                  yFloat = new ArrayList<>();
 
   private ILevelChanger IChanger;
 
   public Level() {
     dialogBox.setCloseCommand(() -> dialogOpen = false);
-    keyboard.addKeyPressNotifier(notifier);
+    keyboard.addKeyListener(keyListener);
   }
   
   public void handleKeypress(KeyEvent e) {
@@ -301,13 +327,17 @@ public class Level implements Runnable {
   public ILevelChanger getLevelChanger() {
     return IChanger;
   }
-  
+  /**
+   * Starts the transition fader when switch between levels. Use this when staying on LevelView but only changing levels.
+   */
   public void transitionOutOfLevel() {
     transitionFader.startTransitionOut(() -> {exitLevel();});
   }
-  
-  private void exitLevel() {
-    keyboard.removeKeyPressNotifier(notifier);
+  /**
+   * Cleans up everything before leaving this level. Called by the view manager. Do not call this method directly for changing levels.
+   */
+  public void exitLevel() {
+    keyboard.removeKeyListener(keyListener);
     saveLevelState();
     if (isPortalSet) exitPortal.enterPortal();
   }
@@ -326,6 +356,18 @@ public class Level implements Runnable {
     screen.setOffset(xScroll, yScroll);
   }
   
+  private void checkForBattle() {
+    if (player.isWalking()) {
+      if (ticksSinceLastBattle == 0) {
+        encounterRate += (int)(encounterRate * .3);
+        encounterRate -= 2 * random.nextInt((int)(encounterRate * .3));
+      }
+      if (ticksSinceLastBattle++ == encounterRate) ViewManager.getViewManager().changeView(new BattleView(new Battle()));
+      System.out.println("Ticks Since Last Battle: " + ticksSinceLastBattle);
+      System.out.println("Encounter Rate: " + encounterRate);
+    }
+  }
+  
   private void sortSolidEntities() {
     Collections.sort(solidEntities, (Entity a, Entity b) -> (a.getOverlapY() > b.getOverlapY()) ? 1 : a.getOverlapY() < b.getOverlapY() ? -1 : 0);
   }
@@ -341,7 +383,10 @@ public class Level implements Runnable {
   public void update(){
     if (!loadingThread.isAlive()) {
       // Update player if dialog is closed.
-      if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) player.update();
+      if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) {
+        player.update();
+        if (hasBattles) checkForBattle();
+      }
       // Call the subclass hook for updating.
       levelUpdate();
       // Sort the solid entities

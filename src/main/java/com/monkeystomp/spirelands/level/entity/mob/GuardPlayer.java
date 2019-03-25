@@ -4,11 +4,11 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import com.monkeystomp.spirelands.input.INotify;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.bounds.Bounds;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
 import net.java.games.input.Event;
 
 /**
@@ -30,14 +30,14 @@ public class GuardPlayer extends Player {
               walkingSteps = 2,
               framesPerStep = 12,
               animMax = walkingSteps * framesPerStep - 2;
-  private Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
-  private INotify notifier = (KeyEvent e) -> handleSpaceKeyPress(e);
+  private final Sprite shadow = new Sprite("./resources/characters/character_shadow.png");
+  private final Consumer<KeyEvent> keyListener = e -> handleSpaceKeyPress(e);
   private Bounds quad = new Bounds();
   
   public GuardPlayer(int x, int y) {
     super(x, y);
     setBounds();
-    Keyboard.getKeyboard().addKeyPressNotifier(notifier);
+    Keyboard.getKeyboard().addKeyListener(keyListener);
   }
   
   @Override
@@ -203,7 +203,7 @@ public class GuardPlayer extends Player {
   
   private void destroyPlayer() {
     // Remove notifiers
-    Keyboard.getKeyboard().removeKeyPressNotifier(notifier);
+    Keyboard.getKeyboard().removeKeyListener(keyListener);
   }
   
   @Override

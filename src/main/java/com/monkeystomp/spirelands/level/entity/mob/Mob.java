@@ -4,7 +4,7 @@ package com.monkeystomp.spirelands.level.entity.mob;
 import com.monkeystomp.spirelands.level.entity.Entity;
 
 /**
- *
+ * Mob class is used for general mobile entity methods.
  * @author Aaron Michael McNulty
  */
 public class Mob extends Entity {
@@ -86,5 +86,9 @@ public class Mob extends Entity {
 
   public int getDirection() {
     return direction;
+  }
+
+  public boolean isWalking() {
+    return walking;
   }
 }

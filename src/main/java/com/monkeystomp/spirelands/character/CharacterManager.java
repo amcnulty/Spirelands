@@ -5,7 +5,6 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
