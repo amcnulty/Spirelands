@@ -116,39 +116,66 @@ public class TestLevel extends Level {
     solidEntities.add(npc);
     npc.initLevel(this);
     npc.startAtRandomRoutePoint();
+    
+    NPCConfig npcConfig = new NPCConfig();
+    npcConfig.setX(400);
+    npcConfig.setY(200);
+    npcConfig.setDirection(1);
+    npcConfig.setFixedDirection(true);
+    npc = new BasicNPC(npcConfig, BasicNPC.MALE_BLONDE);
+    solidEntities.add(npc);
+    npc.initLevel(this);
+    
+    npcConfig = new NPCConfig();
+    npcConfig.setX(375);
+    npcConfig.setY(145);
+    npcConfig.setDirection(1);
+    npcConfig.setFixedDirection(true);
+    npc = new BasicNPC(npcConfig, BasicNPC.MALE_YELLOWJACKET);
+    solidEntities.add(npc);
+    npc.initLevel(this);
+//    
+    npcConfig = new NPCConfig();
+    npcConfig.setX(375);
+    npcConfig.setY(255);
+    npcConfig.setDirection(1);
+    npcConfig.setFixedDirection(true);
+    npc = new BasicNPC(npcConfig, BasicNPC.FEMALE_GREENHAIR);
+    solidEntities.add(npc);
+    npc.initLevel(this);
   }
 
   @Override
   protected void addSolidEntities() {
     // Add walls
-    Wall wall = new Wall();
-    WallConfig config = new WallConfig();
-    config.setStartingX(340);
-    config.setStartingY(200);
-    config.setLength(14);
-    config.setInterior(true);
-    wall.createHorizontalWall(config);
-    solidEntities.add(wall);
-    
-    wall = new Wall();
-    config = new WallConfig();
-    config.setStartingX(332);
-    config.setStartingY(208);
-    config.setLength(5);
-    config.setInterior(false);
-    wall.createVerticalWall(config);
-    solidEntities.add(wall);
-    
-    wall = new Wall();
-    config = new WallConfig();
-    config.setStartingX(340);
-    config.setStartingY(288);
-    config.setLength(6);
-    config.setInterior(false);
-    config.setLeftCorner(false);
-    config.setRightCorner(false);
-    wall.createHorizontalWall(config);
-    solidEntities.add(wall);
+//    Wall wall = new Wall();
+//    WallConfig config = new WallConfig();
+//    config.setStartingX(340);
+//    config.setStartingY(200);
+//    config.setLength(14);
+//    config.setInterior(true);
+//    wall.createHorizontalWall(config);
+//    solidEntities.add(wall);
+//    
+//    wall = new Wall();
+//    config = new WallConfig();
+//    config.setStartingX(332);
+//    config.setStartingY(208);
+//    config.setLength(5);
+//    config.setInterior(false);
+//    wall.createVerticalWall(config);
+//    solidEntities.add(wall);
+//    
+//    wall = new Wall();
+//    config = new WallConfig();
+//    config.setStartingX(340);
+//    config.setStartingY(288);
+//    config.setLength(6);
+//    config.setInterior(false);
+//    config.setLeftCorner(false);
+//    config.setRightCorner(false);
+//    wall.createHorizontalWall(config);
+//    solidEntities.add(wall);
     
     Entity entity = new StreetLamp(210, 75);
     solidEntities.add(entity);

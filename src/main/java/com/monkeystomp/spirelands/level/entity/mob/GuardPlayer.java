@@ -208,7 +208,7 @@ public class GuardPlayer extends Player {
   
   @Override
   public void update() {
-//    System.out.println("X: " + getX() + " Y: " + getY());
+    System.out.println("X: " + getX() + " Y: " + getY());
     if (anim > animMax) anim = 0;
     else anim++;
     checkMovementInput();

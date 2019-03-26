@@ -17,7 +17,6 @@ public class Battle {
   private int tick = 0;
   
   private void endBattle() {
-    System.out.println("Ending battle.");
     Location lastLocation = LocationManager.getLocationManager().getCurrentLocation();
     ViewManager.getViewManager().changeView(new LevelView(LevelFactory.createLevel(lastLocation.getLevelId(), lastLocation.getCoordinate())));
   }

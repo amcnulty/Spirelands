@@ -263,7 +263,7 @@ public class Item {
   public static final EquipmentItem
     TRAINING_BOOK_V2 = new ItemBuilder()
           .title("Training Book v.2")
-          .description("Volume 2 of the training book series. In this installment fighters will learn specific tactics to react the next level of their trainin'g.")
+          .description("Volume 2 of the training book series. In this installment fighters will learn specific tactics to reach the next level of their trainin'g.")
           .price(2000)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 11, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);

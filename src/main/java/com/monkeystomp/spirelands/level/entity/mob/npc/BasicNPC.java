@@ -73,8 +73,10 @@ public class BasicNPC extends NPC {
     characterActions.put("WALKING_3_0", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX, sheetY + 3, characterSheet));
     characterActions.put("WALKING_3_1", new Sprite(SPRITE_SIZE, SPRITE_SIZE, sheetX + 2, sheetY + 3, characterSheet));
     setBounds();
+    setCurrentAction();
   }
-    
+  
+  @Override
   protected void setBounds() {
     quad.setQuadBounds(
       y - 1,
@@ -89,6 +91,7 @@ public class BasicNPC extends NPC {
     moveBounds[3] = 10;
   }
   
+  @Override
   protected void updateBounds() {
     quad.setQuadBounds(
       y - 1,
@@ -98,6 +101,7 @@ public class BasicNPC extends NPC {
     );
   }
   
+  @Override
   protected void setCurrentAction() { 
     if (!walking) {
       currentAction = "STANDING_" + direction;
