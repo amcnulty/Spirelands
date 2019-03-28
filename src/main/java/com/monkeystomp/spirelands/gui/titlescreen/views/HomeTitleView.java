@@ -46,7 +46,7 @@ public class HomeTitleView extends TitleView {
 // left of house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
 // top left corner
-    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel(TestLevel.LEVEL_ID, new SpawnCoordinate(500, 200, 3))));
+    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel(TestLevel.LEVEL_ID, new SpawnCoordinate(100, 200, 3))));
 // inside house
 //    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.FIRST_FLOOR_ENTRANCE)));
   }

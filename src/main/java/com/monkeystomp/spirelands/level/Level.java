@@ -70,6 +70,7 @@ public class Level implements Runnable {
   private String path;
   protected Thread loadingThread = new Thread(this, "Tile Loader");
   protected int[] bitmap;
+  protected Battle battle;
   protected DialogBox dialogBox = new DialogBox();
   protected ArrayList<Integer> uniqueTiles = new ArrayList<>();
   protected ArrayList<Tile> tiles = new ArrayList<>();
@@ -362,7 +363,7 @@ public class Level implements Runnable {
         encounterRate += (int)(encounterRate * .3);
         encounterRate -= 2 * random.nextInt((int)(encounterRate * .3));
       }
-      if (ticksSinceLastBattle++ == encounterRate) ViewManager.getViewManager().changeView(new BattleView(new Battle()));
+      if (ticksSinceLastBattle++ == encounterRate) ViewManager.getViewManager().changeView(new BattleView(battle));
       System.out.println("Ticks Since Last Battle: " + ticksSinceLastBattle);
       System.out.println("Encounter Rate: " + encounterRate);
     }
