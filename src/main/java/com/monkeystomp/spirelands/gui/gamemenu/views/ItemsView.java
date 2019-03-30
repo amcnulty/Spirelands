@@ -124,7 +124,7 @@ public class ItemsView extends DisplayView {
   
   private void setItemOnCharacterButtons() {
     itemOnCharacterButtons.clear();
-    CharacterManager.getCharacterManager().getPartyMembers().forEach(partyMember -> {
+    CharacterManager.getCharacterManager().getPartyMembers().forEach((position, partyMember) -> {
       itemOnCharacterButtons.add(new ItemOnCharacterButton(
         "",
         215,

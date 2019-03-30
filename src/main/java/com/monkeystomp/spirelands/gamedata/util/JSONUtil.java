@@ -36,6 +36,10 @@ public class JSONUtil {
    */
   public static final String IN_PARTY = "TNhGlhRMpi";
   /**
+   * Number value for position in party.
+   */
+  public static final String PARTY_POSITION = "L2MzPWN5OQ";
+  /**
    * Key for stats object on each character.
    */
   public static final String STATS = "apU4KX7T8e";

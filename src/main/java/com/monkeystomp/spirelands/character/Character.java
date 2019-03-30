@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.character;
 
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.HashMap;
@@ -74,6 +75,8 @@ public class Character {
   private String name;
   // Thumbnail image for character
   private Sprite thumbnail;
+  // Sprite sheet for character
+  private SpriteSheet sheet;
   // Character weapon type
   private String weaponType;
   // Character level
@@ -159,6 +162,14 @@ public class Character {
 
   public void setThumbnail(Sprite thumbnail) {
     this.thumbnail = thumbnail;
+  }
+
+  public SpriteSheet getSheet() {
+    return sheet;
+  }
+
+  public void setSheet(SpriteSheet sheet) {
+    this.sheet = sheet;
   }
   
   public void setWeaponType(String weaponType) {

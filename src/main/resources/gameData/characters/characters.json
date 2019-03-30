@@ -4,6 +4,7 @@
     "details": {
       "name": "Luke McLovin",
       "thumbnail": "./resources/characters/thumbnails/luke.png",
+      "spriteSheet": "./resources/characters/sheets/luke.png",
       "weaponType": "Sword"
     },
     "stats": {
@@ -22,6 +23,7 @@
     "details": {
       "name": "Sara Snowbridge",
       "thumbnail": "./resources/characters/thumbnails/sara.png",
+      "spriteSheet": "./resources/characters/sheets/sara.png",
       "weaponType": "Wand"
     },
     "stats": {
@@ -40,6 +42,7 @@
     "details": {
       "name": "William Wallace",
       "thumbnail": "./resources/characters/thumbnails/william.png",
+      "spriteSheet": "./resources/characters/sheets/william.png",
       "weaponType": "Blunt"
     },
     "stats": {

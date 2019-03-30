@@ -109,6 +109,7 @@ public class SaveDataManager {
    */
   public void saveGame() throws IOException {
     saveLocation();
+    // This might need to be renamed save characters and include saving if character is in party and what position they are in.
     saveStats();
     saveInventory();
     FileWriter file = new FileWriter(pathToSave + fileName);

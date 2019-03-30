@@ -8,6 +8,9 @@ import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,6 +24,7 @@ public class CharacterManager {
   
   private final ArrayList<Character> gameCharacters = new ArrayList<>();
   private final ArrayList<Character> partyCharacters = new ArrayList<>();
+  private final HashMap<Integer, Character> partyMap = new HashMap<>();
   private JSONObject characterBaseInformation;
   private final JSONParser parser = new JSONParser();
   private final JSONUtil jsonUtil = new JSONUtil();
@@ -73,7 +77,10 @@ public class CharacterManager {
     character.setLuckWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "luckWeight"}));
     return character;
   }
-  
+  /**
+   * Sets up character details from the given JSON object.
+   * @param characterDetails JSON object containing the details for all game characters.
+   */
   public void setupCharactersDetails(JSONObject characterDetails) {
     partyCharacters.clear();
     Set<?> keys = characterDetails.keySet();
@@ -82,7 +89,9 @@ public class CharacterManager {
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) {
           setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
-          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) partyCharacters.add(gameCharacter);
+          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
+            addPartyMember(gameCharacter, jsonUtil.getNestedInt(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.PARTY_POSITION}));
+          }
         }
       });
     });
@@ -124,9 +133,37 @@ public class CharacterManager {
     else
       character.setEquippedBoots(null);
   }
+  /**
+   * Adds a character to the party at the specified position. Positions start at index 0;
+   * @param character Character to add to the party.
+   * @param position Position to put the character in the party at starting at index 0;
+   * @return The character that was previously in this position otherwise returns null.
+   */
+  public Character addPartyMember(Character character, int position) {
+    return partyMap.put(position, character);
+  }
+  /**
+   * Removes the given character from the party and returns true if successful.
+   * @param character Character to remove from party.
+   * @return True if successful otherwise returns false.
+   */
+  public boolean removePartyMember(Character character) {
+    return partyMap.remove(getPartyMemberPosition(character), character);
+  }
+  /**
+   * Gets the position the given character is set to in the party. If character is not in party this method will return -1;
+   * @param character Character to check party position.
+   * @return The position the character is in the party. If character is not in party returns -1;
+   */
+  public int getPartyMemberPosition(Character character) {
+    for (Entry<Integer, Character> entry: partyMap.entrySet()) {
+      if (entry.getValue().equals(character)) return entry.getKey();
+    }
+    return -1;
+  }
   
-  public ArrayList<Character> getPartyMembers() {
-    return partyCharacters;
+  public HashMap<Integer, Character> getPartyMembers() {
+    return partyMap;
   }
   
   public ArrayList<Character> getCharacters() {

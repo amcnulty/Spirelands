@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.components.PartyMemberButton;
 import java.util.ArrayList;
+import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 /**
@@ -29,8 +30,8 @@ public class DefaultView extends DisplayView {
   
   private void createCharacterButtons() {
     int i = 0;
-    for (Character partyMember : characterManager.getPartyMembers()) {
-      buttons.add(new PartyMemberButton(partyMember, playerButtonX, playerButtonStartingY + verticalSpacing * i, () -> {handleButtonClick(partyMember);}));
+    for (Entry<Integer, Character> partyMember : characterManager.getPartyMembers().entrySet()) {
+      buttons.add(new PartyMemberButton(partyMember.getValue(), playerButtonX, playerButtonStartingY + verticalSpacing * i, () -> {handleButtonClick(partyMember.getValue());}));
       buttons.get(i).setDisabled(true);
       i++;
     }

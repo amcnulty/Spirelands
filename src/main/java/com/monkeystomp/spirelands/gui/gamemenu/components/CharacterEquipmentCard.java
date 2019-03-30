@@ -151,7 +151,7 @@ public class CharacterEquipmentCard {
   
   public void setCharacter(Character character) {
     this.character = character;
-    characterIndex = CharacterManager.getCharacterManager().getPartyMembers().indexOf(character);
+    characterIndex = CharacterManager.getCharacterManager().getPartyMemberPosition(character);
     setDetails();
   }
   
