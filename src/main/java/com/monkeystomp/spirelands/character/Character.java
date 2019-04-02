@@ -75,8 +75,10 @@ public class Character {
   private String name;
   // Thumbnail image for character
   private Sprite thumbnail;
-  // Sprite sheet for character
-  private SpriteSheet sheet;
+  // Overworld sprite sheet for character
+  private SpriteSheet overworldSheet;
+  // Battler sprite sheet for character
+  private SpriteSheet battleSheet;
   // Character weapon type
   private String weaponType;
   // Character level
@@ -164,12 +166,20 @@ public class Character {
     this.thumbnail = thumbnail;
   }
 
-  public SpriteSheet getSheet() {
-    return sheet;
+  public SpriteSheet getOverworldSheet() {
+    return overworldSheet;
   }
 
-  public void setSheet(SpriteSheet sheet) {
-    this.sheet = sheet;
+  public void setOverworldSheet(SpriteSheet overworldSheet) {
+    this.overworldSheet = overworldSheet;
+  }
+
+  public SpriteSheet getBattleSheet() {
+    return battleSheet;
+  }
+
+  public void setBattleSheet(SpriteSheet battleSheet) {
+    this.battleSheet = battleSheet;
   }
   
   public void setWeaponType(String weaponType) {

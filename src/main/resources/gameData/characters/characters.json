@@ -3,8 +3,9 @@
     "id": "luke01",
     "details": {
       "name": "Luke McLovin",
-      "thumbnail": "./resources/characters/thumbnails/luke.png",
-      "spriteSheet": "./resources/characters/sheets/luke.png",
+      "thumbnail": "./resources/characters/luke/luke_thumbnail.png",
+      "overworldSheet": "./resources/characters/luke/luke_overworld.png",
+      "battleSheet": "./resources/characters/luke/luke_battle.png",
       "weaponType": "Sword"
     },
     "stats": {
@@ -22,8 +23,9 @@
     "id": "sara02",
     "details": {
       "name": "Sara Snowbridge",
-      "thumbnail": "./resources/characters/thumbnails/sara.png",
-      "spriteSheet": "./resources/characters/sheets/sara.png",
+      "thumbnail": "./resources/characters/sara/sara_thumbnail.png",
+      "overworldSheet": "./resources/characters/sara/sara_overworld.png",
+      "battleSheet": "./resources/characters/sara/sara_battle.png",
       "weaponType": "Wand"
     },
     "stats": {
@@ -41,8 +43,9 @@
     "id": "will03",
     "details": {
       "name": "William Wallace",
-      "thumbnail": "./resources/characters/thumbnails/william.png",
-      "spriteSheet": "./resources/characters/sheets/william.png",
+      "thumbnail": "./resources/characters/william/william_thumbnail.png",
+      "overworldSheet": "./resources/characters/william/william_overworld.png",
+      "battleSheet": "./resources/characters/william/william_battle.png",
       "weaponType": "Blunt"
     },
     "stats": {

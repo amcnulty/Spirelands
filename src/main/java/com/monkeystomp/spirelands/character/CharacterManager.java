@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
@@ -9,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import org.json.simple.JSONObject;
@@ -25,6 +25,7 @@ public class CharacterManager {
   private final ArrayList<Character> gameCharacters = new ArrayList<>();
   private final ArrayList<Character> partyCharacters = new ArrayList<>();
   private final HashMap<Integer, Character> partyMap = new HashMap<>();
+  private Character partyLeader;
   private JSONObject characterBaseInformation;
   private final JSONParser parser = new JSONParser();
   private final JSONUtil jsonUtil = new JSONUtil();
@@ -34,7 +35,6 @@ public class CharacterManager {
   private CharacterManager() {
     loadJSON();
     createBaseCharacters();
-//    createCharacters(SaveDataManager.getSaveDataManager().getCharacters());
   }
   
   private void loadJSON() {
@@ -84,6 +84,13 @@ public class CharacterManager {
   public void setupCharactersDetails(JSONObject characterDetails) {
     partyCharacters.clear();
     Set<?> keys = characterDetails.keySet();
+    setPartyLeader(
+      CharacterManager.getCharacterManager().getCharacters().stream().filter(
+        character -> character.getId().equals(
+          jsonUtil.getNestedString(SaveDataManager.getSaveDataManager().getSaveObject(), new String[]{JSONUtil.PARTY_LEADER})
+        )
+      ).findAny().orElse(null)
+    );
     keys.forEach(key -> {
       JSONObject character = (JSONObject)characterDetails.get(key);
       gameCharacters.forEach(gameCharacter -> {
@@ -149,6 +156,14 @@ public class CharacterManager {
    */
   public boolean removePartyMember(Character character) {
     return partyMap.remove(getPartyMemberPosition(character), character);
+  }
+
+  public Character getPartyLeader() {
+    return partyLeader;
+  }
+
+  public void setPartyLeader(Character partyLeader) {
+    this.partyLeader = partyLeader;
   }
   /**
    * Gets the position the given character is set to in the party. If character is not in party this method will return -1;

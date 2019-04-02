@@ -28,6 +28,7 @@ public class SaveDataManager {
   private final String pathToSave = "./saves/";
   private JSONObject  saveObject,
                       levels;
+  private final JSONUtil jsonUtil = new JSONUtil();
   private final JSONParser parser = new JSONParser();
   private String fileName;
   private static final SaveDataManager INSTANCE = new SaveDataManager();
@@ -110,7 +111,7 @@ public class SaveDataManager {
   public void saveGame() throws IOException {
     saveLocation();
     // This might need to be renamed save characters and include saving if character is in party and what position they are in.
-    saveStats();
+    saveCharacters();
     saveInventory();
     FileWriter file = new FileWriter(pathToSave + fileName);
     file.write(saveObject.toJSONString());
@@ -127,8 +128,9 @@ public class SaveDataManager {
     location.put(JSONUtil.DIRECTION, currentLocation.getCoordinate().getDirection());
   }
   
-  private void saveStats() {
+  private void saveCharacters() {
     JSONObject characters = (JSONObject) saveObject.get(JSONUtil.CHARACTERS);
+    characters.put(JSONUtil.PARTY_LEADER, CharacterManager.getCharacterManager().getPartyLeader().getId());
     ArrayList<Character> gameCharacters = CharacterManager.getCharacterManager().getCharacters();
     Set<?> keys = characters.keySet();
     keys.forEach(key -> {

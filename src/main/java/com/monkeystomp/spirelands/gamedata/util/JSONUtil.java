@@ -148,6 +148,10 @@ public class JSONUtil {
    */
   public static final String DIRECTION = "1ozadLPvm2";
   /**
+   * String value for the id of the party leader.
+   */
+  public static final String PARTY_LEADER = "dyYJ9VY0sF";
+  /**
    * Key for the main inventory object.
    */
   public static final String INVENTORY = "5sI67QIas5";
