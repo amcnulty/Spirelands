@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.character;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
@@ -65,7 +66,9 @@ public class CharacterManager {
     Character character = new Character();
     character.setId(jsonUtil.getNestedString(baseInfo, new String[]{"id"}));
     character.setName(jsonUtil.getNestedString(baseInfo, new String[]{"details", "name"}));
-    character.setThumbnail(new Sprite(jsonUtil.getNestedString(baseInfo, new String[]{"details", "thumbnail"})));
+    character.setThumbnail(new Sprite(jsonUtil.getNestedString(baseInfo, new String[]{"details", "thumbnail"}), 32));
+    character.setOverworldSheet(new SpriteSheet(jsonUtil.getNestedString(baseInfo, new String[]{"details", "overworldSheet"})));
+    character.setBattleSheet(new SpriteSheet(jsonUtil.getNestedString(baseInfo, new String[]{"details", "battleSheet"})));
     character.setWeaponType(jsonUtil.getNestedString(baseInfo, new String[]{"details", "weaponType"}));
     character.setHealthWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "healthWeight"}));
     character.setManaWeight(jsonUtil.getNestedString(baseInfo, new String[]{"stats", "manaWeight"}));

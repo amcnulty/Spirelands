@@ -1,7 +1,6 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
-import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.Button;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
@@ -20,7 +19,6 @@ public class ItemOnCharacterButton extends Button {
   private final static int  WIDTH = 172,
                             HEIGHT = 32;
   private final Character character;
-  private final Sprite smallThumbnail;
   private final Sprite healthUnderline = new Sprite(65, 1, GameColors.HEALTH_BAR_UNDERLINE);
   private final Sprite healthEmpty = new Sprite(65, 4, GameColors.HEALTH_BAR_EMPTY);
   private final Sprite manaUnderline = new Sprite(65, 1, GameColors.MANA_BAR_UNDERLINE);
@@ -52,7 +50,6 @@ public class ItemOnCharacterButton extends Button {
   public ItemOnCharacterButton(String text, int x, int y, int width, int height, Character character, Consumer<Character> callback) {
     super(text, x, y, WIDTH, HEIGHT, character, callback);
     this.character = character;
-    this.smallThumbnail = new Sprite(character.getThumbnail(), 20);
     healthLabel.setX(this.x + 40);
     healthLabel.setY(this.y + 7);
     healthLabel.setText("HP:");
@@ -163,7 +160,7 @@ public class ItemOnCharacterButton extends Button {
   @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
-    screen.renderSprite(gl, x + 8, y + height / 2 - smallThumbnail.getHeight() / 2 + 3, smallThumbnail, false);
+    screen.renderSprite(gl, x + 8, y + height / 2 - 13, character.getThumbnail(), 1f, false, .625f);
     screen.renderFonts(healthLabel);
     screen.renderFonts(characterHealthFont);
     screen.renderFonts(manaLabel);

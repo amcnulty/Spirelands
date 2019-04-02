@@ -1,6 +1,8 @@
 package com.monkeystomp.spirelands.level.entity.mob;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -14,6 +16,7 @@ public class Player extends Mob {
   
   protected SpriteSheet characterSheet;
   protected HashMap<String, Sprite> characterActions = new HashMap<>();
+  private final Character playerCharacter = CharacterManager.getCharacterManager().getPartyLeader();
   
   public Player(int x, int y) {
     this.x = x;

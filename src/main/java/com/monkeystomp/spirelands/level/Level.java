@@ -16,6 +16,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
+import com.monkeystomp.spirelands.level.entity.mob.PartyPlayer;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
@@ -91,7 +92,7 @@ public class Level implements Runnable {
               randomEncounterModifier;
   private Random random = new Random();
   private final TransitionFader transitionFader = new TransitionFader();
-  protected Player player;
+  protected PartyPlayer player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
@@ -181,7 +182,7 @@ public class Level implements Runnable {
   }
 
   protected void addPlayer() {
-    player = new GuardPlayer(spawnCoordinate.getX(), spawnCoordinate.getY());
+    player = new PartyPlayer(spawnCoordinate.getX(), spawnCoordinate.getY());
     player.setDirection(spawnCoordinate.getDirection());
     player.initLevel(this);
     solidEntities.add(player);
@@ -275,7 +276,7 @@ public class Level implements Runnable {
     dialogOpen = bool;
   }
 
-  public Player getPlayer() {
+  public PartyPlayer getPlayer() {
     return player;
   }
   

@@ -27,8 +27,8 @@ public class SaveSlotButton extends Button {
   
   private static final int  WIDTH = 100,
                             HEIGHT = 100;
-  private final int thumbnailX = 20,
-                    thumbnailY = 30,
+  private final int thumbnailX = 14,
+                    thumbnailY = 20,
                     spaceBetweenThumbnails = 20;
   private final String  fileName,
                         pathToSave = "./saves/";
@@ -38,7 +38,7 @@ public class SaveSlotButton extends Button {
   private final FontInfo  levelNameFont = GameFonts.getDarkText_plain_18(),
                           levelFontInfo = GameFonts.getDarkText_plain_18(),
                           goldFontInfo = GameFonts.getDarkText_plain_18();
-  private ArrayList<Sprite> partyMembers = new ArrayList<>();
+  private final ArrayList<Sprite> partyMembers = new ArrayList<>();
   private JSONObject  json,
                       characters,
                       location;
@@ -87,7 +87,7 @@ public class SaveSlotButton extends Button {
       JSONObject partyInfo = (JSONObject)character.get(JSONUtil.PARTY_INFO);
       if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
         CharacterManager.getCharacterManager().getCharacters().forEach(gameCharacter -> {
-          if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) partyMembers.add(new Sprite(gameCharacter.getThumbnail(), 50f));
+          if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) partyMembers.add(gameCharacter.getThumbnail());
         });
       }
     });
@@ -151,7 +151,7 @@ public class SaveSlotButton extends Button {
       screen.renderFonts(goldFontInfo);
       screen.renderSprite(gl, x + width / 2 - separator.getWidth() / 2, levelNameFont.getY() + 10, separator, false);
       for (int i = 0; i < partyMembers.size(); i++) {
-        screen.renderSprite(gl, x + thumbnailX + i * spaceBetweenThumbnails, y + thumbnailY, partyMembers.get(i), false);
+        screen.renderSprite(gl, x + thumbnailX + i * spaceBetweenThumbnails, y + thumbnailY, partyMembers.get(i), 1f, false, .5f);
       }
     }
   }

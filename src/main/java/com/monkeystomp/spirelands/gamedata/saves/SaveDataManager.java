@@ -130,7 +130,7 @@ public class SaveDataManager {
   
   private void saveCharacters() {
     JSONObject characters = (JSONObject) saveObject.get(JSONUtil.CHARACTERS);
-    characters.put(JSONUtil.PARTY_LEADER, CharacterManager.getCharacterManager().getPartyLeader().getId());
+    saveObject.put(JSONUtil.PARTY_LEADER, CharacterManager.getCharacterManager().getPartyLeader().getId());
     ArrayList<Character> gameCharacters = CharacterManager.getCharacterManager().getCharacters();
     Set<?> keys = characters.keySet();
     keys.forEach(key -> {
