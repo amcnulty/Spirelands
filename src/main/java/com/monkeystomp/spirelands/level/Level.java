@@ -4,8 +4,6 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
-import com.monkeystomp.spirelands.level.entity.mob.Player;
-import com.monkeystomp.spirelands.level.entity.mob.GuardPlayer;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.tile.Tile;
@@ -16,7 +14,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
 import com.monkeystomp.spirelands.level.entity.fixed.Chest;
-import com.monkeystomp.spirelands.level.entity.mob.PartyPlayer;
+import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
@@ -92,7 +90,7 @@ public class Level implements Runnable {
               randomEncounterModifier;
   private Random random = new Random();
   private final TransitionFader transitionFader = new TransitionFader();
-  protected PartyPlayer player;
+  protected Player player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
                   isPortalSet = false,
@@ -182,7 +180,7 @@ public class Level implements Runnable {
   }
 
   protected void addPlayer() {
-    player = new PartyPlayer(spawnCoordinate.getX(), spawnCoordinate.getY());
+    player = new Player(spawnCoordinate.getX(), spawnCoordinate.getY());
     player.setDirection(spawnCoordinate.getDirection());
     player.initLevel(this);
     solidEntities.add(player);
@@ -276,7 +274,7 @@ public class Level implements Runnable {
     dialogOpen = bool;
   }
 
-  public PartyPlayer getPlayer() {
+  public Player getPlayer() {
     return player;
   }
   

@@ -1,11 +1,11 @@
 package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.level.entity.mob.npc.BasicNPC;
-import com.monkeystomp.spirelands.level.entity.mob.npc.NPC;
-import com.monkeystomp.spirelands.level.entity.mob.npc.NPCConfig;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
@@ -13,6 +13,7 @@ import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.view.LevelView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -20,44 +21,30 @@ import java.util.ArrayList;
  */
 public class Battle {
   
-  protected SpawnCoordinate partyMemberSlot1 = new SpawnCoordinate(300, 210, 3),
-                            partyMemberSlot2 = new SpawnCoordinate(320, 170, 3),
-                            partyMemberSlot3 = new SpawnCoordinate(320, 250, 3);
+  protected SpawnCoordinate partyMemberSlot1 = new SpawnCoordinate(300, 110, 3),
+                            partyMemberSlot2 = new SpawnCoordinate(320, 70, 3),
+                            partyMemberSlot3 = new SpawnCoordinate(320, 150, 3);
+  private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
   protected Sprite background;
   private int tick = 0;
-  private ArrayList<NPC> party = new ArrayList<>();
+  private final ArrayList<BattleEntity> party = new ArrayList<>();
   
   public Battle() {
+    setSlotMap();
     createPartymembers();
   }
   
+  private void setSlotMap() {
+    slotMap.put(0, partyMemberSlot1);
+    slotMap.put(1, partyMemberSlot2);
+    slotMap.put(2, partyMemberSlot3);
+  }
+  
   private void createPartymembers() {
-    NPCConfig config = new NPCConfig();
-    NPC npc;
-    
-    config.setX(partyMemberSlot1.getX());
-    config.setY(partyMemberSlot1.getY());
-    config.setFixedDirection(true);
-    config.setDirection(partyMemberSlot1.getDirection());
-    
-    npc = new BasicNPC(config, BasicNPC.MALE_GUARD);
-    party.add(npc);
-    
-    config.setX(partyMemberSlot2.getX());
-    config.setY(partyMemberSlot2.getY());
-    config.setFixedDirection(true);
-    config.setDirection(partyMemberSlot2.getDirection());
-    
-    npc = new BasicNPC(config, BasicNPC.MALE_DARKBLUEHAIR);
-    party.add(npc);
-    
-    config.setX(partyMemberSlot3.getX());
-    config.setY(partyMemberSlot3.getY());
-    config.setFixedDirection(true);
-    config.setDirection(partyMemberSlot3.getDirection());
-    
-    npc = new BasicNPC(config, BasicNPC.FEMALE_CATLADY);
-    party.add(npc);
+    HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
+    partyMembers.forEach((key, partyMember) -> {
+      party.add(new BattleEntity(slotMap.get(key), partyMember.getBattleSheet()));
+    });
   }
   
   private void endBattle() {
@@ -66,12 +53,17 @@ public class Battle {
   }
   
   public void update() {
-    if (tick++ == 600) endBattle();
+    for (BattleEntity partyMember: party) {
+      partyMember.update();
+    }
+    if (tick++ == 5700) endBattle();
   }
   
   public void render(Screen screen, GL2 gl) {
     screen.renderSprite(gl, 0, 0, background, false);
-    party.forEach(partyMember -> partyMember.render(screen, gl));
+    for (BattleEntity partyMember: party) {
+      partyMember.render(screen, gl);
+    }
   }
 
 }
