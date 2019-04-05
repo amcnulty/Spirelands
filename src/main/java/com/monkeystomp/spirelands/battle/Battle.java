@@ -31,7 +31,7 @@ public class Battle {
   
   public Battle() {
     setSlotMap();
-    createPartymembers();
+    createPartyMembers();
   }
   
   private void setSlotMap() {
@@ -40,10 +40,10 @@ public class Battle {
     slotMap.put(2, partyMemberSlot3);
   }
   
-  private void createPartymembers() {
+  private void createPartyMembers() {
     HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
     partyMembers.forEach((key, partyMember) -> {
-      party.add(new BattleEntity(slotMap.get(key), partyMember.getBattleSheet()));
+      party.add(new BattleEntity(slotMap.get(key), partyMember));
     });
   }
   
@@ -57,6 +57,11 @@ public class Battle {
       partyMember.update();
     }
     if (tick++ == 5700) endBattle();
+    else if (tick % 600 == 0) {
+      party.get(0).playUseMagicalSkillAnimation();
+      party.get(1).playShootingAnimation();
+      party.get(2).playEvadeAnimation();
+    }
   }
   
   public void render(Screen screen, GL2 gl) {
