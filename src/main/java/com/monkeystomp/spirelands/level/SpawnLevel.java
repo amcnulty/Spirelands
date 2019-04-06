@@ -38,7 +38,9 @@ public class SpawnLevel extends Level {
     this.levelId = LEVEL_ID;
     this.hasBattles = HAS_BATTLES;
     this.battle = BATTLE;
-    this.encounterRate = Level.HEAVY_ENCOUNTERS;
+    // INSANE ENCOUNTERS!!
+    this.encounterRate = 10;
+//    this.encounterRate = Level.HEAVY_ENCOUNTERS;
 //    this.encounterRate = Level.NORMAL_ENCOUNTERS;
 //    this.encounterRate = Level.LIGHT_ENCOUNTERS;
     loadLevel(BITMAP_PATH);

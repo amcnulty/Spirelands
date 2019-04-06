@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
@@ -28,6 +29,7 @@ public class Battle {
                             partyMemberSlot3 = new SpawnCoordinate(320, 150, 3);
   private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
   protected Sprite background;
+  protected String battleMusic;
   private int tick = 0;
   private final ArrayList<BattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
@@ -35,6 +37,10 @@ public class Battle {
   public Battle() {
     setSlotMap();
     createPartyMembers();
+  }
+  
+  public void init() {
+    Music.getMusicPlayer().play(battleMusic);
   }
   
   private void setSlotMap() {

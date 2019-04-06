@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -17,6 +18,7 @@ public class SpawnLevelBattle extends Battle {
   public SpawnLevelBattle() {
     this.background = BACKGROUND;
     createEnemies();
+    this.battleMusic = Music.BATTLE_SONG;
   }
   
   private void createEnemies() {

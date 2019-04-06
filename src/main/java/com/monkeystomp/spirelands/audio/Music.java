@@ -25,51 +25,59 @@ public class Music {
   /**
    * A slow sad piano song.
    */
-  public static String SAD_PIANO_SONG = "./resources/audio/music/sad_piano_song.wav";
+  public static final String SAD_PIANO_SONG = "./resources/audio/music/sad_piano_song.wav";
   /**
    * Music loop for the title menu.
    */
-  public static String TITLE_MUSIC = "./resources/audio/music/title_music.wav";
+  public static final String TITLE_MUSIC = "./resources/audio/music/title_music.wav";
   /**
    * A song that would be fitting for walking around a castle.
    */
-  public static String INSIDE_CASTLE_WALLS = "./resources/audio/music/inside_castle_walls.wav";
+  public static final String INSIDE_CASTLE_WALLS = "./resources/audio/music/inside_castle_walls.wav";
   /**
    * A heroic upbeat tune that will be great for introducing a hero or getting excited for some action.
    */
-  public static String INTRODUCE_HERO = "./resources/audio/music/introduct_hero.wav";
+  public static final String INTRODUCE_HERO = "./resources/audio/music/introduct_hero.wav";
   /**
    * A calm short music loop that can be played inside of a townspersons' home.
    */
-  public static String NEUTRAL_IN_A_HOUSE = "./resources/audio/music/neutral_in_a_house.wav";
+  public static final String NEUTRAL_IN_A_HOUSE = "./resources/audio/music/neutral_in_a_house.wav";
   /**
    * Music that can be played while plotting with your allies.
    */
-  public static String PLOTTING_WITH_COMRADES = "./resources/audio/music/plotting_with_comrades.wav";
+  public static final String PLOTTING_WITH_COMRADES = "./resources/audio/music/plotting_with_comrades.wav";
   /**
    * Short music loop that would be fitting to play in a shop.
    */
-  public static String SHORT_MERCHANT_LOOP = "./resources/audio/music/short_merchant_loop.wav";
+  public static final String SHORT_MERCHANT_LOOP = "./resources/audio/music/short_merchant_loop.wav";
   /**
    * Good background music for a town or village with not much going on.
    */
-  public static String SIMPLE_TOWN = "./resources/audio/music/simple_town.wav";
+  public static final String SIMPLE_TOWN = "./resources/audio/music/simple_town.wav";
   /**
    * Rain, thunder, and wind loop good for a storm condition.
    */
-  public static String STORM = "./resources/audio/music/storm.wav";
+  public static final String STORM = "./resources/audio/music/storm.wav";
   /**
    * Simple tune for playing in a town or village.
    */
-  public static String TOWN_JINGLE = "./resources/audio/music/town_jingle.wav";
+  public static final String TOWN_JINGLE = "./resources/audio/music/town_jingle.wav";
   /**
    * Music for when action is heating up and your party is under pressure.
    */
-  public static String UNDER_PRESSURE = "./resources/audio/music/under_pressure.wav";
+  public static final String UNDER_PRESSURE = "./resources/audio/music/under_pressure.wav";
   /**
    * Music that sounds like it could be played on an airship traveling the winds.
    */
-  public static String AIRSHIP_SONG = "./resources/audio/music/airship_song_remix.wav";
+  public static final String AIRSHIP_SONG = "./resources/audio/music/airship_song_remix.wav";
+  /**
+   * A looping battle song.
+   */
+  public static final String BATTLE_SONG = "./resources/audio/music/battle/battle_b.wav";
+  /**
+   * Battle victory song.
+   */
+  public static final String BATTLE_VICTORY = "./resources/audio/music/battle_victory.wav";
   
   private static final Music INSTANCE = new Music();
   private Clip clip;

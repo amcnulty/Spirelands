@@ -363,8 +363,6 @@ public class Level implements Runnable {
         encounterRate -= 2 * random.nextInt((int)(encounterRate * .3));
       }
       if (ticksSinceLastBattle++ == encounterRate) ViewManager.getViewManager().changeView(new BattleView(battle));
-      System.out.println("Ticks Since Last Battle: " + ticksSinceLastBattle);
-      System.out.println("Encounter Rate: " + encounterRate);
     }
   }
   

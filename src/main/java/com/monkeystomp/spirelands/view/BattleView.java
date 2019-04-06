@@ -13,12 +13,13 @@ import java.util.function.Consumer;
  */
 public class BattleView extends GameView {
   
-  private Battle battle;
-  private Consumer<KeyEvent> IKeyListener = e -> handleKeyPress(e);
+  private final Battle battle;
+  private final Consumer<KeyEvent> IKeyListener = e -> handleKeyPress(e);
   
   public BattleView(Battle battle) {
     this.battle = battle;
     setupKeyListeners();
+    this.battle.init();
   }
   
   private void setupKeyListeners() {
