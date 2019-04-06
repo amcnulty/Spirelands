@@ -2,7 +2,6 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
@@ -15,12 +14,11 @@ import java.util.HashMap;
  */
 public class BattleEntity {
   
-  private int x, y, anim;
+  protected int x, y, anim;
   private final SpriteSheet spriteSheet;
   private final SpawnCoordinate slot;
-  private Sprite currentAction;
+  protected Sprite currentAction;
   private final int renderSize = 32;
-  private final Character character;
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
   private final ICallback
     idleAnimation = () -> {
@@ -97,12 +95,11 @@ public class BattleEntity {
   private ICallback currentAnimation = idleAnimation,
                     repeatingAnimation = idleAnimation;
   
-  public BattleEntity(SpawnCoordinate slot, Character character) {
+  public BattleEntity(SpawnCoordinate slot, SpriteSheet spriteSheet) {
     this.slot = slot;
+    this.spriteSheet = spriteSheet;
     this.x = slot.getX();
     this.y = slot.getY();
-    this.character = character;
-    this.spriteSheet = character.getBattleSheet();
     setupActionMap();
     currentAction = actionMap.get("IDLE_0");
   }

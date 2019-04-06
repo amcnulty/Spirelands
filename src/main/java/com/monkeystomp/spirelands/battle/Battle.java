@@ -2,6 +2,8 @@ package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
+import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -28,6 +30,7 @@ public class Battle {
   protected Sprite background;
   private int tick = 0;
   private final ArrayList<BattleEntity> party = new ArrayList<>();
+  protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
   
   public Battle() {
     setSlotMap();
@@ -43,7 +46,7 @@ public class Battle {
   private void createPartyMembers() {
     HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
     partyMembers.forEach((key, partyMember) -> {
-      party.add(new BattleEntity(slotMap.get(key), partyMember));
+      party.add(new CharacterBattleEntity(slotMap.get(key), partyMember));
     });
   }
   
@@ -56,11 +59,17 @@ public class Battle {
     for (BattleEntity partyMember: party) {
       partyMember.update();
     }
+    for (EnemyBattleEntity enemy: enemies) {
+      enemy.update();
+    }
     if (tick++ == 5700) endBattle();
-    else if (tick % 600 == 0) {
+    else if (tick % 300 == 0) {
       party.get(0).playUseMagicalSkillAnimation();
       party.get(1).playShootingAnimation();
       party.get(2).playEvadeAnimation();
+      enemies.get(0).playStabbingAnimation();
+      enemies.get(1).playSwingingAnimation();
+      enemies.get(2).playShootingAnimation();
     }
   }
   
@@ -68,6 +77,9 @@ public class Battle {
     screen.renderSprite(gl, 0, 0, background, false);
     for (BattleEntity partyMember: party) {
       partyMember.render(screen, gl);
+    }
+    for (EnemyBattleEntity enemy: enemies) {
+      enemy.render(screen, gl);
     }
   }
 

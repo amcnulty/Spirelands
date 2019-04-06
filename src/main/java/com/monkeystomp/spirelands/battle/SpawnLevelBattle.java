@@ -1,8 +1,10 @@
 package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 
 /**
  *
@@ -14,6 +16,13 @@ public class SpawnLevelBattle extends Battle {
   
   public SpawnLevelBattle() {
     this.background = BACKGROUND;
+    createEnemies();
+  }
+  
+  private void createEnemies() {
+    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1)));
+    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(100, 70, 1)));
+    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(100, 150, 1)));
   }
   
   @Override

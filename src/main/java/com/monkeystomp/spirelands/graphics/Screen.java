@@ -156,6 +156,37 @@ public class Screen {
     gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
   }
   /**
+   * Renders a sprite with color blending effects. This is mostly used for lights that need to blend colors with their surroundings.
+   * @param gl Instance of the GL2 class.
+   * @param xp X position to start rendering of the sprite.
+   * @param yp Y position to start rendering of the sprite.
+   * @param sprite The sprite to be rendered.
+   * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
+   */
+  public void renderFlippedSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
+    if (fixed) {
+      xp -= xOffset;
+      yp -= yOffset;
+    }
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
+    gl.glColor4f(1, 1, 1, 1);
+    gl.glBegin(GL2.GL_QUADS);
+      gl.glTexCoord2f(1, 0);
+      gl.glVertex2f(xp, yp);
+      
+      gl.glTexCoord2f(0, 0);
+      gl.glVertex2f(xp + sprite.getWidth(), yp);
+      
+      gl.glTexCoord2f(0, 1);
+      gl.glVertex2f(xp + sprite.getWidth(), yp + sprite.getHeight());
+      
+      gl.glTexCoord2f(1, 1);
+      gl.glVertex2f(xp, yp + sprite.getHeight());
+    gl.glEnd();
+//    gl.glFlush();
+    gl.glBindTexture(GL2.GL_TEXTURE_2D, 0);
+  }
+  /**
    * Renders a sprite to the screen at the given coordinates with a set alpha transparency. If fixed is set to true the sprite will be rendered at a specific location on the map otherwise the coordinates will be in relation to the screen.
    * @param gl Instance of the GL2 class.
    * @param xp X position to start rendering of the sprite.
