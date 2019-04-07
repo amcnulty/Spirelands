@@ -73,9 +73,9 @@ public class Battle {
       party.get(0).playUseMagicalSkillAnimation();
       party.get(1).playShootingAnimation();
       party.get(2).playEvadeAnimation();
-      enemies.get(0).playStabbingAnimation();
-      enemies.get(1).playSwingingAnimation();
-      enemies.get(2).playShootingAnimation();
+      enemies.get(0).getEnemy().decreaseHealth(40);
+      enemies.get(0).playDamageAnimation();
+      enemies.forEach(enemy -> System.out.println(enemy.getEnemy().getHealth()));
     }
   }
   

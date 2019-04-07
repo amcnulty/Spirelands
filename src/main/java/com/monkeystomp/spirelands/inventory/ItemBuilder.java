@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * <p>
- * The ItemBuilder class is used in the to configure an Item and call its constructor.
+ * The ItemBuilder class is used to configure an Item and call its constructor.
  * </p>
  * <h3>
  * Example Usage:

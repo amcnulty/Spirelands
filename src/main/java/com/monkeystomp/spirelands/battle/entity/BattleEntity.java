@@ -20,7 +20,7 @@ public class BattleEntity {
   protected Sprite currentAction;
   private final int renderSize = 32;
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
-  private final ICallback
+  protected final ICallback
     idleAnimation = () -> {
       currentAction = actionMap.get("IDLE_" + (anim % 36) / 12);
     },
@@ -92,8 +92,8 @@ public class BattleEntity {
       currentAction = actionMap.get("DEAD_" + (anim % 36) / 12);
     };
 
-  private ICallback currentAnimation = idleAnimation,
-                    repeatingAnimation = idleAnimation;
+  protected ICallback currentAnimation = idleAnimation,
+                      repeatingAnimation = idleAnimation;
   
   public BattleEntity(SpawnCoordinate slot, SpriteSheet spriteSheet) {
     this.slot = slot;
@@ -178,7 +178,7 @@ public class BattleEntity {
     actionMap.put("DEAD_2", new Sprite(64, renderSize, 8, 5, spriteSheet));
   }
   
-  private void playLastRepeatingAnimation() {
+  protected void playLastRepeatingAnimation() {
     currentAnimation = repeatingAnimation;
   }
 
@@ -197,7 +197,7 @@ public class BattleEntity {
   public void setY(int y) {
     this.y = y;
   }
-  
+
   public void playIdleAnimation() {
     currentAnimation = repeatingAnimation = idleAnimation;
   }
