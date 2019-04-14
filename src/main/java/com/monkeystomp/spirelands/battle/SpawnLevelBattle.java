@@ -39,9 +39,15 @@ public class SpawnLevelBattle extends Battle {
   }
   
   private void createEnemies() {
-    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1), plantMonster.build()));
-    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(80, 70, 1), plantMonster.build()));
-    enemies.add(new EnemyBattleEntity(new SpawnCoordinate(80, 150, 1), plantMonster.build()));
+    EnemyBattleEntity newEntity = new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1), plantMonster.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 70, 1), plantMonster.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 150, 1), plantMonster.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
   }
   
   @Override

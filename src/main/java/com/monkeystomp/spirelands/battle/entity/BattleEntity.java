@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -14,11 +15,14 @@ import java.util.HashMap;
  */
 public class BattleEntity {
   
-  protected int x, y, anim;
+  protected int x, y, anim, readyGaugeMax;
+  private int readyGauge = 0;
   private final SpriteSheet spriteSheet;
   private final SpawnCoordinate slot;
+  private Battle battle;
   protected Sprite currentAction;
   private final int renderSize = 32;
+  private boolean ready = false;
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
     idleAnimation = () -> {
@@ -181,6 +185,10 @@ public class BattleEntity {
   protected void playLastRepeatingAnimation() {
     currentAnimation = repeatingAnimation;
   }
+  
+  public void setBattle(Battle battle) {
+    this.battle = battle;
+  }
 
   public int getX() {
     return x;
@@ -196,6 +204,10 @@ public class BattleEntity {
 
   public void setY(int y) {
     this.y = y;
+  }
+
+  public boolean isReady() {
+    return ready;
   }
 
   public void playIdleAnimation() {
@@ -279,9 +291,17 @@ public class BattleEntity {
     currentAnimation = repeatingAnimation = deadAnimation;
   }
   
+  private void fillGauge() {
+    if (readyGauge++ == readyGaugeMax) {
+      ready = true;
+      this.playReadyPhysicalAnimation();
+    }
+  }
+  
   public void update() {
     currentAnimation.execute();
     anim++;
+    if (battle.isGaugesFilling() && !ready) fillGauge();
   }
   
   public void render(Screen screen, GL2 gl) {

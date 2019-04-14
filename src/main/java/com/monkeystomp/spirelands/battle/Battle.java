@@ -31,7 +31,8 @@ public class Battle {
   protected Sprite background;
   protected String battleMusic;
   private int tick = 0;
-  private final ArrayList<BattleEntity> party = new ArrayList<>();
+  private boolean gaugesFilling = true;
+  private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
   
   public Battle() {
@@ -52,13 +53,28 @@ public class Battle {
   private void createPartyMembers() {
     HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
     partyMembers.forEach((key, partyMember) -> {
-      party.add(new CharacterBattleEntity(slotMap.get(key), partyMember));
+      CharacterBattleEntity newEntity = new CharacterBattleEntity(slotMap.get(key), partyMember);
+      newEntity.setBattle(this);
+      party.add(newEntity);
+      
     });
   }
   
   private void endBattle() {
     Location lastLocation = LocationManager.getLocationManager().getCurrentLocation();
     ViewManager.getViewManager().changeView(new LevelView(LevelFactory.createLevel(lastLocation.getLevelId(), lastLocation.getCoordinate())));
+  }
+
+  public boolean isGaugesFilling() {
+    return gaugesFilling;
+  }
+  
+  private void checkForReadyEntites() {
+    for (CharacterBattleEntity partyMember: party) {
+//      if (partyMember.isReady()) System.out.println(partyMember.getCharacter().getName() + " is ready!");
+    }
+    for (EnemyBattleEntity enemy: enemies) {
+    }
   }
   
   public void update() {
@@ -68,6 +84,7 @@ public class Battle {
     for (EnemyBattleEntity enemy: enemies) {
       enemy.update();
     }
+    checkForReadyEntites();
     if (tick++ == 5700) endBattle();
     else if (tick % 300 == 0) {
       party.get(0).playUseMagicalSkillAnimation();
