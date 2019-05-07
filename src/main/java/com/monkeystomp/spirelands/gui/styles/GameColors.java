@@ -65,6 +65,14 @@ public class GameColors {
    */
   public static final int MANA_BAR_EMPTY = 0xFF9999FF;
   /**
+   * ATB gauge bar filled color #0xFFFFFF00;
+   */
+  public static final int ATB_GAUGE_BAR_FILLED = 0xFF99FF99;
+  /**
+   * ATB gauge bar empty color #0xFFFFFF99
+   */
+  public static final int ATB_GAUGE_BAR_EMPTY = 0xFFFFFF99;
+  /**
    * Dark gray used for hovering game menu buttons #0xFF2C2C2C.
    */
   public static final int GAME_MENU_BUTTON_HOVER = 0xFF2C2C2C;

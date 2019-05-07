@@ -19,52 +19,52 @@ public class CharacterBattleEntity extends BattleEntity {
   
   private void setReadyGaugeMax() {
     switch (character.getSpeed() / 25) {
-      // 4.7 seconds
+      // 9.4 seconds
       case 0:
-        readyGaugeMax = 282;
+        readyGaugeMax = 564;
       break;
-      // 4.2 seconds
+      // 8.4 seconds
       case 1:
-        readyGaugeMax = 252;
+        readyGaugeMax = 504;
       break;
-      // 3.7 seconds
+      // 7.4 seconds
       case 2:
-        readyGaugeMax = 222;
+        readyGaugeMax = 444;
       break;
-      // 3.3 seconds
+      // 6.6 seconds
       case 3:
-        readyGaugeMax = 198;
+        readyGaugeMax = 396;
+      break;
+      // 5.6 seconds
+      case 4:
+        readyGaugeMax = 336;
+      break;
+      // 4.6 seconds
+      case 5:
+        readyGaugeMax = 276;
+      break;
+      // 3.6 seconds
+      case 6:
+        readyGaugeMax = 216;
       break;
       // 2.8 seconds
-      case 4:
+      case 7:
         readyGaugeMax = 168;
       break;
-      // 2.3 seconds
-      case 5:
-        readyGaugeMax = 138;
-      break;
-      // 1.8 seconds
-      case 6:
-        readyGaugeMax = 108;
-      break;
-      // 1.4 seconds
-      case 7:
-        readyGaugeMax = 84;
-      break;
-      // 1.2 seconds
+      // 2.4 seconds
       case 8:
-        readyGaugeMax = 72;
+        readyGaugeMax = 144;
       break;
-      // 1.1 second
+      // 2.2 second
       case 9:
-        readyGaugeMax = 66;
+        readyGaugeMax = 132;
       break;
-      // 1 second
+      // 2 second
       case 10:
-        readyGaugeMax = 60;
+        readyGaugeMax = 120;
       break;
       default:
-        readyGaugeMax = 60;
+        readyGaugeMax = 120;
     }
   }
 

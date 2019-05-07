@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
+import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
@@ -28,12 +29,14 @@ public class Battle {
                             partyMemberSlot2 = new SpawnCoordinate(320, 70, 3),
                             partyMemberSlot3 = new SpawnCoordinate(320, 150, 3);
   private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
+  private final int battleCardTop = 200;
   protected Sprite background;
   protected String battleMusic;
   private int tick = 0;
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
+  private final ArrayList<BattleCard> battleCards = new ArrayList<>();
   
   public Battle() {
     setSlotMap();
@@ -56,7 +59,7 @@ public class Battle {
       CharacterBattleEntity newEntity = new CharacterBattleEntity(slotMap.get(key), partyMember);
       newEntity.setBattle(this);
       party.add(newEntity);
-      
+      battleCards.add(new BattleCard(newEntity, battleCards.size()));
     });
   }
   
@@ -84,6 +87,9 @@ public class Battle {
     for (EnemyBattleEntity enemy: enemies) {
       enemy.update();
     }
+    for (BattleCard card: battleCards) {
+      card.update();
+    }
     checkForReadyEntites();
     if (tick++ == 5700) endBattle();
     else if (tick % 300 == 0) {
@@ -103,6 +109,9 @@ public class Battle {
     }
     for (EnemyBattleEntity enemy: enemies) {
       enemy.render(screen, gl);
+    }
+    for (BattleCard card: battleCards) {
+      card.render(screen, gl);
     }
   }
 

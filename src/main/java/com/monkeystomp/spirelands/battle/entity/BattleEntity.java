@@ -298,6 +298,10 @@ public class BattleEntity {
     }
   }
   
+  public double getReadyPercent() {
+    return ((double)readyGauge / readyGaugeMax > 1) ? 1 : (double)readyGauge / readyGaugeMax;
+  }
+  
   public void update() {
     currentAnimation.execute();
     anim++;
