@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
+import java.util.Random;
 
 /**
  *
@@ -10,11 +11,19 @@ import com.monkeystomp.spirelands.character.Character;
 public class CharacterBattleEntity extends BattleEntity {
   
   private final Character character;
+  private final Random random = new Random();
   
   public CharacterBattleEntity(SpawnCoordinate slot, Character character) {
     super(slot, character.getBattleSheet());
     this.character = character;
     setReadyGaugeMax();
+  }
+  
+  private void setReadyGaugeStart() {
+    double luckModifier = (double)character.getLuck() / Character.STAT_MAX;
+    double rand = random.nextGaussian() * ((double)readyGaugeMax / 8) + ((luckModifier * readyGaugeMax) * .75);
+    readyGauge = rand > 0 ? (int)rand : 0;
+    System.out.println(readyGauge);
   }
   
   private void setReadyGaugeMax() {
@@ -66,6 +75,10 @@ public class CharacterBattleEntity extends BattleEntity {
       default:
         readyGaugeMax = 120;
     }
+  }
+  
+  public void init() {
+    setReadyGaugeStart();
   }
 
   public Character getCharacter() {

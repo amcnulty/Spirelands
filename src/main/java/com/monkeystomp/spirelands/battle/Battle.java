@@ -45,6 +45,9 @@ public class Battle {
   
   public void init() {
     Music.getMusicPlayer().play(battleMusic);
+    for (CharacterBattleEntity partyMember: party) {
+      partyMember.init();
+    }
   }
   
   private void setSlotMap() {

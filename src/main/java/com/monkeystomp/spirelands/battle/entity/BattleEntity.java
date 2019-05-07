@@ -16,7 +16,7 @@ import java.util.HashMap;
 public class BattleEntity {
   
   protected int x, y, anim, readyGaugeMax;
-  private int readyGauge = 0;
+  protected int readyGauge = 0;
   private final SpriteSheet spriteSheet;
   private final SpawnCoordinate slot;
   private Battle battle;

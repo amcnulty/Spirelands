@@ -63,8 +63,10 @@ public class Character {
    * Very high stat weight for setting values on level up.
    */
   public static final String VERY_HIGH = "Very High";
-  // The max for any stat other than mana or HP
-  private final int statMax = 255;
+  /**
+   * The max for any stat other than mana or HP.
+   */
+  public static final int STAT_MAX = 255;
   // The modifier for when health stat is increased
   private final int healthWeightIncreaseModifier = 40;
   // The modifier for when mana stat is increased
@@ -622,7 +624,7 @@ public class Character {
    */
   public void increaseStrength(int amount) {
     strength += amount;
-    if (strength > statMax) strength = statMax;
+    if (strength > STAT_MAX) strength = STAT_MAX;
   }
   /**
    * Increase the defense stat of this character.
@@ -630,7 +632,7 @@ public class Character {
    */
   public void increaseDefense(int amount) {
     defense += amount;
-    if (defense > statMax) defense = statMax;
+    if (defense > STAT_MAX) defense = STAT_MAX;
   }
   /**
    * Increase the intellect stat of this character.
@@ -638,7 +640,7 @@ public class Character {
    */
   public void increaseIntellect(int amount) {
     intellect += amount;
-    if (intellect > statMax) intellect = statMax;
+    if (intellect > STAT_MAX) intellect = STAT_MAX;
   }
   /**
    * Increase the spirit stat of this character.
@@ -646,7 +648,7 @@ public class Character {
    */
   public void increaseSpirit(int amount) {
     spirit += amount;
-    if (spirit > statMax) spirit = statMax;
+    if (spirit > STAT_MAX) spirit = STAT_MAX;
   }
   /**
    * Increase the speed stat of this character.
@@ -654,7 +656,7 @@ public class Character {
    */
   public void increaseSpeed(int amount) {
     speed += amount;
-    if (speed > statMax) speed = statMax;
+    if (speed > STAT_MAX) speed = STAT_MAX;
   }
   /**
    * Increase the luck stat of this character.
@@ -662,7 +664,7 @@ public class Character {
    */
   public void increaseLuck(int amount) {
     luck += amount;
-    if (luck > statMax) luck = statMax;
+    if (luck > STAT_MAX) luck = STAT_MAX;
   }
   /**
    * Increase the level stat of this character
