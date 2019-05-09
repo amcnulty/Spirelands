@@ -38,43 +38,43 @@ public class BattleEntity {
       currentAction = actionMap.get("GUARD_" + (anim % 36) / 12);
     },
     damageAnimation = () -> {
-      if (anim == 36) moveFinished();
+      if (anim == 36) moveFinished(false);
       else currentAction = actionMap.get("DAMAGE_" + anim  / 12);
     },
     evadeAnimation = () -> {
       if (anim == 0) x = x + 5;
       if (anim == 36) {
         x = x - 5;
-        moveFinished();
+        moveFinished(false);
       }
       else currentAction = actionMap.get("EVADE_" + anim / 12);
     },
     stabbingAnimation = () -> {
-      if (anim == 36) moveFinished();
+      if (anim == 36) moveFinished(true);
       else currentAction = actionMap.get("STABBING_" + anim / 12);
     },
     swingingAnimation = () -> {
-      if (anim == 36) moveFinished();
+      if (anim == 36) moveFinished(true);
       else currentAction = actionMap.get("SWINGING_" + anim / 12);
     },
     shootingAnimation = () -> {
       if (anim == 1) x = x - 5;
       if (anim == 36) {
         x = x + 5;
-        moveFinished();
+        moveFinished(true);
       }
       else currentAction = actionMap.get("SHOOTING_" + anim / 12);
     },
     usePhysicalSkillAnimation = () -> {
-      if (anim == 36) moveFinished();
+      if (anim == 36) moveFinished(true);
       else currentAction = actionMap.get("USE_PHYSICAL_SKILL_" + anim / 12);
     },
     useMagicalSkillAnimation = () -> {
-      if (anim == 72) moveFinished();
+      if (anim == 72) moveFinished(true);
       else currentAction = actionMap.get("USE_MAGICAL_SKILL_" + anim / 24);
     },
     useItemAnimation = () -> {
-      if (anim == 36) moveFinished();
+      if (anim == 36) moveFinished(true);
       else currentAction = actionMap.get("USE_ITEM_" + anim / 12);
     },
     escapeAnimation = () -> {
@@ -184,7 +184,7 @@ public class BattleEntity {
   
   public void init() {}
   
-  protected void moveFinished() {
+  protected void moveFinished(boolean offensive) {
     currentAnimation = repeatingAnimation;
   }
   

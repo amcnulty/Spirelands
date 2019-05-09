@@ -2,12 +2,10 @@ package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.battle.enemy.EnemyBuilder;
+import com.monkeystomp.spirelands.battle.enemy.Bestiary;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 
 /**
@@ -17,19 +15,6 @@ import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 public class SpawnLevelBattle extends Battle {
   
   private final Sprite BACKGROUND = new Sprite(new Sprite("./resources/backgrounds/battle/dark_woods.jpg"), 38.05);
-  private final EnemyBuilder plantMonster = new EnemyBuilder()
-          .spriteSheet(new SpriteSheet("./resources/enemies/plant_battle.png"))
-          .name("Plant Monster")
-          .level(3)
-          .health(155)
-          .mana(35)
-          .strength(15)
-          .defense(8)
-          .intellect(5)
-          .spirit(11)
-          .speed(70)
-          .luck(6)
-          .loot(Item.SMALL_HP_POTION);
   
   public SpawnLevelBattle() {
     this.background = BACKGROUND;
@@ -38,13 +23,13 @@ public class SpawnLevelBattle extends Battle {
   }
   
   private void createEnemies() {
-    EnemyBattleEntity newEntity = new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1), plantMonster.build());
+    EnemyBattleEntity newEntity = new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1), Bestiary.PLANT_MONSTER.build());
     newEntity.setBattle(this);
     enemies.add(newEntity);
-    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 70, 1), plantMonster.build());
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 70, 1), Bestiary.PLANT_MONSTER.build());
     newEntity.setBattle(this);
     enemies.add(newEntity);
-    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 150, 1), plantMonster.build());
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 150, 1), Bestiary.PLANT_MONSTER.build());
     newEntity.setBattle(this);
     enemies.add(newEntity);
   }

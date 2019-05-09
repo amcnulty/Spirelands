@@ -101,12 +101,16 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   @Override
-  protected void moveFinished() {
-    super.moveFinished();
+  protected void moveFinished(boolean offensive) {
+    super.moveFinished(offensive);
     if (enemy.getHealth() == 0) currentAnimation = deadAnimation;
-    moveToLocation(getSlot().getX(), getSlot().getY());
-    setReady(false);
-    moving = false;
+    if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
+      moveToLocation(getSlot().getX(), getSlot().getY());
+    }
+    if (offensive) {
+      setReady(false);
+      moving = false;
+    }
   }
   
   @Override

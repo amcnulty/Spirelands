@@ -2,6 +2,10 @@ package com.monkeystomp.spirelands.battle.enemy;
 
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -37,6 +41,10 @@ public class Enemy {
   private final int luck;
   // Loot item that this enemy is holding.
   private final Item loot;
+  // Moves that this enemy can perform.
+  private final ArrayList<EnemyMove> enemyMoves;
+  // Random class.
+  private final Random random = new Random();
   /**
    * Creates a new Enemy object with the given configuration from the EnemyBuilder object.
    * @param builder Configuration object for creating this Enemy instance.
@@ -56,6 +64,7 @@ public class Enemy {
     this.speed = builder.speed;
     this.luck = builder.luck;
     this.loot = builder.loot;
+    this.enemyMoves = builder.enemyMoves;
   }
   /**
    * Increases the health stat of this Enemy.
@@ -142,6 +151,25 @@ public class Enemy {
 
   public Item getLoot() {
     return loot;
+  }
+  /**
+   * Gets any random move from this enemies list of moves.
+   * @return An EnemyMove object.
+   */
+  public EnemyMove getRandomMove() {
+    return enemyMoves.get(random.nextInt(enemyMoves.size()));
+  }
+  /**
+   * Gets a random move of the specified type and variety.
+   * @param type Physical | Magical
+   * @param variety Offensive | Defensive
+   * @return An EnemyMove object.
+   */
+  public EnemyMove getRandomMove(String type, String variety) {
+    List<EnemyMove> moves = enemyMoves.stream().
+            filter(move -> move.getType().equals(type) && move.getVariety().equals(variety))
+            .collect(Collectors.<EnemyMove>toList());
+    return moves.get(random.nextInt(moves.size()));
   }
 
 }
