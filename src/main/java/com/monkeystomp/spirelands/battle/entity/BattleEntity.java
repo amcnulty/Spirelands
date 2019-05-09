@@ -38,43 +38,43 @@ public class BattleEntity {
       currentAction = actionMap.get("GUARD_" + (anim % 36) / 12);
     },
     damageAnimation = () -> {
-      if (anim == 36) playLastRepeatingAnimation();
+      if (anim == 36) moveFinished();
       else currentAction = actionMap.get("DAMAGE_" + anim  / 12);
     },
     evadeAnimation = () -> {
       if (anim == 0) x = x + 5;
       if (anim == 36) {
         x = x - 5;
-        playLastRepeatingAnimation();
+        moveFinished();
       }
       else currentAction = actionMap.get("EVADE_" + anim / 12);
     },
     stabbingAnimation = () -> {
-      if (anim == 36) playLastRepeatingAnimation();
+      if (anim == 36) moveFinished();
       else currentAction = actionMap.get("STABBING_" + anim / 12);
     },
     swingingAnimation = () -> {
-      if (anim == 36) playLastRepeatingAnimation();
+      if (anim == 36) moveFinished();
       else currentAction = actionMap.get("SWINGING_" + anim / 12);
     },
     shootingAnimation = () -> {
       if (anim == 1) x = x - 5;
       if (anim == 36) {
         x = x + 5;
-        playLastRepeatingAnimation();
+        moveFinished();
       }
       else currentAction = actionMap.get("SHOOTING_" + anim / 12);
     },
     usePhysicalSkillAnimation = () -> {
-      if (anim == 36) playLastRepeatingAnimation();
+      if (anim == 36) moveFinished();
       else currentAction = actionMap.get("USE_PHYSICAL_SKILL_" + anim / 12);
     },
     useMagicalSkillAnimation = () -> {
-      if (anim == 72) playLastRepeatingAnimation();
+      if (anim == 72) moveFinished();
       else currentAction = actionMap.get("USE_MAGICAL_SKILL_" + anim / 24);
     },
     useItemAnimation = () -> {
-      if (anim == 36) playLastRepeatingAnimation();
+      if (anim == 36) moveFinished();
       else currentAction = actionMap.get("USE_ITEM_" + anim / 12);
     },
     escapeAnimation = () -> {
@@ -182,7 +182,9 @@ public class BattleEntity {
     actionMap.put("DEAD_2", new Sprite(64, renderSize, 8, 5, spriteSheet));
   }
   
-  protected void playLastRepeatingAnimation() {
+  public void init() {}
+  
+  protected void moveFinished() {
     currentAnimation = repeatingAnimation;
   }
   
@@ -206,8 +208,16 @@ public class BattleEntity {
     this.y = y;
   }
 
+  public SpawnCoordinate getSlot() {
+    return slot;
+  }
+
   public boolean isReady() {
     return ready;
+  }
+
+  public void setReady(boolean ready) {
+    this.ready = ready;
   }
 
   public void playIdleAnimation() {

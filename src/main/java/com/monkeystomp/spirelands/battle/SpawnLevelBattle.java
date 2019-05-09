@@ -2,7 +2,6 @@ package com.monkeystomp.spirelands.battle;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
-import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.battle.enemy.EnemyBuilder;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -28,7 +27,7 @@ public class SpawnLevelBattle extends Battle {
           .defense(8)
           .intellect(5)
           .spirit(11)
-          .speed(7)
+          .speed(70)
           .luck(6)
           .loot(Item.SMALL_HP_POTION);
   

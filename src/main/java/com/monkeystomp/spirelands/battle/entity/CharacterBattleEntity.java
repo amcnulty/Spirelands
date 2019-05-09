@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.entity;
 
+import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
 import java.util.Random;
@@ -23,7 +24,6 @@ public class CharacterBattleEntity extends BattleEntity {
     double luckModifier = (double)character.getLuck() / Character.STAT_MAX;
     double rand = random.nextGaussian() * ((double)readyGaugeMax / 8) + ((luckModifier * readyGaugeMax) * .75);
     readyGauge = rand > 0 ? (int)rand : 0;
-    System.out.println(readyGauge);
   }
   
   private void setReadyGaugeMax() {
@@ -77,6 +77,14 @@ public class CharacterBattleEntity extends BattleEntity {
     }
   }
   
+  public void handleAttack(Enemy enemy) {
+    if (random.nextBoolean()) {
+      this.playDamageAnimation();
+    }
+    else this.playEvadeAnimation();
+  }
+  
+  @Override
   public void init() {
     setReadyGaugeStart();
   }

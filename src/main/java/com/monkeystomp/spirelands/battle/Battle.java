@@ -18,6 +18,7 @@ import com.monkeystomp.spirelands.view.LevelView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  *
@@ -29,6 +30,7 @@ public class Battle {
                             partyMemberSlot2 = new SpawnCoordinate(320, 70, 3),
                             partyMemberSlot3 = new SpawnCoordinate(320, 150, 3);
   private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
+  private final Random random = new Random();
   private final int battleCardTop = 200;
   protected Sprite background;
   protected String battleMusic;
@@ -36,6 +38,7 @@ public class Battle {
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
+  private ArrayList<BattleEntity> readyEntities = new ArrayList<>();
   private final ArrayList<BattleCard> battleCards = new ArrayList<>();
   
   public Battle() {
@@ -47,6 +50,9 @@ public class Battle {
     Music.getMusicPlayer().play(battleMusic);
     for (CharacterBattleEntity partyMember: party) {
       partyMember.init();
+    }
+    for (EnemyBattleEntity enemy: enemies) {
+      enemy.init();
     }
   }
   
@@ -75,11 +81,37 @@ public class Battle {
     return gaugesFilling;
   }
   
+  private CharacterBattleEntity getTarget() {
+    return party.get(random.nextInt(party.size()));
+  }
+  
   private void checkForReadyEntites() {
-    for (CharacterBattleEntity partyMember: party) {
-//      if (partyMember.isReady()) System.out.println(partyMember.getCharacter().getName() + " is ready!");
+    if (gaugesFilling) {
+      for (CharacterBattleEntity partyMember: party) {
+        if (partyMember.isReady()) {
+          System.out.println(partyMember.getCharacter().getName() + " is ready!");
+          gaugesFilling = false;
+          readyEntities.add(partyMember);
+        }
+      }
+      for (EnemyBattleEntity enemy: enemies) {
+        if (enemy.isReady()) {
+          System.out.println(enemy.getEnemy().getName() + " is ready!");
+          gaugesFilling = false;
+          readyEntities.add(enemy);
+        }
+      }
     }
-    for (EnemyBattleEntity enemy: enemies) {
+    if (!readyEntities.isEmpty()) {
+      if (!readyEntities.get(0).isReady()) readyEntities.remove(0);
+      if (!readyEntities.isEmpty()) {
+        if (readyEntities.get(0) instanceof EnemyBattleEntity) {
+          if (!((EnemyBattleEntity)readyEntities.get(0)).isMoving()) {
+            ((EnemyBattleEntity)readyEntities.get(0)).makeMove(getTarget());
+          }
+        }
+      }
+      else gaugesFilling = true;
     }
   }
   
@@ -95,14 +127,14 @@ public class Battle {
     }
     checkForReadyEntites();
     if (tick++ == 5700) endBattle();
-    else if (tick % 300 == 0) {
-      party.get(0).playUseMagicalSkillAnimation();
-      party.get(1).playShootingAnimation();
-      party.get(2).playEvadeAnimation();
-      enemies.get(0).getEnemy().decreaseHealth(40);
-      enemies.get(0).playDamageAnimation();
-      enemies.forEach(enemy -> System.out.println(enemy.getEnemy().getHealth()));
-    }
+//    else if (tick % 300 == 0) {
+//      party.get(0).playUseMagicalSkillAnimation();
+//      party.get(1).playShootingAnimation();
+//      party.get(2).playEvadeAnimation();
+//      enemies.get(0).getEnemy().decreaseHealth(40);
+//      enemies.get(0).playDamageAnimation();
+//      enemies.forEach(enemy -> System.out.println(enemy.getEnemy().getHealth()));
+//    }
   }
   
   public void render(Screen screen, GL2 gl) {
