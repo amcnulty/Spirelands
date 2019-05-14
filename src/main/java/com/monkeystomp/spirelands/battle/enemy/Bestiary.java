@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
+import com.monkeystomp.spirelands.battle.move.EnemyMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 
@@ -14,10 +15,10 @@ public class Bestiary {
   public static final EnemyBuilder PLANT_MONSTER = new EnemyBuilder()
           .spriteSheet(new SpriteSheet("./resources/enemies/plant_battle.png"))
           .name("Plant Monster")
-          .level(3)
-          .health(155)
+          .level(1)
+          .health(80)
           .mana(35)
-          .strength(15)
+          .strength(6)
           .defense(8)
           .intellect(5)
           .spirit(11)

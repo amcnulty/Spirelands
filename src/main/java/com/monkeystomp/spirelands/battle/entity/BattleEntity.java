@@ -19,7 +19,7 @@ public class BattleEntity {
   protected int readyGauge = 0;
   private final SpriteSheet spriteSheet;
   private final SpawnCoordinate slot;
-  private Battle battle;
+  protected Battle battle;
   protected Sprite currentAction;
   private final int renderSize = 32;
   private boolean ready = false;

@@ -2,7 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
-import com.monkeystomp.spirelands.battle.enemy.EnemyMove;
+import com.monkeystomp.spirelands.battle.move.EnemyMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
@@ -150,7 +150,7 @@ public class EnemyBattleEntity extends BattleEntity {
         if (isReady()) {
           try {
             moveAnimation.invoke(this);
-            currentTarget.handleAttack(enemy);
+            battle.getMoveProcessor().process(this, currentTarget, currentMove);
           } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
           }

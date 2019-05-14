@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.battle.enemy;
+package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import java.lang.reflect.Method;

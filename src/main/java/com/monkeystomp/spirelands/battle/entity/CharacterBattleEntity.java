@@ -77,13 +77,6 @@ public class CharacterBattleEntity extends BattleEntity {
     }
   }
   
-  public void handleAttack(Enemy enemy) {
-    if (random.nextBoolean()) {
-      this.playDamageAnimation();
-    }
-    else this.playEvadeAnimation();
-  }
-  
   @Override
   public void init() {
     setReadyGaugeStart();

@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
+import com.monkeystomp.spirelands.battle.move.EnemyMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;

@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
+import com.monkeystomp.spirelands.battle.move.MoveProcessor;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -34,6 +35,7 @@ public class Battle {
   private final int battleCardTop = 200;
   protected Sprite background;
   protected String battleMusic;
+  private final MoveProcessor moveProcessor = new MoveProcessor();
   private int tick = 0;
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
@@ -75,6 +77,10 @@ public class Battle {
   private void endBattle() {
     Location lastLocation = LocationManager.getLocationManager().getCurrentLocation();
     ViewManager.getViewManager().changeView(new LevelView(LevelFactory.createLevel(lastLocation.getLevelId(), lastLocation.getCoordinate())));
+  }
+
+  public MoveProcessor getMoveProcessor() {
+    return moveProcessor;
   }
 
   public boolean isGaugesFilling() {

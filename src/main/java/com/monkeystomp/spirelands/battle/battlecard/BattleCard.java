@@ -63,11 +63,13 @@ public class BattleCard {
   
   private void updateStatBars() {
     if (characterHealth != character.getHealth()) {
-      healthFill = new Sprite((int)((character.getHealth() / (double)character.getHealthMax()) * barWidth), barHeight, GameColors.HEALTH_BAR_FILL);
+      if (character.getHealth() == 0) healthFill = null;
+      else healthFill = new Sprite((int)((character.getHealth() / (double)character.getHealthMax()) * barWidth), barHeight, GameColors.HEALTH_BAR_FILL);
       characterHealth = character.getHealth();
     }
     if (characterMana != character.getMana()) {
-      manaFill = new Sprite((int)((character.getMana() / (double)character.getManaMax()) * barWidth), barHeight, GameColors.MANA_BAR_FILL);
+      if (character.getMana() == 0) manaFill = null;
+      else manaFill = new Sprite((int)((character.getMana() / (double)character.getManaMax()) * barWidth), barHeight, GameColors.MANA_BAR_FILL);
       characterMana = character.getMana();
     }
   }
@@ -89,10 +91,10 @@ public class BattleCard {
     screen.renderSprite(gl, left, top, character.getThumbnail(), false);
     screen.renderFonts(healthFont);
     screen.renderSprite(gl, left + 40, top + 11, healthEmpty, false);
-    screen.renderSprite(gl, left + 40, top + 11, healthFill, false);
+    if (healthFill != null) screen.renderSprite(gl, left + 40, top + 11, healthFill, false);
     screen.renderFonts(manaFont);
     screen.renderSprite(gl, left + 40, top + 22, manaEmpty, false);
-    screen.renderSprite(gl, left + 40, top + 22, manaFill, false);
+    if (manaFill != null) screen.renderSprite(gl, left + 40, top + 22, manaFill, false);
   }
 
 }
