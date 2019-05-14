@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
+import com.monkeystomp.spirelands.battle.enemy.EnemyMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
@@ -23,6 +24,7 @@ public class EnemyBattleEntity extends BattleEntity {
   private boolean moving = false,
                   traveling = false;
   private CharacterBattleEntity currentTarget;
+  private EnemyMove currentMove;
   private final int leftOfTarget = 28;
   private ArrayList<int[]> travelingSteps = new ArrayList<>();
   private Method moveAnimation;
@@ -129,14 +131,13 @@ public class EnemyBattleEntity extends BattleEntity {
   public void makeMove(CharacterBattleEntity target) {
     this.currentTarget = target;
     moving = true;
-    Class<?>[] args = null;
     moveToLocation(target.getX() - leftOfTarget, target.getY());
-    try {
-      moveAnimation = BattleEntity.class.getDeclaredMethod("playSwingingAnimation", args);
-    } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    
+    setNextMove();
+  }
+  
+  private void setNextMove() {
+    currentMove = enemy.getRandomMove();
+    moveAnimation = currentMove.getMoveAnimation();
   }
   
   private void updateTravel() {

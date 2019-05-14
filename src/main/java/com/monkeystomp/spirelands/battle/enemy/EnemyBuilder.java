@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * <pre>
  * {@code
  * private Enemy
- *   plantEnemy = new EnemyBuilder()}
+ *   plantEnemy = new EnemyBuilder()
  *     .spriteSheet(new SpriteSheet("./resources/path/to/spritesheet"))
  *     .name("Plant Monster")
  *     .level(3)
@@ -27,7 +27,7 @@ import java.util.ArrayList;
  *     .speed(7)
  *     .luck(6)
  *     .loot(Item.SMALL_HP_POTION)
- *     .build();
+ *     .build();}
  * </pre>
  * @author Aaron Michael McNulty
  */
@@ -92,7 +92,7 @@ public class EnemyBuilder {
   /**
    * Moves that this enemy can perform.
    */
-  public ArrayList<EnemyMove> enemyMoves;
+  public ArrayList<EnemyMove> enemyMoves = new ArrayList<>();
   /**
    * Sets the sprite sheet of the enemy.
    * @param spriteSheet SpriteSheet object to set for this enemy.

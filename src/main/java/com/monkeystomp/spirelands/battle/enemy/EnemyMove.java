@@ -1,5 +1,7 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
+import java.lang.reflect.Method;
+
 /**
  * Enemy Move class is used to describe a move that can be made by an enemy during a battle sequence.
  * @author Aaron Michael McNulty
@@ -33,14 +35,33 @@ public class EnemyMove {
   private final int accuracy;
   // Is the move a ranged move?
   private final boolean ranged;
+  // The animation method for the battle entity.
+  private final Method moveAnimation;
   
-  public EnemyMove(String name, String type, String variety, int powerLevel, int accuracy, boolean ranged) {
-    this.name = name;
-    this.type = type;
-    this.variety = variety;
-    this.powerLevel = powerLevel;
-    this.accuracy = accuracy;
-    this.ranged = ranged;
+  /**
+   * A basic attack move. Physical & Offensive.
+   */
+  public static final EnemyMove BASIC_ATTACK = new EnemyMoveBuilder()
+          .name("Basic Attack")
+          .physicalAttack()
+          .powerLevel(20)
+          .accuracy(95)
+          .ranged(false)
+          .stabbingAnimation()
+          .build();
+  
+  /**
+   * Creates a new EnemyMove object with the given configuration from the EnemyMoveBuilder object.
+   * @param builder Configuration object for creating this EnemyMove instance.
+   */
+  public EnemyMove(EnemyMoveBuilder builder) {
+    this.name = builder.name;
+    this.type = builder.type;
+    this.variety = builder.variety;
+    this.powerLevel = builder.powerLevel;
+    this.accuracy = builder.accuracy;
+    this.ranged = builder.ranged;
+    this.moveAnimation = builder.moveAnimation;
   }
 
   public String getName() {
@@ -65,6 +86,10 @@ public class EnemyMove {
 
   public boolean isRanged() {
     return ranged;
+  }
+
+  public Method getMoveAnimation() {
+    return moveAnimation;
   }
 
 }
