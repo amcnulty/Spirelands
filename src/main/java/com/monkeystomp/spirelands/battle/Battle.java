@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
+import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.battle.move.MoveProcessor;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
@@ -20,6 +21,7 @@ import com.monkeystomp.spirelands.view.ViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.function.Consumer;
 
 /**
  *
@@ -40,12 +42,15 @@ public class Battle {
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
-  private ArrayList<BattleEntity> readyEntities = new ArrayList<>();
+  private final ArrayList<BattleEntity> readyEntities = new ArrayList<>();
   private final ArrayList<BattleCard> battleCards = new ArrayList<>();
+  private final ArrayList<FlashMessage> currentMessages = new ArrayList<>();
+  private final Consumer<FlashMessage> IFlashMessage = flashMessage -> currentMessages.add(flashMessage);
   
   public Battle() {
     setSlotMap();
     createPartyMembers();
+    moveProcessor.setIFlashMessage(IFlashMessage);
   }
   
   public void init() {
@@ -95,14 +100,12 @@ public class Battle {
     if (gaugesFilling) {
       for (CharacterBattleEntity partyMember: party) {
         if (partyMember.isReady()) {
-          System.out.println(partyMember.getCharacter().getName() + " is ready!");
           gaugesFilling = false;
           readyEntities.add(partyMember);
         }
       }
       for (EnemyBattleEntity enemy: enemies) {
         if (enemy.isReady()) {
-          System.out.println(enemy.getEnemy().getName() + " is ready!");
           gaugesFilling = false;
           readyEntities.add(enemy);
         }
@@ -131,6 +134,10 @@ public class Battle {
     for (BattleCard card: battleCards) {
       card.update();
     }
+    for (int i = 0; i < currentMessages.size(); i++) {
+      if (currentMessages.get(i).isVisible()) currentMessages.get(i).update();
+      else currentMessages.remove(i);
+    }
     checkForReadyEntites();
     if (tick++ == 5700) endBattle();
 //    else if (tick % 300 == 0) {
@@ -153,6 +160,9 @@ public class Battle {
     }
     for (BattleCard card: battleCards) {
       card.render(screen, gl);
+    }
+    for (FlashMessage message: currentMessages) {
+      message.render(screen, gl);
     }
   }
 

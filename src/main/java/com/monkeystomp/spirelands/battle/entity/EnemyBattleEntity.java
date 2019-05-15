@@ -140,6 +140,15 @@ public class EnemyBattleEntity extends BattleEntity {
     moveAnimation = currentMove.getMoveAnimation();
   }
   
+  private void processMove() {
+    try {
+      moveAnimation.invoke(this);
+      battle.getMoveProcessor().process(this, currentTarget, currentMove);
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+  
   private void updateTravel() {
     if (traveling) {
       this.x = travelingSteps.get(0)[0];
@@ -148,15 +157,15 @@ public class EnemyBattleEntity extends BattleEntity {
       if (travelingSteps.isEmpty()) {
         traveling = false;
         if (isReady()) {
-          try {
-            moveAnimation.invoke(this);
-            battle.getMoveProcessor().process(this, currentTarget, currentMove);
-          } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
-          }
+          processMove();
         }
       }
     }
+  }
+  
+  @Override
+  protected void checkForHealth() {
+    if (enemy.getHealth() == 0) setAsDead();
   }
   
   @Override

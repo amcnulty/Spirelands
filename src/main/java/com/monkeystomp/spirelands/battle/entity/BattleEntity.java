@@ -22,7 +22,8 @@ public class BattleEntity {
   protected Battle battle;
   protected Sprite currentAction;
   private final int renderSize = 32;
-  private boolean ready = false;
+  private boolean ready = false,
+                  isDead = false;
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
     idleAnimation = () -> {
@@ -185,7 +186,8 @@ public class BattleEntity {
   public void init() {}
   
   protected void moveFinished(boolean offensive) {
-    currentAnimation = repeatingAnimation;
+    if (isDead) playDeadAnimation();
+    else currentAnimation = repeatingAnimation;
   }
   
   public void setBattle(Battle battle) {
@@ -312,10 +314,19 @@ public class BattleEntity {
     return ((double)readyGauge / readyGaugeMax > 1) ? 1 : (double)readyGauge / readyGaugeMax;
   }
   
+  protected void setAsDead() {
+    isDead = true;
+    ready = false;
+    readyGauge = 0;
+  }
+  
+  protected void checkForHealth() {}
+  
   public void update() {
+    if (!isDead) checkForHealth();
     currentAnimation.execute();
     anim++;
-    if (battle.isGaugesFilling() && !ready) fillGauge();
+    if (battle.isGaugesFilling() && !ready && !isDead) fillGauge();
   }
   
   public void render(Screen screen, GL2 gl) {

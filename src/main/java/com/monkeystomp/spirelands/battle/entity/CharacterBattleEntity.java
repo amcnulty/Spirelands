@@ -81,6 +81,11 @@ public class CharacterBattleEntity extends BattleEntity {
   public void init() {
     setReadyGaugeStart();
   }
+  
+  @Override
+  protected void checkForHealth() {
+    if (character.getHealth() == 0) setAsDead();
+  }
 
   public Character getCharacter() {
     return character;
