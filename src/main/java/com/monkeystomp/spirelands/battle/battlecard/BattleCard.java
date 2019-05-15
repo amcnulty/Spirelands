@@ -62,15 +62,17 @@ public class BattleCard {
   }
   
   private void updateStatBars() {
-    if (characterHealth != character.getHealth()) {
-      if (character.getHealth() == 0) healthFill = null;
-      else healthFill = new Sprite((int)((character.getHealth() / (double)character.getHealthMax()) * barWidth), barHeight, GameColors.HEALTH_BAR_FILL);
-      characterHealth = character.getHealth();
+    int health = character.getHealth();
+    int mana = character.getMana();
+    if (characterHealth != health) {
+      if (health == 0) healthFill = null;
+      else healthFill = new Sprite((int)((health / (double)character.getHealthMax()) * barWidth), barHeight, GameColors.HEALTH_BAR_FILL);
+      characterHealth = health;
     }
-    if (characterMana != character.getMana()) {
-      if (character.getMana() == 0) manaFill = null;
-      else manaFill = new Sprite((int)((character.getMana() / (double)character.getManaMax()) * barWidth), barHeight, GameColors.MANA_BAR_FILL);
-      characterMana = character.getMana();
+    if (characterMana != mana) {
+      if (mana == 0) manaFill = null;
+      else manaFill = new Sprite((int)((mana / (double)character.getManaMax()) * barWidth), barHeight, GameColors.MANA_BAR_FILL);
+      characterMana = mana;
     }
   }
   

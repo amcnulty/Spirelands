@@ -22,8 +22,8 @@ public class Bestiary {
           .defense(8)
           .intellect(5)
           .spirit(11)
-          .speed(70)
-          .luck(25)
+          .speed(255)
+          .luck(255)
           .loot(Item.SMALL_HP_POTION)
           .addMove(EnemyMove.BASIC_ATTACK);
   

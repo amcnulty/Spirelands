@@ -93,7 +93,9 @@ public class Battle {
   }
   
   private CharacterBattleEntity getTarget() {
-    return party.get(random.nextInt(party.size()));
+    CharacterBattleEntity nextTarget = party.get(random.nextInt(party.size()));
+    if (nextTarget.isDead()) return getTarget();
+    else return nextTarget;
   }
   
   private void checkForReadyEntites() {
@@ -139,7 +141,7 @@ public class Battle {
       else currentMessages.remove(i);
     }
     checkForReadyEntites();
-    if (tick++ == 5700) endBattle();
+    if (tick++ == 400) endBattle();
 //    else if (tick % 300 == 0) {
 //      party.get(0).playUseMagicalSkillAnimation();
 //      party.get(1).playShootingAnimation();

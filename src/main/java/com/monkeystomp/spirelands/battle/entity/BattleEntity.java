@@ -218,6 +218,10 @@ public class BattleEntity {
     return ready;
   }
 
+  public boolean isDead() {
+    return isDead;
+  }
+
   public void setReady(boolean ready) {
     this.ready = ready;
   }

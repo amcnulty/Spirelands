@@ -79,7 +79,11 @@ public class CharacterBattleEntity extends BattleEntity {
   
   @Override
   public void init() {
-    setReadyGaugeStart();
+    if (character.getHealth() == 0) {
+      setAsDead();
+      playDeadAnimation();
+    }
+    else setReadyGaugeStart();
   }
   
   @Override
