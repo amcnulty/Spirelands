@@ -62,13 +62,5 @@ $ gradle test --tests InventoryManagerTest.addArmorToInventory
 ```
 ---
 ### Credits ###
-<div style="display: flex;">
-  <div style="flex-grow: 1;">
-    Author:<br>
-    Game Resources:
-  </div>
-  <div style="flex-grow: 3;">
-    <i>Aaron Michael McNulty</i><br>
-    <a href="https://opengameart.org/">Open Game Art</a>
-  </div>
-</div>
+* Author:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;*Aaron Michael McNulty*
+* Game Resources:&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://opengameart.org/">Open Game Art</a>
