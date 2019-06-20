@@ -20,15 +20,15 @@ public class MoveProcessor {
     this.IFlashMessage = IFlashMessage;
   }
   
-  public void process(BattleEntity user, BattleEntity target, EnemyMove move) {
+  public void process(BattleEntity user, BattleEntity target, BattleMove move) {
     if (user instanceof EnemyBattleEntity) {
       if (target instanceof CharacterBattleEntity) {
-        if (move.getVariety().equals(EnemyMove.OFFENSIVE)) processEnemyOffensiveMove((EnemyBattleEntity)user, (CharacterBattleEntity)target, move);
+        if (move.getVariety().equals(BattleMove.OFFENSIVE)) processEnemyOffensiveMove((EnemyBattleEntity)user, (CharacterBattleEntity)target, move);
       }
     }
   }
   
-  private void processEnemyOffensiveMove(EnemyBattleEntity user, CharacterBattleEntity target, EnemyMove move) {
+  private void processEnemyOffensiveMove(EnemyBattleEntity user, CharacterBattleEntity target, BattleMove move) {
     int attackPower, overallEffect;
     if (random.nextInt(100) + 1 > move.getAccuracy()) {
       target.playEvadeAnimation();
@@ -38,8 +38,14 @@ public class MoveProcessor {
       System.out.println(user.getEnemy().getName() + " missed " + target.getCharacter().getName() + "!");
     }
     else {
-      attackPower = (int)(move.getPowerLevel() * user.getEnemy().getStrength() * ( .1 + ( .009 * ( user.getEnemy().getLevel() ))));
-      overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getCharacter().getDefense() ))));
+      if (move.getType().equals(BattleMove.PHYSICAL)) {
+        attackPower = (int)(move.getPowerLevel() * user.getEnemy().getStrength() * ( .1 + ( .009 * ( user.getEnemy().getLevel() ))));
+        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getCharacter().getDefense() ))));
+      }
+      else {
+        attackPower = (int)(move.getPowerLevel() * user.getEnemy().getIntellect() * ( .1 + ( .009 * ( user.getEnemy().getLevel() ))));
+        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getCharacter().getSpirit() ))));
+      }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       target.playDamageAnimation();
       target.getCharacter().decreaseHealth(overallEffect);

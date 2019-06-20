@@ -1,21 +1,22 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * <p>
- * The EnemyMoveBuilder class is used to configure an EnemyMove and call its constructor.
+ * The BattleMoveBuilder class is used to configure a BattleMove and call its constructor.
  * </p>
  * <h3>
  * Example Usage:
  * </h3>
  * <pre>
  * {@code
- * private EnemyMove
- *   fireAttack = new EnemyMoveBuilder()
+ * private BattleMove
+ *   fireAttack = new BattleMoveBuilder()
  *     .name("Fire Attack")
  *     .magicalAttack()
  *     .powerLevel(30)
@@ -25,7 +26,7 @@ import java.util.logging.Logger;
  * </pre>
  * @author Aaron Michael McNulty
  */
-public class EnemyMoveBuilder {
+public class BattleMoveBuilder {
   
   private final Class<?>[] args = null;
   /**
@@ -57,155 +58,168 @@ public class EnemyMoveBuilder {
    */
   public Method moveAnimation;
   /**
+   * The thumbnail for this move.
+   */
+  public Sprite thumbnail;
+  /**
    * Sets the name of the move.
    * @param name Display name for the move.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder name(String name) {
+  public BattleMoveBuilder name(String name) {
     this.name = name;
     return this;
   }
   /**
    * Sets the type as physical and the variety as offensive.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder physicalAttack() {
-    this.type = EnemyMove.PHYSICAL;
-    this.variety = EnemyMove.OFFENSIVE;
+  public BattleMoveBuilder physicalAttack() {
+    this.type = BattleMove.PHYSICAL;
+    this.variety = BattleMove.OFFENSIVE;
     return this;
   }
   /**
    * Sets the type as physical and the variety as defensive.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder physicalDefensive() {
-    this.type = EnemyMove.PHYSICAL;
-    this.variety = EnemyMove.DEFENSIVE;
+  public BattleMoveBuilder physicalDefensive() {
+    this.type = BattleMove.PHYSICAL;
+    this.variety = BattleMove.DEFENSIVE;
     return this;
   }
   /**
    * Sets the type as magical and the variety as offensive.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder magicalAttack() {
-    this.type = EnemyMove.MAGICAL;
-    this.variety = EnemyMove.OFFENSIVE;
+  public BattleMoveBuilder magicalAttack() {
+    this.type = BattleMove.MAGICAL;
+    this.variety = BattleMove.OFFENSIVE;
     return this;
   }
   /**
    * Sets the type as magical and the variety as defensive.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder magicalDefensive() {
-    this.type = EnemyMove.MAGICAL;
-    this.variety = EnemyMove.DEFENSIVE;
+  public BattleMoveBuilder magicalDefensive() {
+    this.type = BattleMove.MAGICAL;
+    this.variety = BattleMove.DEFENSIVE;
     return this;
   }
   /**
    * Sets the power level to the given amount.
    * @param amount Integer value to set the power level to.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder powerLevel(int amount) {
+  public BattleMoveBuilder powerLevel(int amount) {
     this.powerLevel = amount;
     return this;
   }
   /**
    * Sets the accuracy level to the given amount.
    * @param amount Integer representation of the percent accuracy i.e. 95 = 95%.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder accuracy(int amount) {
+  public BattleMoveBuilder accuracy(int amount) {
     this.accuracy = amount;
     return this;
   }
   /**
    * Sets this move to ranged if passed true.
    * @param isRanged Flag for if this move should be ranged.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder ranged(boolean isRanged) {
+  public BattleMoveBuilder ranged(boolean isRanged) {
     this.ranged = isRanged;
     return this;
   }
   /**
    * Sets the move animation to stabbing animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder stabbingAnimation() {
+  public BattleMoveBuilder stabbingAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playStabbingAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
    * Sets the move animation to swinging animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder swingingAnimation() {
+  public BattleMoveBuilder swingingAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playSwingingAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
    * Sets the move animation to shooting animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder shootingAnimation() {
+  public BattleMoveBuilder shootingAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playShootingAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
    * Sets the move animation to physical skill animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder physicalSkillAnimation() {
+  public BattleMoveBuilder physicalSkillAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playUsePhysicalSkillAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
    * Sets the move animation to magical skill animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder magicalSkillAnimation() {
+  public BattleMoveBuilder magicalSkillAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playUseMagicalSkillAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
    * Sets the move animation to use item animation.
-   * @return The EnemyMoveBuilder reference.
+   * @return The BattleMoveBuilder reference.
    */
-  public EnemyMoveBuilder useItemAnimation() {
+  public BattleMoveBuilder useItemAnimation() {
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playUseItemAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
-      Logger.getLogger(EnemyMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
     return this;
   }
   /**
-   * Builds this enemy move by calling the EnemyMove class constructor with this instance of EnemyMoveBuilder as the argument.
+   * Sets the thumbnail for this move.
+   * @param thumbnail The thumbnail sprite for this move.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder thumbnail(Sprite thumbnail) {
+    this.thumbnail = thumbnail;
+    return this;
+  }
+  /**
+   * Builds this enemy move by calling the EnemyMove class constructor with this instance of BattleMoveBuilder as the argument.
    * @return The newly created EnemyMove.
    */
-  public EnemyMove build() {
-    return new EnemyMove(this);
+  public BattleMove build() {
+    return new BattleMove(this);
   }
   
 }

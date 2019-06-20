@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.battle;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
+import com.monkeystomp.spirelands.battle.controls.BattleControls;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
@@ -38,6 +39,7 @@ public class Battle {
   protected Sprite background;
   protected String battleMusic;
   private final MoveProcessor moveProcessor = new MoveProcessor();
+  private final BattleControls battleControls = new BattleControls();
   private int tick = 0;
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
@@ -121,6 +123,11 @@ public class Battle {
             ((EnemyBattleEntity)readyEntities.get(0)).makeMove(getTarget());
           }
         }
+        else if (readyEntities.get(0) instanceof CharacterBattleEntity) {
+          if (!battleControls.isShowing()) {
+            battleControls.setControlsForBattleEntity((CharacterBattleEntity)readyEntities.get(0));
+          }
+        }
       }
       else gaugesFilling = true;
     }
@@ -141,7 +148,8 @@ public class Battle {
       else currentMessages.remove(i);
     }
     checkForReadyEntites();
-    if (tick++ == 400) endBattle();
+    if (battleControls.isShowing()) battleControls.update();
+    if (tick++ == 4000) endBattle();
 //    else if (tick % 300 == 0) {
 //      party.get(0).playUseMagicalSkillAnimation();
 //      party.get(1).playShootingAnimation();
@@ -166,6 +174,7 @@ public class Battle {
     for (FlashMessage message: currentMessages) {
       message.render(screen, gl);
     }
+    if (battleControls.isShowing()) battleControls.render(screen, gl);
   }
 
 }

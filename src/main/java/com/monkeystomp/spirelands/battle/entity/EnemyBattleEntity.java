@@ -2,7 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
-import com.monkeystomp.spirelands.battle.move.EnemyMove;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
@@ -24,9 +24,9 @@ public class EnemyBattleEntity extends BattleEntity {
   private boolean moving = false,
                   traveling = false;
   private CharacterBattleEntity currentTarget;
-  private EnemyMove currentMove;
+  private BattleMove currentMove;
   private final int leftOfTarget = 28;
-  private ArrayList<int[]> travelingSteps = new ArrayList<>();
+  private final ArrayList<int[]> travelingSteps = new ArrayList<>();
   private Method moveAnimation;
   
   public EnemyBattleEntity(SpawnCoordinate slot, Enemy enemy) {

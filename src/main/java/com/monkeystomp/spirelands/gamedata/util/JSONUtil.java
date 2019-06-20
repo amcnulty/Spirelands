@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.gamedata.util;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -116,6 +117,14 @@ public class JSONUtil {
    */
   public static final String BOOTS = "T4gs8cvhf3";
   /**
+   * The moves object for each character.
+   */
+  public static final String MOVES = "Moves";
+  /**
+   * The equipped moves for each character.
+   */
+  public static final String EQUIPPED_MOVES = "EquippedMoves";
+  /**
    * Key for main levels object.
    */
   public static final String LEVELS = "DHlVpJMNLN";
@@ -174,6 +183,16 @@ public class JSONUtil {
       object = (JSONObject) object.get(keys[i]);
     }
     return object;
+  }
+  
+  public JSONArray getNestedArray (JSONObject parent, String[] keys) {
+    JSONObject object = parent;
+    JSONArray returnValue = new JSONArray();
+    for (int i = 0; i < keys.length; i++) {
+      if (i == keys.length - 1) returnValue = (JSONArray)object.get(keys[i]);
+      else object = (JSONObject) object.get(keys[i]);
+    }
+    return returnValue;
   }
   
   public String getNestedString(JSONObject parent, String[] keys) {

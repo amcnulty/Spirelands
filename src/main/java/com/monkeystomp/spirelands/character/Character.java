@@ -1,9 +1,11 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -71,6 +73,8 @@ public class Character {
   private final int healthWeightIncreaseModifier = 40;
   // The modifier for when mana stat is increased
   private final int manaWeightIncreaseModifier = 8;
+  // The max number of equiped moves.
+  private final int equippedMoveMax = 8;
   // The unique id for this character
   private String id;
   // Character name
@@ -135,6 +139,8 @@ public class Character {
   private ArmorItem equippedBoots;
   // Map of stat weight to array values.
   private final HashMap<String, int[]> statWeightToValuesMap = new HashMap<>();
+  // Array of equipped moves.
+  private final ArrayList<BattleMove> equippedMoves = new ArrayList<>();
   
   public Character() {
     statWeightToValuesMap.put(Character.VERY_LOW, new int[]{1, 1, 1, 1});
@@ -333,6 +339,25 @@ public class Character {
   public WeaponItem getEquippedWeapon() {
     return equippedWeapon;
   }
+
+  public ArrayList<BattleMove> getEquippedMoves() {
+    return equippedMoves;
+  }
+  
+  public void equipMove(BattleMove move) {
+    if (equippedMoves.size() < equippedMoveMax) {
+      equippedMoves.add(move);
+    }
+  }
+    
+  /**
+   *      !!################################################!!
+   *      !!                                                !!
+   *      !!         Equipment setters and getters          !!
+   *      !!                                                !!
+   *      !!################################################!!
+   */
+  
   /**
    * <span style="color: red">WARNING!!</span> Only use this for setting equipment on game start. To equip weapon from inventory use equipWeapon().
    * @param equippedWeapon Weapon item to set as equipped weapon.

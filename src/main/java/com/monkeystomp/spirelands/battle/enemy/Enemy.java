@@ -1,6 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
-import com.monkeystomp.spirelands.battle.move.EnemyMove;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public class Enemy {
   // Loot item that this enemy is holding.
   private final Item loot;
   // Moves that this enemy can perform.
-  private final ArrayList<EnemyMove> enemyMoves;
+  private final ArrayList<BattleMove> enemyMoves;
   // Random class.
   private final Random random = new Random();
   /**
@@ -157,7 +157,7 @@ public class Enemy {
    * Gets any random move from this enemies list of moves.
    * @return An EnemyMove object.
    */
-  public EnemyMove getRandomMove() {
+  public BattleMove getRandomMove() {
     return enemyMoves.get(random.nextInt(enemyMoves.size()));
   }
   /**
@@ -166,10 +166,10 @@ public class Enemy {
    * @param variety Offensive | Defensive
    * @return An EnemyMove object.
    */
-  public EnemyMove getRandomMove(String type, String variety) {
-    List<EnemyMove> moves = enemyMoves.stream().
+  public BattleMove getRandomMove(String type, String variety) {
+    List<BattleMove> moves = enemyMoves.stream().
             filter(move -> move.getType().equals(type) && move.getVariety().equals(variety))
-            .collect(Collectors.<EnemyMove>toList());
+            .collect(Collectors.<BattleMove>toList());
     return moves.get(random.nextInt(moves.size()));
   }
 

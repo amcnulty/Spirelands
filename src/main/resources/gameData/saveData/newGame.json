@@ -20,7 +20,12 @@
         "M43HMFzkSv": 0,
         "eNAP1loLmD": 10
       },
-      "8FRT4q5CKl": {}
+      "8FRT4q5CKl": {},
+      "Moves": {
+        "EquippedMoves": [
+          { "bHJncPLq94": 0 }
+        ]
+      }
     },
     "0LUWKjxGG7": {
       "bHJncPLq94": "sara02",
@@ -42,7 +47,12 @@
         "M43HMFzkSv": 0,
         "eNAP1loLmD": 9
       },
-      "8FRT4q5CKl": {}
+      "8FRT4q5CKl": {},
+      "Moves": {
+        "EquippedMoves": [
+          { "bHJncPLq94": 1 }
+        ]
+      }
     },
     "aRbmU7JFgB": {
       "bHJncPLq94": "will03",
@@ -64,7 +74,12 @@
         "M43HMFzkSv": 0,
         "eNAP1loLmD": 7
       },
-      "8FRT4q5CKl": {}
+      "8FRT4q5CKl": {},
+      "Moves": {
+        "EquippedMoves": [
+          { "bHJncPLq94": 2 }
+        ]
+      }
     }
   },
   "DHlVpJMNLN": {},

@@ -1,6 +1,5 @@
 package com.monkeystomp.spirelands.battle.entity;
 
-import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
 import java.util.Random;

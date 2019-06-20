@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Set;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -107,6 +109,7 @@ public class CharacterManager {
     });
   }
   
+  @SuppressWarnings("unchecked")
   private void setupCharacterDetails(Character character, JSONObject detailInfo) {
     JSONObject detailStats = (JSONObject)detailInfo.get(JSONUtil.STATS);
     JSONObject equipment = (JSONObject) detailInfo.get(JSONUtil.EQUIPMENT);
@@ -142,6 +145,10 @@ public class CharacterManager {
       character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.BOOTS})));
     else
       character.setEquippedBoots(null);
+    JSONArray moves = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.MOVES, JSONUtil.EQUIPPED_MOVES});
+    moves.forEach(move -> {
+      character.equipMove(BattleMove.MOVE_MAP.get(jsonUtil.getNestedInt((JSONObject)move, new String[]{JSONUtil.ID})));
+    });
   }
   /**
    * Adds a character to the party at the specified position. Positions start at index 0;

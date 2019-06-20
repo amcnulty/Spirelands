@@ -1,6 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
-import com.monkeystomp.spirelands.battle.move.EnemyMove;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class EnemyBuilder {
   /**
    * Moves that this enemy can perform.
    */
-  public ArrayList<EnemyMove> enemyMoves = new ArrayList<>();
+  public ArrayList<BattleMove> enemyMoves = new ArrayList<>();
   /**
    * Sets the sprite sheet of the enemy.
    * @param spriteSheet SpriteSheet object to set for this enemy.
@@ -209,7 +209,7 @@ public class EnemyBuilder {
    * @param move New move to be added to this enemy.
    * @return The EnemyBuilder reference.
    */
-  public EnemyBuilder addMove(EnemyMove move) {
+  public EnemyBuilder addMove(BattleMove move) {
     this.enemyMoves.add(move);
     return this;
   }

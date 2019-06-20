@@ -1,6 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
-import com.monkeystomp.spirelands.battle.move.EnemyMove;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 
@@ -25,6 +25,6 @@ public class Bestiary {
           .speed(255)
           .luck(255)
           .loot(Item.SMALL_HP_POTION)
-          .addMove(EnemyMove.BASIC_ATTACK);
+          .addMove(BattleMove.BASIC_ATTACK);
   
 }
