@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.battle.entity;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
+import com.monkeystomp.spirelands.character.StatModel;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -32,6 +33,7 @@ public class BattleEntity {
   protected BattleEntity currentTarget;
   protected BattleMove currentMove;
   protected Method moveAnimation;
+  protected StatModel statModel;
   private final ArrayList<int[]> travelingSteps = new ArrayList<>();
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
@@ -217,6 +219,10 @@ public class BattleEntity {
 
   public void setY(int y) {
     this.y = y;
+  }
+
+  public StatModel getStatModel() {
+    return statModel;
   }
 
   public SpawnCoordinate getSlot() {

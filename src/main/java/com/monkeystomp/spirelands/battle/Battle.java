@@ -129,7 +129,6 @@ public class Battle {
       }
     }
     if (!readyEntities.isEmpty()) {
-      System.out.println(readyEntities.size());
       if (!readyEntities.get(0).isReady()) {
         readyEntities.remove(0);
         checkForReadyEntities();

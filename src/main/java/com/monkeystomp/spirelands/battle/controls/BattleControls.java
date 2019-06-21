@@ -29,7 +29,7 @@ public class BattleControls {
     this.entity = entity;
     showing = true;
     this.controlButtons.clear();
-    ArrayList<BattleMove> battleMoves = this.entity.getCharacter().getEquippedMoves();
+    ArrayList<BattleMove> battleMoves = this.entity.getStatModel().getEquippedMoves();
     int startingX = getStartingX(battleMoves.size());
     for (BattleMove move: battleMoves) {
       controlButtons.add(

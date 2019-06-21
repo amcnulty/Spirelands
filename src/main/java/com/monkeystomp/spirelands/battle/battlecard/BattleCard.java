@@ -37,7 +37,7 @@ public class BattleCard {
   private final FontInfo manaFont = GameFonts.getDarkText_plain_18();
   
   public BattleCard(CharacterBattleEntity character, int index) {
-    this.character = character.getCharacter();
+    this.character = character.getStatModel();
     this.battleEntity = character;
     this.index = index;
     this.left = index * cardWidth + sidePadding;

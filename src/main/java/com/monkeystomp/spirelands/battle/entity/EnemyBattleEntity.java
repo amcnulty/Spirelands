@@ -16,24 +16,23 @@ import java.util.logging.Logger;
  */
 public class EnemyBattleEntity extends BattleEntity {
   
-  private final Enemy enemy;
   private final Random random = new Random();
   private final int leftOfTarget = 28;
   
   public EnemyBattleEntity(SpawnCoordinate slot, Enemy enemy) {
     super(slot, enemy.getSpriteSheet());
-    this.enemy = enemy;
+    this.statModel = enemy;
     setReadyGaugeMax();
   }
   
   private void setReadyGaugeStart() {
-    double luckModifier = (double)enemy.getLuck() / Character.STAT_MAX;
+    double luckModifier = (double)statModel.getLuck() / Character.STAT_MAX;
     double rand = random.nextGaussian() * ((double)readyGaugeMax / 8) + ((luckModifier * readyGaugeMax) * .75);
     readyGauge = rand > 0 ? (int)rand : 0;
   }
   
   private void setReadyGaugeMax() {
-    switch (enemy.getSpeed() / 25) {
+    switch (statModel.getSpeed() / 25) {
       // 9.4 seconds
       case 0:
         readyGaugeMax = 564;
@@ -86,7 +85,7 @@ public class EnemyBattleEntity extends BattleEntity {
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
-    if (enemy.getHealth() == 0) currentAnimation = deadAnimation;
+    if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
     if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
@@ -97,16 +96,12 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   private void setCurrentAnimation () {
-    if (enemy.getHealth() / (double)enemy.getHealthMax() < .2) playLowHealthAnimation();
+    if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
   }
   
   @Override
   public void init() {
     setReadyGaugeStart();
-  }
-  
-  public Enemy getEnemy() {
-    return this.enemy;
   }
   
   public void makeMove(CharacterBattleEntity target) {
@@ -120,7 +115,7 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   private void setNextMove() {
-    currentMove = enemy.getRandomMove();
+    currentMove = ((Enemy)statModel).getRandomMove();
     moveAnimation = currentMove.getMoveAnimation();
   }
   
@@ -135,8 +130,13 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   @Override
+  public Enemy getStatModel() {
+    return (Enemy)statModel;
+  }
+  
+  @Override
   protected void checkForHealth() {
-    if (enemy.getHealth() == 0) setAsDead();
+    if (statModel.getHealth() == 0) setAsDead();
   }
   
   @Override

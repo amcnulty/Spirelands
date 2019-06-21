@@ -15,23 +15,22 @@ import java.util.logging.Logger;
 public class CharacterBattleEntity extends BattleEntity {
   
   private final int rightOfTarget = 28;
-  private final Character character;
   private final Random random = new Random();
   
   public CharacterBattleEntity(SpawnCoordinate slot, Character character) {
     super(slot, character.getBattleSheet());
-    this.character = character;
+    this.statModel = character;
     setReadyGaugeMax();
   }
   
   private void setReadyGaugeStart() {
-    double luckModifier = (double)character.getLuck() / Character.STAT_MAX;
+    double luckModifier = (double)statModel.getLuck() / Character.STAT_MAX;
     double rand = random.nextGaussian() * ((double)readyGaugeMax / 8) + ((luckModifier * readyGaugeMax) * .75);
     readyGauge = rand > 0 ? (int)rand : 0;
   }
   
   private void setReadyGaugeMax() {
-    switch (character.getSpeed() / 25) {
+    switch (statModel.getSpeed() / 25) {
       // 9.4 seconds
       case 0:
         readyGaugeMax = 564;
@@ -83,7 +82,7 @@ public class CharacterBattleEntity extends BattleEntity {
   
   @Override
   public void init() {
-    if (character.getHealth() == 0) {
+    if (statModel.getHealth() == 0) {
       setAsDead();
       playDeadAnimation();
     }
@@ -92,13 +91,13 @@ public class CharacterBattleEntity extends BattleEntity {
   
   @Override
   protected void checkForHealth() {
-    if (character.getHealth() == 0) setAsDead();
+    if (statModel.getHealth() == 0) setAsDead();
   }
   
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
-    if (character.getHealth() == 0) currentAnimation = deadAnimation;
+    if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
     if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
@@ -109,7 +108,7 @@ public class CharacterBattleEntity extends BattleEntity {
   }
   
   private void setCurrentAnimation() {
-    if (character.getHealth() / (double)character.getHealthMax() < .2) playLowHealthAnimation();
+    if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
   }
   
   @Override
@@ -132,9 +131,10 @@ public class CharacterBattleEntity extends BattleEntity {
     }
     else processMove();
   }
-
-  public Character getCharacter() {
-    return character;
+  
+  @Override
+  public Character getStatModel() {
+    return (Character)statModel;
   }
 
 }
