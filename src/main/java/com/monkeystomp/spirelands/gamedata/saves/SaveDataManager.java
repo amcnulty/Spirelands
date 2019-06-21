@@ -107,6 +107,7 @@ public class SaveDataManager {
   }
   /**
    * Main save game method.
+   * @throws java.io.IOException
    */
   public void saveGame() throws IOException {
     saveLocation();

@@ -16,14 +16,16 @@
         "R1Jgagop66": 6,
         "uqWyiIdj8r": 120,
         "0qv84towQw": 6,
-        "JSb14I8V1n": 10,
+        "JSb14I8V1n": 110,
         "M43HMFzkSv": 0,
         "eNAP1loLmD": 10
       },
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 0 }
+          { "bHJncPLq94": 0 },
+          { "bHJncPLq94": 1 },
+          { "bHJncPLq94": 2 }
         ]
       }
     },
@@ -50,6 +52,7 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
+          { "bHJncPLq94": 0 },
           { "bHJncPLq94": 1 }
         ]
       }
@@ -77,6 +80,7 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
+          { "bHJncPLq94": 0 },
           { "bHJncPLq94": 2 }
         ]
       }

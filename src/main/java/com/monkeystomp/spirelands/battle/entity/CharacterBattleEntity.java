@@ -1,8 +1,12 @@
 package com.monkeystomp.spirelands.battle.entity;
 
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -10,6 +14,7 @@ import java.util.Random;
  */
 public class CharacterBattleEntity extends BattleEntity {
   
+  private final int rightOfTarget = 28;
   private final Character character;
   private final Random random = new Random();
   
@@ -88,6 +93,44 @@ public class CharacterBattleEntity extends BattleEntity {
   @Override
   protected void checkForHealth() {
     if (character.getHealth() == 0) setAsDead();
+  }
+  
+  @Override
+  protected void moveFinished(boolean offensive) {
+    super.moveFinished(offensive);
+    if (character.getHealth() == 0) currentAnimation = deadAnimation;
+    if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
+      moveToLocation(getSlot().getX(), getSlot().getY());
+    }
+    if (offensive) {
+      returnToIdleState();
+      setCurrentAnimation();
+    }
+  }
+  
+  private void setCurrentAnimation() {
+    if (character.getHealth() / (double)character.getHealthMax() < .2) playLowHealthAnimation();
+  }
+  
+  @Override
+  protected void processMove() {
+    try {
+      moveAnimation.invoke(this);
+      battle.getMoveProcessor().process(this, currentTarget, currentMove);
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+
+  public void makeMove(BattleMove move, EnemyBattleEntity target) {
+    moving = true;
+    currentTarget = target;
+    currentMove = move;
+    moveAnimation = move.getMoveAnimation();
+    if (!move.isRanged()) {
+      moveToLocation(target.getX() + rightOfTarget, target.getY());
+    }
+    else processMove();
   }
 
   public Character getCharacter() {

@@ -2,11 +2,14 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -24,6 +27,12 @@ public class BattleEntity {
   private final int renderSize = 32;
   private boolean ready = false,
                   isDead = false;
+  protected boolean moving = false,
+                  traveling = false;
+  protected BattleEntity currentTarget;
+  protected BattleMove currentMove;
+  protected Method moveAnimation;
+  private final ArrayList<int[]> travelingSteps = new ArrayList<>();
   private final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
     idleAnimation = () -> {
@@ -222,6 +231,10 @@ public class BattleEntity {
     return isDead;
   }
 
+  public boolean isMoving() {
+    return moving;
+  }
+
   public void setReady(boolean ready) {
     this.ready = ready;
   }
@@ -307,6 +320,39 @@ public class BattleEntity {
     currentAnimation = repeatingAnimation = deadAnimation;
   }
   
+  protected void returnToIdleState() {
+    setReady(false);
+    moving = false;
+    readyGauge = 0;
+    playIdleAnimation();
+  }
+  
+  protected void moveToLocation(int x, int y) {
+    traveling = true;
+    int xStep, yStep;
+    for (int i = 1; i < 21; i++) {
+      xStep = (int)(this.x + ((double)i * ((double)(x - this.x) / 20)));
+      yStep = (int)(this.y + ((double)i * ((double)(y - this.y) / 20)));
+      travelingSteps.add(new int[]{xStep, yStep});
+    }
+  }
+  
+  private void updateTravel() {
+    if (traveling) {
+      this.x = travelingSteps.get(0)[0];
+      this.y = travelingSteps.get(0)[1];
+      travelingSteps.remove(0);
+      if (travelingSteps.isEmpty()) {
+        traveling = false;
+        if (isReady()) {
+          processMove();
+        }
+      }
+    }
+  }
+  
+  protected void processMove() {}
+  
   private void fillGauge() {
     if (readyGauge++ == readyGaugeMax) {
       ready = true;
@@ -331,6 +377,7 @@ public class BattleEntity {
     currentAnimation.execute();
     anim++;
     if (battle.isGaugesFilling() && !ready && !isDead) fillGauge();
+    updateTravel();
   }
   
   public void render(Screen screen, GL2 gl) {

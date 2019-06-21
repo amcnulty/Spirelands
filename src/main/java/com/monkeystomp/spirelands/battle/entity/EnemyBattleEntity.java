@@ -2,13 +2,10 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
-import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,13 +18,7 @@ public class EnemyBattleEntity extends BattleEntity {
   
   private final Enemy enemy;
   private final Random random = new Random();
-  private boolean moving = false,
-                  traveling = false;
-  private CharacterBattleEntity currentTarget;
-  private BattleMove currentMove;
   private final int leftOfTarget = 28;
-  private final ArrayList<int[]> travelingSteps = new ArrayList<>();
-  private Method moveAnimation;
   
   public EnemyBattleEntity(SpawnCoordinate slot, Enemy enemy) {
     super(slot, enemy.getSpriteSheet());
@@ -92,16 +83,6 @@ public class EnemyBattleEntity extends BattleEntity {
     }
   }
   
-  private void moveToLocation(int x, int y) {
-    traveling = true;
-    int xStep, yStep;
-    for (int i = 1; i < 21; i++) {
-      xStep = (int)(this.x + ((double)i * ((double)(x - this.x) / 20)));
-      yStep = (int)(this.y + ((double)i * ((double)(y - this.y) / 20)));
-      travelingSteps.add(new int[]{xStep, yStep});
-    }
-  }
-  
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
@@ -110,18 +91,18 @@ public class EnemyBattleEntity extends BattleEntity {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
     if (offensive) {
-      setReady(false);
-      moving = false;
+      returnToIdleState();
+      setCurrentAnimation();
     }
+  }
+  
+  private void setCurrentAnimation () {
+    if (enemy.getHealth() / (double)enemy.getHealthMax() < .2) playLowHealthAnimation();
   }
   
   @Override
   public void init() {
     setReadyGaugeStart();
-  }
-
-  public boolean isMoving() {
-    return moving;
   }
   
   public Enemy getEnemy() {
@@ -129,10 +110,13 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   public void makeMove(CharacterBattleEntity target) {
-    this.currentTarget = target;
+    currentTarget = target;
     moving = true;
-    moveToLocation(target.getX() - leftOfTarget, target.getY());
     setNextMove();
+    if (!currentMove.isRanged()) {
+      moveToLocation(target.getSlot().getX() - leftOfTarget, target.getSlot().getY());
+    }
+    else processMove();
   }
   
   private void setNextMove() {
@@ -140,7 +124,8 @@ public class EnemyBattleEntity extends BattleEntity {
     moveAnimation = currentMove.getMoveAnimation();
   }
   
-  private void processMove() {
+  @Override
+  protected void processMove() {
     try {
       moveAnimation.invoke(this);
       battle.getMoveProcessor().process(this, currentTarget, currentMove);
@@ -149,29 +134,9 @@ public class EnemyBattleEntity extends BattleEntity {
     }
   }
   
-  private void updateTravel() {
-    if (traveling) {
-      this.x = travelingSteps.get(0)[0];
-      this.y = travelingSteps.get(0)[1];
-      travelingSteps.remove(0);
-      if (travelingSteps.isEmpty()) {
-        traveling = false;
-        if (isReady()) {
-          processMove();
-        }
-      }
-    }
-  }
-  
   @Override
   protected void checkForHealth() {
     if (enemy.getHealth() == 0) setAsDead();
-  }
-  
-  @Override
-  public void update() {
-    super.update();
-    updateTravel();
   }
   
   @Override

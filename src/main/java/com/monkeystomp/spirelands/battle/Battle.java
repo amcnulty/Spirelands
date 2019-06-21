@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.battle.move.MoveProcessor;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
@@ -39,7 +40,6 @@ public class Battle {
   protected Sprite background;
   protected String battleMusic;
   private final MoveProcessor moveProcessor = new MoveProcessor();
-  private final BattleControls battleControls = new BattleControls();
   private int tick = 0;
   private boolean gaugesFilling = true;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
@@ -48,6 +48,7 @@ public class Battle {
   private final ArrayList<BattleCard> battleCards = new ArrayList<>();
   private final ArrayList<FlashMessage> currentMessages = new ArrayList<>();
   private final Consumer<FlashMessage> IFlashMessage = flashMessage -> currentMessages.add(flashMessage);
+  private final BattleControls battleControls = new BattleControls((move) -> handleBattleControlSelection(move));
   
   public Battle() {
     setSlotMap();
@@ -94,13 +95,25 @@ public class Battle {
     return gaugesFilling;
   }
   
+  public void handleBattleControlSelection(BattleMove move) {
+    battleControls.hideControls();
+    ((CharacterBattleEntity)readyEntities.get(0)).makeMove(move, getRandomEnemyTarget());
+  }
+  
+  // !!! REMOVE THIS METHOD AFTER IMPLEMENTING TAGET SELECTION !!!
+  private EnemyBattleEntity getRandomEnemyTarget() {
+    EnemyBattleEntity nextTarget = enemies.get(random.nextInt(enemies.size()));
+    if (nextTarget.isDead()) return getRandomEnemyTarget();
+    else return nextTarget;
+  }
+  
   private CharacterBattleEntity getTarget() {
     CharacterBattleEntity nextTarget = party.get(random.nextInt(party.size()));
     if (nextTarget.isDead()) return getTarget();
     else return nextTarget;
   }
   
-  private void checkForReadyEntites() {
+  private void checkForReadyEntities() {
     if (gaugesFilling) {
       for (CharacterBattleEntity partyMember: party) {
         if (partyMember.isReady()) {
@@ -116,15 +129,19 @@ public class Battle {
       }
     }
     if (!readyEntities.isEmpty()) {
-      if (!readyEntities.get(0).isReady()) readyEntities.remove(0);
+      System.out.println(readyEntities.size());
+      if (!readyEntities.get(0).isReady()) {
+        readyEntities.remove(0);
+        checkForReadyEntities();
+      }
       if (!readyEntities.isEmpty()) {
         if (readyEntities.get(0) instanceof EnemyBattleEntity) {
-          if (!((EnemyBattleEntity)readyEntities.get(0)).isMoving()) {
+          if (!(readyEntities.get(0)).isMoving()) {
             ((EnemyBattleEntity)readyEntities.get(0)).makeMove(getTarget());
           }
         }
         else if (readyEntities.get(0) instanceof CharacterBattleEntity) {
-          if (!battleControls.isShowing()) {
+          if (!battleControls.isShowing() && !readyEntities.get(0).isMoving()) {
             battleControls.setControlsForBattleEntity((CharacterBattleEntity)readyEntities.get(0));
           }
         }
@@ -147,9 +164,9 @@ public class Battle {
       if (currentMessages.get(i).isVisible()) currentMessages.get(i).update();
       else currentMessages.remove(i);
     }
-    checkForReadyEntites();
+    checkForReadyEntities();
     if (battleControls.isShowing()) battleControls.update();
-    if (tick++ == 4000) endBattle();
+//    if (tick++ == 4000) endBattle();
 //    else if (tick % 300 == 0) {
 //      party.get(0).playUseMagicalSkillAnimation();
 //      party.get(1).playShootingAnimation();
