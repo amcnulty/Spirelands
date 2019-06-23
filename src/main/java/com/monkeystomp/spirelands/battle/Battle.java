@@ -64,7 +64,11 @@ public class Battle {
   
   public void init() {
     createPartyMembers();
-    victoryScreen = new VictoryScreen(party.stream().map(CharacterBattleEntity::getStatModel).collect(Collectors.toList()));
+    createEnemies();
+    victoryScreen = new VictoryScreen(
+      party.stream().map(CharacterBattleEntity::getStatModel).collect(Collectors.toList()),
+      enemies.stream().map(EnemyBattleEntity::getStatModel).collect(Collectors.toList())
+    );
     Music.getMusicPlayer().play(battleMusic);
     for (CharacterBattleEntity partyMember: party) {
       partyMember.init();
@@ -73,6 +77,8 @@ public class Battle {
       enemy.init();
     }
   }
+
+  protected void createEnemies() {};
   
   private void setSlotMap() {
     slotMap.put(0, partyMemberSlot1);
@@ -169,7 +175,10 @@ public class Battle {
       partyMember.playVictoryAnimation();
     }
     Music.getMusicPlayer().play(victoryMusic);
-    setTimeout(this::showVictoryScreen, 6000);
+    setTimeout(() -> {
+      showVictoryScreen();
+      victoryScreen.awardParty();
+    }, 6000);
   }
   
   private void showVictoryScreen() {

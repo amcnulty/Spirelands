@@ -19,6 +19,12 @@ public class Enemy extends StatModel {
   private final SpriteSheet spriteSheet;
   // Loot item that this enemy is holding.
   private final Item loot;
+  // The drop rate of this enemy.
+  private final int dropRate;
+  // The experience gained from defeating this enemy.
+  private final int experienceAward;
+  // The gold gained from defeating this enemy.
+  private final int goldAward;
   // Moves that this enemy can perform.
   private final ArrayList<BattleMove> enemyMoves;
   // Random class.
@@ -42,6 +48,9 @@ public class Enemy extends StatModel {
     this.speed = builder.speed;
     this.luck = builder.luck;
     this.loot = builder.loot;
+    this.dropRate = builder.dropRate;
+    this.experienceAward = builder.experienceAward;
+    this.goldAward = builder.goldAward;
     this.enemyMoves = builder.enemyMoves;
   }
 
@@ -51,6 +60,18 @@ public class Enemy extends StatModel {
 
   public Item getLoot() {
     return loot;
+  }
+
+  public int getDropRate() {
+    return dropRate;
+  }
+
+  public int getExperienceAward() {
+    return experienceAward;
+  }
+
+  public int getGoldAward() {
+    return goldAward;
   }
   /**
    * Gets any random move from this enemies list of moves.

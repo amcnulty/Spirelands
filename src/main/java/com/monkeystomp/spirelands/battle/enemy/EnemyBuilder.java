@@ -28,6 +28,9 @@ import java.util.ArrayList;
  *     .speed(7)
  *     .luck(6)
  *     .loot(Item.SMALL_HP_POTION)
+ *     .dropRate(20)
+ *     .experienceAward(1)
+ *     .goldAward(10)
  *     .build();}
  * </pre>
  * @author Aaron Michael McNulty
@@ -90,6 +93,18 @@ public class EnemyBuilder {
    * An item that this enemy is holding.
    */
   public Item loot;
+  /**
+   * The drop rate of this enemy.
+   */
+  public int dropRate;
+  /**
+   * The experience gained from defeating this enemy.
+   */
+  public int experienceAward;
+  /**
+   * The gold gained from defeating this enemy.
+   */
+  public int goldAward;
   /**
    * Moves that this enemy can perform.
    */
@@ -202,6 +217,33 @@ public class EnemyBuilder {
    */
   public EnemyBuilder loot(Item loot) {
     this.loot = loot;
+    return this;
+  }
+  /**
+   * Sets the drop rate of this enemy.
+   * @param rate Number ranging from 1-100 representing the percent chance of a drop.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder dropRate(int rate) {
+    this.dropRate = rate;
+    return this;
+  }
+  /**
+   * Sets the experience awarded by defeating this enemy.
+   * @param award The amount of experience this enemy will give when defeated.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder experienceAward(int award) {
+    this.experienceAward = award;
+    return this;
+  }
+  /**
+   * Sets the gold awarded by defeating this enemy.
+   * @param award The amount of gold this enemy will give when defeated.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder goldAward(int award) {
+    this.goldAward = award;
     return this;
   }
   /**

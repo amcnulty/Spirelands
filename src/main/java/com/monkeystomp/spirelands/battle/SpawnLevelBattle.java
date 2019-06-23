@@ -23,12 +23,7 @@ public class SpawnLevelBattle extends Battle {
   }
   
   @Override
-  public void init() {
-    super.init();
-    createEnemies();
-  }
-  
-  private void createEnemies() {
+  protected void createEnemies() {
     EnemyBattleEntity newEntity = new EnemyBattleEntity(new SpawnCoordinate(100, 110, 1), Bestiary.PLANT_MONSTER.build());
     newEntity.setBattle(this);
     enemies.add(newEntity);

@@ -25,6 +25,9 @@ public class Bestiary {
           .speed(11)
           .luck(11)
           .loot(Item.SMALL_HP_POTION)
+          .dropRate(20)
+          .experienceAward(2)
+          .goldAward(10)
           .addMove(BattleMove.BASIC_ATTACK);
   
 }
