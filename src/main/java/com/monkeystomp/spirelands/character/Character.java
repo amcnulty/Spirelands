@@ -474,22 +474,54 @@ public class Character extends StatModel {
   public int getCombinedLuck() {
     return luck;
   }
+    
+  /**
+   *      !!################################################!!
+   *      !!                                                !!
+   *      !!         Level and experience Methods           !!
+   *      !!                                                !!
+   *      !!################################################!!
+   */
+  
   /**
    * Increase the level stat of this character
    * @param amount The amount to change level by.
    */
   public void increaseLevel(int amount) {
-    level += amount;
-    if (level > 100) level = 100;
+    for (int i = 0; i < amount; i++) {
+      level++;
+      if (level > 100) level = 100;
+      else {
+        increaseHealthMax(statWeightToValuesMap.get(healthWeight)[level % 4] * healthWeightIncreaseModifier);
+        increaseManaMax(statWeightToValuesMap.get(manaWeight)[level % 4] * manaWeightIncreaseModifier);
+        increaseStrength(statWeightToValuesMap.get(strengthWeight)[level % 4]);
+        increaseDefense(statWeightToValuesMap.get(defenseWeight)[level % 4]);
+        increaseIntellect(statWeightToValuesMap.get(intellectWeight)[level % 4]);
+        increaseSpirit(statWeightToValuesMap.get(spiritWeight)[level % 4]);
+        increaseSpeed(statWeightToValuesMap.get(speedWeight)[level % 4]);
+        increaseLuck(statWeightToValuesMap.get(luckWeight)[level % 4]);    
+      }
+    }
+    experience = 0;
+  }
+  
+  /**
+   * Gets the number of experience points needed to get to the next level.
+   * @return Number of experience point needed to get to the next level.
+   */
+  public int getExpToNextLevel() {
+    int nextLevel = level + 1;
+    return (int)(.025 * Math.pow(nextLevel, 4) + Math.pow(nextLevel, 3) + 1.5 * Math.pow(nextLevel, 2) + .35 * nextLevel - 2.875);
+  }
+  
+  public void addExperiencePoints(int amount) {
+    if (experience + amount >= getExpToNextLevel()) {
+      int remaining = amount - (getExpToNextLevel() - experience);
+      increaseLevel(1);
+      addExperiencePoints(remaining);
+    }
     else {
-      increaseHealthMax(statWeightToValuesMap.get(healthWeight)[level % 4] * healthWeightIncreaseModifier);
-      increaseManaMax(statWeightToValuesMap.get(manaWeight)[level % 4] * manaWeightIncreaseModifier);
-      increaseStrength(statWeightToValuesMap.get(strengthWeight)[level % 4]);
-      increaseDefense(statWeightToValuesMap.get(defenseWeight)[level % 4]);
-      increaseIntellect(statWeightToValuesMap.get(intellectWeight)[level % 4]);
-      increaseSpirit(statWeightToValuesMap.get(spiritWeight)[level % 4]);
-      increaseSpeed(statWeightToValuesMap.get(speedWeight)[level % 4]);
-      increaseLuck(statWeightToValuesMap.get(luckWeight)[level % 4]);    
+      experience += amount;
     }
   }
     
