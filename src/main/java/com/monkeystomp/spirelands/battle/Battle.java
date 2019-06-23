@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.battle.move.MoveProcessor;
+import com.monkeystomp.spirelands.battle.victory.VictoryScreen;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
@@ -24,6 +25,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,10 +42,13 @@ public class Battle {
   private final Random random = new Random();
   private final int battleCardTop = 200;
   protected Sprite background;
-  protected String battleMusic;
+  protected String  battleMusic,
+                    victoryMusic;
   private final MoveProcessor moveProcessor = new MoveProcessor();
+  private VictoryScreen victoryScreen;
   private int tick = 0;
-  private boolean gaugesFilling = true;
+  private boolean gaugesFilling = true,
+                  battleVictory = false;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
   private final ArrayList<BattleEntity> readyEntities = new ArrayList<>();
@@ -52,11 +59,12 @@ public class Battle {
   
   public Battle() {
     setSlotMap();
-    createPartyMembers();
     moveProcessor.setIFlashMessage(IFlashMessage);
   }
   
   public void init() {
+    createPartyMembers();
+    victoryScreen = new VictoryScreen(party.stream().map(CharacterBattleEntity::getStatModel).collect(Collectors.toList()));
     Music.getMusicPlayer().play(battleMusic);
     for (CharacterBattleEntity partyMember: party) {
       partyMember.init();
@@ -149,6 +157,36 @@ public class Battle {
     }
   }
   
+  private boolean isVictory() {
+    for (BattleEntity entity: enemies) {
+      if (!entity.isDead()) return false;
+    }
+    return true;
+  }
+  
+  private void playVictoryAnimation() {
+    for (BattleEntity partyMember: party) {
+      partyMember.playVictoryAnimation();
+    }
+    Music.getMusicPlayer().play(victoryMusic);
+    setTimeout(this::showVictoryScreen, 6000);
+  }
+  
+  private void showVictoryScreen() {
+    victoryScreen.setShowing(true);
+  }
+  
+  private void setTimeout(Runnable runnable, int delay) {
+    new Thread(() -> {
+      try {
+        Thread.sleep(delay);
+        runnable.run();
+      } catch (InterruptedException ex) {
+        Logger.getLogger(Battle.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }).start();
+  }
+  
   public void update() {
     for (BattleEntity partyMember: party) {
       partyMember.update();
@@ -163,17 +201,19 @@ public class Battle {
       if (currentMessages.get(i).isVisible()) currentMessages.get(i).update();
       else currentMessages.remove(i);
     }
-    checkForReadyEntities();
+    if (!battleVictory) checkForReadyEntities();
+    if (isVictory() && !battleVictory) {
+      setTimeout(this::playVictoryAnimation, 1500);
+      battleVictory = true;
+      battleControls.hideControls();
+    }
     if (battleControls.isShowing()) battleControls.update();
-//    if (tick++ == 4000) endBattle();
-//    else if (tick % 300 == 0) {
-//      party.get(0).playUseMagicalSkillAnimation();
-//      party.get(1).playShootingAnimation();
-//      party.get(2).playEvadeAnimation();
-//      enemies.get(0).getEnemy().decreaseHealth(40);
-//      enemies.get(0).playDamageAnimation();
-//      enemies.forEach(enemy -> System.out.println(enemy.getEnemy().getHealth()));
-//    }
+    if (victoryScreen.isShowing()) {
+      victoryScreen.update();
+      tick++;
+//      if (tick == 2100) endBattle();
+      if (tick == 200) endBattle();
+    }
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -184,13 +224,16 @@ public class Battle {
     for (EnemyBattleEntity enemy: enemies) {
       enemy.render(screen, gl);
     }
-    for (BattleCard card: battleCards) {
-      card.render(screen, gl);
+    if (!victoryScreen.isShowing()) {
+      for (BattleCard card: battleCards) {
+        card.render(screen, gl);
+      }
     }
     for (FlashMessage message: currentMessages) {
       message.render(screen, gl);
     }
     if (battleControls.isShowing()) battleControls.render(screen, gl);
+    if (victoryScreen.isShowing()) victoryScreen.render(screen, gl);
   }
 
 }

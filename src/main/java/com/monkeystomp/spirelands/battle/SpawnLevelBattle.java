@@ -18,8 +18,14 @@ public class SpawnLevelBattle extends Battle {
   
   public SpawnLevelBattle() {
     this.background = BACKGROUND;
-    createEnemies();
     this.battleMusic = Music.BATTLE_SONG;
+    this.victoryMusic = Music.BATTLE_VICTORY;
+  }
+  
+  @Override
+  public void init() {
+    super.init();
+    createEnemies();
   }
   
   private void createEnemies() {

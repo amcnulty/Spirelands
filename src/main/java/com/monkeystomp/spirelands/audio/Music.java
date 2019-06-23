@@ -77,7 +77,7 @@ public class Music {
   /**
    * Battle victory song.
    */
-  public static final String BATTLE_VICTORY = "./resources/audio/music/battle_victory.wav";
+  public static final String BATTLE_VICTORY = "./resources/audio/music/battle/battle_victory.wav";
   
   private static final Music INSTANCE = new Music();
   private Clip clip;

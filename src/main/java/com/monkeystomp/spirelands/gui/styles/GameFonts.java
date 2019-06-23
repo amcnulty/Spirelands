@@ -110,6 +110,13 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(28)), new Color(GameColors.GAME_MENU_DEFAULT_TEXT)));
   }
   /**
+   * Dark headline font.
+   * @return The font info object.
+   */
+  public static FontInfo getDarkHeadline() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(28)), new Color(GameColors.DARK_TEXT)));
+  }
+  /**
    * Dialog box symbol font.
    * @return The font info object.
    */
