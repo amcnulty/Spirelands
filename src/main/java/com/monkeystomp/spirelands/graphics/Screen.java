@@ -161,15 +161,16 @@ public class Screen {
    * @param xp X position to start rendering of the sprite.
    * @param yp Y position to start rendering of the sprite.
    * @param sprite The sprite to be rendered.
+   * @param alpha The transparency to be applied over the whole sprite.
    * @param fixed If true coordinates will be with respect to map. If false coordinates will be in respect to screen.
    */
-  public void renderFlippedSprite(GL2 gl, int xp, int yp, Sprite sprite, boolean fixed) {
+  public void renderFlippedSprite(GL2 gl, int xp, int yp, Sprite sprite, float alpha, boolean fixed) {
     if (fixed) {
       xp -= xOffset;
       yp -= yOffset;
     }
     gl.glBindTexture(GL2.GL_TEXTURE_2D, sprite.getTexture().getTextureObject());
-    gl.glColor4f(1, 1, 1, 1);
+    gl.glColor4f(1, 1, 1, alpha);
     gl.glBegin(GL2.GL_QUADS);
       gl.glTexCoord2f(1, 0);
       gl.glVertex2f(xp, yp);

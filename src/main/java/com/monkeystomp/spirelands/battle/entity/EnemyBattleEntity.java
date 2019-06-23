@@ -18,6 +18,8 @@ public class EnemyBattleEntity extends BattleEntity {
   
   private final Random random = new Random();
   private final int leftOfTarget = 28;
+  private float alpha = 1;
+  private int disapearDelay = 120;
   
   public EnemyBattleEntity(SpawnCoordinate slot, Enemy enemy) {
     super(slot, enemy.getSpriteSheet());
@@ -140,8 +142,19 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   @Override
+  public void update() {
+    super.update();
+    if (isDead() && disapearDelay > -1) {
+      disapearDelay--;
+    }
+    if (isDead() && alpha > 0 && disapearDelay < 0) {
+      alpha -= .01f;
+    }
+  }
+  
+  @Override
   public void render(Screen screen, GL2 gl) {
-    screen.renderFlippedSprite(gl, x, y, currentAction, false);
+    screen.renderFlippedSprite(gl, x, y, currentAction, alpha, false);
   }
 
 }
