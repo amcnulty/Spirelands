@@ -73,6 +73,14 @@ public class GameColors {
    */
   public static final int ATB_GAUGE_BAR_EMPTY = 0xFFFFFF99;
   /**
+   * Experience gauge filled color #0xFF00B400;
+   */
+  public static final int EXP_GAUGE_FILL = 0xFF00B400;
+  /**
+   * Experience gauge empty color #0xFF6BB46B;
+   */
+  public static final int EXP_GAUGE_EMPTY = 0xFF6BB46B;
+  /**
    * Dark gray used for hovering game menu buttons #0xFF2C2C2C.
    */
   public static final int GAME_MENU_BUTTON_HOVER = 0xFF2C2C2C;

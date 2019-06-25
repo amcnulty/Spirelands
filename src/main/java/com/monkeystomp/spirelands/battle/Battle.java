@@ -67,7 +67,8 @@ public class Battle {
     createEnemies();
     victoryScreen = new VictoryScreen(
       party.stream().map(CharacterBattleEntity::getStatModel).collect(Collectors.toList()),
-      enemies.stream().map(EnemyBattleEntity::getStatModel).collect(Collectors.toList())
+      enemies.stream().map(EnemyBattleEntity::getStatModel).collect(Collectors.toList()),
+      () -> endBattle()
     );
     Music.getMusicPlayer().play(battleMusic);
     for (CharacterBattleEntity partyMember: party) {
@@ -220,8 +221,7 @@ public class Battle {
     if (victoryScreen.isShowing()) {
       victoryScreen.update();
       tick++;
-//      if (tick == 2100) endBattle();
-      if (tick == 200) endBattle();
+      if (tick == 2100) endBattle();
     }
   }
   

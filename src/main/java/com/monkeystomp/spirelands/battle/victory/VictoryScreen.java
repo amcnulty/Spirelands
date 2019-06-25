@@ -8,8 +8,11 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.util.Helpers;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ public class VictoryScreen {
                     left = (int)(Screen.getWidth() * .05),
                     right = left + backgroundWidth,
                     bottom = top + backgroundHeight,
+                    animatedExpBarX = left + 48,
                     totalExp,
                     totalGold;
   private final Sprite background = new Sprite(backgroundWidth, backgroundHeight, GameColors.DIALOG_BOX_BACKGROUND);
@@ -40,15 +44,35 @@ public class VictoryScreen {
   private final ArrayList<FontInfo> expGainedFonts = new ArrayList<>();
   private final ArrayList<FontInfo> expValueFonts = new ArrayList<>();
   private final ArrayList<Item> droppedItems = new ArrayList<>();
+  private final ArrayList<AnimatedExpBar> animatedExpBars = new ArrayList<>();
   private final Random random = new Random();
+  private ICallback callback;
+  private final PrimaryButton okButton = new PrimaryButton(
+    "Continue",
+    Screen.getWidth() / 2,
+    bottom - 10,
+    40,
+    11,
+    () -> callback.execute()
+  );
   
-  public VictoryScreen(List<Character> party, List<Enemy> enemies) {
+  public VictoryScreen(List<Character> party, List<Enemy> enemies, ICallback callback) {
     this.party = party;
     this.enemies = enemies;
+    this.callback = callback;
     totalExp = getExpAwards();
     totalGold = getGoldAwards();
+    setAnimatedExpBars();
     setDroppedItems();
     setupFonts();
+  }
+  
+  private void setAnimatedExpBars() {
+    for (int i = 0; i < party.size(); i++) {
+      animatedExpBars.add(
+        new AnimatedExpBar(animatedExpBarX, top + 40 + (i * 48), totalExp, party.get(i))
+      );
+    }
   }
   
   private int getExpAwards() {
@@ -128,10 +152,18 @@ public class VictoryScreen {
     for (Item item: droppedItems) {
       InventoryManager.getInventoryManager().addToInventory(item);
     }
+    Helpers.setTimeout(() -> {
+      for (AnimatedExpBar bar: animatedExpBars) {
+        bar.setAnimating(true);
+      }
+    }, 2000);
   }
   
   public void update() {
-    
+    for (AnimatedExpBar bar: animatedExpBars) {
+      bar.update();
+    }
+    okButton.update();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -144,8 +176,10 @@ public class VictoryScreen {
       screen.renderFonts(characterNameFonts.get(i));
       screen.renderFonts(expGainedFonts.get(i));
       screen.renderFonts(expValueFonts.get(i));
+      animatedExpBars.get(i).render(screen, gl);
       screen.renderSprite(gl, left + 15, top + 30 + (i * 48), party.get(i).getThumbnail(), false);
     }
+    okButton.render(screen, gl);
   }
 
 }
