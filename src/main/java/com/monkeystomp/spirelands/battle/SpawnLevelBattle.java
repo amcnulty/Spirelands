@@ -33,6 +33,24 @@ public class SpawnLevelBattle extends Battle {
     newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 150, 1), Bestiary.PLANT_MONSTER.build());
     newEntity.setBattle(this);
     enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(140, 110, 1), Bestiary.PLANT_MONSTER_LV2.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(120, 70, 1), Bestiary.PLANT_MONSTER_LV2.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(120, 150, 1), Bestiary.PLANT_MONSTER_LV2.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(60, 110, 1), Bestiary.PLANT_MONSTER_LV2_ALT.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(40, 70, 1), Bestiary.PLANT_MONSTER_LV2_ALT.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(40, 150, 1), Bestiary.PLANT_MONSTER_LV2_ALT.build());
+    newEntity.setBattle(this);
+    enemies.add(newEntity);
   }
   
   @Override

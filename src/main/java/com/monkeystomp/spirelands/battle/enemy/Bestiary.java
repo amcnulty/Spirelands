@@ -29,5 +29,48 @@ public class Bestiary {
           .experienceAward(1)
           .goldAward(10)
           .addMove(BattleMove.BASIC_ATTACK);
+  /**
+   * A plant monster that does physical and magical attacks
+   */
+  public static final EnemyBuilder PLANT_MONSTER_LV2 = new EnemyBuilder()
+          .spriteSheet(new SpriteSheet("./resources/enemies/plant_battle.png"))
+          .name("Plant Monster 2")
+          .level(2)
+          .health(90)
+          .mana(37)
+          .strength(8)
+          .defense(10)
+          .intellect(7)
+          .spirit(13)
+          .speed(13)
+          .luck(13)
+          .loot(Item.MEDIUM_HP_POTION)
+          .dropRate(20)
+          .experienceAward(2)
+          .goldAward(20)
+          .addMove(BattleMove.BASIC_ATTACK)
+          .addMove(BattleMove.MAGIC_ENERGY);
+  /**
+   * A plant monster that does physical and magical attacks
+   */
+  public static final EnemyBuilder PLANT_MONSTER_LV2_ALT = new EnemyBuilder()
+          .spriteSheet(new SpriteSheet("./resources/enemies/plant_battle.png"))
+          .name("Plant Monster 2")
+          .level(2)
+          .health(90)
+          .mana(37)
+          .strength(8)
+          .defense(10)
+          .intellect(7)
+          .spirit(13)
+          .speed(13)
+          .luck(13)
+          .loot(Item.MANA_POTION)
+          .dropRate(20)
+          .experienceAward(2)
+          .goldAward(20)
+          .addMove(BattleMove.BASIC_ATTACK)
+          .addMove(BattleMove.BLUNT_FORCE)
+          .addMove(BattleMove.MAGIC_ENERGY);
   
 }

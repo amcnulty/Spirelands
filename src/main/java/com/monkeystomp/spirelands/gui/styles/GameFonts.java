@@ -54,6 +54,13 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, getAdjustedFontSize(18)), new Color(GameColors.DARK_TEXT)));
   }
   /**
+   * Dark test for light backgrounds bold.
+   * @return The font info object.
+   */
+  public static FontInfo getDarkText_bold_18() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(18)), new Color(GameColors.DARK_TEXT)));
+  }
+  /**
    * Warning text for menu screens.
    * @return The font info object.
    */

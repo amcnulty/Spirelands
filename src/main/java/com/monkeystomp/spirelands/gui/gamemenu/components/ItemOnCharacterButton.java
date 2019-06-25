@@ -166,10 +166,10 @@ public class ItemOnCharacterButton extends Button {
     screen.renderFonts(manaLabel);
     screen.renderFonts(characterManaFont);
     screen.renderSprite(gl, x + 40, y + 11, healthEmpty, false);
-    screen.renderSprite(gl, x + 40, y + 11, healthFill, false);
+    if (healthFill.getWidth() > 0) screen.renderSprite(gl, x + 40, y + 11, healthFill, false);
     screen.renderSprite(gl, x + 40, y + 15, healthUnderline, false);
     screen.renderSprite(gl, x + 40, y + 23, manaEmpty, false);
-    screen.renderSprite(gl, x + 40, y + 23, manaFill, false);
+    if  (manaFill.getWidth() > 0) screen.renderSprite(gl, x + 40, y + 23, manaFill, false);
     screen.renderSprite(gl, x + 40, y + 27, manaUnderline, false);
     screen.renderFonts(strengthLabelFont);
     screen.renderFonts(strengthFont);

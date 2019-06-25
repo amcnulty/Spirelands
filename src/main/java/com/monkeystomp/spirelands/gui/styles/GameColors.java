@@ -30,6 +30,14 @@ public class GameColors {
    */
   public static final int RED = 0xFFFF0000;
   /**
+   * Green #0xFF00FF00
+   */
+  public static final int GREEN = 0xFF00FF00;
+  /**
+   * Dark Green #0xFF009900;
+   */
+  public static final int DARK_GREEN = 0xFF009900;
+  /**
    * Blue #0xFF0000FF
    */
   public static final int BLUE = 0xFF0000FF;

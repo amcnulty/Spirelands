@@ -123,12 +123,12 @@ public class PartyMemberButton extends Button {
     screen.renderFonts(characterHealthFont);
     screen.renderFonts(healthLabel);
     screen.renderSprite(gl, characterHealthFont.getX(), characterHealthFont.getY() + 4, healthEmpty, false);
-    screen.renderSprite(gl, characterHealthFont.getX(), characterHealthFont.getY() + 4, healthFill, false);
+    if (healthFill.getWidth() > 0) screen.renderSprite(gl, characterHealthFont.getX(), characterHealthFont.getY() + 4, healthFill, false);
     screen.renderSprite(gl, characterHealthFont.getX(), characterHealthFont.getY() + 8, healthUnderline, false);
     screen.renderFonts(characterManaFont);
     screen.renderFonts(manaLabel);
     screen.renderSprite(gl, characterManaFont.getX(), characterManaFont.getY() + 4, manaEmpty, false);
-    screen.renderSprite(gl, characterManaFont.getX(), characterManaFont.getY() + 4, manaFill, false);
+    if (manaFill.getWidth() > 0) screen.renderSprite(gl, characterManaFont.getX(), characterManaFont.getY() + 4, manaFill, false);
     screen.renderSprite(gl, characterManaFont.getX(), characterManaFont.getY() + 8, manaUnderline, false);
     screen.renderFonts(characterLevelFont);
   }

@@ -96,7 +96,7 @@ public class BattleCard {
     if (healthFill != null && healthFill.getWidth() > 0) screen.renderSprite(gl, left + 40, top + 11, healthFill, false);
     screen.renderFonts(manaFont);
     screen.renderSprite(gl, left + 40, top + 22, manaEmpty, false);
-    if (manaFill != null) screen.renderSprite(gl, left + 40, top + 22, manaFill, false);
+    if (manaFill != null && manaFill.getWidth() > 0) screen.renderSprite(gl, left + 40, top + 22, manaFill, false);
   }
 
 }
