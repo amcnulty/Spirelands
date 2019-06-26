@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.battle.entity;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.util.Helpers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import java.util.logging.Level;
@@ -102,8 +103,11 @@ public class CharacterBattleEntity extends BattleEntity {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
     if (offensive) {
-      returnToIdleState();
-      setCurrentAnimation();
+      finishedAttacking = true;
+      Helpers.setTimeout(() -> {
+        returnToIdleState();
+        setCurrentAnimation();
+      }, 500);
     }
   }
   
@@ -123,6 +127,7 @@ public class CharacterBattleEntity extends BattleEntity {
 
   public void makeMove(BattleMove move, EnemyBattleEntity target) {
     moving = true;
+    finishedAttacking = false;
     currentTarget = target;
     currentMove = move;
     moveAnimation = move.getMoveAnimation();

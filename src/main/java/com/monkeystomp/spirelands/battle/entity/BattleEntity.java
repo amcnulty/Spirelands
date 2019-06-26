@@ -28,8 +28,12 @@ public class BattleEntity {
   private final int renderSize = 32;
   private boolean ready = false,
                   isDead = false;
-  protected boolean moving = false,
-                  traveling = false;
+  /**
+   * An entity is moving if it has been assigned make move. This is used to prevent multiple calls to make move.
+   */
+  protected boolean moving = false;
+  protected boolean finishedAttacking = true;
+  protected boolean traveling = false;
   protected BattleEntity currentTarget;
   protected BattleMove currentMove;
   protected Method moveAnimation;
@@ -350,7 +354,7 @@ public class BattleEntity {
       travelingSteps.remove(0);
       if (travelingSteps.isEmpty()) {
         traveling = false;
-        if (isReady()) {
+        if (isReady() && !finishedAttacking) {
           processMove();
         }
       }

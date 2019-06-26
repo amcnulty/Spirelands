@@ -92,6 +92,7 @@ public class EnemyBattleEntity extends BattleEntity {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
     if (offensive) {
+      finishedAttacking = true;
       returnToIdleState();
       setCurrentAnimation();
     }
@@ -109,6 +110,7 @@ public class EnemyBattleEntity extends BattleEntity {
   public void makeMove(CharacterBattleEntity target) {
     currentTarget = target;
     moving = true;
+    finishedAttacking = false;
     setNextMove();
     if (!currentMove.isRanged()) {
       moveToLocation(target.getSlot().getX() - leftOfTarget, target.getSlot().getY());
