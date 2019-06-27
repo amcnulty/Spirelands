@@ -209,6 +209,10 @@ public class BattleEntity {
     this.battle = battle;
   }
 
+  public Sprite getCurrentAction() {
+    return currentAction;
+  }
+
   public int getX() {
     return x;
   }

@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.controls.BattleControls;
+import com.monkeystomp.spirelands.battle.controls.TargetSelector;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
@@ -56,6 +57,8 @@ public class Battle {
   private final ArrayList<FlashMessage> currentMessages = new ArrayList<>();
   private final Consumer<FlashMessage> IFlashMessage = flashMessage -> currentMessages.add(flashMessage);
   private final BattleControls battleControls = new BattleControls((move) -> handleBattleControlSelection(move));
+  private BattleMove currentCharacterMove;
+  private final TargetSelector targetSelector = new TargetSelector(target -> handleTargetSelection(target));
   
   public Battle() {
     setSlotMap();
@@ -77,6 +80,7 @@ public class Battle {
     for (EnemyBattleEntity enemy: enemies) {
       enemy.init();
     }
+    targetSelector.init(party, enemies);
   }
 
   protected void createEnemies() {};
@@ -98,6 +102,7 @@ public class Battle {
   }
   
   private void endBattle() {
+    targetSelector.destroy();
     Location lastLocation = LocationManager.getLocationManager().getCurrentLocation();
     ViewManager.getViewManager().changeView(new LevelView(LevelFactory.createLevel(lastLocation.getLevelId(), lastLocation.getCoordinate())));
   }
@@ -110,9 +115,18 @@ public class Battle {
     return gaugesFilling;
   }
   
-  public void handleBattleControlSelection(BattleMove move) {
-    battleControls.hideControls();
-    ((CharacterBattleEntity)readyEntities.get(0)).makeMove(move, getRandomEnemyTarget());
+  private void handleBattleControlSelection(BattleMove move) {
+    currentCharacterMove = move;
+    if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
+    else targetSelector.selectCharacterTarget();
+  }
+  
+  private void handleTargetSelection(BattleEntity target) {
+    if (target instanceof EnemyBattleEntity) {
+      ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, (EnemyBattleEntity)target);
+      battleControls.hideControls();
+    }
+    targetSelector.setTargeting(false);
   }
   
   // !!! REMOVE THIS METHOD AFTER IMPLEMENTING TAGET SELECTION !!!
@@ -223,6 +237,7 @@ public class Battle {
       tick++;
       if (tick == 2100) endBattle();
     }
+    targetSelector.update();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -241,6 +256,7 @@ public class Battle {
     for (FlashMessage message: currentMessages) {
       message.render(screen, gl);
     }
+    targetSelector.render(screen, gl);
     if (battleControls.isShowing()) battleControls.render(screen, gl);
     if (victoryScreen.isShowing()) victoryScreen.render(screen, gl);
   }

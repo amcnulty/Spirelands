@@ -19,7 +19,7 @@ public class BattleControlButton extends Button {
   private final Sprite buttonImage;
   private final Sprite borderDefault = new Sprite("./resources/gui/battle_move_border.png", 16);
   private final Sprite borderHover = new Sprite("./resources/gui/battle_move_border_hover.png", 16);
-  private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 16, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.SLOW, 8);
+  private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 16, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.MEDIUM, 8);
   private boolean isDown = false,
                   isDefault = true,
                   isHover = false;
@@ -43,30 +43,6 @@ public class BattleControlButton extends Button {
   }
   
   @Override
-  protected void setDefault() {
-    super.setDefault();
-    isDown = false;
-    isHover = false;
-    isDefault = true;
-  }
-  
-  @Override
-  protected void hover() {
-    super.hover();
-    isDown = false;
-    isHover = true;
-    isDefault = false;
-  }
-  
-  @Override
-  protected void down() {
-    super.down();
-    isDown = true;
-    isHover = false;
-    isDefault = false;
-  }
-  
-  @Override
   public void update() {
     super.update();
     rotatingBorder.update();
@@ -74,13 +50,13 @@ public class BattleControlButton extends Button {
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    if (isDown) {
+    if (isDown()) {
       screen.renderSprite(gl, x, y, rotatingBorder.getSprite(), false);
     }
-    else if (isHover) {
+    else if (isHovering()) {
       screen.renderSprite(gl, x, y, borderHover, false);
     }
-    else if (isDefault) {
+    else {
       screen.renderSprite(gl, x, y, borderDefault, false);
     }
     super.render(screen, gl);

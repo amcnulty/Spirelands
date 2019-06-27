@@ -25,7 +25,8 @@ public class Button {
   private boolean startedOffButton = false,
                   startedOnButton = false,
                   hovering = false,
-                  disabled = false;
+                  disabled = false,
+                  down = false;
   /**
    * The x pixel coordinate of the button.
    */
@@ -122,6 +123,14 @@ public class Button {
     right = x + width / 2;
     bottom = y + height / 2;
   }
+
+  public boolean isHovering() {
+    return hovering;
+  }
+
+  public boolean isDown() {
+    return down;
+  }
   /**
    * Fires when the button is hovered over with the cursor.
    */
@@ -129,12 +138,14 @@ public class Button {
     if (!hovering && hoverSound != null) SFX.playSoundEffect(hoverSound);
     currentButton = buttonHover;
     hovering = true;
+    down = false;
   }
   /**
    * Fires when the button is being pressed down.
    */
   protected void down() {
     currentButton = buttonDown;
+    down = true;
   }
   /**
    * Fires when the button is clicked on. Will execute the callback that was set for this button.
@@ -151,6 +162,7 @@ public class Button {
   protected void setDefault() {
     currentButton = button;
     hovering = false;
+    down = false;
   }
 
   public int getTop() {
