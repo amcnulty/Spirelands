@@ -23,6 +23,38 @@ public class Keyboard implements KeyListener {
     return INSTANCE;
   }
   /**
+   * The 1 key
+   */
+  public static final int NUMBER_ROW_1 = 49;
+  /**
+   * The 2 key
+   */
+  public static final int NUMBER_ROW_2 = 50;
+  /**
+   * The 3 key
+   */
+  public static final int NUMBER_ROW_3 = 51;
+  /**
+   * The 4 key
+   */
+  public static final int NUMBER_ROW_4 = 52;
+  /**
+   * The 5 key
+   */
+  public static final int NUMBER_ROW_5 = 53;
+  /**
+   * The 6 key
+   */
+  public static final int NUMBER_ROW_6 = 54;
+  /**
+   * The 7 key
+   */
+  public static final int NUMBER_ROW_7 = 55;
+  /**
+   * The 8 key
+   */
+  public static final int NUMBER_ROW_8 = 56;
+  /**
    * The 'W' key.
    */
   public static final int W_KEY = 87;
@@ -58,6 +90,10 @@ public class Keyboard implements KeyListener {
    * The space key.
    */
   public static final int SPACE_KEY = 32;
+  /**
+   * The enter keys.
+   */
+  public static final int ENTER_KEY = 10;
   /**
    * The left shift key key.
    */

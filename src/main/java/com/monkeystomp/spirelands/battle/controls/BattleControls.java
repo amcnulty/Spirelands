@@ -5,6 +5,8 @@ import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.BattleControlButton;
+import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
+import com.monkeystomp.spirelands.input.Keyboard;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -18,8 +20,9 @@ public class BattleControls {
   private final int buttonRowY = 160,
                     buttonMargin = 1;
   private CharacterBattleEntity entity;
-  private final ArrayList<BattleControlButton> controlButtons = new ArrayList<>();
+  private ButtonGroup controlButtonGroup;
   private final Consumer<BattleMove> IBattleMove;
+  private final int[] keyCodeByIndex = new int[]{Keyboard.NUMBER_ROW_1, Keyboard.NUMBER_ROW_2, Keyboard.NUMBER_ROW_3, Keyboard.NUMBER_ROW_4, Keyboard.NUMBER_ROW_5, Keyboard.NUMBER_ROW_6, Keyboard.NUMBER_ROW_7, Keyboard.NUMBER_ROW_8};
   
   public BattleControls(Consumer<BattleMove> IBattleMove) {
     this.IBattleMove = IBattleMove;
@@ -28,18 +31,21 @@ public class BattleControls {
   public void setControlsForBattleEntity(CharacterBattleEntity entity) {
     this.entity = entity;
     showing = true;
-    this.controlButtons.clear();
     ArrayList<BattleMove> battleMoves = this.entity.getStatModel().getEquippedMoves();
     int startingX = getStartingX(battleMoves.size());
+    controlButtonGroup = new ButtonGroup();
+    
+    int index = 0;
     for (BattleMove move: battleMoves) {
-      controlButtons.add(
+      controlButtonGroup.addButton(
         new BattleControlButton(
-          startingX + ((BattleControlButton.WIDTH + buttonMargin) * controlButtons.size()),
+          startingX + ((BattleControlButton.WIDTH + buttonMargin) * index),
           buttonRowY,
+          keyCodeByIndex[index],
           move.getThumbnail(),
           () -> IBattleMove.accept(move)
-        )
-      );
+        ));
+      index++;
     }
   }
   
@@ -61,17 +67,11 @@ public class BattleControls {
   }
   
   public void update() {
-    for (int i = 0; i < controlButtons.size(); i++) {
-      controlButtons.get(i).update();
-    }
+    controlButtonGroup.update();
   }
   
   public void render(Screen screen, GL2 gl) {
-    if (entity != null) {
-      for (int i = 0; i < controlButtons.size(); i++) {
-        controlButtons.get(i).render(screen, gl);
-      }
-    }
+    controlButtonGroup.render(screen, gl);
   }
   
 }

@@ -10,6 +10,8 @@ import java.util.function.Consumer;
  */
 public class GroupButton extends Button {
   
+  private Consumer<GroupButton> IGroupNotifier;
+  
   /**
    * Creates a Button object with a callback that gets fired when button is clicked.
    * @param text The text to be rendered on the button.
@@ -44,7 +46,10 @@ public class GroupButton extends Button {
   @Override
   protected void click() {
     super.click();
-    setActive();
+    if (IGroupNotifier == null) {
+      System.err.println("Consumer<GroupButton> IGroupNotifier is not set for this button. Please use setIGroupNotifier() method to set the consumer.");
+    }
+    else IGroupNotifier.accept(this);
   }
   /**
    * Set this button active in the group so it will show active state and not respond to hover and click events.
@@ -57,6 +62,10 @@ public class GroupButton extends Button {
    */
   public void resetButton() {
     setDisabled(false);
+  }
+
+  public void setIGroupNotifier(Consumer<GroupButton> IGroupNotifier) {
+    this.IGroupNotifier = IGroupNotifier;
   }
   
 }

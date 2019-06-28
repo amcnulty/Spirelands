@@ -7,25 +7,25 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
+import com.monkeystomp.spirelands.input.Keyboard;
 
 /**
  *
  * @author Aaron Michael McNulty
  */
-public class BattleControlButton extends Button {
+public class BattleControlButton extends GroupButton {
   
   public static final int WIDTH = 16,
                     HEIGHT = 16;
+  private final int relatedKey;
   private final Sprite buttonImage;
   private final Sprite borderDefault = new Sprite("./resources/gui/battle_move_border.png", 16);
   private final Sprite borderHover = new Sprite("./resources/gui/battle_move_border_hover.png", 16);
   private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 16, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.MEDIUM, 8);
-  private boolean isDown = false,
-                  isDefault = true,
-                  isHover = false;
 
-  public BattleControlButton(int x, int y, Sprite buttonImage, ICallback callback) {
-    super("", x, y, WIDTH, HEIGHT, callback);
+  public BattleControlButton(int x, int y, int relatedKey, Sprite buttonImage, ICallback callback) {
+    super("", x, y, WIDTH, HEIGHT, buttonImage, callback);
+    this.relatedKey = relatedKey;
     this.buttonImage = buttonImage;
     createButtonSprites();
     setButtonSounds();
@@ -46,11 +46,12 @@ public class BattleControlButton extends Button {
   public void update() {
     super.update();
     rotatingBorder.update();
+    if (Keyboard.isKeyPressed(relatedKey)) click();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    if (isDown()) {
+    if (isDisabled()) {
       screen.renderSprite(gl, x, y, rotatingBorder.getSprite(), false);
     }
     else if (isHovering()) {

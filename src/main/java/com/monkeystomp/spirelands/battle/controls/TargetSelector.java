@@ -62,7 +62,7 @@ public class TargetSelector {
   
   private void handleKeyEvent(KeyEvent event) {
     if (targeting) {
-      if (event.getKeyCode() == Keyboard.SPACE_KEY) {
+      if (event.getKeyCode() == Keyboard.SPACE_KEY || event.getKeyCode() == Keyboard.ENTER_KEY) {
         IBattleEntitySelector.accept(currentTarget);
       }
       else if (event.getKeyCode() == Keyboard.W_KEY || event.getKeyCode() == Keyboard.UP_KEY) {
