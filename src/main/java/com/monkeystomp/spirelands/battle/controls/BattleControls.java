@@ -4,7 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.gui.controlls.BattleControlButton;
+import com.monkeystomp.spirelands.gui.controlls.button.BattleControlButton;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 

@@ -2,7 +2,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.panels;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.gui.controlls.GameMenuNavButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GameMenuNavButton;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 

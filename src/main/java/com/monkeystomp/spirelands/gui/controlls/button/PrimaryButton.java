@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.gui.controlls;
+package com.monkeystomp.spirelands.gui.controlls.button;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
@@ -12,10 +12,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 /**
- * A red button that is used for destructive actions.
+ * The primary button for menu operations on the title screen and pause menu.
  * @author Aaron Michael McNulty
  */
-public class DangerButton extends Button {
+public class PrimaryButton extends Button {
   
   private FontInfo fontInfo;
   /**
@@ -27,7 +27,7 @@ public class DangerButton extends Button {
    * @param height The height of the button.
    * @param callback The callback function that fires when the button is clicked on.
    */
-  public DangerButton(String text, int x, int y, int width, int height, ICallback callback) {
+  public PrimaryButton(String text, int x, int y, int width, int height, ICallback callback) {
     super(text, x, y, width, height, callback);
     setFontInfo();
     createButtonSprites();
@@ -46,9 +46,9 @@ public class DangerButton extends Button {
   }
 
   private void createButtonSprites() {
-    button = new Sprite(width, height, GameColors.DANGER_BUTTON_RED);
-    buttonHover = new Sprite(width, height, GameColors.DANGER_BUTTON_HOVER);
-    buttonDown = new Sprite(width, height, GameColors.DANGER_BUTTON_DOWN);
+    button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
+    buttonHover = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_HOVER);
+    buttonDown = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_DOWN);
     currentButton = button;
   }
   

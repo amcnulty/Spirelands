@@ -7,7 +7,7 @@ import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import com.monkeystomp.spirelands.gui.controlls.BattleTargetButton;
+import com.monkeystomp.spirelands.gui.controlls.button.BattleTargetButton;
 import com.monkeystomp.spirelands.input.Keyboard;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;

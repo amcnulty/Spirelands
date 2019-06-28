@@ -2,8 +2,8 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.gui.controlls.GameMenuPaginationButton;
-import com.monkeystomp.spirelands.gui.controlls.GameMenuPrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPaginationButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 

@@ -3,7 +3,7 @@ package com.monkeystomp.spirelands.gui.pausemenu.views;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import com.monkeystomp.spirelands.gui.styles.GameColors;

@@ -6,7 +6,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;

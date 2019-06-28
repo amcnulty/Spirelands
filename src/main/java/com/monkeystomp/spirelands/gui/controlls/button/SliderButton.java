@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.gui.controlls;
+package com.monkeystomp.spirelands.gui.controlls.button;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;

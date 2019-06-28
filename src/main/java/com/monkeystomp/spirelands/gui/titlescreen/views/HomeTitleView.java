@@ -6,7 +6,7 @@ import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.SpawnLevel;

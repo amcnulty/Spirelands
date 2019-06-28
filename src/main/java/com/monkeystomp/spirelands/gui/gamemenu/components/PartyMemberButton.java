@@ -4,7 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.gui.controlls.Button;
+import com.monkeystomp.spirelands.gui.controlls.button.Button;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;

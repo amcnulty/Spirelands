@@ -2,7 +2,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.gui.controlls.GameMenuSecondaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;

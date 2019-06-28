@@ -8,7 +8,7 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.character.Character;
-import com.monkeystomp.spirelands.gui.controlls.PrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
