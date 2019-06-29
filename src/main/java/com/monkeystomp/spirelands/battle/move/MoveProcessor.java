@@ -42,6 +42,7 @@ public class MoveProcessor {
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       if (user != target) target.playDamageAnimation();
+      user.getStatModel().decreaseMana(move.getManaRequired());
       target.getStatModel().decreaseHealth(overallEffect);
       FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), String.valueOf(overallEffect));
       message.floatMessageUp(true);

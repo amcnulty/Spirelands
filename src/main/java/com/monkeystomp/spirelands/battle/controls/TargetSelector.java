@@ -48,10 +48,7 @@ public class TargetSelector {
     entities = Stream.concat(party.stream(), enemies.stream()).collect(Collectors.toList());
     for (BattleEntity entity: entities) {
       mouseTargetButtons.add(new BattleTargetButton(
-        entity.getX() + entity.getCurrentAction().getWidth() / 2,
-        entity.getY() + entity.getCurrentAction().getHeight() / 2,
-        entity.getCurrentAction().getWidth(),
-        entity.getCurrentAction().getHeight(),
+        entity,
         () -> {
           currentTarget = entity;
           IBattleEntitySelector.accept(entity);
@@ -85,28 +82,24 @@ public class TargetSelector {
   }
   
   private BattleEntity getClosestEntityAbove() {
-//    List<BattleEntity> entities = Stream.concat(party.stream(), enemies.stream()).collect(Collectors.toList());
     List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() < currentTarget.getY() && !entity.isDead()).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityRight() {
-//    List<BattleEntity> entities = Stream.concat(party.stream(), enemies.stream()).collect(Collectors.toList());
     List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() > currentTarget.getX() && !entity.isDead()).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityBelow() {
-//    List<BattleEntity> entities = Stream.concat(party.stream(), enemies.stream()).collect(Collectors.toList());
     List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() > currentTarget.getY() && !entity.isDead()).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityLeft() {
-//    List<BattleEntity> entities = Stream.concat(party.stream(), enemies.stream()).collect(Collectors.toList());
     List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() < currentTarget.getX() && !entity.isDead()).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
@@ -177,7 +170,7 @@ public class TargetSelector {
     if (targeting) {
       screen.renderSprite(gl, currentTarget.getX() + currentTarget.getCurrentAction().getWidth() / 2 - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - 15, selectorIconAnim.getSprite(), false);
       for (BattleTargetButton button: mouseTargetButtons) {
-        button.render(screen, gl);
+        if (button.getEntity() != currentTarget) button.render(screen, gl);
       }
     }
   }

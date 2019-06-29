@@ -42,6 +42,8 @@ public class BattleMove {
   private final String variety;
   // Power level of the move.
   private final int powerLevel;
+  // Amount of mana requited for this move.
+  private final int manaRequired;
   // Accuracy of the move.
   private final int accuracy;
   // Is the move a ranged move?
@@ -68,6 +70,7 @@ public class BattleMove {
           .name("Magic Energy")
           .magicalAttack()
           .powerLevel(20)
+          .manaRequired(5)
           .accuracy(95)
           .ranged(true)
           .magicalSkillAnimation()
@@ -94,6 +97,7 @@ public class BattleMove {
     this.type = builder.type;
     this.variety = builder.variety;
     this.powerLevel = builder.powerLevel;
+    this.manaRequired = builder.manaRequired;
     this.accuracy = builder.accuracy;
     this.ranged = builder.ranged;
     this.moveAnimation = builder.moveAnimation;
@@ -142,6 +146,10 @@ public class BattleMove {
 
   public int getPowerLevel() {
     return powerLevel;
+  }
+
+  public int getManaRequired() {
+    return manaRequired;
   }
 
   public int getAccuracy() {

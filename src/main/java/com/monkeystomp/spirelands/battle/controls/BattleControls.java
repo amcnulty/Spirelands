@@ -35,7 +35,6 @@ public class BattleControls {
     ArrayList<BattleMove> battleMoves = this.entity.getStatModel().getEquippedMoves();
     int startingX = getStartingX(battleMoves.size());
     controlButtonGroup = new ButtonGroup();
-    
     int index = 0;
     for (BattleMove move: battleMoves) {
       controlButtonGroup.addButton(
@@ -43,10 +42,13 @@ public class BattleControls {
           startingX + ((BattleControlButton.WIDTH + buttonMargin) * index),
           buttonRowY,
           keyCodeByIndex[index],
-          move.getThumbnail(),
+          move,
           () -> IBattleMove.accept(move)
         ));
       index++;
+    }
+    for (GroupButton button: controlButtonGroup.getButtons()) {
+      if (((BattleControlButton)button).getMove().getManaRequired() > entity.getStatModel().getMana()) ((BattleControlButton)button).disableButton();
     }
   }
   

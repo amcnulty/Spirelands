@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  *     .name("Fire Attack")
  *     .magicalAttack()
  *     .powerLevel(30)
+ *     .manaRequired(20)
  *     .accuracy(100)
  *     .ranged(true)
  *     .build();}
@@ -45,6 +46,10 @@ public class BattleMoveBuilder {
    * The power level of this move.
    */
   public int powerLevel;
+  /**
+   * The amount of mana required for this move. Default is zero if not specified.
+   */
+  public int manaRequired = 0;
   /**
    * The accuracy value of this move.
    */
@@ -113,6 +118,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder powerLevel(int amount) {
     this.powerLevel = amount;
+    return this;
+  }
+  /**
+   * Sets the amount of mana required for this move.
+   * @param amount Integer value to set to the mana required value.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder manaRequired(int amount) {
+    this.manaRequired = amount;
     return this;
   }
   /**
