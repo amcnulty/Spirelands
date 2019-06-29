@@ -166,8 +166,10 @@ public class TargetSelector {
   
   public void update() {
     selectorIconAnim.update();
-    for (BattleTargetButton button: mouseTargetButtons) {
-      button.update();
+    if (targeting) {
+      for (BattleTargetButton button: mouseTargetButtons) {
+        button.update();
+      }
     }
   }
 

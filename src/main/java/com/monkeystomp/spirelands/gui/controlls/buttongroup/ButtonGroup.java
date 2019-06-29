@@ -27,6 +27,10 @@ public class ButtonGroup {
     buttons.add(newButton);
   }
   
+  public ArrayList<GroupButton> getButtons() {
+    return buttons;
+  }
+  
   public void update() {
     for (GroupButton button: buttons) {
       button.update();

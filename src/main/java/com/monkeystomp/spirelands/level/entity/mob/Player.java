@@ -197,7 +197,7 @@ public class Player extends Mob {
     level.transitionOutOfLevel();
   }
   
-  private void destroyPlayer() {
+  public void destroyPlayer() {
     // Remove notifiers
     Keyboard.getKeyboard().removeKeyListener(keyListener);
   }

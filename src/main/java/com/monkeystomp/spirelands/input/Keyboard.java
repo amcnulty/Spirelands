@@ -121,6 +121,11 @@ public class Keyboard implements KeyListener {
   public void keyPressed(KeyEvent e) {
     keys[e.getKeyCode()] = true;
     callKeyListeners(e);
+//    Use this block to print out instances where keypress listeners are being used.
+//    System.out.println("-------------------------------");
+//    for (int i = 0; i < keyListeners.size(); i++) {
+//      System.out.println(keyListeners.get(i).toString());
+//    }
   }
   /**
    * {@inheritDoc}

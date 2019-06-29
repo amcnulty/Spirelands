@@ -338,6 +338,7 @@ public class Level implements Runnable {
    */
   public void exitLevel() {
     keyboard.removeKeyListener(keyListener);
+    player.destroyPlayer();
     saveLevelState();
     if (isPortalSet) exitPortal.enterPortal();
   }

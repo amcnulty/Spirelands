@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.BattleControlButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GroupButton;
 import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
 import com.monkeystomp.spirelands.input.Keyboard;
 import java.util.ArrayList;
@@ -49,6 +50,14 @@ public class BattleControls {
     }
   }
   
+  private void destroyExistingButtons(ButtonGroup buttonGroup) {
+    if (buttonGroup != null) {
+      for (GroupButton button: buttonGroup.getButtons()) {
+        ((BattleControlButton)button).destroy();
+      }
+    }
+  }
+  
   private int getStartingX(int size) {
     if (size % 2 == 0) {
       return (Screen.getWidth() / 2) - ((size / 2) * (buttonMargin + BattleControlButton.WIDTH));
@@ -64,6 +73,7 @@ public class BattleControls {
   
   public void hideControls() {
     showing = false;
+    destroyExistingButtons(controlButtonGroup);
   }
   
   public void update() {

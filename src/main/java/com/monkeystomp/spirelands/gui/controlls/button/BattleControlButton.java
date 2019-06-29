@@ -8,6 +8,8 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.input.Keyboard;
+import java.awt.event.KeyEvent;
+import java.util.function.Consumer;
 
 /**
  *
@@ -22,11 +24,13 @@ public class BattleControlButton extends GroupButton {
   private final Sprite borderDefault = new Sprite("./resources/gui/battle_move_border.png", 16);
   private final Sprite borderHover = new Sprite("./resources/gui/battle_move_border_hover.png", 16);
   private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 16, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.MEDIUM, 8);
+  private final Consumer<KeyEvent> keyPressListener = event -> handleKeyPress(event);
 
   public BattleControlButton(int x, int y, int relatedKey, Sprite buttonImage, ICallback callback) {
     super("", x, y, WIDTH, HEIGHT, buttonImage, callback);
     this.relatedKey = relatedKey;
     this.buttonImage = buttonImage;
+    Keyboard.getKeyboard().addKeyListener(keyPressListener);
     createButtonSprites();
     setButtonSounds();
   }
@@ -42,11 +46,18 @@ public class BattleControlButton extends GroupButton {
     clickSound = SoundEffects.BUTTON_CLICK;
   }
   
+  private void handleKeyPress(KeyEvent event) {
+    if (event.getKeyCode() == relatedKey) click();
+  }
+  
+  public void destroy() {
+    Keyboard.getKeyboard().removeKeyListener(keyPressListener);
+  }
+  
   @Override
   public void update() {
     super.update();
     rotatingBorder.update();
-    if (Keyboard.isKeyPressed(relatedKey)) click();
   }
   
   @Override

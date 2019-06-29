@@ -32,6 +32,7 @@ public class BattleView extends GameView {
   
   @Override
   public void leaveView() {
+    Keyboard.getKeyboard().removeKeyListener(IKeyListener);
   }
   
   @Override
