@@ -25,7 +25,7 @@ public class MoveProcessor {
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
     int attackPower, overallEffect;
     if (random.nextInt(100) + 1 > move.getAccuracy()) {
-      target.playEvadeAnimation();
+      if (user != target) target.playEvadeAnimation();
       FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), "miss");
       message.floatMessageUp(true);
       IFlashMessage.accept(message);
@@ -41,7 +41,7 @@ public class MoveProcessor {
         overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
-      target.playDamageAnimation();
+      if (user != target) target.playDamageAnimation();
       target.getStatModel().decreaseHealth(overallEffect);
       FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), String.valueOf(overallEffect));
       message.floatMessageUp(true);

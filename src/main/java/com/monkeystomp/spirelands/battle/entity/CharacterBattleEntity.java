@@ -17,6 +17,7 @@ public class CharacterBattleEntity extends BattleEntity {
   
   private final int rightOfTarget = 28;
   private final Random random = new Random();
+  private boolean targetingSelf = false;
   
   public CharacterBattleEntity(SpawnCoordinate slot, Character character) {
     super(slot, character.getBattleSheet());
@@ -102,7 +103,8 @@ public class CharacterBattleEntity extends BattleEntity {
     if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
-    if (offensive) {
+    if (offensive || targetingSelf) {
+      targetingSelf = false;
       finishedAttacking = true;
       Helpers.setTimeout(() -> {
         returnToIdleState();
@@ -132,6 +134,19 @@ public class CharacterBattleEntity extends BattleEntity {
     currentMove = move;
     moveAnimation = move.getMoveAnimation();
     if (!move.isRanged()) {
+      moveToLocation(target.getX() + rightOfTarget, target.getY());
+    }
+    else processMove();
+  }
+
+  public void makeMove(BattleMove move, CharacterBattleEntity target) {
+    moving = true;
+    finishedAttacking = false;
+    currentTarget = target;
+    targetingSelf = target == this;
+    currentMove = move;
+    moveAnimation = move.getMoveAnimation();
+    if (!move.isRanged() && !targetingSelf) {
       moveToLocation(target.getX() + rightOfTarget, target.getY());
     }
     else processMove();

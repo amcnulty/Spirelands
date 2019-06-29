@@ -126,6 +126,10 @@ public class Battle {
       ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, (EnemyBattleEntity)target);
       battleControls.hideControls();
     }
+    if (target instanceof CharacterBattleEntity) {
+      ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, (CharacterBattleEntity)target);
+      battleControls.hideControls();
+    }
     targetSelector.setTargeting(false);
   }
   
