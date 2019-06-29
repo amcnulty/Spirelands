@@ -146,7 +146,10 @@ public class TargetSelector {
   
   public void selectCharacterTarget() {
     if (currentTarget != null) {
-      if (!currentTarget.isDead() && currentTarget instanceof CharacterBattleEntity) return;
+      if (!currentTarget.isDead() && currentTarget instanceof CharacterBattleEntity) {
+        targeting = true;
+        return;
+      }
     }
     for (CharacterBattleEntity character: party) {
       if (!character.isDead()) {
