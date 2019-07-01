@@ -71,7 +71,7 @@ public class BattleMove {
           .magicalAttack()
           .powerLevel(20)
           .manaRequired(5)
-          .accuracy(95)
+          .accuracy(100)
           .ranged(true)
           .magicalSkillAnimation()
           .thumbnail(Item.PUPIL_WAND.getThumbnail())
