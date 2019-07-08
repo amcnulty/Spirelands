@@ -1,8 +1,12 @@
 package com.monkeystomp.spirelands.battle.entity;
 
+import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.graphics.AnimatedSprite;
+import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.util.Helpers;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
@@ -17,7 +21,10 @@ public class CharacterBattleEntity extends BattleEntity {
   
   private final int rightOfTarget = 28;
   private final Random random = new Random();
-  private boolean targetingSelf = false;
+  private boolean targetingSelf = false,
+                  showingControls = false;
+  private final AnimatedSprite ringBack = new AnimatedSprite(128, 48, new SpriteSheet("./resources/animations/characterRing/character_ring_back.png"), AnimatedSprite.VERY_SLOW, 5);
+  private final AnimatedSprite ringFront = new AnimatedSprite(128, 48, new SpriteSheet("./resources/animations/characterRing/character_ring_front.png"), AnimatedSprite.VERY_SLOW, 5);
   
   public CharacterBattleEntity(SpawnCoordinate slot, Character character) {
     super(slot, character.getBattleSheet());
@@ -99,7 +106,7 @@ public class CharacterBattleEntity extends BattleEntity {
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
-    if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
+    checkHealthStatus();
     if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
@@ -108,13 +115,8 @@ public class CharacterBattleEntity extends BattleEntity {
       finishedAttacking = true;
       Helpers.setTimeout(() -> {
         returnToIdleState();
-        setCurrentAnimation();
       }, 500);
     }
-  }
-  
-  private void setCurrentAnimation() {
-    if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
   }
   
   @Override
@@ -127,23 +129,15 @@ public class CharacterBattleEntity extends BattleEntity {
     }
   }
 
-  public void makeMove(BattleMove move, EnemyBattleEntity target) {
+  public void makeMove(BattleMove move, BattleEntity target) {
     moving = true;
     finishedAttacking = false;
+    showingControls = false;
     currentTarget = target;
-    currentMove = move;
-    moveAnimation = move.getMoveAnimation();
-    if (!move.isRanged()) {
-      moveToLocation(target.getX() + rightOfTarget, target.getY());
+    if (target instanceof CharacterBattleEntity) {
+      targetingSelf = target == this;
     }
-    else processMove();
-  }
-
-  public void makeMove(BattleMove move, CharacterBattleEntity target) {
-    moving = true;
-    finishedAttacking = false;
-    currentTarget = target;
-    targetingSelf = target == this;
+    else targetingSelf = false;
     currentMove = move;
     moveAnimation = move.getMoveAnimation();
     if (!move.isRanged() && !targetingSelf) {
@@ -155,6 +149,24 @@ public class CharacterBattleEntity extends BattleEntity {
   @Override
   public Character getStatModel() {
     return (Character)statModel;
+  }
+
+  public void setShowingControls(boolean showingControls) {
+    this.showingControls = showingControls;
+  }
+  
+  @Override
+  public void update() {
+    super.update();
+    ringBack.update();
+    ringFront.update();
+  }
+  
+  @Override
+  public void render(Screen screen, GL2 gl) {
+    if (showingControls) screen.renderSprite(gl, x - 10, y + 4 - 24, ringBack.getSprite(), false);
+    super.render(screen, gl);
+    if (showingControls) screen.renderSprite(gl, x - 10, y + 4 + 24, ringFront.getSprite(), false);
   }
 
 }

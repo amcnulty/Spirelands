@@ -122,22 +122,9 @@ public class Battle {
   }
   
   private void handleTargetSelection(BattleEntity target) {
-    if (target instanceof EnemyBattleEntity) {
-      ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, (EnemyBattleEntity)target);
-      battleControls.hideControls();
-    }
-    if (target instanceof CharacterBattleEntity) {
-      ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, (CharacterBattleEntity)target);
-      battleControls.hideControls();
-    }
+    ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, target);
+    battleControls.hideControls();
     targetSelector.setTargeting(false);
-  }
-  
-  // !!! REMOVE THIS METHOD AFTER IMPLEMENTING TAGET SELECTION !!!
-  private EnemyBattleEntity getRandomEnemyTarget() {
-    EnemyBattleEntity nextTarget = enemies.get(random.nextInt(enemies.size()));
-    if (nextTarget.isDead()) return getRandomEnemyTarget();
-    else return nextTarget;
   }
   
   private CharacterBattleEntity getTarget() {
@@ -175,6 +162,7 @@ public class Battle {
         else if (readyEntities.get(0) instanceof CharacterBattleEntity) {
           if (!battleControls.isShowing() && !readyEntities.get(0).isMoving()) {
             battleControls.setControlsForBattleEntity((CharacterBattleEntity)readyEntities.get(0));
+            ((CharacterBattleEntity)readyEntities.get(0)).setShowingControls(true);
           }
         }
       }

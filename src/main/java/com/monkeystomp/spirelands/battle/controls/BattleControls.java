@@ -49,6 +49,7 @@ public class BattleControls {
     }
     for (GroupButton button: controlButtonGroup.getButtons()) {
       if (((BattleControlButton)button).getMove().getManaRequired() > entity.getStatModel().getMana()) ((BattleControlButton)button).disableButton();
+      if (((BattleControlButton)button).getMove().equals(entity.getCurrentMove())) ((BattleControlButton)button).clickOverride();
     }
   }
   

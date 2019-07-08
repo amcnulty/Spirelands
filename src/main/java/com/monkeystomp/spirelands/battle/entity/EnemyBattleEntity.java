@@ -87,19 +87,14 @@ public class EnemyBattleEntity extends BattleEntity {
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
-    if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
+    checkHealthStatus();
     if (this.x != getSlot().getX() || this.y != getSlot().getY()) {
       moveToLocation(getSlot().getX(), getSlot().getY());
     }
     if (offensive) {
       finishedAttacking = true;
       returnToIdleState();
-      setCurrentAnimation();
     }
-  }
-  
-  private void setCurrentAnimation () {
-    if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
   }
   
   @Override

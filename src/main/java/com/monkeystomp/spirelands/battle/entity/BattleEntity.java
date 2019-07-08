@@ -213,6 +213,10 @@ public class BattleEntity {
     return currentAction;
   }
 
+  public BattleMove getCurrentMove() {
+    return currentMove;
+  }
+
   public int getX() {
     return x;
   }
@@ -338,7 +342,12 @@ public class BattleEntity {
     setReady(false);
     moving = false;
     readyGauge = 0;
-    playIdleAnimation();
+  }
+  
+  protected void checkHealthStatus() {
+    if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
+    else if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
+    else playIdleAnimation();
   }
   
   protected void moveToLocation(int x, int y) {
@@ -353,10 +362,12 @@ public class BattleEntity {
   
   private void updateTravel() {
     if (traveling) {
-      this.x = travelingSteps.get(0)[0];
-      this.y = travelingSteps.get(0)[1];
-      travelingSteps.remove(0);
-      if (travelingSteps.isEmpty()) {
+      if (!travelingSteps.isEmpty()) {
+        this.x = travelingSteps.get(0)[0];
+        this.y = travelingSteps.get(0)[1];
+        travelingSteps.remove(0);
+      }
+      else {
         traveling = false;
         if (isReady() && !finishedAttacking) {
           processMove();
