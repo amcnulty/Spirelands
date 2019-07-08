@@ -86,8 +86,8 @@ public class BattleEntity {
       else currentAction = actionMap.get("USE_PHYSICAL_SKILL_" + anim / 12);
     },
     useMagicalSkillAnimation = () -> {
-      if (anim == 72) moveFinished(true);
-      else currentAction = actionMap.get("USE_MAGICAL_SKILL_" + anim / 24);
+      if (anim == 108) moveFinished(true);
+      else currentAction = actionMap.get("USE_MAGICAL_SKILL_" + anim / 36);
     },
     useItemAnimation = () -> {
       if (anim == 36) moveFinished(true);

@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.move;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import java.util.Random;
@@ -13,6 +14,7 @@ public class MoveProcessor {
   
   private final Random random = new Random();
   private Consumer<FlashMessage> IFlashMessage;
+  private final SoundEffects sfx = new SoundEffects();
 
   public void setIFlashMessage(Consumer<FlashMessage> IFlashMessage) {
     this.IFlashMessage = IFlashMessage;
@@ -26,6 +28,7 @@ public class MoveProcessor {
     int attackPower, overallEffect;
     if (random.nextInt(100) + 1 > move.getAccuracy()) {
       if (user != target) target.playEvadeAnimation();
+      sfx.playSoundEffect(SoundEffects.HIT_MISS);
       FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), "miss");
       message.floatMessageUp(true);
       IFlashMessage.accept(message);
@@ -42,6 +45,7 @@ public class MoveProcessor {
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       if (user != target) target.playDamageAnimation();
+      sfx.playSoundEffect(move.getSound());
       user.getStatModel().decreaseMana(move.getManaRequired());
       target.getStatModel().decreaseHealth(overallEffect);
       FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), String.valueOf(overallEffect));

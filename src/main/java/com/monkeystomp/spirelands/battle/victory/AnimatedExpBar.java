@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.victory;
 
 import com.monkeystomp.spirelands.character.Character;
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -24,6 +25,7 @@ public class AnimatedExpBar {
   private int expGained;
   private double tick = 0;
   private final Character dummyCharacter = new Character();
+  private final SoundEffects sfx = new SoundEffects();
   
   public AnimatedExpBar(int x, int y, int expGained, Character character) {
     this.x = x;
@@ -74,6 +76,7 @@ public class AnimatedExpBar {
   }
   
   private void addExp() {
+    int lastLevel = dummyCharacter.getLevel();
     if (expGained > 0) {
       if (dummyCharacter.getExpToNextLevel() / 120 < 1) {
         if (round(tick, 2) == dummyCharacter.getExpToNextLevel()) {
@@ -93,6 +96,7 @@ public class AnimatedExpBar {
         }
       }
     }
+    if (lastLevel != dummyCharacter.getLevel()) sfx.playSoundEffect(SoundEffects.LEVEL_UP);
   }
   
   public void update() {

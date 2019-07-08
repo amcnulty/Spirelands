@@ -158,6 +158,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     RIBS.setStrengthUp(1);
+    RIBS.setUseItemSound(SoundEffects.GULP_EAT);
   }
   /**
    * Apple (EQUIPMENT - DEFENSE UP)
@@ -171,6 +172,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     APPLE.setDefenseUp(1);
+    APPLE.setUseItemSound(SoundEffects.CRUNCH_EAT);
   }
   /**
    * Banana (EQUIPMENT - INTELLECT UP)
@@ -184,6 +186,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     BANANA.setIntellectUp(1);
+    BANANA.setUseItemSound(SoundEffects.QUICK_EAT);
   }
   /**
    * Dragon Tooth (EQUIPMENT - SPIRIT UP)
@@ -197,6 +200,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     DRAGON_TOOTH.setSpiritUp(1);
+    DRAGON_TOOTH.setUseItemSound(SoundEffects.STAT_UP);
   }
   /**
    * Feather (EQUIPMENT - SPEED UP)
@@ -210,6 +214,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     FEATHER.setSpeedUp(1);
+    FEATHER.setUseItemSound(SoundEffects.STAT_UP);
   }
   /**
    * A cookie (EQUIPMENT - LUCK UP)
@@ -223,6 +228,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     COOKIE.setLuckUp(1);
+    COOKIE.setUseItemSound(SoundEffects.QUICK_EAT);
   }
   /**
    * Special Candy (EQUIPMENT - LEVEL UP)
@@ -236,6 +242,7 @@ public class Item {
           .build(EquipmentItem.class);
   static {
     SPECIAL_CANDY.setLevelUp(1);
+    SPECIAL_CANDY.setUseItemSound(SoundEffects.LEVEL_UP);
   }
   /**
    * A training book to increase stats (EQUIPMENT)
@@ -254,6 +261,7 @@ public class Item {
     TRAINING_BOOK_V1.setSpiritUp(1);
     TRAINING_BOOK_V1.setSpeedUp(1);
     TRAINING_BOOK_V1.setLuckUp(1);
+    TRAINING_BOOK_V1.setUseItemSound(SoundEffects.LEVEL_UP);
   }
   /**
    * A training book to increase stats (EQUIPMENT)
@@ -273,6 +281,7 @@ public class Item {
     TRAINING_BOOK_V2.setSpeedUp(2);
     TRAINING_BOOK_V2.setLuckUp(2);
     TRAINING_BOOK_V2.setLevelUp(1);
+    TRAINING_BOOK_V2.setUseItemSound(SoundEffects.LEVEL_UP);
   }
   
   /**

@@ -1,7 +1,9 @@
 package com.monkeystomp.spirelands.battle.move;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -52,6 +54,8 @@ public class BattleMove {
   private final Method moveAnimation;
   // The thumbnail for this move.
   private final Sprite thumbnail;
+  // The sound effect for this move.
+  private final File sound;
   
   /**
    * A basic attack move. Physical & Offensive.
@@ -64,6 +68,7 @@ public class BattleMove {
           .ranged(false)
           .stabbingAnimation()
           .thumbnail(Item.COMMON_SWORD.getThumbnail())
+          .sound(SoundEffects.QUICK_HIT)
           .build();
   
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
@@ -75,6 +80,7 @@ public class BattleMove {
           .ranged(true)
           .magicalSkillAnimation()
           .thumbnail(Item.PUPIL_WAND.getThumbnail())
+          .sound(SoundEffects.MAGICAL_ENERGY)
           .build();
   
   public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
@@ -85,6 +91,7 @@ public class BattleMove {
           .ranged(false)
           .swingingAnimation()
           .thumbnail(Item.BROADAXE.getThumbnail())
+          .sound(SoundEffects.STRONG_MALE_ATTACK)
           .build();
   
   /**
@@ -102,6 +109,7 @@ public class BattleMove {
     this.ranged = builder.ranged;
     this.moveAnimation = builder.moveAnimation;
     this.thumbnail = builder.thumbnail;
+    this.sound = builder.sound;
   }
   
   static {
@@ -166,6 +174,10 @@ public class BattleMove {
 
   public Sprite getThumbnail() {
     return thumbnail;
+  }
+
+  public File getSound() {
+    return sound;
   }
 
 }

@@ -24,9 +24,20 @@ import javax.sound.sampled.LineEvent;
  */
 public class SoundEffects {
   /**
+   *          !!######################################!!
+   *          !!                                      !!
+   *          !!             Misc Sounds              !!
+   *          !!                                      !!
+   *          !!######################################!!
+   */
+  /**
    * Monkey stomp sound.
    */
   public static final File MONKEY_STOMP_SOUND = new File("./resources/audio/sfx/monkey_stomp_sound.wav");
+  /**
+   * Leveling up sound.
+   */
+  public static final File LEVEL_UP = new File("./resources/audio/sfx/level_up.wav");
   /**
    * The sound of birds chirping.
    */
@@ -82,6 +93,37 @@ public class SoundEffects {
   /**
    *          !!######################################!!
    *          !!                                      !!
+   *          !!            Battle Sounds             !!
+   *          !!                                      !!
+   *          !!######################################!!
+   */
+  /**
+   * A quick hitting sound.
+   */
+  public static final File QUICK_HIT = new File("./resources/audio/sfx/quick_hit.wav");
+  /**
+   * A quick smacking sound.
+   */
+  public static final File QUICK_SMACK = new File("./resources/audio/sfx/quick_smack.wav");
+  /**
+   * A mugging sound.
+   */
+  public static final File MUG_ATTACK = new File("./resources/audio/sfx/mug.wav");
+  /**
+   * A missed hit.
+   */
+  public static final File HIT_MISS = new File("./resources/audio/sfx/hit_miss.wav");
+  /**
+   * A strong attack performed by a male character.
+   */
+  public static final File STRONG_MALE_ATTACK = new File("./resources/audio/sfx/male_strong_attack.wav");
+  /**
+   * Magical energy move sound.
+   */
+  public static final File MAGICAL_ENERGY = new File("./resources/audio/sfx/magic_energy.wav");
+  /**
+   *          !!######################################!!
+   *          !!                                      !!
    *          !!             Item Sounds              !!
    *          !!                                      !!
    *          !!######################################!!
@@ -90,6 +132,26 @@ public class SoundEffects {
    * A healing item sound.
    */
   public static final File HEALING_SOUND = new File("./resources/audio/sfx/items/item_healing.wav");
+  /**
+   * The sound of earning money.
+   */
+  public static final File COIN = new File("./resources/audio/sfx/items/coin.wav");
+  /**
+   * Positive stat increasing sound.
+   */
+  public static final File STAT_UP = new File("./resources/audio/sfx/items/stat_up.wav");
+  /**
+   * A sound of eating something crunchy.
+   */
+  public static final File CRUNCH_EAT = new File("./resources/audio/sfx/items/crunch_eat.wav");
+  /**
+   * A gulping eating sound.
+   */
+  public static final File GULP_EAT = new File("./resources/audio/sfx/items/gulp_eat.wav");
+  /**
+   * A quick generic eating sound.
+   */
+  public static final File QUICK_EAT = new File("./resources/audio/sfx/items/quick_eat.wav");
   /**
    * An armor equip sound.
    */

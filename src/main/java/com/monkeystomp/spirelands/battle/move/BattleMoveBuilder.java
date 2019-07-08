@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,9 @@ import java.util.logging.Logger;
  *     .manaRequired(20)
  *     .accuracy(100)
  *     .ranged(true)
+ *     .magicalSkillAnimation()
+ *     .thumbnail(Item.PUPIL_WAND.getThumbnail())
+ *     .sound(SoundEffects.MAGICAL_ENERGY)
  *     .build();}
  * </pre>
  * @author Aaron Michael McNulty
@@ -66,6 +70,10 @@ public class BattleMoveBuilder {
    * The thumbnail for this move.
    */
   public Sprite thumbnail;
+  /**
+   * The sound effect for this move.
+   */
+  public File sound;
   /**
    * Sets the name of the move.
    * @param name Display name for the move.
@@ -226,6 +234,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder thumbnail(Sprite thumbnail) {
     this.thumbnail = thumbnail;
+    return this;
+  }
+  /**
+   * Sets the sound effect for this move.
+   * @param sound The file location of the sound resource.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder sound(File sound) {
+    this.sound = sound;
     return this;
   }
   /**
