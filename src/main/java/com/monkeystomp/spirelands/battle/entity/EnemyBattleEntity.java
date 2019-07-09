@@ -5,10 +5,7 @@ import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -116,16 +113,6 @@ public class EnemyBattleEntity extends BattleEntity {
   private void setNextMove() {
     currentMove = ((Enemy)statModel).getRandomMove();
     moveAnimation = currentMove.getMoveAnimation();
-  }
-  
-  @Override
-  protected void processMove() {
-    try {
-      moveAnimation.invoke(this);
-      battle.getMoveProcessor().process(this, currentTarget, currentMove);
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
-    }
   }
   
   @Override

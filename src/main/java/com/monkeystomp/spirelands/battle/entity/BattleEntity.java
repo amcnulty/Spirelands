@@ -9,9 +9,13 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
+import com.monkeystomp.spirelands.util.Helpers;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -362,7 +366,7 @@ public class BattleEntity {
   
   private void updateTravel() {
     if (traveling) {
-      if (!travelingSteps.isEmpty()) {
+      if (!travelingSteps.isEmpty() && travelingSteps.get(0) != null) {
         this.x = travelingSteps.get(0)[0];
         this.y = travelingSteps.get(0)[1];
         travelingSteps.remove(0);
@@ -376,7 +380,17 @@ public class BattleEntity {
     }
   }
   
-  protected void processMove() {}
+  protected void processMove() {
+    try {
+      moveAnimation.invoke(this);
+    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    if (currentMove.getTargetAnimationDelay() > 0) {
+      Helpers.setTimeout(() -> battle.getMoveProcessor().process(this, currentTarget, currentMove), currentMove.getTargetAnimationDelay());
+    }
+    else battle.getMoveProcessor().process(this, currentTarget, currentMove);
+  }
   
   private void fillGauge() {
     if (readyGauge++ == readyGaugeMax) {

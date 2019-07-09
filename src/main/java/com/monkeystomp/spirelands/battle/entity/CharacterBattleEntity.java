@@ -8,10 +8,7 @@ import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.util.Helpers;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -116,16 +113,6 @@ public class CharacterBattleEntity extends BattleEntity {
       Helpers.setTimeout(() -> {
         returnToIdleState();
       }, 500);
-    }
-  }
-  
-  @Override
-  protected void processMove() {
-    try {
-      moveAnimation.invoke(this);
-      battle.getMoveProcessor().process(this, currentTarget, currentMove);
-    } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-      Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
 

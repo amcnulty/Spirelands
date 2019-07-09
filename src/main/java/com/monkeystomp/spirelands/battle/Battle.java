@@ -230,6 +230,7 @@ public class Battle {
       if (tick == 2100) endBattle();
     }
     targetSelector.update();
+    moveProcessor.update();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -245,6 +246,7 @@ public class Battle {
         card.render(screen, gl);
       }
     }
+    moveProcessor.render(screen, gl);
     for (FlashMessage message: currentMessages) {
       message.render(screen, gl);
     }

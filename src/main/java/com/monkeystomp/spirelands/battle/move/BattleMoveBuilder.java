@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import java.io.File;
 import java.lang.reflect.Method;
@@ -27,6 +28,7 @@ import java.util.logging.Logger;
  *     .magicalSkillAnimation()
  *     .thumbnail(Item.PUPIL_WAND.getThumbnail())
  *     .sound(SoundEffects.MAGICAL_ENERGY)
+ *     .targetAnimation(blueExplosion)
  *     .build();}
  * </pre>
  * @author Aaron Michael McNulty
@@ -74,6 +76,14 @@ public class BattleMoveBuilder {
    * The sound effect for this move.
    */
   public File sound;
+  /**
+   * The animation this move makes on the target.
+   */
+  public AnimatedSprite targetAnimation;
+  /**
+   * Delay in milliseconds after playing the move animation before playing the target animation.
+   */
+  public int targetAnimationDelay = 0;
   /**
    * Sets the name of the move.
    * @param name Display name for the move.
@@ -208,6 +218,7 @@ public class BattleMoveBuilder {
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder magicalSkillAnimation() {
+    targetAnimationDelay = 600;
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playUseMagicalSkillAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
@@ -243,6 +254,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder sound(File sound) {
     this.sound = sound;
+    return this;
+  }
+  /**
+   * Sets the animation that plays over the target for this move.
+   * @param animation AnimatedSprite with the desired animation.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder targetAnimation(AnimatedSprite animation) {
+    this.targetAnimation = animation;
     return this;
   }
   /**

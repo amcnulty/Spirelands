@@ -1,7 +1,9 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.io.File;
 import java.lang.reflect.Field;
@@ -56,6 +58,34 @@ public class BattleMove {
   private final Sprite thumbnail;
   // The sound effect for this move.
   private final File sound;
+  // The animation this move makes on the target.
+  private final AnimatedSprite targetAnimation;
+  // Delay in milliseconds after playing the move animation before playing the target animation.
+  private final int targetAnimationDelay;
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!        Move Animations         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  private static final AnimatedSprite
+  basicSlash = new AnimatedSprite(
+          128,
+          32,
+          new SpriteSheet("./resources/animations/slash/basic_slash.png"),
+          AnimatedSprite.MEDIUM,
+          6,
+          true
+  ),
+  blueExplosion = new AnimatedSprite(
+          128,
+          48,
+          new SpriteSheet("./resources/animations/magic/blueExplosion/blue_explosion.png"),
+          AnimatedSprite.FAST,
+          30,
+          true
+  );
   
   /**
    * A basic attack move. Physical & Offensive.
@@ -69,6 +99,7 @@ public class BattleMove {
           .stabbingAnimation()
           .thumbnail(Item.COMMON_SWORD.getThumbnail())
           .sound(SoundEffects.QUICK_HIT)
+          .targetAnimation(basicSlash)
           .build();
   
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
@@ -81,6 +112,7 @@ public class BattleMove {
           .magicalSkillAnimation()
           .thumbnail(Item.PUPIL_WAND.getThumbnail())
           .sound(SoundEffects.MAGICAL_ENERGY)
+          .targetAnimation(blueExplosion)
           .build();
   
   public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
@@ -110,6 +142,8 @@ public class BattleMove {
     this.moveAnimation = builder.moveAnimation;
     this.thumbnail = builder.thumbnail;
     this.sound = builder.sound;
+    this.targetAnimation = builder.targetAnimation;
+    this.targetAnimationDelay = builder.targetAnimationDelay;
   }
   
   static {
@@ -175,9 +209,31 @@ public class BattleMove {
   public Sprite getThumbnail() {
     return thumbnail;
   }
+  /**
+   * Checks if this move has a sound associated with it.
+   * @return True if there is a sound for this move otherwise false.
+   */
+  public boolean hasSound() {
+    return sound != null;
+  }
 
   public File getSound() {
     return sound;
+  }
+  /**
+   * Checks if this move has a target animation associated with it.
+   * @return True if there is a target animation otherwise false.
+   */
+  public boolean hasTargetAnimation() {
+    return targetAnimation != null;
+  }
+
+  public AnimatedSprite getTargetAnimation() {
+    return targetAnimation;
+  }
+
+  public int getTargetAnimationDelay() {
+    return targetAnimationDelay;
   }
 
 }

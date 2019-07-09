@@ -31,6 +31,8 @@ public class AnimatedSprite {
               tick = 0,
               speed,
               currentIndex = 0;
+  private boolean playOnce = false,
+                  readyToPlay = true;
   private ArrayList<Sprite> sprites = new ArrayList<>();
   private Sprite currentSprite;
   
@@ -42,9 +44,29 @@ public class AnimatedSprite {
     this.speed = speed;
   }
   
+  public AnimatedSprite(int rawSize, int renderSize, SpriteSheet sheet, int speed, int frames, boolean playOnce) {
+    for (int i = 0; i < frames; i++) {
+      sprites.add(new Sprite(rawSize, renderSize, x++, 0, sheet));
+    }
+    currentSprite = sprites.get(0);
+    this.speed = speed;
+    this.playOnce = playOnce;
+  }
+
+  public boolean isReadyToPlay() {
+    return readyToPlay;
+  }
+
+  public void setReadyToPlay(boolean readyToPlay) {
+    this.readyToPlay = readyToPlay;
+  }
+  
   public void update() {
     if (tick++ % speed == 0) {
-      if (currentIndex == sprites.size()) currentIndex = 0;
+      if (currentIndex == sprites.size()) {
+        readyToPlay = false;
+        currentIndex = 0;
+      }
       currentSprite = sprites.get(currentIndex++);
     }
   }
