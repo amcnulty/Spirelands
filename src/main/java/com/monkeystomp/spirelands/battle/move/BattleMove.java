@@ -1,15 +1,20 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.awt.Color;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.function.Function;
 
 /**
  * Battle Move class is used to describe a move that can be made by a battle entity during a battle sequence.
@@ -34,6 +39,8 @@ public class BattleMove {
   public static final String DEFENSIVE = "Defensive";
   // Map of all the moves to their ids.
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
+  // Instance of the Random class.
+  private static final Random random = new Random();
   // Used to track the ids when creating moves.
   private static int nextId = 0;
   // The id of the move.
@@ -62,6 +69,8 @@ public class BattleMove {
   private final AnimatedSprite targetAnimation;
   // Delay in milliseconds after playing the move animation before playing the target animation.
   private final int targetAnimationDelay;
+  // A consumer to define the action to take on a defensive move. Returns a FlashMessage object.
+  private final Function<MoveInformation, FlashMessage> action;
   /**
    *          !!################################!!
    *          !!                                !!
@@ -84,6 +93,14 @@ public class BattleMove {
           new SpriteSheet("./resources/animations/magic/blueExplosion/blue_explosion.png"),
           AnimatedSprite.FAST,
           30,
+          true
+  ),
+  cureAnimation = new AnimatedSprite(
+          192,
+          48,
+          new SpriteSheet("./resources/animations/magic/cure/cure.png"),
+          AnimatedSprite.MEDIUM,
+          20,
           true
   );
   
@@ -126,6 +143,29 @@ public class BattleMove {
           .sound(SoundEffects.STRONG_MALE_ATTACK)
           .build();
   
+  public static final BattleMove CURE = new BattleMoveBuilder()
+          .name("Cure")
+          .magicalDefensive()
+          .powerLevel(20)
+          .manaRequired(5)
+          .accuracy(100)
+          .ranged(true)
+          .magicalSkillAnimation()
+          .thumbnail(Item.HEALTH_BOTTLE.getThumbnail())
+          .sound(SoundEffects.HEALING_SOUND)
+          .targetAnimation(cureAnimation)
+          .action(moveInfo -> {
+            int attackPower, overallEffect;
+            attackPower = (int)(moveInfo.getMove().getPowerLevel() * moveInfo.getUser().getStatModel().getIntellect() * ( .1 + ( .009 * ( moveInfo.getUser().getStatModel().getLevel() ))));
+            overallEffect = (int)( attackPower * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
+            moveInfo.getTarget().getStatModel().increaseHealth(overallEffect);
+            FlashMessage message = new FlashMessage(moveInfo.getTarget(), String.valueOf(overallEffect));
+            message.setColor(new Color(GameColors.ATB_GAUGE_BAR_FILLED));
+            message.floatMessageUp(true);
+            return message;
+          })
+          .build();
+  
   /**
    * Creates a new EnemyMove object with the given configuration from the EnemyMoveBuilder object.
    * @param builder Configuration object for creating this EnemyMove instance.
@@ -144,6 +184,7 @@ public class BattleMove {
     this.sound = builder.sound;
     this.targetAnimation = builder.targetAnimation;
     this.targetAnimationDelay = builder.targetAnimationDelay;
+    this.action = builder.action;
   }
   
   static {
@@ -234,6 +275,10 @@ public class BattleMove {
 
   public int getTargetAnimationDelay() {
     return targetAnimationDelay;
+  }
+
+  public Function<MoveInformation, FlashMessage> getAction() {
+    return action;
   }
 
 }

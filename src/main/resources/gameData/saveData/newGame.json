@@ -25,7 +25,8 @@
         "EquippedMoves": [
           { "bHJncPLq94": 0 },
           { "bHJncPLq94": 1 },
-          { "bHJncPLq94": 2 }
+          { "bHJncPLq94": 2 },
+          { "bHJncPLq94": 3 }
         ]
       }
     },
@@ -53,7 +54,8 @@
       "Moves": {
         "EquippedMoves": [
           { "bHJncPLq94": 0 },
-          { "bHJncPLq94": 1 }
+          { "bHJncPLq94": 1 },
+          { "bHJncPLq94": 3 }
         ]
       }
     },

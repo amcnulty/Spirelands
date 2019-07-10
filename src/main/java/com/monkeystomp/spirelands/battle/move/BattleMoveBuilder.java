@@ -1,10 +1,12 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -84,6 +86,10 @@ public class BattleMoveBuilder {
    * Delay in milliseconds after playing the move animation before playing the target animation.
    */
   public int targetAnimationDelay = 0;
+  /**
+   * A consumer to define the action to take on a defensive move.
+   */
+  public Function<MoveInformation, FlashMessage> action;
   /**
    * Sets the name of the move.
    * @param name Display name for the move.
@@ -263,6 +269,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder targetAnimation(AnimatedSprite animation) {
     this.targetAnimation = animation;
+    return this;
+  }
+  /**
+   * Sets the action to take on defensive moves for this move.
+   * @param action The BiConsumer that takes the user and target.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder action(Function<MoveInformation, FlashMessage> action) {
+    this.action = action;
     return this;
   }
   /**

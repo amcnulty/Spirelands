@@ -5,6 +5,8 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
+import java.awt.Color;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -28,6 +30,7 @@ public class MoveProcessor {
     currentTarget = target;
     currentMove = move;
     if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
+    else if (move.getVariety().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
@@ -59,11 +62,22 @@ public class MoveProcessor {
       }
       user.getStatModel().decreaseMana(move.getManaRequired());
       target.getStatModel().decreaseHealth(overallEffect);
-      FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), String.valueOf(overallEffect));
+      FlashMessage message = new FlashMessage(target, String.valueOf(overallEffect));
       message.floatMessageUp(true);
       IFlashMessage.accept(message);
 //      System.out.println(user.getStatModel().getName() + " did " + overallEffect + " damage to " + target.getStatModel().getName() + "!");
     }
+  }
+  
+  private void processDefensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
+      if (move.hasSound()) {
+        sfx.playSoundEffect(move.getSound());
+      }
+      if (currentMove.hasTargetAnimation()) {
+        currentMove.getTargetAnimation().setReadyToPlay(true);
+      }
+      user.getStatModel().decreaseMana(move.getManaRequired());
+      IFlashMessage.accept(move.getAction().apply(new MoveInformation(user, target, move)));
   }
   
   public void update() {
