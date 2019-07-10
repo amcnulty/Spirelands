@@ -117,8 +117,9 @@ public class Battle {
   
   private void handleBattleControlSelection(BattleMove move) {
     currentCharacterMove = move;
-    if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
-    else targetSelector.selectCharacterTarget();
+    if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
+    else if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
+    else if (move.getVariety().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
   }
   
   private void handleTargetSelection(BattleEntity target) {

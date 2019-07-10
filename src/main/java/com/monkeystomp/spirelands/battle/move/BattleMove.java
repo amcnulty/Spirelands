@@ -71,6 +71,8 @@ public class BattleMove {
   private final int targetAnimationDelay;
   // A consumer to define the action to take on a defensive move. Returns a FlashMessage object.
   private final Function<MoveInformation, FlashMessage> action;
+  // Flag to set this move as a single target move that only targets the user.
+  private final boolean singleTarget;
   /**
    *          !!################################!!
    *          !!                                !!
@@ -151,7 +153,7 @@ public class BattleMove {
           .accuracy(100)
           .ranged(true)
           .magicalSkillAnimation()
-          .thumbnail(Item.HEALTH_BOTTLE.getThumbnail())
+          .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.HEALING_SOUND)
           .targetAnimation(cureAnimation)
           .action(moveInfo -> {
@@ -164,6 +166,20 @@ public class BattleMove {
             message.floatMessageUp(true);
             return message;
           })
+          .build();
+  
+  public static final BattleMove GUARD = new BattleMoveBuilder()
+          .name("Guard")
+          .physicalDefensive()
+          .accuracy(100)
+          .guardAnimation()
+          .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
+          .action(moveInfo -> {
+            moveInfo.getUser().setGuarding(true);
+            moveInfo.getUser().returnToIdleState();
+            return null;
+          })
+          .singleTarget(true)
           .build();
   
   /**
@@ -185,6 +201,7 @@ public class BattleMove {
     this.targetAnimation = builder.targetAnimation;
     this.targetAnimationDelay = builder.targetAnimationDelay;
     this.action = builder.action;
+    this.singleTarget = builder.singleTarget;
   }
   
   static {
@@ -279,6 +296,10 @@ public class BattleMove {
 
   public Function<MoveInformation, FlashMessage> getAction() {
     return action;
+  }
+
+  public boolean isSingleTarget() {
+    return singleTarget;
   }
 
 }

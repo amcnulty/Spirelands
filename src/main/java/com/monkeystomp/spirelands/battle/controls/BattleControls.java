@@ -19,7 +19,7 @@ public class BattleControls {
 
   private boolean showing = false;
   private final int buttonRowY = 160,
-                    buttonMargin = 1;
+                    buttonMargin = 3;
   private CharacterBattleEntity entity;
   private ButtonGroup controlButtonGroup;
   private final Consumer<BattleMove> IBattleMove;

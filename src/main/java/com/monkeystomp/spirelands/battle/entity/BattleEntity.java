@@ -38,6 +38,7 @@ public class BattleEntity {
   protected boolean moving = false;
   protected boolean finishedAttacking = true;
   protected boolean traveling = false;
+  protected boolean guarding = false;
   protected BattleEntity currentTarget;
   protected BattleMove currentMove;
   protected Method moveAnimation;
@@ -257,12 +258,20 @@ public class BattleEntity {
     return moving;
   }
 
+  public boolean isGuarding() {
+    return guarding;
+  }
+
+  public void setGuarding(boolean guarding) {
+    this.guarding = guarding;
+  }
+
   public void setReady(boolean ready) {
     this.ready = ready;
   }
 
   public void playIdleAnimation() {
-    currentAnimation = repeatingAnimation = idleAnimation;
+    if (!isGuarding()) currentAnimation = repeatingAnimation = idleAnimation;
   }
   
   public void playReadyPhysicalAnimation() {
@@ -342,7 +351,7 @@ public class BattleEntity {
     currentAnimation = repeatingAnimation = deadAnimation;
   }
   
-  protected void returnToIdleState() {
+  public void returnToIdleState() {
     setReady(false);
     moving = false;
     readyGauge = 0;
@@ -350,7 +359,7 @@ public class BattleEntity {
   
   protected void checkHealthStatus() {
     if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
-    else if (statModel.getHealth() / (double)statModel.getHealthMax() < .2) playLowHealthAnimation();
+    else if (statModel.getHealth() / (double)statModel.getHealthMax() < .2 && !isGuarding()) playLowHealthAnimation();
     else playIdleAnimation();
   }
   
@@ -395,6 +404,7 @@ public class BattleEntity {
   private void fillGauge() {
     if (readyGauge++ == readyGaugeMax) {
       ready = true;
+      setGuarding(false);
       this.playReadyPhysicalAnimation();
     }
   }
@@ -406,6 +416,7 @@ public class BattleEntity {
   protected void setAsDead() {
     isDead = true;
     ready = false;
+    setGuarding(false);
     readyGauge = 0;
   }
   

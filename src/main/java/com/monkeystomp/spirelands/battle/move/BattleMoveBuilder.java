@@ -53,7 +53,7 @@ public class BattleMoveBuilder {
   /**
    * The power level of this move.
    */
-  public int powerLevel;
+  public int powerLevel = 0;
   /**
    * The amount of mana required for this move. Default is zero if not specified.
    */
@@ -90,6 +90,10 @@ public class BattleMoveBuilder {
    * A consumer to define the action to take on a defensive move.
    */
   public Function<MoveInformation, FlashMessage> action;
+  /**
+   * Flag to set this move as a single target move that only targets the user.
+   */
+  public boolean singleTarget = false;
   /**
    * Sets the name of the move.
    * @param name Display name for the move.
@@ -169,6 +173,18 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder ranged(boolean isRanged) {
     this.ranged = isRanged;
+    return this;
+  }
+  /**
+   * Sets the move animation to guard animation.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder guardAnimation() {
+    try {
+      this.moveAnimation = BattleEntity.class.getDeclaredMethod("playGuardAnimation", args);
+    } catch (NoSuchMethodException | SecurityException ex) {
+      Logger.getLogger(BattleMoveBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
     return this;
   }
   /**
@@ -278,6 +294,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder action(Function<MoveInformation, FlashMessage> action) {
     this.action = action;
+    return this;
+  }
+  /**
+   * Sets the single target flag for this move.
+   * @param singleTarget Indicates if the move can only target the user.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder singleTarget(boolean singleTarget) {
+    this.singleTarget = singleTarget;
     return this;
   }
   /**

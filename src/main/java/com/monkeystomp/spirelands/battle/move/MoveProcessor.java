@@ -5,8 +5,6 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.Screen;
-import com.monkeystomp.spirelands.gui.styles.GameColors;
-import java.awt.Color;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -46,7 +44,10 @@ public class MoveProcessor {
     else {
       if (move.getType().equals(BattleMove.PHYSICAL)) {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getStrength() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
-        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getDefense() ))));
+        if (target.isGuarding()) {
+          overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getDefense() * 1.5) ))));
+        }
+        else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getDefense() ))));
       }
       else {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
@@ -77,7 +78,8 @@ public class MoveProcessor {
         currentMove.getTargetAnimation().setReadyToPlay(true);
       }
       user.getStatModel().decreaseMana(move.getManaRequired());
-      IFlashMessage.accept(move.getAction().apply(new MoveInformation(user, target, move)));
+      FlashMessage message = move.getAction().apply(new MoveInformation(user, target, move));
+      if (message != null) IFlashMessage.accept(message);
   }
   
   public void update() {

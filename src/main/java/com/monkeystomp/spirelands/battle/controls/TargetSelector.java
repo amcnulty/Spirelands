@@ -31,7 +31,8 @@ public class TargetSelector {
   private BattleEntity currentTarget;
   private final Consumer<BattleEntity> IBattleEntitySelector;
   private final Consumer<KeyEvent> keyListener = event -> handleKeyEvent(event);
-  private boolean targeting = false;
+  private boolean targeting = false,
+                  singleTargetOnly = false;
   
   public TargetSelector(Consumer<BattleEntity> IBattleEntitySelector) {
     this.IBattleEntitySelector = IBattleEntitySelector;
@@ -62,21 +63,23 @@ public class TargetSelector {
       if (event.getKeyCode() == Keyboard.SPACE_KEY || event.getKeyCode() == Keyboard.ENTER_KEY) {
         IBattleEntitySelector.accept(currentTarget);
       }
-      else if (event.getKeyCode() == Keyboard.W_KEY || event.getKeyCode() == Keyboard.UP_KEY) {
-        BattleEntity nextTarget = getClosestEntityAbove();
-        if (nextTarget != null) currentTarget = nextTarget;
-      }
-      else if (event.getKeyCode() == Keyboard.A_KEY || event.getKeyCode() == Keyboard.LEFT_KEY) {
-        BattleEntity nextTarget = getClosestEntityLeft();
-        if (nextTarget != null) currentTarget = nextTarget;
-      }
-      else if (event.getKeyCode() == Keyboard.S_KEY || event.getKeyCode() == Keyboard.DOWN_KEY) {
-        BattleEntity nextTarget = getClosestEntityBelow();
-        if (nextTarget != null) currentTarget = nextTarget;
-      }
-      else if (event.getKeyCode() == Keyboard.D_KEY || event.getKeyCode() == Keyboard.RIGHT_KEY) {
-        BattleEntity nextTarget = getClosestEntityRight();
-        if (nextTarget != null) currentTarget = nextTarget;
+      if (!singleTargetOnly) {
+        if (event.getKeyCode() == Keyboard.W_KEY || event.getKeyCode() == Keyboard.UP_KEY) {
+          BattleEntity nextTarget = getClosestEntityAbove();
+          if (nextTarget != null) currentTarget = nextTarget;
+        }
+        else if (event.getKeyCode() == Keyboard.A_KEY || event.getKeyCode() == Keyboard.LEFT_KEY) {
+          BattleEntity nextTarget = getClosestEntityLeft();
+          if (nextTarget != null) currentTarget = nextTarget;
+        }
+        else if (event.getKeyCode() == Keyboard.S_KEY || event.getKeyCode() == Keyboard.DOWN_KEY) {
+          BattleEntity nextTarget = getClosestEntityBelow();
+          if (nextTarget != null) currentTarget = nextTarget;
+        }
+        else if (event.getKeyCode() == Keyboard.D_KEY || event.getKeyCode() == Keyboard.RIGHT_KEY) {
+          BattleEntity nextTarget = getClosestEntityRight();
+          if (nextTarget != null) currentTarget = nextTarget;
+        }
       }
     }
   }
@@ -121,7 +124,14 @@ public class TargetSelector {
     Keyboard.getKeyboard().removeKeyListener(keyListener);
   }
   
+  public void selectSingleTarget(BattleEntity target) {
+    currentTarget = target;
+    targeting = true;
+    singleTargetOnly = true;
+  }
+  
   public void selectEnemyTarget() {
+    singleTargetOnly = false;
     if (currentTarget != null) {
       if (!currentTarget.isDead() && currentTarget instanceof EnemyBattleEntity) {
         targeting = true;
@@ -138,6 +148,7 @@ public class TargetSelector {
   }
   
   public void selectCharacterTarget() {
+    singleTargetOnly = false;
     if (currentTarget != null) {
       if (!currentTarget.isDead() && currentTarget instanceof CharacterBattleEntity) {
         targeting = true;
@@ -159,7 +170,14 @@ public class TargetSelector {
   
   public void update() {
     selectorIconAnim.update();
-    if (targeting) {
+    if (targeting && singleTargetOnly) {
+      mouseTargetButtons.stream()
+        .filter(button -> button.getEntity() == currentTarget)
+        .findAny()
+        .get()
+        .update();
+    }
+    else if (targeting && !singleTargetOnly) {
       for (BattleTargetButton button: mouseTargetButtons) {
         button.update();
       }
@@ -169,8 +187,17 @@ public class TargetSelector {
   public void render(Screen screen, GL2 gl) {
     if (targeting) {
       screen.renderSprite(gl, currentTarget.getX() + currentTarget.getCurrentAction().getWidth() / 2 - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - 15, selectorIconAnim.getSprite(), false);
-      for (BattleTargetButton button: mouseTargetButtons) {
-        if (button.getEntity() != currentTarget) button.render(screen, gl);
+      if (targeting && singleTargetOnly) {
+        mouseTargetButtons.stream()
+          .filter(button -> button.getEntity() == currentTarget)
+          .findAny()
+          .get()
+          .render(screen, gl);
+      }
+      else if (targeting && !singleTargetOnly) {
+        for (BattleTargetButton button: mouseTargetButtons) {
+          if (button.getEntity() != currentTarget) button.render(screen, gl);
+        }
       }
     }
   }

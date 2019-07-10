@@ -25,11 +25,13 @@ public class BattleControlButton extends GroupButton {
   private final Sprite buttonImage;
   private final Sprite disabledMask = new Sprite(WIDTH, HEIGHT, GameColors.BLACK);
   private final BattleMove move;
-  private final Sprite borderDefault = new Sprite("./resources/gui/battle_move_border.png", 16);
-  private final Sprite borderHover = new Sprite("./resources/gui/battle_move_border_hover.png", 16);
-  private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 16, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.MEDIUM, 8);
+  private final Sprite borderDefault = new Sprite("./resources/gui/battle_move_border.png", 18);
+  private final Sprite borderHover = new Sprite("./resources/gui/battle_move_border_hover.png", 18);
+  private final AnimatedSprite rotatingBorder = new AnimatedSprite(32, 18, new SpriteSheet("./resources/gui/animated_battle_move_border.png"), AnimatedSprite.MEDIUM, 8);
   private final Consumer<KeyEvent> keyPressListener = event -> handleKeyPress(event);
   private boolean manuallyDisabled = false;
+  private int borderX = x - 1,
+              borderY = y -1;
 
   public BattleControlButton(int x, int y, int relatedKey, BattleMove move, ICallback callback) {
     super("", x, y, WIDTH, HEIGHT, move.getThumbnail(), callback);
@@ -88,16 +90,18 @@ public class BattleControlButton extends GroupButton {
   public void render(Screen screen, GL2 gl) {
     if (!manuallyDisabled) {
       if (isDisabled()) {
-        screen.renderSprite(gl, x, y, rotatingBorder.getSprite(), false);
+        screen.renderSprite(gl, borderX, borderY, rotatingBorder.getSprite(), false);
       }
       else if (isHovering()) {
-        screen.renderSprite(gl, x, y, borderHover, false);
+        screen.renderSprite(gl, borderX, borderY, borderHover, false);
       }
       else {
-        screen.renderSprite(gl, x, y, borderDefault, false);
+        screen.renderSprite(gl, borderX, borderY, borderDefault, false);
       }
     }
-    else screen.renderSprite(gl, x, y, borderDefault, false);
+    else {
+      screen.renderSprite(gl, borderX, borderY, borderDefault, false);
+    }
     super.render(screen, gl);
     if (manuallyDisabled) screen.renderSprite(gl, x, y, disabledMask, .5f, false);
   }
