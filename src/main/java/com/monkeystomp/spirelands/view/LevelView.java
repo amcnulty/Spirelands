@@ -71,8 +71,7 @@ public class LevelView extends GameView {
     if (!gamePaused) {
       level.update();
     }
-    else if (gamePaused) {
-      // update pause menu
+    else {
       pauseMenu.update();
     }
   }

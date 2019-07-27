@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.gui.pausemenu;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.pausemenu.views.BattleHomeView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmExitView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmQuitToMenuView;
 import com.monkeystomp.spirelands.gui.pausemenu.views.ConfirmSaveView;
@@ -41,6 +42,7 @@ public class PauseMenu {
   
   private final Consumer<String> IPauseViewSetter = view -> handleViewChange(view);
   private final PauseView homeView = new HomeView(IPauseViewSetter),
+                          battleHomeView = new BattleHomeView(IPauseViewSetter),
                           saveView = new SaveView(IPauseViewSetter),
                           confirmExitView = new ConfirmExitView(IPauseViewSetter),
                           confirmSaveView = new ConfirmSaveView(IPauseViewSetter),
@@ -57,11 +59,19 @@ public class PauseMenu {
     pauseViewMap.put(CONFIRM_QUIT_TO_MENU_VIEW, confirmQuitToMenuView);
   }
   /**
+   * Set the current view to the battle home view. Use this when pausing from the battle view.
+   */
+  public void useBattleHomeView() {
+    currentView = battleHomeView;
+    pauseViewMap.replace(HOME_VIEW, battleHomeView);
+  }
+  /**
    * Sets the callback method that fires when the pause menu gets closed.
    * @param callback The callback method that will get fired when the dialog closes.
    */
   public void setCloseCommand(ICallback callback) {
     homeView.setCloseCommand(callback);
+    battleHomeView.setCloseCommand(callback);
   }
   /**
    * Sets the callback method that fires when the user presses quit to main menu.
