@@ -215,6 +215,21 @@ public class Sprite {
       e.printStackTrace();
     }
   }
+  
+  public Sprite(String path, int renderWidth, int renderHeight) {
+    try {
+      BufferedImage image = ImageIO.read(new File(path));
+      this.width = renderWidth;
+      this.height = renderHeight;
+      this.rawWidth = image.getWidth();
+      this.rawHeight = image.getHeight();
+      this.pixels = new int[rawWidth * rawHeight];
+      image.getRGB(0, 0, rawWidth, rawHeight, pixels, 0, rawWidth);
+    }
+    catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
   /**
    * Creates a scaled sprite from an existing one based on a percentage value.
    * @param original The original sprite to create the new sprite from.

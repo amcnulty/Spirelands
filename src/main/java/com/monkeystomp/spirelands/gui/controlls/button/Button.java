@@ -123,6 +123,27 @@ public class Button {
     right = x + width / 2;
     bottom = y + height / 2;
   }
+  
+  public Button(int x, int y, Sprite defaultState, Sprite hover, Sprite down, Sprite disabled, ICallback callback) throws Error {
+    if (!areAllEqual(defaultState, hover, down, disabled)) throw new Error("Dimensions of provided sprites do not match! Only sprites of matching width and height are allowed!");
+    this.width = defaultState.getWidth();
+    this.height = defaultState.getHeight();
+    this.x = x - width / 2;
+    this.y = y - height / 2;
+    this.CALLBACK = callback;
+    this.button = defaultState;
+    this.buttonHover = hover;
+    this.buttonDown = down;
+    this.disabledButton = disabled;
+    this.currentButton = button;
+    right = x + width / 2;
+    bottom = y + height / 2;
+  }
+  
+  private boolean areAllEqual(Sprite s1, Sprite s2, Sprite s3, Sprite s4) {
+    int value = s1.getWidth() + s1.getHeight();
+    return (value == s2.getWidth() + s2.getHeight() && value == s3.getWidth() + s3.getHeight() && value == s4.getWidth() + s4.getHeight());
+  }
 
   public boolean isHovering() {
     return hovering;
@@ -168,6 +189,11 @@ public class Button {
   public int getTop() {
     return y;
   }
+  
+  public void setTop(int top) {
+    this.y = top;
+    bottom = y + height;
+  }
 
   public int getRight() {
     return right;
@@ -179,6 +205,11 @@ public class Button {
 
   public int getLeft() {
     return x;
+  }
+  
+  public void setLeft(int left) {
+    this.x = left;
+    right = x + width / 2;
   }
   
   public boolean isDisabled() {

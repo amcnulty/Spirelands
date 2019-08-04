@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.controls.BattleControls;
+import com.monkeystomp.spirelands.battle.controls.FlyoutMenu;
 import com.monkeystomp.spirelands.battle.controls.TargetSelector;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
@@ -45,6 +46,7 @@ public class Battle {
   protected Sprite background;
   protected String  battleMusic,
                     victoryMusic;
+  private final FlyoutMenu flyout = new FlyoutMenu();
   private final MoveProcessor moveProcessor = new MoveProcessor();
   private VictoryScreen victoryScreen;
   private int tick = 0;
@@ -218,7 +220,10 @@ public class Battle {
       if (currentMessages.get(i).isVisible()) currentMessages.get(i).update();
       else currentMessages.remove(i);
     }
-    if (!battleVictory) checkForReadyEntities();
+    if (!battleVictory) {
+      checkForReadyEntities();
+      flyout.update();
+    }
     if (isVictory() && !battleVictory) {
       setTimeout(this::playVictoryAnimation, 1500);
       battleVictory = true;
@@ -242,6 +247,7 @@ public class Battle {
     for (EnemyBattleEntity enemy: enemies) {
       enemy.render(screen, gl);
     }
+    if (!battleVictory) flyout.render(screen, gl);
     if (!victoryScreen.isShowing()) {
       for (BattleCard card: battleCards) {
         card.render(screen, gl);

@@ -63,7 +63,7 @@ public class GameMenuSecondaryButton extends Button {
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
   }
-
+  
   private void createButtonSprites() {
     button = new Sprite(width, height, GameColors.GAME_MENU_BACKGROUND);
     buttonHover = new Sprite(width, height, GameColors.GAME_MENU_BUTTON_HOVER);

@@ -44,6 +44,15 @@ public class PrimaryButton extends Button {
     fontInfo.setX(fontX);
     fontInfo.setY(fontY);
   }
+  
+  public void setFontLocation() {
+    Rectangle2D rect = GameFonts.getPrimaryButtonText().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    int textWidth = (int)rect.getWidth();
+    int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
+    int fontY = y + this.height / 2;
+    fontInfo.setX(fontX);
+    fontInfo.setY(fontY);
+  }
 
   private void createButtonSprites() {
     button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
