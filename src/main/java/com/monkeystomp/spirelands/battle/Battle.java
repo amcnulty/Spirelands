@@ -17,6 +17,7 @@ import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
@@ -83,6 +84,10 @@ public class Battle {
       enemy.init();
     }
     targetSelector.init(party, enemies);
+  }
+  
+  public void setPauseCommand(ICallback callback) {
+    flyout.setPauseCommand(callback);
   }
 
   protected void createEnemies() {};

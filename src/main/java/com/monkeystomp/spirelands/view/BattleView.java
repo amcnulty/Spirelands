@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
+import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.input.Keyboard;
 import java.awt.event.KeyEvent;
 import java.util.function.Consumer;
@@ -19,6 +20,7 @@ public class BattleView extends GameView {
   private boolean gamePaused = false;
   private final PauseMenu pauseMenu = new PauseMenu();
   private final Consumer<KeyEvent> IKeyListener = e -> handleKeyPress(e);
+  private final ICallback pauseCallback = () -> pauseLevel();
   
   public BattleView(Battle battle) {
     this.battle = battle;
@@ -28,6 +30,7 @@ public class BattleView extends GameView {
   
   private void setupNotifiers() {
     Keyboard.getKeyboard().addKeyListener(IKeyListener);
+    battle.setPauseCommand(pauseCallback);
     pauseMenu.setCloseCommand(() -> resumeLevel());
     pauseMenu.setQuitToMenuCommand(() -> ViewManager.getViewManager().changeView(new TitleScreen()));
   }

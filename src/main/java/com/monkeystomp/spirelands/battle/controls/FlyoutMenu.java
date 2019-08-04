@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.Button;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.input.ICallback;
 
 /**
  *
@@ -34,7 +35,7 @@ public class FlyoutMenu {
       menuY + 16,
       41,
       11,
-      () -> {System.out.println("Pause Button Clicked!");}
+      () -> {handlePauseClick();}
     ),
     escapeButton = new PrimaryButton(
       "Escape",
@@ -55,6 +56,15 @@ public class FlyoutMenu {
   );  
   private boolean menuHidden = true,
                   animating = false;
+  private ICallback pauseCommand;
+  
+  public void setPauseCommand(ICallback callback) {
+    pauseCommand = callback;
+  }
+  
+  private void handlePauseClick() {
+    pauseCommand.execute();
+  }
   
   public void animate() {
     if (menuHidden) {

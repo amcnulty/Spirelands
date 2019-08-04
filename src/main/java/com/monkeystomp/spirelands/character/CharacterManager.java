@@ -146,9 +146,11 @@ public class CharacterManager {
     else
       character.setEquippedBoots(null);
     JSONArray moves = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.MOVES, JSONUtil.EQUIPPED_MOVES});
+    ArrayList<BattleMove> equippedMoves = new ArrayList<>();
     moves.forEach(move -> {
-      character.equipMove(BattleMove.MOVE_MAP.get(jsonUtil.getNestedInt((JSONObject)move, new String[]{JSONUtil.ID})));
+      equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getNestedInt((JSONObject)move, new String[]{JSONUtil.ID})));
     });
+    character.setEquippedMoves(equippedMoves);
   }
   /**
    * Adds a character to the party at the specified position. Positions start at index 0;

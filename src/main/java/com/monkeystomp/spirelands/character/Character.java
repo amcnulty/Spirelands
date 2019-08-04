@@ -221,6 +221,11 @@ public class Character extends StatModel {
       equippedMoves.add(move);
     }
   }
+  
+  public void setEquippedMoves(ArrayList<BattleMove> moves) {
+    equippedMoves.clear();
+    equippedMoves.addAll(moves);
+  }
     
   /**
    *      !!################################################!!
