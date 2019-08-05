@@ -18,6 +18,8 @@ import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.input.ICallback;
+import com.monkeystomp.spirelands.level.lightmap.LightMap;
+import com.monkeystomp.spirelands.level.lightmap.LightMapType;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.util.LevelFactory;
@@ -51,8 +53,11 @@ public class Battle {
   private final MoveProcessor moveProcessor = new MoveProcessor();
   private VictoryScreen victoryScreen;
   private int tick = 0;
+  private float shadowLevel = 1.0f;
   private boolean gaugesFilling = true,
-                  battleVictory = false;
+                  battleVictory = false,
+                  fading = false,
+                  fullyVisible = false;
   private final ArrayList<CharacterBattleEntity> party = new ArrayList<>();
   protected final ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
   private final ArrayList<BattleEntity> readyEntities = new ArrayList<>();
@@ -62,10 +67,13 @@ public class Battle {
   private final BattleControls battleControls = new BattleControls((move) -> handleBattleControlSelection(move));
   private BattleMove currentCharacterMove;
   private final TargetSelector targetSelector = new TargetSelector(target -> handleTargetSelection(target));
+  private final LightMap lightmap = new LightMap();
   
   public Battle() {
     setSlotMap();
     moveProcessor.setIFlashMessage(IFlashMessage);
+    lightmap.enableLightMap(LightMapType.BLENDED);
+    flyout.setEscapeCommand(() -> endBattle());
   }
   
   public void init() {
@@ -84,6 +92,7 @@ public class Battle {
       enemy.init();
     }
     targetSelector.init(party, enemies);
+    fading = true;
   }
   
   public void setPauseCommand(ICallback callback) {
@@ -109,6 +118,10 @@ public class Battle {
   }
   
   private void endBattle() {
+    fading = true;
+  }
+  
+  private void destroyBattle() {
     targetSelector.destroy();
     Location lastLocation = LocationManager.getLocationManager().getCurrentLocation();
     ViewManager.getViewManager().changeView(new LevelView(LevelFactory.createLevel(lastLocation.getLevelId(), lastLocation.getCoordinate())));
@@ -211,6 +224,27 @@ public class Battle {
     }).start();
   }
   
+  private void updateFade() {
+    System.out.println("updating fade");
+    if (fullyVisible) {
+      shadowLevel += .01f;
+      System.out.println(shadowLevel);
+      if (Math.round(shadowLevel * 100.0f) / 100.0f == 1) {
+        fullyVisible = false;
+        fading = false;
+        destroyBattle();
+      }
+    }
+    else {
+      System.out.println(shadowLevel);
+      shadowLevel -= .01f;
+      if (Math.round(shadowLevel * 100.0f) / 100.0f == 0) {
+        fullyVisible = true;
+        fading = false;
+      }
+    }
+  }
+  
   public void update() {
     for (BattleEntity partyMember: party) {
       partyMember.update();
@@ -242,6 +276,7 @@ public class Battle {
     }
     targetSelector.update();
     moveProcessor.update();
+    if (fading) updateFade();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -265,6 +300,7 @@ public class Battle {
     targetSelector.render(screen, gl);
     if (battleControls.isShowing()) battleControls.render(screen, gl);
     if (victoryScreen.isShowing()) victoryScreen.render(screen, gl);
+    lightmap.render(gl, screen, shadowLevel);
   }
 
 }

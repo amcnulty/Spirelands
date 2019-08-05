@@ -43,7 +43,7 @@ public class FlyoutMenu {
       menuY + 30,
       41,
       11,
-      () -> {System.out.println("Escape button clicked!");}
+      () -> {handleEscapeClick();}
     );
   private final Button exitButton = new Button(
     menuBackground.getWidth() + menuX - 5,
@@ -56,14 +56,23 @@ public class FlyoutMenu {
   );  
   private boolean menuHidden = true,
                   animating = false;
-  private ICallback pauseCommand;
+  private ICallback pauseCommand,
+                    escapeCommand;
   
   public void setPauseCommand(ICallback callback) {
     pauseCommand = callback;
   }
   
+  public void setEscapeCommand(ICallback callback) {
+    escapeCommand = callback;
+  }
+  
   private void handlePauseClick() {
     pauseCommand.execute();
+  }
+  
+  private void handleEscapeClick() {
+    escapeCommand.execute();
   }
   
   public void animate() {

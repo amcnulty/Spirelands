@@ -88,7 +88,7 @@ public class Level implements Runnable {
               yScroll,
               ticksSinceLastBattle = 0,
               randomEncounterModifier;
-  private Random random = new Random();
+  private final Random random = new Random();
   private final TransitionFader transitionFader = new TransitionFader();
   protected Player player;
   protected float shadowLevel;
