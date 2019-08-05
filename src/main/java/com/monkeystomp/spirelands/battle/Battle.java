@@ -225,10 +225,8 @@ public class Battle {
   }
   
   private void updateFade() {
-    System.out.println("updating fade");
     if (fullyVisible) {
       shadowLevel += .01f;
-      System.out.println(shadowLevel);
       if (Math.round(shadowLevel * 100.0f) / 100.0f == 1) {
         fullyVisible = false;
         fading = false;
