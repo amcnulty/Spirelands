@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.gui.controlls.button.Button;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.input.ICallback;
+import java.io.File;
 
 /**
  *
@@ -58,6 +59,12 @@ public class FlyoutMenu {
                   animating = false;
   private ICallback pauseCommand,
                     escapeCommand;
+  
+  public FlyoutMenu() {
+    dropdownButton.setClickSound(new File("./resources/audio/sfx/ui/button_click.wav"));
+    exitButton.setClickSound(new File("./resources/audio/sfx/ui/button_click.wav"));
+    escapeButton.setClickSound(new File("./resources/audio/sfx/running_away.wav"));
+  }
   
   public void setPauseCommand(ICallback callback) {
     pauseCommand = callback;

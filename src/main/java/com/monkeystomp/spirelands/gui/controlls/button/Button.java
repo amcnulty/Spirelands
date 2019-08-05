@@ -123,7 +123,17 @@ public class Button {
     right = x + width / 2;
     bottom = y + height / 2;
   }
-  
+  /**
+   * Creates a Button object with the set sprite values and fires the given callback when clicked.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param defaultState Sprite to show for button default state.
+   * @param hover Sprite to show for button hover state.
+   * @param down Sprite to show for button down state.
+   * @param disabled Sprite to show for button disabled state.
+   * @param callback The callback function that fires when the button is clicked on.
+   * @throws Error 
+   */
   public Button(int x, int y, Sprite defaultState, Sprite hover, Sprite down, Sprite disabled, ICallback callback) throws Error {
     if (!areAllEqual(defaultState, hover, down, disabled)) throw new Error("Dimensions of provided sprites do not match! Only sprites of matching width and height are allowed!");
     this.width = defaultState.getWidth();
@@ -214,6 +224,14 @@ public class Button {
   
   public boolean isDisabled() {
     return this.disabled;
+  }
+
+  public void setHoverSound(File hoverSound) {
+    this.hoverSound = hoverSound;
+  }
+
+  public void setClickSound(File clickSound) {
+    this.clickSound = clickSound;
   }
   
   public void disableButtonClickSound() {
