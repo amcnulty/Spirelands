@@ -1,4 +1,4 @@
-package com.monkeystomp.spirelands.level.util;
+package com.monkeystomp.spirelands.level.transitions;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;

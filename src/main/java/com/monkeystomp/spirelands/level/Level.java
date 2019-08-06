@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.level;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
@@ -17,8 +18,9 @@ import com.monkeystomp.spirelands.level.entity.fixed.Chest;
 import com.monkeystomp.spirelands.level.entity.mob.Player;
 import com.monkeystomp.spirelands.level.lightmap.LightMap;
 import com.monkeystomp.spirelands.level.location.Location;
+import com.monkeystomp.spirelands.level.transitions.BattleTransition;
 import com.monkeystomp.spirelands.level.util.LocationManager;
-import com.monkeystomp.spirelands.level.util.TransitionFader;
+import com.monkeystomp.spirelands.level.transitions.TransitionFader;
 import com.monkeystomp.spirelands.view.BattleView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.event.KeyEvent;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
@@ -90,6 +93,7 @@ public class Level implements Runnable {
               randomEncounterModifier;
   private final Random random = new Random();
   private final TransitionFader transitionFader = new TransitionFader();
+  private final BattleTransition battleTransition = new BattleTransition();
   protected Player player;
   protected float shadowLevel;
   private boolean dialogOpen = false,
@@ -363,7 +367,13 @@ public class Level implements Runnable {
         encounterRate += (int)(encounterRate * .3);
         encounterRate -= 2 * random.nextInt((int)(encounterRate * .3));
       }
-      if (ticksSinceLastBattle++ == encounterRate) ViewManager.getViewManager().changeView(new BattleView(battle));
+      if (ticksSinceLastBattle++ == encounterRate) {
+        Music.getMusicPlayer().stop();
+        CompletableFuture.supplyAsync(battleTransition::show)
+          .thenAccept(value -> {
+            ViewManager.getViewManager().changeView(new BattleView(battle));
+          });
+      }
     }
   }
   
@@ -381,22 +391,24 @@ public class Level implements Runnable {
   
   public void update(){
     if (!loadingThread.isAlive()) {
-      // Update player if dialog is closed.
-      if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) {
-        player.update();
-        if (hasBattles) checkForBattle();
+      if (!battleTransition.isAnimating()) {
+        if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) {
+          player.update();
+          if (hasBattles) checkForBattle();
+        }
+        // Call the subclass hook for updating.
+        levelUpdate();
+        // Sort the solid entities
+        sortSolidEntities();
+        // Update the solid entities
+        for (int i = 0; i < solidEntities.size(); i++) {
+          if (solidEntities.get(i).equals(player)) continue;
+          solidEntities.get(i).update();
+        }
+        if (gameMenuOpen) GAME_MENU.update();
+        transitionFader.update();
       }
-      // Call the subclass hook for updating.
-      levelUpdate();
-      // Sort the solid entities
-      sortSolidEntities();
-      // Update the solid entities
-      for (int i = 0; i < solidEntities.size(); i++) {
-        if (solidEntities.get(i).equals(player)) continue;
-        solidEntities.get(i).update();
-      }
-      if (gameMenuOpen) GAME_MENU.update();
-      transitionFader.update();
+      else battleTransition.update();
     }
   }
 
@@ -431,6 +443,7 @@ public class Level implements Runnable {
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);
       transitionFader.render(screen, gl);
+      if (battleTransition.isAnimating()) battleTransition.render(screen, gl);
     }
   }
 }

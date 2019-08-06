@@ -234,7 +234,6 @@ public class Battle {
       }
     }
     else {
-      System.out.println(shadowLevel);
       shadowLevel -= .01f;
       if (Math.round(shadowLevel * 100.0f) / 100.0f == 0) {
         fullyVisible = true;
