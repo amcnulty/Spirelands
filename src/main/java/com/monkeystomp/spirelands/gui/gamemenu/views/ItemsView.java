@@ -142,7 +142,7 @@ public class ItemsView extends DisplayView {
       checkAnimationsBeforeClose = true;
       return;
     }
-    selectedItem.setCharacter(targetCharacter);
+    selectedItem.setStatModel(targetCharacter);
     selectedItem.useItem();
   }
   

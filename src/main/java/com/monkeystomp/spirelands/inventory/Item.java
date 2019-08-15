@@ -1,9 +1,11 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.character.StatModel;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,7 +44,7 @@ public class Item {
   private final int id,
                     price;
   private static int nextId = 0;
-  private Character character;
+  private StatModel statModel;
   protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
   protected static final InventoryManager INVENTORY_MANAGER = InventoryManager.getInventoryManager();
   private static final int  SPRITE_SIZE = 16,
@@ -75,6 +77,7 @@ public class Item {
   static {
     SMALL_HP_POTION.setHealingPoints(100);
     SMALL_HP_POTION.setUseItemSound(SoundEffects.HEALING_SOUND);
+    BattleMove.createBattleMoveFromItem(SMALL_HP_POTION);
   }
   /**
    * Medium Health Potion (EQUIPMENT)
@@ -1808,12 +1811,12 @@ public class Item {
     return type;
   }
 
-  public void setCharacter(Character character) {
-    this.character = character;
+  public void setStatModel(StatModel statModel) {
+    this.statModel = statModel;
   }
   
-  public Character getCharacter() {
-    return character;
+  public StatModel getStatModel() {
+    return statModel;
   }
   
   public ArrayList<ItemAttribute> getAttributes() {

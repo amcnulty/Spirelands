@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.awt.Color;
 import java.io.File;
@@ -37,6 +38,10 @@ public class BattleMove {
    * Used for the 'variety' property for defensive moves.
    */
   public static final String DEFENSIVE = "Defensive";
+  /**
+   * Used for both 'type' and 'variety' for item moves.
+   */
+  public static final String ITEM = "Item";
   // Map of all the moves to their ids.
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
   // Instance of the Random class.
@@ -73,6 +78,8 @@ public class BattleMove {
   private final Function<MoveInformation, FlashMessage> action;
   // Flag to set this move as a single target move that only targets the user.
   private final boolean singleTarget;
+  // Item associated with item move.
+  private final Item item;
   /**
    *          !!################################!!
    *          !!                                !!
@@ -120,7 +127,9 @@ public class BattleMove {
           .sound(SoundEffects.QUICK_HIT)
           .targetAnimation(basicSlash)
           .build();
-  
+  /**
+   * A basic typeless magic attack. Magical & Offensive.
+   */
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
           .name("Magic Energy")
           .magicalAttack()
@@ -133,7 +142,9 @@ public class BattleMove {
           .sound(SoundEffects.MAGICAL_ENERGY)
           .targetAnimation(blueExplosion)
           .build();
-  
+  /**
+   * A stronger but less accurate attack. Physical & Offensive.
+   */
   public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
           .name("Blunt Force")
           .physicalAttack()
@@ -144,7 +155,9 @@ public class BattleMove {
           .thumbnail(Item.BROADAXE.getThumbnail())
           .sound(SoundEffects.STRONG_MALE_ATTACK)
           .build();
-  
+  /**
+   * A cure spell for recovering HP. Magical & Defensive.
+   */
   public static final BattleMove CURE = new BattleMoveBuilder()
           .name("Cure")
           .magicalDefensive()
@@ -167,11 +180,12 @@ public class BattleMove {
             return message;
           })
           .build();
-  
+  /**
+   * A defensive move to limit physical damage. Physical & Defensive.
+   */
   public static final BattleMove GUARD = new BattleMoveBuilder()
           .name("Guard")
           .physicalDefensive()
-          .accuracy(100)
           .guardAnimation()
           .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
           .action(moveInfo -> {
@@ -202,6 +216,7 @@ public class BattleMove {
     this.targetAnimationDelay = builder.targetAnimationDelay;
     this.action = builder.action;
     this.singleTarget = builder.singleTarget;
+    this.item = builder.item;
   }
   
   static {
@@ -223,8 +238,16 @@ public class BattleMove {
       }
     }
   }
-
-  private int getNextId() {
+  
+  public static void createBattleMoveFromItem(Item item) {
+    BattleMove itemMove = new BattleMoveBuilder().itemMove(item).build();
+    MOVE_MAP.put(
+      itemMove.getId(),
+      itemMove
+    );
+  }
+  
+  private static int getNextId() {
     return nextId++;
   }
 
@@ -300,6 +323,10 @@ public class BattleMove {
 
   public boolean isSingleTarget() {
     return singleTarget;
+  }
+
+  public EquipmentItem getItem() {
+    return (EquipmentItem)item;
   }
 
 }

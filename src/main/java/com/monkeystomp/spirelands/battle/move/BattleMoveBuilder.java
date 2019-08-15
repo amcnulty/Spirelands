@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.inventory.Item;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.function.Function;
@@ -61,7 +62,7 @@ public class BattleMoveBuilder {
   /**
    * The accuracy value of this move.
    */
-  public int accuracy;
+  public int accuracy = 100;
   /**
    * Flag to check if this move is ranged.
    */
@@ -94,6 +95,10 @@ public class BattleMoveBuilder {
    * Flag to set this move as a single target move that only targets the user.
    */
   public boolean singleTarget = false;
+  /**
+   * Item associated with item move.
+   */
+  public Item item;
   /**
    * Sets the name of the move.
    * @param name Display name for the move.
@@ -253,6 +258,7 @@ public class BattleMoveBuilder {
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder useItemAnimation() {
+    targetAnimationDelay = 600;
     try {
       this.moveAnimation = BattleEntity.class.getDeclaredMethod("playUseItemAnimation", args);
     } catch (NoSuchMethodException | SecurityException ex) {
@@ -303,6 +309,17 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder singleTarget(boolean singleTarget) {
     this.singleTarget = singleTarget;
+    return this;
+  }
+  
+  public BattleMoveBuilder itemMove(Item item) {
+    this.item = item;
+    this.name = item.getTitle();
+    this.type = BattleMove.ITEM;
+    this.variety = BattleMove.ITEM;
+    this.ranged = true;
+    useItemAnimation();
+    this.thumbnail = item.getThumbnail();
     return this;
   }
   /**

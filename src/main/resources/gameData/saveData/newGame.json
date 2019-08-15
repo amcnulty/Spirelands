@@ -27,7 +27,8 @@
           { "bHJncPLq94": 1 },
           { "bHJncPLq94": 2 },
           { "bHJncPLq94": 3 },
-          { "bHJncPLq94": 4 }
+          { "bHJncPLq94": 4 },
+          { "bHJncPLq94": 5 }
         ]
       }
     },
@@ -54,9 +55,9 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 0 },
           { "bHJncPLq94": 1 },
-          { "bHJncPLq94": 3 }
+          { "bHJncPLq94": 2 },
+          { "bHJncPLq94": 4 }
         ]
       }
     },
@@ -83,9 +84,9 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 0 },
-          { "bHJncPLq94": 2 },
-          { "bHJncPLq94": 4 }
+          { "bHJncPLq94": 1 },
+          { "bHJncPLq94": 3 },
+          { "bHJncPLq94": 5 }
 
         ]
       }

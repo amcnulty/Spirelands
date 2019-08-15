@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.gui.controlls.button.BattleControlButton;
 import com.monkeystomp.spirelands.gui.controlls.button.GroupButton;
 import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
 import com.monkeystomp.spirelands.input.Keyboard;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -48,7 +49,13 @@ public class BattleControls {
       index++;
     }
     for (GroupButton button: controlButtonGroup.getButtons()) {
+      // Disabled button if out of mana.
       if (((BattleControlButton)button).getMove().getManaRequired() > entity.getStatModel().getMana()) ((BattleControlButton)button).disableButton();
+      // Disable item button if no more items in inventory.
+      if (((BattleControlButton)button).getMove().getType().equals(BattleMove.ITEM)) {
+        if (InventoryManager.getInventoryManager().getInventoryReferenceById(((BattleControlButton)button).getMove().getItem().getId()) == null) ((BattleControlButton)button).disableButton();
+      }
+      // Automatically preselect last used move.
       if (((BattleControlButton)button).getMove().equals(entity.getCurrentMove())) ((BattleControlButton)button).clickOverride();
     }
   }

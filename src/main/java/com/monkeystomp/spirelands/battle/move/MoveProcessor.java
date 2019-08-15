@@ -29,6 +29,7 @@ public class MoveProcessor {
     currentMove = move;
     if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
     else if (move.getVariety().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
+    else if (move.getVariety().equals(BattleMove.ITEM)) processItemMove(user, target, move);
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
@@ -88,6 +89,14 @@ public class MoveProcessor {
         if (currentMove.getTargetAnimation().isReadyToPlay()) currentMove.getTargetAnimation().update();
       }
     }
+  }
+  
+  private void processItemMove(BattleEntity user, BattleEntity target, BattleMove move) {
+    if (currentMove.hasTargetAnimation()) {
+      currentMove.getTargetAnimation().setReadyToPlay(true);
+    }
+    move.getItem().setStatModel(target.getStatModel());
+    move.getItem().useItem();
   }
   
   public void render(Screen screen, GL2 gl) {
