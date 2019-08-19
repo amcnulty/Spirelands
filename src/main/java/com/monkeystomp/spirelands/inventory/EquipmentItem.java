@@ -95,6 +95,14 @@ public class EquipmentItem extends Item {
     }
     INVENTORY_MANAGER.removeFromInventory(this);
   }
+
+  public boolean isEquippable() {
+    return equippable;
+  }
+
+  public void setEquippable(boolean equippable) {
+    this.equippable = equippable;
+  }
   
   @Override
   public int getId() {

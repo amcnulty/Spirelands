@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.io.File;
 import java.lang.reflect.Method;
@@ -314,6 +315,7 @@ public class BattleMoveBuilder {
   
   public BattleMoveBuilder itemMove(Item item, String variety, AnimatedSprite targetAnimation) {
     this.item = item;
+    if (this.item instanceof EquipmentItem) ((EquipmentItem)this.item).setEquippable(true);
     this.name = item.getTitle();
     this.type = BattleMove.ITEM;
     this.variety = variety;

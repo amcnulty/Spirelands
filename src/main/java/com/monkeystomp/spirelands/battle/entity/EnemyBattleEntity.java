@@ -4,6 +4,8 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.graphics.Sprite;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import java.util.Random;
 
@@ -14,14 +16,27 @@ import java.util.Random;
 public class EnemyBattleEntity extends BattleEntity {
   
   private final Random random = new Random();
-  private final int leftOfTarget = 28;
-  private float alpha = 1;
-  private int disapearDelay = 120;
+  private final int leftOfTarget = 28,
+                    healthBarAnimationDuration = 60;
+  private float alpha = 1,
+                healthBarAlpha = 0f;
+  private int disapearDelay = 120,
+              healthBarDisapearDelay = 120,
+              healthBarAnimationTick = 0,
+              lastHealthBarWidth,
+              currentHealth,
+              healthBarX,
+              healthBarY;
+  private boolean animatingHealthBar = false;
+  private final Sprite healthBarEmpty = new Sprite(50, 1, GameColors.HEALTH_BAR_EMPTY);
+  private Sprite healthBarFilled;
   
   public EnemyBattleEntity(SpawnCoordinate slot, Enemy enemy) {
     super(slot, enemy.getSpriteSheet());
     this.statModel = enemy;
+    this.currentHealth = statModel.getHealth();
     setReadyGaugeMax();
+    calculateHealthBar();
   }
   
   private void setReadyGaugeStart() {
@@ -81,6 +96,11 @@ public class EnemyBattleEntity extends BattleEntity {
     }
   }
   
+  private void calculateHealthBar() {
+    int barWidth = (int)(((float)statModel.getHealth() / (float) statModel.getHealthMax()) * 50);
+    healthBarFilled = new Sprite(barWidth, 1, GameColors.HEALTH_BAR_FILL);
+  }
+  
   @Override
   protected void moveFinished(boolean offensive) {
     super.moveFinished(offensive);
@@ -120,9 +140,32 @@ public class EnemyBattleEntity extends BattleEntity {
     return (Enemy)statModel;
   }
   
+  private int getHealthBarX() {
+    return healthBarX = x + currentAction.getWidth() / 2 - 25;
+  }
+  
+  private int getHealthBarY() {
+    return healthBarY = y - 3;
+  }
+  
   @Override
   protected void checkForHealth() {
     if (statModel.getHealth() == 0) setAsDead();
+    if (currentHealth != statModel.getHealth()) {
+//      calculateHealthBar();
+      currentHealth = statModel.getHealth();
+      healthBarAlpha = 1;
+      healthBarDisapearDelay = 120;
+      animatingHealthBar = true;
+      healthBarAnimationTick = 60;
+      lastHealthBarWidth = healthBarFilled.getWidth();
+    }
+  }
+  
+  private void animateHealthBar() {
+    int barWidth = (int)(((float)statModel.getHealth() / (float) statModel.getHealthMax()) * 50);
+    int difference = (int)((lastHealthBarWidth - barWidth) * (healthBarAnimationTick / (float)60));
+    healthBarFilled = new Sprite(barWidth + difference, 1, GameColors.HEALTH_BAR_FILL);
   }
   
   @Override
@@ -134,11 +177,20 @@ public class EnemyBattleEntity extends BattleEntity {
     if (isDead() && alpha > 0 && disapearDelay < 0) {
       alpha -= .01f;
     }
+    if (healthBarDisapearDelay > -1) {
+      healthBarDisapearDelay--;
+    }
+    else if (healthBarDisapearDelay < 0 && healthBarAlpha > 0) {
+      healthBarAlpha -= .05f;
+    }
+    if (animatingHealthBar && healthBarAnimationTick-- > -1) animateHealthBar();
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
     screen.renderFlippedSprite(gl, x, y, currentAction, alpha, false);
+    screen.renderSprite(gl, getHealthBarX(), getHealthBarY(), healthBarEmpty, healthBarAlpha, false);
+    if (healthBarFilled != null && healthBarFilled.getWidth() > 0) screen.renderSprite(gl, getHealthBarX(), getHealthBarY(), healthBarFilled, healthBarAlpha, false);
   }
 
 }
