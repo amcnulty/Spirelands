@@ -87,24 +87,35 @@ public class BattleMove {
    *          !!                                !!
    *          !!################################!!
    */
-  private static final AnimatedSprite
-  basicSlash = new AnimatedSprite(
+  /**
+   * Slashing animation for physical attacks.
+   */
+  public static final AnimatedSprite
+  BASIC_SLASH = new AnimatedSprite(
           128,
           32,
           new SpriteSheet("./resources/animations/slash/basic_slash.png"),
           AnimatedSprite.MEDIUM,
           6,
           true
-  ),
-  blueExplosion = new AnimatedSprite(
+  );
+  /**
+   * Explosion with blue flames for magic attacks.
+   */
+  public static final AnimatedSprite
+  BLUE_EXPLOSION = new AnimatedSprite(
           128,
           48,
           new SpriteSheet("./resources/animations/magic/blueExplosion/blue_explosion.png"),
           AnimatedSprite.FAST,
           30,
           true
-  ),
-  cureAnimation = new AnimatedSprite(
+  );
+  /**
+   * Colorful animation for healing moves.
+   */
+  public static final AnimatedSprite
+  CURE_ANIMATION = new AnimatedSprite(
           192,
           48,
           new SpriteSheet("./resources/animations/magic/cure/cure.png"),
@@ -125,7 +136,7 @@ public class BattleMove {
           .stabbingAnimation()
           .thumbnail(Item.COMMON_SWORD.getThumbnail())
           .sound(SoundEffects.QUICK_HIT)
-          .targetAnimation(basicSlash)
+          .targetAnimation(BASIC_SLASH)
           .build();
   /**
    * A basic typeless magic attack. Magical & Offensive.
@@ -140,7 +151,7 @@ public class BattleMove {
           .magicalSkillAnimation()
           .thumbnail(Item.PUPIL_WAND.getThumbnail())
           .sound(SoundEffects.MAGICAL_ENERGY)
-          .targetAnimation(blueExplosion)
+          .targetAnimation(BLUE_EXPLOSION)
           .build();
   /**
    * A stronger but less accurate attack. Physical & Offensive.
@@ -168,7 +179,7 @@ public class BattleMove {
           .magicalSkillAnimation()
           .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.HEALING_SOUND)
-          .targetAnimation(cureAnimation)
+          .targetAnimation(CURE_ANIMATION)
           .action(moveInfo -> {
             int attackPower, overallEffect;
             attackPower = (int)(moveInfo.getMove().getPowerLevel() * moveInfo.getUser().getStatModel().getIntellect() * ( .1 + ( .009 * ( moveInfo.getUser().getStatModel().getLevel() ))));
@@ -239,8 +250,8 @@ public class BattleMove {
     }
   }
   
-  public static void createBattleMoveFromItem(Item item) {
-    BattleMove itemMove = new BattleMoveBuilder().itemMove(item).build();
+  public static void createBattleMoveFromItem(Item item, String variety, AnimatedSprite targetAnimation) {
+    BattleMove itemMove = new BattleMoveBuilder().itemMove(item, variety, targetAnimation).build();
     MOVE_MAP.put(
       itemMove.getId(),
       itemMove

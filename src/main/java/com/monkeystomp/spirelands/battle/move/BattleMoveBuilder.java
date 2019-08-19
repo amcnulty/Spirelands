@@ -312,14 +312,15 @@ public class BattleMoveBuilder {
     return this;
   }
   
-  public BattleMoveBuilder itemMove(Item item) {
+  public BattleMoveBuilder itemMove(Item item, String variety, AnimatedSprite targetAnimation) {
     this.item = item;
     this.name = item.getTitle();
     this.type = BattleMove.ITEM;
-    this.variety = BattleMove.ITEM;
+    this.variety = variety;
     this.ranged = true;
     useItemAnimation();
     this.thumbnail = item.getThumbnail();
+    this.targetAnimation = targetAnimation;
     return this;
   }
   /**

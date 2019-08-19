@@ -4,7 +4,6 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
-import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.StatModel;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -31,6 +30,10 @@ public class Item {
    */
   public static final String EQUIPMENT = "Equipment";
   /**
+   * Battle type item
+   */
+  public static final String BATTLE = "Battle";
+  /**
    * Special type item
    */
   public static final String SPECIAL = "Special";
@@ -43,7 +46,11 @@ public class Item {
   private final Sprite thumbnail;
   private final int id,
                     price;
-  private static int nextId = 0;
+  private static int  nextEquipmentId = 1000,
+                      nextBattleId = 2000,
+                      nextArmorId = 3000,
+                      nextWeaponId = 4000,
+                      nextSpecialId = 5000;
   private StatModel statModel;
   protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
   protected static final InventoryManager INVENTORY_MANAGER = InventoryManager.getInventoryManager();
@@ -77,7 +84,7 @@ public class Item {
   static {
     SMALL_HP_POTION.setHealingPoints(100);
     SMALL_HP_POTION.setUseItemSound(SoundEffects.HEALING_SOUND);
-    BattleMove.createBattleMoveFromItem(SMALL_HP_POTION);
+    BattleMove.createBattleMoveFromItem(SMALL_HP_POTION, BattleMove.DEFENSIVE, BattleMove.CURE_ANIMATION);
   }
   /**
    * Medium Health Potion (EQUIPMENT)
@@ -287,6 +294,27 @@ public class Item {
     TRAINING_BOOK_V2.setUseItemSound(SoundEffects.LEVEL_UP);
   }
   
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!          Battle Items          !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
+   * A basic fire attack bottle (Battle)
+   */
+  public static final BattleItem
+    FIRE_BOTTLE = new ItemBuilder()
+          .title("Fire Bottle")
+          .description("A bottle the posseses the power of flames. Use it on your enemies in battle to inflict fire type damage.")
+          .price(500)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 5, 8, SpriteSheet.itemsSheet))
+          .build(BattleItem.class);
+  static {
+    // Set the damage and type of the item here.
+  }
+
   /**
    *          !!################################!!
    *          !!                                !!
@@ -1771,12 +1799,12 @@ public class Item {
    * @param builder The item builder to create this item.
    */
   public Item(ItemBuilder builder) {
+    this.type = builder.type;
     this.id = getNextId();
     this.title = builder.title;
     this.description = builder.description;
     this.price = builder.price;
     this.thumbnail = builder.thumbnail;
-    this.type = builder.type;
   }
   
   static {
@@ -1800,7 +1828,20 @@ public class Item {
   }
   
   private int getNextId() {
-    return nextId++;
+    switch (type) {
+      case Item.EQUIPMENT:
+        return nextEquipmentId++;
+      case Item.BATTLE:
+        return nextBattleId++;
+      case Item.ARMOR:
+        return nextArmorId++;
+      case Item.WEAPON:
+        return nextWeaponId++;
+      case Item.SPECIAL:
+        return nextSpecialId++;
+      default:
+        return 0;
+    }
   }
 
   public String getTitle() {

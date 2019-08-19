@@ -5,6 +5,11 @@ import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.inventory.ItemAttribute;
+import com.monkeystomp.spirelands.util.Helpers;
+import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -27,9 +32,9 @@ public class MoveProcessor {
   public void process(BattleEntity user, BattleEntity target, BattleMove move) {
     currentTarget = target;
     currentMove = move;
-    if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
+    if (move.getType().equals(BattleMove.ITEM)) processItemMove(user, target, move);
+    else if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
     else if (move.getVariety().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
-    else if (move.getVariety().equals(BattleMove.ITEM)) processItemMove(user, target, move);
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
@@ -83,20 +88,39 @@ public class MoveProcessor {
       if (message != null) IFlashMessage.accept(message);
   }
   
-  public void update() {
-    if (currentMove != null) {
-      if (currentMove.hasTargetAnimation()) {
-        if (currentMove.getTargetAnimation().isReadyToPlay()) currentMove.getTargetAnimation().update();
-      }
-    }
-  }
-  
   private void processItemMove(BattleEntity user, BattleEntity target, BattleMove move) {
     if (currentMove.hasTargetAnimation()) {
       currentMove.getTargetAnimation().setReadyToPlay(true);
     }
     move.getItem().setStatModel(target.getStatModel());
     move.getItem().useItem();
+    ArrayList<FlashMessage> messages = new ArrayList<>();
+    for (ItemAttribute attribute: move.getItem().getAttributes()) {
+      if (attribute.getLabel().equals(ItemAttribute.HEALTH_RESTORE)) {
+        FlashMessage message = new FlashMessage(target, "HP: " + attribute.getValue());
+        message.setColor(new Color(GameColors.ATB_GAUGE_BAR_FILLED));
+        message.floatMessageUp(true);
+        messages.add(message);
+      }
+      if (attribute.getLabel().equals(ItemAttribute.MANA_RESTORE)) {
+        FlashMessage message = new FlashMessage(target, "MP: " + attribute.getValue());
+        message.setColor(new Color(GameColors.MANA_BAR_FILL));
+        message.floatMessageUp(true);
+        messages.add(message);
+      }
+    }
+    for (int i = 0; i < messages.size(); i++) {
+      FlashMessage message = messages.get(i);
+      Helpers.setTimeout(() -> IFlashMessage.accept(message), i * 1000);
+    }
+  }
+  
+  public void update() {
+    if (currentMove != null) {
+      if (currentMove.hasTargetAnimation()) {
+        if (currentMove.getTargetAnimation().isReadyToPlay()) currentMove.getTargetAnimation().update();
+      }
+    }
   }
   
   public void render(Screen screen, GL2 gl) {
