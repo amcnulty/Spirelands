@@ -4,12 +4,17 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
+import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.inventory.BattleItem;
+import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.ItemAttribute;
 import com.monkeystomp.spirelands.util.Helpers;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Consumer;
 
@@ -32,7 +37,10 @@ public class MoveProcessor {
   public void process(BattleEntity user, BattleEntity target, BattleMove move) {
     currentTarget = target;
     currentMove = move;
-    if (move.getType().equals(BattleMove.ITEM)) processItemMove(user, target, move);
+    if (move.getType().equals(BattleMove.ITEM)) {
+      if (move.getItem() instanceof EquipmentItem) processEquipmentItemMove(user, target, move);
+      else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, target, move);
+    }
     else if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
     else if (move.getVariety().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
   }
@@ -88,12 +96,12 @@ public class MoveProcessor {
       if (message != null) IFlashMessage.accept(message);
   }
   
-  private void processItemMove(BattleEntity user, BattleEntity target, BattleMove move) {
+  private void processEquipmentItemMove(BattleEntity user, BattleEntity target, BattleMove move) {
     if (currentMove.hasTargetAnimation()) {
       currentMove.getTargetAnimation().setReadyToPlay(true);
     }
     move.getItem().setStatModel(target.getStatModel());
-    move.getItem().useItem();
+    ((EquipmentItem)move.getItem()).useItem();
     ArrayList<FlashMessage> messages = new ArrayList<>();
     for (ItemAttribute attribute: move.getItem().getAttributes()) {
       if (attribute.getLabel().equals(ItemAttribute.HEALTH_RESTORE)) {
@@ -113,6 +121,48 @@ public class MoveProcessor {
       FlashMessage message = messages.get(i);
       Helpers.setTimeout(() -> IFlashMessage.accept(message), i * 1000);
     }
+  }
+  
+  public void processBattleItemMove(BattleEntity user, BattleEntity target, BattleMove move) {
+    int attackPower, overallEffect;
+    if (currentMove.hasTargetAnimation()) {
+      currentMove.getTargetAnimation().setReadyToPlay(true);
+    }
+    ((BattleItem)move.getItem()).useItem();
+    if (((BattleItem)move.getItem()).getBattleMoveType().equals(BattleMove.PHYSICAL)) {
+      int averagePartyLevel = 0, averagePartyStrength = 0;
+      HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
+      for (int i = 0; i < partyMembers.size(); i++) {
+        averagePartyLevel += partyMembers.get(i).getLevel();
+        averagePartyStrength += partyMembers.get(i).getStrength();
+      }
+      averagePartyLevel /= partyMembers.size();
+      averagePartyStrength /= partyMembers.size();
+      attackPower = (int)(move.getPowerLevel() * averagePartyStrength * ( .1 + ( .009 * ( averagePartyLevel ))));
+      if (target.isGuarding()) {
+        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getDefense() * 1.5) ))));
+      }
+      else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getDefense() ))));
+    }
+    else {
+      int averagePartyLevel = 0, averagePartyIntellect = 0;
+      HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
+      for (int i = 0; i < partyMembers.size(); i++) {
+        averagePartyLevel += partyMembers.get(i).getLevel();
+        averagePartyIntellect += partyMembers.get(i).getCombinedIntellect();
+      }
+      averagePartyLevel /= partyMembers.size();
+      averagePartyIntellect /= partyMembers.size();
+      attackPower = (int)(move.getPowerLevel() * averagePartyIntellect * ( .1 + ( .009 * ( averagePartyLevel ))));
+      overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
+    }
+    overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
+    if (user != target) target.playDamageAnimation();
+    user.getStatModel().decreaseMana(move.getManaRequired());
+    target.getStatModel().decreaseHealth(overallEffect);
+    FlashMessage message = new FlashMessage(target, String.valueOf(overallEffect));
+    message.floatMessageUp(true);
+    IFlashMessage.accept(message);
   }
   
   public void update() {

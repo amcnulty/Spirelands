@@ -23,12 +23,13 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 0 },
-          { "bHJncPLq94": 1 },
-          { "bHJncPLq94": 2 },
-          { "bHJncPLq94": 3 },
-          { "bHJncPLq94": 4 },
-          { "bHJncPLq94": 5 }
+          { "bHJncPLq94": 2000 },
+          { "bHJncPLq94": 2001 },
+          { "bHJncPLq94": 3000 },
+          { "bHJncPLq94": 2002 },
+          { "bHJncPLq94": 3001 },
+          { "bHJncPLq94": 1000 },
+          { "bHJncPLq94": 1001 }
         ]
       }
     },
@@ -55,9 +56,11 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 1 },
-          { "bHJncPLq94": 2 },
-          { "bHJncPLq94": 4 }
+          { "bHJncPLq94": 2000 },
+          { "bHJncPLq94": 3000 },
+          { "bHJncPLq94": 3001 },
+          { "bHJncPLq94": 1000 },
+          { "bHJncPLq94": 1002 }
         ]
       }
     },
@@ -84,10 +87,11 @@
       "8FRT4q5CKl": {},
       "Moves": {
         "EquippedMoves": [
-          { "bHJncPLq94": 1 },
-          { "bHJncPLq94": 3 },
-          { "bHJncPLq94": 5 }
-
+          { "bHJncPLq94": 2000 },
+          { "bHJncPLq94": 2001 },
+          { "bHJncPLq94": 2002 },
+          { "bHJncPLq94": 1001 },
+          { "bHJncPLq94": 1002 }
         ]
       }
     }
@@ -108,6 +112,8 @@
       { "bHJncPLq94": 1000, "DoQd94zuo4": 2},
       { "bHJncPLq94": 1008, "DoQd94zuo4": 1},
       { "bHJncPLq94": 1014, "DoQd94zuo4": 22 },
+      { "bHJncPLq94": 2000, "DoQd94zuo4": 3 },
+      { "bHJncPLq94": 2001, "DoQd94zuo4": 12 },
       { "bHJncPLq94": 3004, "DoQd94zuo4": 3},
       { "bHJncPLq94": 3000, "DoQd94zuo4": 2},
       { "bHJncPLq94": 3012, "DoQd94zuo4": 1},

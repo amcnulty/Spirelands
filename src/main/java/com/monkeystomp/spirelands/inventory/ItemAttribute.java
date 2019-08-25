@@ -61,6 +61,10 @@ public class ItemAttribute {
    * Luck stat increase. Used for luck up items.
    */
   public static final String LUCK_UP = "Luck Increase";
+  /**
+   * Fire damage amount. Used for fire type battle items.
+   */
+  public static final String FIRE_DAMAGE = "Fire Damage";
   
   private final String  label,
                         value;

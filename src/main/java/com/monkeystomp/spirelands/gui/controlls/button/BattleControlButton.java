@@ -73,9 +73,11 @@ public class BattleControlButton extends GroupButton {
    * Calls the click method on this button. Acts as if it was clicked on in the UI.
    */
   public void clickOverride() {
-    clickSound = null;
-    super.click();
-    clickSound = SoundEffects.BUTTON_CLICK;
+    if (!manuallyDisabled) {
+      clickSound = null;
+      super.click();
+      clickSound = SoundEffects.BUTTON_CLICK;
+    }
   }
   
   @Override

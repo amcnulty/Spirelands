@@ -12,6 +12,8 @@ import com.monkeystomp.spirelands.graphics.EventListener;
 import com.monkeystomp.spirelands.input.GameController;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.gamedata.settings.SettingsManager;
+import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.util.Helpers;
 import com.monkeystomp.spirelands.view.TitleScreen;
 import java.awt.Cursor;
 import java.awt.Image;
@@ -75,8 +77,9 @@ public class Game extends GLCanvas implements Runnable {
     // Temporarily add items to player inventory for testing.
     InventoryManager manager = InventoryManager.getInventoryManager();
     // Equipment
-    
-//    Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
+//    Helpers.setTimeout(() -> {
+//      Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
+//    }, 4000);
 //    manager.setGold(2019);
 
     if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor();

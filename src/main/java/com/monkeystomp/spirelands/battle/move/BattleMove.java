@@ -6,7 +6,6 @@ import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
-import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.awt.Color;
 import java.io.File;
@@ -31,6 +30,10 @@ public class BattleMove {
    */
   public static final String MAGICAL = "Magical";
   /**
+   * Used for 'type' for item moves.
+   */
+  public static final String ITEM = "Item";
+  /**
    * Used for the 'variety' property for offensive moves.
    */
   public static final String OFFENSIVE = "Offensive";
@@ -38,16 +41,14 @@ public class BattleMove {
    * Used for the 'variety' property for defensive moves.
    */
   public static final String DEFENSIVE = "Defensive";
-  /**
-   * Used for both 'type' and 'variety' for item moves.
-   */
-  public static final String ITEM = "Item";
   // Map of all the moves to their ids.
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
   // Instance of the Random class.
   private static final Random random = new Random();
   // Used to track the ids when creating moves.
-  private static int nextId = 0;
+  private static int  nextItemId = 1000,
+                      nextPhysicalId = 2000,
+                      nextMagicalId = 3000;
   // The id of the move.
   private final int id;
   // The name of the move.
@@ -212,9 +213,9 @@ public class BattleMove {
    * @param builder Configuration object for creating this EnemyMove instance.
    */
   public BattleMove(BattleMoveBuilder builder) {
+    this.type = builder.type;
     this.id = getNextId();
     this.name = builder.name;
-    this.type = builder.type;
     this.variety = builder.variety;
     this.powerLevel = builder.powerLevel;
     this.manaRequired = builder.manaRequired;
@@ -258,8 +259,17 @@ public class BattleMove {
     );
   }
   
-  private static int getNextId() {
-    return nextId++;
+  private int getNextId() {
+    switch (getType()) {
+      case BattleMove.ITEM:
+        return nextItemId++;
+      case BattleMove.PHYSICAL:
+        return nextPhysicalId++;
+      case BattleMove.MAGICAL:
+        return nextMagicalId++;
+      default:
+        return 0;
+    }
   }
 
   public int getId() {
@@ -336,8 +346,8 @@ public class BattleMove {
     return singleTarget;
   }
 
-  public EquipmentItem getItem() {
-    return (EquipmentItem)item;
+  public Item getItem() {
+    return item;
   }
 
 }

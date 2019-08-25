@@ -313,6 +313,25 @@ public class Item {
           .build(BattleItem.class);
   static {
     // Set the damage and type of the item here.
+    FIRE_BOTTLE.setUseItemSound(SoundEffects.MAGICAL_ENERGY);
+    FIRE_BOTTLE.setFireDamage(20);
+    BattleMove.createBattleMoveFromItem(FIRE_BOTTLE, BattleMove.OFFENSIVE, BattleMove.BLUE_EXPLOSION);
+  }
+  
+  /**
+   * Item used to unleash a crazy egg attack!
+   */
+  public static final BattleItem
+    THROWING_EGG = new ItemBuilder()
+          .title("Throwing Egg")
+          .description("This is a great thowing egg! Use it to start an egg attack. Causes minimal physical damage, however, it will leave your enemies stunned.")
+          .price(200)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 7, SpriteSheet.itemsSheet))
+          .build(BattleItem.class);
+  static {
+    THROWING_EGG.setUseItemSound(SoundEffects.HIT_MISS);
+    THROWING_EGG.setPhysicalDamage(10);
+    BattleMove.createBattleMoveFromItem(THROWING_EGG, BattleMove.OFFENSIVE, BattleMove.BASIC_SLASH);
   }
 
   /**
