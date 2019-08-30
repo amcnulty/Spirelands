@@ -4,6 +4,8 @@ import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * <p>
@@ -253,6 +255,19 @@ public class EnemyBuilder {
    */
   public EnemyBuilder addMove(BattleMove move) {
     this.enemyMoves.add(move);
+    return this;
+  }
+  
+  public EnemyBuilder addMove(BattleMove move, String customMoveName) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customMoveName);
+      this.enemyMoves.add(clone);
+      return this;
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
     return this;
   }
   /**

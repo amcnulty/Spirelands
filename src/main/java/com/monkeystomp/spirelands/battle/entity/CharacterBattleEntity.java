@@ -125,6 +125,8 @@ public class CharacterBattleEntity extends BattleEntity {
     finishedAttacking = false;
     showingControls = false;
     currentTarget = target;
+    // Show the name of the move as a message on the screen by calling the battle class show move name method.
+    battle.showBattleMoveName(move.getName());
     if (target instanceof CharacterBattleEntity) {
       targetingSelf = target == this;
     }

@@ -20,7 +20,7 @@ import java.util.function.Function;
  * Battle Move class is used to describe a move that can be made by a battle entity during a battle sequence.
  * @author Aaron Michael McNulty
  */
-public class BattleMove {
+public class BattleMove implements Cloneable {
   /**
    * Used for the 'type' property for physical moves.
    */
@@ -52,7 +52,7 @@ public class BattleMove {
   // The id of the move.
   private final int id;
   // The name of the move.
-  private final String name;
+  private String name;
   // Physical or magical type.
   private final String type;
   // Offensive or defensive variety.
@@ -272,6 +272,14 @@ public class BattleMove {
     }
   }
 
+  /**
+   * Overrides the name property for this move. Only do this with cloned instances and not the original static member of the BattleMove class.
+   * @param customName The custom name to give to this move.
+   */
+  public void setCustomName(String customName) {
+    this.name = customName;
+  }
+  
   public int getId() {
     return id;
   }
@@ -348,6 +356,11 @@ public class BattleMove {
 
   public Item getItem() {
     return item;
+  }
+  
+  @Override
+  public Object clone() throws CloneNotSupportedException {
+    return super.clone();
   }
 
 }

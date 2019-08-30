@@ -28,6 +28,7 @@ import com.monkeystomp.spirelands.view.LevelView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -151,6 +152,19 @@ public class Battle {
     ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, target);
     battleControls.hideControls();
     targetSelector.setTargeting(false);
+  }
+  /**
+   * Shows a new message in the middle of the battle screen for a short period of time.
+   * The most recent call to this method will take precedence.
+   * @param moveName The name of the move to display on screen.
+   */
+  public void showBattleMoveName(String moveName) {
+    // Check for previous message that is still being displayed and remove it.
+    currentMessages.removeAll(currentMessages
+            .stream().filter(message -> message.isMainMessage())
+            .collect(Collectors.toList()));
+    FlashMessage message = new FlashMessage(moveName);
+    currentMessages.add(message);
   }
   
   private CharacterBattleEntity getTarget() {

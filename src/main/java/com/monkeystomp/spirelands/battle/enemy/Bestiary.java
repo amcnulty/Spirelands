@@ -28,7 +28,7 @@ public class Bestiary {
           .dropRate(20)
           .experienceAward(1)
           .goldAward(10)
-          .addMove(BattleMove.BASIC_ATTACK);
+          .addMove(BattleMove.BASIC_ATTACK, "Plant Attack");
   /**
    * A plant monster that does physical and magical attacks
    */
@@ -48,8 +48,8 @@ public class Bestiary {
           .dropRate(20)
           .experienceAward(2)
           .goldAward(20)
-          .addMove(BattleMove.BASIC_ATTACK)
-          .addMove(BattleMove.MAGIC_ENERGY);
+          .addMove(BattleMove.BASIC_ATTACK, "Plant Attack")
+          .addMove(BattleMove.MAGIC_ENERGY, "Sap Spray");
   /**
    * A plant monster that does physical and magical attacks
    */
@@ -69,8 +69,8 @@ public class Bestiary {
           .dropRate(20)
           .experienceAward(2)
           .goldAward(20)
-          .addMove(BattleMove.BASIC_ATTACK)
-          .addMove(BattleMove.BLUNT_FORCE)
-          .addMove(BattleMove.MAGIC_ENERGY);
+          .addMove(BattleMove.BASIC_ATTACK, "Plant Attack")
+          .addMove(BattleMove.BLUNT_FORCE, "Vine Whip")
+          .addMove(BattleMove.MAGIC_ENERGY, "Sap Attack");
   
 }

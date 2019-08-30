@@ -124,6 +124,8 @@ public class EnemyBattleEntity extends BattleEntity {
     moving = true;
     finishedAttacking = false;
     setNextMove();
+    // Show the name of the move as a message on the screen by calling the battle class show move name method.
+    battle.showBattleMoveName(currentMove.getName());
     if (!currentMove.isRanged()) {
       moveToLocation(target.getSlot().getX() - leftOfTarget, target.getSlot().getY());
     }
