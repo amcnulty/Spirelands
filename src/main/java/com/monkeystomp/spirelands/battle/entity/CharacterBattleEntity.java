@@ -98,6 +98,10 @@ public class CharacterBattleEntity extends BattleEntity {
   @Override
   protected void checkForHealth() {
     if (statModel.getHealth() == 0) setAsDead();
+    if (!moving && currentAnimation != damageAnimation) {
+      if (statModel.getHealth() / (double)statModel.getHealthMax() < .2 && !isGuarding()) playLowHealthAnimation();
+      else playIdleAnimation();
+    }
   }
   
   @Override

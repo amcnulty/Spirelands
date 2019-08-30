@@ -364,6 +364,7 @@ public class BattleEntity {
   }
   
   protected void moveToLocation(int x, int y) {
+    playIdleAnimation();
     traveling = true;
     int xStep, yStep;
     for (int i = 1; i < 21; i++) {
