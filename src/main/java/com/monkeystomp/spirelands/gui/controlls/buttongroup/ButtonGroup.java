@@ -19,12 +19,16 @@ public class ButtonGroup {
    */
   public void addButton(GroupButton newButton) {
     newButton.setIGroupNotifier(activeButton -> {
-      for (GroupButton button: buttons) {
-        button.resetButton();
-      }
+      resetButtons();
       activeButton.setActive();
     });
     buttons.add(newButton);
+  }
+  
+  public void resetButtons() {
+    for (GroupButton button: buttons) {
+      button.resetButton();
+    }
   }
   
   public ArrayList<GroupButton> getButtons() {

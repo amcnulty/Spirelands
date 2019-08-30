@@ -136,10 +136,15 @@ public class Battle {
   }
   
   private void handleBattleControlSelection(BattleMove move) {
-    currentCharacterMove = move;
-    if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
-    else if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
-    else if (move.getVariety().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
+    if (move != null) {
+      currentCharacterMove = move;
+      if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
+      else if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
+      else if (move.getVariety().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
+    }
+    else {
+      targetSelector.setTargeting(false);
+    }
   }
   
   private void handleTargetSelection(BattleEntity target) {

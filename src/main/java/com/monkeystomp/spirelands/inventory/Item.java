@@ -127,6 +127,7 @@ public class Item {
   static {
     MANA_VILE.setManaRestorePoints(20);
     MANA_VILE.setUseItemSound(SoundEffects.HEALING_SOUND);
+    BattleMove.createBattleMoveFromItem(MANA_VILE, BattleMove.DEFENSIVE, BattleMove.CURE_ANIMATION);
   }
   /**
    * Mana Potion (EQUIPMENT)

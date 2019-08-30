@@ -73,7 +73,7 @@ public class GameColors {
    */
   public static final int MANA_BAR_EMPTY = 0xFF9999FF;
   /**
-   * ATB gauge bar filled color #0xFFFFFF00;
+   * ATB gauge bar filled color #0xFF99FF99;
    */
   public static final int ATB_GAUGE_BAR_FILLED = 0xFF99FF99;
   /**
