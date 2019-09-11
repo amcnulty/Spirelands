@@ -28,7 +28,6 @@ import com.monkeystomp.spirelands.view.LevelView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -219,7 +218,7 @@ public class Battle {
   
   private void playVictoryAnimation() {
     for (BattleEntity partyMember: party) {
-      partyMember.playVictoryAnimation();
+      if (!partyMember.isDead()) partyMember.playVictoryAnimation();
     }
     Music.getMusicPlayer().play(victoryMusic);
     setTimeout(() -> {

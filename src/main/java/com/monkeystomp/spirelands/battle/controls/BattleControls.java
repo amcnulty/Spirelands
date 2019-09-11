@@ -12,7 +12,6 @@ import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.util.Helpers;
-import static java.nio.file.Files.move;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -128,13 +127,17 @@ public class BattleControls {
       if (((BattleControlButton)button).getMove() != null) {
         // Disabled button if out of mana.
         if (((BattleControlButton)button).getMove().getManaRequired() > entity.getStatModel().getMana()) ((BattleControlButton)button).disableButton();
+        // Automatically preselect last used move.
+        if (((BattleControlButton)button).getMove().equals(entity.getCurrentMove())) ((BattleControlButton)button).clickOverride();
+      }
+    }
+    for (GroupButton button: itemButtonGroup.getButtons()) {
+      if (((BattleControlButton)button).getMove() != null) {
         // Disable item button if no more items in inventory.
         if (((BattleControlButton)button).getMove().getType().equals(BattleMove.ITEM)) {
           if (InventoryManager.getInventoryManager().getInventoryReferenceById(((BattleControlButton)button).getMove().getItem().getId()) == null) ((BattleControlButton)button).disableButton();
         }
-        // Automatically preselect last used move.
-        if (((BattleControlButton)button).getMove().equals(entity.getCurrentMove())) ((BattleControlButton)button).clickOverride();
-      }
+      }      
     }
   }
 

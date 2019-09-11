@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.battle.move;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
+import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;
@@ -58,6 +59,12 @@ public class MoveProcessor {
     else {
       if (move.getType().equals(BattleMove.PHYSICAL)) {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getStrength() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        if (user instanceof CharacterBattleEntity && random.nextInt(100) + 1 > 95) {
+          attackPower *= 1.5;
+          FlashMessage message = new FlashMessage(user.getX() - 5, user.getY() + 8, "Critical!");
+          message.floatMessageUp(true);
+          IFlashMessage.accept(message);
+        }
         if (target.isGuarding()) {
           overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getDefense() * 1.5) ))));
         }
