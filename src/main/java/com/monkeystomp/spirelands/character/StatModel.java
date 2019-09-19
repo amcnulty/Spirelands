@@ -1,5 +1,8 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
+import java.util.ArrayList;
+
 /**
  * The StatModel class is a superclass for Characters and Enemies who have stats for displaying and using in battle.
  * @author Aaron Michael McNulty
@@ -144,6 +147,10 @@ public class StatModel {
 
   public int getLuck() {
     return luck;
+  }
+  
+  public ArrayList<ElementalEffect> getElementalDefenses() {
+    return new ArrayList<>();
   }
   /**
    *      !!################################################!!

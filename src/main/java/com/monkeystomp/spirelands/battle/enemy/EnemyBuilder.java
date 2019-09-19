@@ -48,6 +48,10 @@ public class EnemyBuilder {
    */
   public String name;
   /**
+   * Elemental type of this enemy.
+   */
+  public String element;
+  /**
    * Level of this enemy
    */
   public int level;
@@ -127,6 +131,15 @@ public class EnemyBuilder {
    */
   public EnemyBuilder name(String name) {
     this.name = name;
+    return this;
+  }
+  /**
+   * Sets the elemental type of this enemy.
+   * @param element Element to set this enemy to.
+   * @return This EnemyBuilder reference.
+   */
+  public EnemyBuilder element(String element) {
+    this.element = element;
     return this;
   }
   /**

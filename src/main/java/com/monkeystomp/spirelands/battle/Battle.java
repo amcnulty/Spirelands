@@ -139,8 +139,8 @@ public class Battle {
     if (move != null) {
       currentCharacterMove = move;
       if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
-      else if (move.getVariety().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
-      else if (move.getVariety().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
+      else if (move.getAction().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
+      else if (move.getAction().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
     }
     else {
       targetSelector.setTargeting(false);

@@ -1,82 +1,82 @@
 {
-  "Fire": [
-    "Fire": 1,
-    "Ice": 1.5,
-    "Earth": .5,
-    "Water": .5,
-    "Electric": 1,
-    "Poison": 1,
-    "Undead": 1.5,
-    "Holy": 1
-  ],
-  "Ice": [
-    "Fire": .5,
-    "Ice": 1,
-    "Earth": 1.5,
-    "Water": 1.25,
-    "Electric": 1,
-    "Poison": 1.25,
-    "Undead": .75,
-    "Holy": 1
-  ],
-  "Earth": [
-    "Fire": 1.5,
-    "Ice": .5,
-    "Earth": 1,
-    "Water": .5,
-    "Electric": 1.5,
-    "Poison": .5,
-    "Undead": 1,
-    "Holy": 1
-  ],
-  "Water": [
-    "Fire": 1.5,
-    "Ice": .75,
-    "Earth": 1.5,
-    "Water": 1,
-    "Electric": .5,
-    "Poison": 1,
-    "Undead": 1,
-    "Holy": .75
-  ],
-  "Electric": [
-    "Fire": 1,
-    "Ice": 1,
-    "Earth": .5,
-    "Water": 1.5,
-    "Electric": 1,
-    "Poison": 1,
-    "Undead": 1.25,
-    "Holy": 1.25
-  ],
-  "Poison": [
-    "Fire": 1,
-    "Ice": 1,
-    "Earth": 1.25,
-    "Water": 1,
-    "Electric": 1,
-    "Poison": 1,
-    "Undead": .5,
-    "Holy": 1
-  ],
-  "Undead": [
-    "Fire": .5,
-    "Ice": 1,
-    "Earth": 1.25,
-    "Water": .75,
-    "Electric": 1,
-    "Poison": 1.25,
-    "Undead": 1,
-    "Holy": 1.5
-  ],
-  "Holy": [
-    "Fire": 1,
-    "Ice": 1,
-    "Earth": 1,
-    "Water": 1,
-    "Electric": .75,
-    "Poison": 1,
-    "Undead": 1.5,
-    "Holy": 1
-  ],
+  "Fire": {
+    "Fire": 100,
+    "Ice": 150,
+    "Earth": 50,
+    "Water": 50,
+    "Electric": 100,
+    "Poison": 100,
+    "Undead": 150,
+    "Holy": 100
+  },
+  "Ice": {
+    "Fire": 50,
+    "Ice": 100,
+    "Earth": 150,
+    "Water": 125,
+    "Electric": 100,
+    "Poison": 125,
+    "Undead": 75,
+    "Holy": 100
+  },
+  "Earth": {
+    "Fire": 150,
+    "Ice": 50,
+    "Earth": 100,
+    "Water": 50,
+    "Electric": 150,
+    "Poison": 50,
+    "Undead": 100,
+    "Holy": 100
+  },
+  "Water": {
+    "Fire": 150,
+    "Ice": 75,
+    "Earth": 150,
+    "Water": 100,
+    "Electric": 50,
+    "Poison": 100,
+    "Undead": 100,
+    "Holy": 75
+  },
+  "Electric": {
+    "Fire": 100,
+    "Ice": 100,
+    "Earth": 50,
+    "Water": 150,
+    "Electric": 100,
+    "Poison": 100,
+    "Undead": 125,
+    "Holy": 125
+  },
+  "Poison": {
+    "Fire": 100,
+    "Ice": 100,
+    "Earth": 125,
+    "Water": 100,
+    "Electric": 100,
+    "Poison": 100,
+    "Undead": 50,
+    "Holy": 100
+  },
+  "Undead": {
+    "Fire": 50,
+    "Ice": 100,
+    "Earth": 125,
+    "Water": 75,
+    "Electric": 100,
+    "Poison": 125,
+    "Undead": 100,
+    "Holy": 150
+  },
+  "Holy": {
+    "Fire": 100,
+    "Ice": 100,
+    "Earth": 100,
+    "Water": 100,
+    "Electric": 75,
+    "Poison": 100,
+    "Undead": 150,
+    "Holy": 100
+  },
 }

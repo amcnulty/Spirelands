@@ -130,77 +130,78 @@ public class BattleEntity {
   }
   
   private void setupActionMap() {
-    actionMap.put("IDLE_0", new Sprite(64, renderSize, 2, 0, spriteSheet));
-    actionMap.put("IDLE_1", new Sprite(64, renderSize, 1, 0, spriteSheet));
-    actionMap.put("IDLE_2", new Sprite(64, renderSize, 0, 0, spriteSheet));
+    int rawSize = spriteSheet.getWidth() / 9;
+    actionMap.put("IDLE_0", new Sprite(rawSize, renderSize, 2, 0, spriteSheet));
+    actionMap.put("IDLE_1", new Sprite(rawSize, renderSize, 1, 0, spriteSheet));
+    actionMap.put("IDLE_2", new Sprite(rawSize, renderSize, 0, 0, spriteSheet));
     
-    actionMap.put("READY_PHYSICAL_0", new Sprite(64, renderSize, 0, 1, spriteSheet));
-    actionMap.put("READY_PHYSICAL_1", new Sprite(64, renderSize, 1, 1, spriteSheet));
-    actionMap.put("READY_PHYSICAL_2", new Sprite(64, renderSize, 2, 1, spriteSheet));
+    actionMap.put("READY_PHYSICAL_0", new Sprite(rawSize, renderSize, 0, 1, spriteSheet));
+    actionMap.put("READY_PHYSICAL_1", new Sprite(rawSize, renderSize, 1, 1, spriteSheet));
+    actionMap.put("READY_PHYSICAL_2", new Sprite(rawSize, renderSize, 2, 1, spriteSheet));
     
-    actionMap.put("READY_MAGICAL_0", new Sprite(64, renderSize, 0, 2, spriteSheet));
-    actionMap.put("READY_MAGICAL_1", new Sprite(64, renderSize, 1, 2, spriteSheet));
-    actionMap.put("READY_MAGICAL_2", new Sprite(64, renderSize, 2, 2, spriteSheet));
+    actionMap.put("READY_MAGICAL_0", new Sprite(rawSize, renderSize, 0, 2, spriteSheet));
+    actionMap.put("READY_MAGICAL_1", new Sprite(rawSize, renderSize, 1, 2, spriteSheet));
+    actionMap.put("READY_MAGICAL_2", new Sprite(rawSize, renderSize, 2, 2, spriteSheet));
     
-    actionMap.put("GUARD_0", new Sprite(64, renderSize, 0, 3, spriteSheet));
-    actionMap.put("GUARD_1", new Sprite(64, renderSize, 1, 3, spriteSheet));
-    actionMap.put("GUARD_2", new Sprite(64, renderSize, 2, 3, spriteSheet));
+    actionMap.put("GUARD_0", new Sprite(rawSize, renderSize, 0, 3, spriteSheet));
+    actionMap.put("GUARD_1", new Sprite(rawSize, renderSize, 1, 3, spriteSheet));
+    actionMap.put("GUARD_2", new Sprite(rawSize, renderSize, 2, 3, spriteSheet));
     
-    actionMap.put("DAMAGE_0", new Sprite(64, renderSize, 0, 4, spriteSheet));
-    actionMap.put("DAMAGE_1", new Sprite(64, renderSize, 1, 4, spriteSheet));
-    actionMap.put("DAMAGE_2", new Sprite(64, renderSize, 2, 4, spriteSheet));
+    actionMap.put("DAMAGE_0", new Sprite(rawSize, renderSize, 0, 4, spriteSheet));
+    actionMap.put("DAMAGE_1", new Sprite(rawSize, renderSize, 1, 4, spriteSheet));
+    actionMap.put("DAMAGE_2", new Sprite(rawSize, renderSize, 2, 4, spriteSheet));
     
-    actionMap.put("EVADE_0", new Sprite(64, renderSize, 0, 5, spriteSheet));
-    actionMap.put("EVADE_1", new Sprite(64, renderSize, 1, 5, spriteSheet));
-    actionMap.put("EVADE_2", new Sprite(64, renderSize, 2, 5, spriteSheet));
+    actionMap.put("EVADE_0", new Sprite(rawSize, renderSize, 0, 5, spriteSheet));
+    actionMap.put("EVADE_1", new Sprite(rawSize, renderSize, 1, 5, spriteSheet));
+    actionMap.put("EVADE_2", new Sprite(rawSize, renderSize, 2, 5, spriteSheet));
     
-    actionMap.put("STABBING_0", new Sprite(64, renderSize, 3, 0, spriteSheet));
-    actionMap.put("STABBING_1", new Sprite(64, renderSize, 4, 0, spriteSheet));
-    actionMap.put("STABBING_2", new Sprite(64, renderSize, 5, 0, spriteSheet));
+    actionMap.put("STABBING_0", new Sprite(rawSize, renderSize, 3, 0, spriteSheet));
+    actionMap.put("STABBING_1", new Sprite(rawSize, renderSize, 4, 0, spriteSheet));
+    actionMap.put("STABBING_2", new Sprite(rawSize, renderSize, 5, 0, spriteSheet));
     
-    actionMap.put("SWINGING_0", new Sprite(64, renderSize, 3, 1, spriteSheet));
-    actionMap.put("SWINGING_1", new Sprite(64, renderSize, 4, 1, spriteSheet));
-    actionMap.put("SWINGING_2", new Sprite(64, renderSize, 5, 1, spriteSheet));
+    actionMap.put("SWINGING_0", new Sprite(rawSize, renderSize, 3, 1, spriteSheet));
+    actionMap.put("SWINGING_1", new Sprite(rawSize, renderSize, 4, 1, spriteSheet));
+    actionMap.put("SWINGING_2", new Sprite(rawSize, renderSize, 5, 1, spriteSheet));
     
-    actionMap.put("SHOOTING_0", new Sprite(64, renderSize, 3, 2, spriteSheet));
-    actionMap.put("SHOOTING_1", new Sprite(64, renderSize, 4, 2, spriteSheet));
-    actionMap.put("SHOOTING_2", new Sprite(64, renderSize, 5, 2, spriteSheet));
+    actionMap.put("SHOOTING_0", new Sprite(rawSize, renderSize, 3, 2, spriteSheet));
+    actionMap.put("SHOOTING_1", new Sprite(rawSize, renderSize, 4, 2, spriteSheet));
+    actionMap.put("SHOOTING_2", new Sprite(rawSize, renderSize, 5, 2, spriteSheet));
     
-    actionMap.put("USE_PHYSICAL_SKILL_0", new Sprite(64, renderSize, 3, 3, spriteSheet));
-    actionMap.put("USE_PHYSICAL_SKILL_1", new Sprite(64, renderSize, 4, 3, spriteSheet));
-    actionMap.put("USE_PHYSICAL_SKILL_2", new Sprite(64, renderSize, 5, 3, spriteSheet));
+    actionMap.put("USE_PHYSICAL_SKILL_0", new Sprite(rawSize, renderSize, 3, 3, spriteSheet));
+    actionMap.put("USE_PHYSICAL_SKILL_1", new Sprite(rawSize, renderSize, 4, 3, spriteSheet));
+    actionMap.put("USE_PHYSICAL_SKILL_2", new Sprite(rawSize, renderSize, 5, 3, spriteSheet));
     
-    actionMap.put("USE_MAGICAL_SKILL_0", new Sprite(64, renderSize, 3, 4, spriteSheet));
-    actionMap.put("USE_MAGICAL_SKILL_1", new Sprite(64, renderSize, 4, 4, spriteSheet));
-    actionMap.put("USE_MAGICAL_SKILL_2", new Sprite(64, renderSize, 5, 4, spriteSheet));
+    actionMap.put("USE_MAGICAL_SKILL_0", new Sprite(rawSize, renderSize, 3, 4, spriteSheet));
+    actionMap.put("USE_MAGICAL_SKILL_1", new Sprite(rawSize, renderSize, 4, 4, spriteSheet));
+    actionMap.put("USE_MAGICAL_SKILL_2", new Sprite(rawSize, renderSize, 5, 4, spriteSheet));
     
-    actionMap.put("USE_ITEM_0", new Sprite(64, renderSize, 3, 5, spriteSheet));
-    actionMap.put("USE_ITEM_1", new Sprite(64, renderSize, 4, 5, spriteSheet));
-    actionMap.put("USE_ITEM_2", new Sprite(64, renderSize, 5, 5, spriteSheet));
+    actionMap.put("USE_ITEM_0", new Sprite(rawSize, renderSize, 3, 5, spriteSheet));
+    actionMap.put("USE_ITEM_1", new Sprite(rawSize, renderSize, 4, 5, spriteSheet));
+    actionMap.put("USE_ITEM_2", new Sprite(rawSize, renderSize, 5, 5, spriteSheet));
     
-    actionMap.put("ESCAPE_0", new Sprite(64, renderSize, 6, 0, spriteSheet));
-    actionMap.put("ESCAPE_1", new Sprite(64, renderSize, 7, 0, spriteSheet));
-    actionMap.put("ESCAPE_2", new Sprite(64, renderSize, 8, 0, spriteSheet));
+    actionMap.put("ESCAPE_0", new Sprite(rawSize, renderSize, 6, 0, spriteSheet));
+    actionMap.put("ESCAPE_1", new Sprite(rawSize, renderSize, 7, 0, spriteSheet));
+    actionMap.put("ESCAPE_2", new Sprite(rawSize, renderSize, 8, 0, spriteSheet));
     
-    actionMap.put("VICTORY_0", new Sprite(64, renderSize, 6, 1, spriteSheet));
-    actionMap.put("VICTORY_1", new Sprite(64, renderSize, 7, 1, spriteSheet));
-    actionMap.put("VICTORY_2", new Sprite(64, renderSize, 8, 1, spriteSheet));
+    actionMap.put("VICTORY_0", new Sprite(rawSize, renderSize, 6, 1, spriteSheet));
+    actionMap.put("VICTORY_1", new Sprite(rawSize, renderSize, 7, 1, spriteSheet));
+    actionMap.put("VICTORY_2", new Sprite(rawSize, renderSize, 8, 1, spriteSheet));
     
-    actionMap.put("LOW_HEALTH_0", new Sprite(64, renderSize, 6, 2, spriteSheet));
-    actionMap.put("LOW_HEALTH_1", new Sprite(64, renderSize, 7, 2, spriteSheet));
-    actionMap.put("LOW_HEALTH_2", new Sprite(64, renderSize, 8, 2, spriteSheet));
+    actionMap.put("LOW_HEALTH_0", new Sprite(rawSize, renderSize, 6, 2, spriteSheet));
+    actionMap.put("LOW_HEALTH_1", new Sprite(rawSize, renderSize, 7, 2, spriteSheet));
+    actionMap.put("LOW_HEALTH_2", new Sprite(rawSize, renderSize, 8, 2, spriteSheet));
     
-    actionMap.put("STATUS_0", new Sprite(64, renderSize, 6, 3, spriteSheet));
-    actionMap.put("STATUS_1", new Sprite(64, renderSize, 7, 3, spriteSheet));
-    actionMap.put("STATUS_2", new Sprite(64, renderSize, 8, 3, spriteSheet));
+    actionMap.put("STATUS_0", new Sprite(rawSize, renderSize, 6, 3, spriteSheet));
+    actionMap.put("STATUS_1", new Sprite(rawSize, renderSize, 7, 3, spriteSheet));
+    actionMap.put("STATUS_2", new Sprite(rawSize, renderSize, 8, 3, spriteSheet));
     
-    actionMap.put("SLEEPING_0", new Sprite(64, renderSize, 6, 4, spriteSheet));
-    actionMap.put("SLEEPING_1", new Sprite(64, renderSize, 7, 4, spriteSheet));
-    actionMap.put("SLEEPING_2", new Sprite(64, renderSize, 8, 4, spriteSheet));
+    actionMap.put("SLEEPING_0", new Sprite(rawSize, renderSize, 6, 4, spriteSheet));
+    actionMap.put("SLEEPING_1", new Sprite(rawSize, renderSize, 7, 4, spriteSheet));
+    actionMap.put("SLEEPING_2", new Sprite(rawSize, renderSize, 8, 4, spriteSheet));
     
-    actionMap.put("DEAD_0", new Sprite(64, renderSize, 6, 5, spriteSheet));
-    actionMap.put("DEAD_1", new Sprite(64, renderSize, 7, 5, spriteSheet));
-    actionMap.put("DEAD_2", new Sprite(64, renderSize, 8, 5, spriteSheet));
+    actionMap.put("DEAD_0", new Sprite(rawSize, renderSize, 6, 5, spriteSheet));
+    actionMap.put("DEAD_1", new Sprite(rawSize, renderSize, 7, 5, spriteSheet));
+    actionMap.put("DEAD_2", new Sprite(rawSize, renderSize, 8, 5, spriteSheet));
   }
   
   public void init() {}

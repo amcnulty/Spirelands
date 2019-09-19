@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.elemental.Elemental;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -34,11 +35,11 @@ public class BattleMove implements Cloneable {
    */
   public static final String ITEM = "Item";
   /**
-   * Used for the 'variety' property for offensive moves.
+   * Used for the 'action' property for offensive moves.
    */
   public static final String OFFENSIVE = "Offensive";
   /**
-   * Used for the 'variety' property for defensive moves.
+   * Used for the 'action' property for defensive moves.
    */
   public static final String DEFENSIVE = "Defensive";
   // Map of all the moves to their ids.
@@ -53,10 +54,12 @@ public class BattleMove implements Cloneable {
   private final int id;
   // The name of the move.
   private String name;
+  // The elemental type of the move.
+  private String element;
   // Physical or magical type.
   private final String type;
-  // Offensive or defensive variety.
-  private final String variety;
+  // Offensive or defensive action.
+  private final String action;
   // Power level of the move.
   private final int powerLevel;
   // Amount of mana requited for this move.
@@ -76,7 +79,7 @@ public class BattleMove implements Cloneable {
   // Delay in milliseconds after playing the move animation before playing the target animation.
   private final int targetAnimationDelay;
   // A consumer to define the action to take on a defensive move. Returns a FlashMessage object.
-  private final Function<MoveInformation, FlashMessage> action;
+  private final Function<MoveInformation, FlashMessage> defensiveAction;
   // Flag to set this move as a single target move that only targets the user.
   private final boolean singleTarget;
   // Item associated with item move.
@@ -124,6 +127,13 @@ public class BattleMove implements Cloneable {
           20,
           true
   );
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!             Moves              !!
+   *          !!                                !!
+   *          !!################################!!
+   */
   
   /**
    * A basic attack move. Physical & Offensive.
@@ -181,7 +191,7 @@ public class BattleMove implements Cloneable {
           .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.HEALING_SOUND)
           .targetAnimation(CURE_ANIMATION)
-          .action(moveInfo -> {
+          .defensiveAction(moveInfo -> {
             int attackPower, overallEffect;
             attackPower = (int)(moveInfo.getMove().getPowerLevel() * moveInfo.getUser().getStatModel().getIntellect() * ( .1 + ( .009 * ( moveInfo.getUser().getStatModel().getLevel() ))));
             overallEffect = (int)( attackPower * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
@@ -200,7 +210,7 @@ public class BattleMove implements Cloneable {
           .physicalDefensive()
           .guardAnimation()
           .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
-          .action(moveInfo -> {
+          .defensiveAction(moveInfo -> {
             moveInfo.getUser().setGuarding(true);
             moveInfo.getUser().returnToIdleState();
             return null;
@@ -209,6 +219,21 @@ public class BattleMove implements Cloneable {
           .build();
   
   /**
+   * A basic typeless magic attack. Magical & Offensive.
+   */
+  public static final BattleMove FIREBALL = new BattleMoveBuilder()
+          .name("Fireball")
+          .element(Elemental.FIRE)
+          .magicalAttack()
+          .powerLevel(20)
+          .manaRequired(5)
+          .ranged(true)
+          .magicalSkillAnimation()
+          .thumbnail(new Sprite(16, 16, 6, 11, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.MAGICAL_ENERGY)
+          .targetAnimation(BLUE_EXPLOSION)
+          .build();
+  /**
    * Creates a new EnemyMove object with the given configuration from the EnemyMoveBuilder object.
    * @param builder Configuration object for creating this EnemyMove instance.
    */
@@ -216,7 +241,8 @@ public class BattleMove implements Cloneable {
     this.type = builder.type;
     this.id = getNextId();
     this.name = builder.name;
-    this.variety = builder.variety;
+    this.element = builder.element;
+    this.action = builder.action;
     this.powerLevel = builder.powerLevel;
     this.manaRequired = builder.manaRequired;
     this.accuracy = builder.accuracy;
@@ -226,7 +252,7 @@ public class BattleMove implements Cloneable {
     this.sound = builder.sound;
     this.targetAnimation = builder.targetAnimation;
     this.targetAnimationDelay = builder.targetAnimationDelay;
-    this.action = builder.action;
+    this.defensiveAction = builder.defensiveAction;
     this.singleTarget = builder.singleTarget;
     this.item = builder.item;
   }
@@ -251,8 +277,8 @@ public class BattleMove implements Cloneable {
     }
   }
   
-  public static void createBattleMoveFromItem(Item item, String variety, AnimatedSprite targetAnimation) {
-    BattleMove itemMove = new BattleMoveBuilder().itemMove(item, variety, targetAnimation).build();
+  public static void createBattleMoveFromItem(Item item, String action, AnimatedSprite targetAnimation) {
+    BattleMove itemMove = new BattleMoveBuilder().itemMove(item, action, targetAnimation).build();
     MOVE_MAP.put(
       itemMove.getId(),
       itemMove
@@ -288,12 +314,16 @@ public class BattleMove implements Cloneable {
     return name;
   }
 
+  public String getElement() {
+    return element;
+  }
+
   public String getType() {
     return type;
   }
 
-  public String getVariety() {
-    return variety;
+  public String getAction() {
+    return action;
   }
 
   public int getPowerLevel() {
@@ -346,8 +376,8 @@ public class BattleMove implements Cloneable {
     return targetAnimationDelay;
   }
 
-  public Function<MoveInformation, FlashMessage> getAction() {
-    return action;
+  public Function<MoveInformation, FlashMessage> getDefensiveAction() {
+    return defensiveAction;
   }
 
   public boolean isSingleTarget() {

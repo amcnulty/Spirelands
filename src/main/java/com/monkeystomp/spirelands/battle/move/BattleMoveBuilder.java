@@ -46,13 +46,17 @@ public class BattleMoveBuilder {
    */
   public String name;
   /**
+   * The elemental type of this move.
+   */
+  public String element;
+  /**
    * The type of move Physical | Magical
    */
   public String type;
   /**
-   * The variety of move Offensive | Defensive
+   * The action of move Offensive | Defensive
    */
-  public String variety;
+  public String action;
   /**
    * The power level of this move.
    */
@@ -92,7 +96,7 @@ public class BattleMoveBuilder {
   /**
    * A consumer to define the action to take on a defensive move.
    */
-  public Function<MoveInformation, FlashMessage> action;
+  public Function<MoveInformation, FlashMessage> defensiveAction;
   /**
    * Flag to set this move as a single target move that only targets the user.
    */
@@ -110,40 +114,45 @@ public class BattleMoveBuilder {
     this.name = name;
     return this;
   }
+  
+  public BattleMoveBuilder element(String element) {
+    this.element = element;
+    return this;
+  }
   /**
-   * Sets the type as physical and the variety as offensive.
+   * Sets the type as physical and the action as offensive.
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder physicalAttack() {
     this.type = BattleMove.PHYSICAL;
-    this.variety = BattleMove.OFFENSIVE;
+    this.action = BattleMove.OFFENSIVE;
     return this;
   }
   /**
-   * Sets the type as physical and the variety as defensive.
+   * Sets the type as physical and the action as defensive.
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder physicalDefensive() {
     this.type = BattleMove.PHYSICAL;
-    this.variety = BattleMove.DEFENSIVE;
+    this.action = BattleMove.DEFENSIVE;
     return this;
   }
   /**
-   * Sets the type as magical and the variety as offensive.
+   * Sets the type as magical and the action as offensive.
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder magicalAttack() {
     this.type = BattleMove.MAGICAL;
-    this.variety = BattleMove.OFFENSIVE;
+    this.action = BattleMove.OFFENSIVE;
     return this;
   }
   /**
-   * Sets the type as magical and the variety as defensive.
+   * Sets the type as magical and the action as defensive.
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder magicalDefensive() {
     this.type = BattleMove.MAGICAL;
-    this.variety = BattleMove.DEFENSIVE;
+    this.action = BattleMove.DEFENSIVE;
     return this;
   }
   /**
@@ -297,11 +306,11 @@ public class BattleMoveBuilder {
   }
   /**
    * Sets the action to take on defensive moves for this move.
-   * @param action The BiConsumer that takes the user and target.
+   * @param defensiveAction The BiConsumer that takes the user and target.
    * @return The BattleMoveBuilder reference.
    */
-  public BattleMoveBuilder action(Function<MoveInformation, FlashMessage> action) {
-    this.action = action;
+  public BattleMoveBuilder defensiveAction(Function<MoveInformation, FlashMessage> defensiveAction) {
+    this.defensiveAction = defensiveAction;
     return this;
   }
   /**
@@ -313,14 +322,23 @@ public class BattleMoveBuilder {
     this.singleTarget = singleTarget;
     return this;
   }
-  
-  public BattleMoveBuilder itemMove(Item item, String variety, AnimatedSprite targetAnimation) {
+  /**
+   * Creates a battle move from the given item with the given action and target animation.
+   * @param item Item which to build the move from.
+   * @param action 
+   * @param targetAnimation
+   * @return 
+   */
+  public BattleMoveBuilder itemMove(Item item, String action, AnimatedSprite targetAnimation) {
     this.item = item;
     if (this.item instanceof EquipmentItem) ((EquipmentItem)this.item).setEquippable(true);
-    if (this.item instanceof BattleItem) this.powerLevel = ((BattleItem)this.item).getPowerLevel();
+    if (this.item instanceof BattleItem) {
+      this.powerLevel = ((BattleItem)this.item).getPowerLevel();
+      this.element = ((BattleItem)this.item).getElementalType();
+    }
     this.name = item.getTitle();
     this.type = BattleMove.ITEM;
-    this.variety = variety;
+    this.action = action;
     this.ranged = true;
     useItemAnimation();
     this.thumbnail = item.getThumbnail();

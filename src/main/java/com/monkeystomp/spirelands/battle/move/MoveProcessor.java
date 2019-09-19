@@ -2,8 +2,11 @@ package com.monkeystomp.spirelands.battle.move;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.elemental.Elemental;
+import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
+import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;
@@ -42,8 +45,8 @@ public class MoveProcessor {
       if (move.getItem() instanceof EquipmentItem) processEquipmentItemMove(user, target, move);
       else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, target, move);
     }
-    else if (move.getVariety().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
-    else if (move.getVariety().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
+    else if (move.getAction().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
+    else if (move.getAction().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
@@ -72,6 +75,9 @@ public class MoveProcessor {
       }
       else {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        System.out.println("attack power: " + attackPower);
+        if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), ((Enemy)target.getStatModel()).getElement());
+        System.out.println("new attack power: " + attackPower);
         overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
@@ -99,7 +105,7 @@ public class MoveProcessor {
         currentMove.getTargetAnimation().setReadyToPlay(true);
       }
       user.getStatModel().decreaseMana(move.getManaRequired());
-      FlashMessage message = move.getAction().apply(new MoveInformation(user, target, move));
+      FlashMessage message = move.getDefensiveAction().apply(new MoveInformation(user, target, move));
       if (message != null) IFlashMessage.accept(message);
   }
   

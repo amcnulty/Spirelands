@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.character.StatModel;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
  */
 public class Enemy extends StatModel {
   
+  // The elemental type of this enemy.
+  private final String element;
   // Sprite sheet for this enemy
   private final SpriteSheet spriteSheet;
   // Loot item that this enemy is holding.
@@ -36,6 +39,7 @@ public class Enemy extends StatModel {
   public Enemy(EnemyBuilder builder) {
     this.spriteSheet = builder.spriteSheet;
     this.name = builder.name;
+    this.element = builder.element;
     this.level = builder.level;
     this.health = builder.health;
     this.healthMax = builder.healthMax;
@@ -52,6 +56,17 @@ public class Enemy extends StatModel {
     this.experienceAward = builder.experienceAward;
     this.goldAward = builder.goldAward;
     this.enemyMoves = builder.enemyMoves;
+  }
+
+  public String getElement() {
+    return element;
+  }
+  
+  @Override
+  public ArrayList<ElementalEffect> getElementalDefenses() {
+    ArrayList<ElementalEffect> list = new ArrayList<>();
+    // Add other resistances to the list that have been manually added to this enemy.
+    return list;
   }
 
   public SpriteSheet getSpriteSheet() {
@@ -81,14 +96,14 @@ public class Enemy extends StatModel {
     return enemyMoves.get(random.nextInt(enemyMoves.size()));
   }
   /**
-   * Gets a random move of the specified type and variety.
+   * Gets a random move of the specified type and action.
    * @param type Physical | Magical
-   * @param variety Offensive | Defensive
+   * @param action Offensive | Defensive
    * @return An EnemyMove object.
    */
-  public BattleMove getRandomMove(String type, String variety) {
+  public BattleMove getRandomMove(String type, String action) {
     List<BattleMove> moves = enemyMoves.stream().
-            filter(move -> move.getType().equals(type) && move.getVariety().equals(variety))
+            filter(move -> move.getType().equals(type) && move.getAction().equals(action))
             .collect(Collectors.<BattleMove>toList());
     return moves.get(random.nextInt(moves.size()));
   }

@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.elemental.Elemental;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import java.io.File;
 
@@ -37,7 +38,7 @@ public class BattleItem extends Item {
   
   public void setFireDamage(int amount) {
     powerLevel = amount;
-    elementalType = "Fire";
+    elementalType = Elemental.FIRE;
     battleMoveType = BattleMove.MAGICAL;
     attributes.add(new ItemAttribute(ItemAttribute.FIRE_DAMAGE, amount));
   }
