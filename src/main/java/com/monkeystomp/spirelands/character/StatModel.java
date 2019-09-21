@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.character;
 
 import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * The StatModel class is a superclass for Characters and Enemies who have stats for displaying and using in battle.
@@ -88,6 +89,36 @@ public class StatModel {
   protected int speed;
   // Luck
   protected int luck;
+  // The modifier for when health stat is increased
+  private final int healthWeightIncreaseModifier = 40;
+  // The modifier for when mana stat is increased
+  private final int manaWeightIncreaseModifier = 8;
+  // Stat weight for health stat
+  protected String healthWeight;
+  // Stat weight for mana stat
+  protected String manaWeight;
+  // Stat weight for strength stat
+  protected String strengthWeight;
+  // Stat weight for defense stat
+  protected String defenseWeight;
+  // Stat weight for intellect stat
+  protected String intellectWeight;
+  // Stat weight for spirit stat
+  protected String spiritWeight;
+  // Stat weight for speed stat
+  protected String speedWeight;
+  // Stat weight for luck stat
+  protected String luckWeight;
+  // Map of stat weight to array values.
+  private final HashMap<String, int[]> statWeightToValuesMap = new HashMap<>();
+  
+  public StatModel() {
+    statWeightToValuesMap.put(Character.VERY_LOW, new int[]{1, 1, 1, 1});
+    statWeightToValuesMap.put(Character.LOW, new int[]{1, 2, 1, 1});
+    statWeightToValuesMap.put(Character.AVERAGE, new int[]{1, 2, 1, 2});
+    statWeightToValuesMap.put(Character.HIGH, new int[]{1, 2, 2, 2});
+    statWeightToValuesMap.put(Character.VERY_HIGH, new int[]{2, 2, 2, 2});
+  }
   
   /**
    *      !!################################################!!
@@ -151,6 +182,88 @@ public class StatModel {
   
   public ArrayList<ElementalEffect> getElementalDefenses() {
     return new ArrayList<>();
+  }
+
+  public void setHealth(int health) {
+    this.health = health;
+  }
+
+  public void setHealthMax(int healthMax) {
+    this.healthMax = healthMax;
+  }
+  
+  private void increaseHealthMax(int amount) {
+    increaseHealth(amount);
+    setHealthMax(healthMax + amount);
+  }
+  
+  public void setHealthWeight(String weight) {
+    this.healthWeight = weight;
+  }
+
+  public void setMana(int mana) {
+    this.mana = mana;
+  }
+
+  public void setManaMax(int manaMax) {
+    this.manaMax = manaMax;
+  }
+  
+  private void increaseManaMax(int amount) {
+    increaseMana(amount);
+    setManaMax(manaMax + amount);
+  }
+  
+  public void setManaWeight(String weight) {
+    this.manaWeight = weight;
+  }
+
+  public void setStrength(int strength) {
+    this.strength = strength;
+  }
+  
+  public void setStrengthWeight(String weight) {
+    this.strengthWeight = weight;
+  }
+
+  public void setDefense(int defense) {
+    this.defense = defense;
+  }
+  
+  public void setDefenseWeight(String weight) {
+    this.defenseWeight = weight;
+  }
+
+  public void setIntellect(int intellect) {
+    this.intellect = intellect;
+  }
+  
+  public void setIntellectWeight(String weight) {
+    this.intellectWeight = weight;
+  }
+
+  public void setSpirit(int spirit) {
+    this.spirit = spirit;
+  }
+  
+  public void setSpiritWeight(String weight) {
+    this.spiritWeight = weight;
+  }
+
+  public void setSpeed(int speed) {
+    this.speed = speed;
+  }
+  
+  public void setSpeedWeight(String weight) {
+    this.speedWeight = weight;
+  }
+
+  public void setLuck(int luck) {
+    this.luck = luck;
+  }
+  
+  public void setLuckWeight(String weight) {
+    this.luckWeight = weight;
   }
   /**
    *      !!################################################!!
@@ -239,6 +352,26 @@ public class StatModel {
   public void increaseLuck(int amount) {
     luck += amount;
     if (luck > STAT_MAX) luck = STAT_MAX;
+  }
+  /**
+   * Increase the level stat of this stat model.
+   * @param amount The amount to change level by.
+   */
+  public void increaseLevel(int amount) {
+    for (int i = 0; i < amount; i++) {
+      level++;
+      if (level > 100) level = 100;
+      else {
+        increaseHealthMax(statWeightToValuesMap.get(healthWeight)[level % 4] * healthWeightIncreaseModifier);
+        increaseManaMax(statWeightToValuesMap.get(manaWeight)[level % 4] * manaWeightIncreaseModifier);
+        increaseStrength(statWeightToValuesMap.get(strengthWeight)[level % 4]);
+        increaseDefense(statWeightToValuesMap.get(defenseWeight)[level % 4]);
+        increaseIntellect(statWeightToValuesMap.get(intellectWeight)[level % 4]);
+        increaseSpirit(statWeightToValuesMap.get(spiritWeight)[level % 4]);
+        increaseSpeed(statWeightToValuesMap.get(speedWeight)[level % 4]);
+        increaseLuck(statWeightToValuesMap.get(luckWeight)[level % 4]);    
+      }
+    }
   }
 
 }

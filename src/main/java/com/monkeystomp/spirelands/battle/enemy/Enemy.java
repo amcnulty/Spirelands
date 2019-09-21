@@ -25,9 +25,9 @@ public class Enemy extends StatModel {
   // The drop rate of this enemy.
   private final int dropRate;
   // The experience gained from defeating this enemy.
-  private final int experienceAward;
+  private int experienceAward;
   // The gold gained from defeating this enemy.
-  private final int goldAward;
+  private int goldAward;
   // Moves that this enemy can perform.
   private final ArrayList<BattleMove> enemyMoves;
   // List of elemental effects for this enemy.
@@ -45,14 +45,22 @@ public class Enemy extends StatModel {
     this.level = builder.level;
     this.health = builder.health;
     this.healthMax = builder.healthMax;
+    this.healthWeight = builder.healthWeight;
     this.mana = builder.mana;
     this.manaMax = builder.manaMax;
+    this.manaWeight = builder.manaWeight;
     this.strength = builder.strength;
+    this.strengthWeight = builder.strengthWeight;
     this.defense = builder.defense;
+    this.defenseWeight = builder.defenseWeight;
     this.intellect = builder.intellect;
+    this.intellectWeight = builder.intellectWeight;
     this.spirit = builder.spirit;
+    this.spiritWeight = builder.spiritWeight;
     this.speed = builder.speed;
+    this.speedWeight = builder.speedWeight;
     this.luck = builder.luck;
+    this.luckWeight = builder.luckWeight;
     this.loot = builder.loot;
     this.dropRate = builder.dropRate;
     this.experienceAward = builder.experienceAward;
@@ -70,6 +78,14 @@ public class Enemy extends StatModel {
     ArrayList<ElementalEffect> list = new ArrayList<>();
     // Add other resistances to the list that have been manually added to this enemy.
     return list;
+  }
+  
+  @Override
+  public void increaseLevel(int amount) {
+    super.increaseLevel(amount);
+    health = healthMax;
+    experienceAward = (int)(.025 * Math.pow(level, 4) + Math.pow(level, 3) + 1.5 * Math.pow(level, 2) + .35 * level - 2.875) / (int)((95/100.0) * level + 6);
+    goldAward *= 1.3;
   }
 
   public SpriteSheet getSpriteSheet() {

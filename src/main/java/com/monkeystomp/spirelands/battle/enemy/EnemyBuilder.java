@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.enemy;
 
 import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
+import com.monkeystomp.spirelands.character.StatModel;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
@@ -55,47 +56,79 @@ public class EnemyBuilder {
   /**
    * Level of this enemy
    */
-  public int level;
+  public int level = 1;
   /**
    * Current hit points
    */
-  public int health;
+  public int health = 80;
   /** 
    * Hit point max
    */
-  public int healthMax;
+  public int healthMax = 80;
+  /**
+   * Health weight.
+   */
+  public String healthWeight = StatModel.AVERAGE;
   /**
    * Current mana points
    */
-  public int mana;
+  public int mana = 35;
   /**
    * Max mana points
    */
-  public int manaMax;
+  public int manaMax = 35;
+  /**
+   * Mana weight.
+   */
+  public String manaWeight = StatModel.AVERAGE;
   /**
    * Physical strength stat
    */
-  public int strength;
+  public int strength = 7;
+  /**
+   * Strength weight.
+   */
+  public String strengthWeight = StatModel.AVERAGE;
   /**
    * Physical attack resistance
    */
-  public int defense;
+  public int defense = 7;
+  /**
+   * Defense weight.
+   */
+  public String defenseWeight = StatModel.AVERAGE;
   /**
    * Magic attack stat
    */
-  public int intellect;
+  public int intellect = 7;
+  /**
+   * Intellect weight.
+   */
+  public String intellectWeight = StatModel.AVERAGE;
   /**
    * Magic attack resistance
    */
-  public int spirit;
+  public int spirit = 7;
+  /**
+   * Spirit weight.
+   */
+  public String spiritWeight = StatModel.AVERAGE;
   /**
    * Enemy speed stat
    */
-  public int speed;
+  public int speed = 10;
+  /**
+   * Speed weight.
+   */
+  public String speedWeight = StatModel.AVERAGE;
   /**
    * Luck
    */
-  public int luck;
+  public int luck = 10;
+  /**
+   * Luck weight.
+   */
+  public String luckWeight = StatModel.AVERAGE;
   /**
    * An item that this enemy is holding.
    */
@@ -167,6 +200,15 @@ public class EnemyBuilder {
     return this;
   }
   /**
+   * Sets the healthWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder healthWeight(String weight) {
+    this.healthWeight = weight;
+    return this;
+  }
+  /**
    * Sets the mana and max mana of this enemy.
    * @param mana Mana to set for this enemy.
    * @return The EnemyBuilder reference.
@@ -174,6 +216,15 @@ public class EnemyBuilder {
   public EnemyBuilder mana(int mana) {
     this.mana = mana;
     this.manaMax = mana;
+    return this;
+  }
+  /**
+   * Sets the manaWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder manaWeight(String weight) {
+    this.manaWeight = weight;
     return this;
   }
   /**
@@ -186,12 +237,30 @@ public class EnemyBuilder {
     return this;
   }
   /**
+   * Sets the strengthWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder strengthWeight(String weight) {
+    this.strengthWeight = weight;
+    return this;
+  }
+  /**
    * Sets the defense of this enemy.
    * @param defense Defense to set for this enemy.
    * @return The EnemyBuilder reference.
    */
   public EnemyBuilder defense(int defense) {
     this.defense = defense;
+    return this;
+  }
+  /**
+   * Sets the defenseWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder defenseWeight(String weight) {
+    this.defenseWeight = weight;
     return this;
   }
   /**
@@ -204,12 +273,30 @@ public class EnemyBuilder {
     return this;
   }
   /**
+   * Sets the intellectWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder intellectWeight(String weight) {
+    this.intellectWeight = weight;
+    return this;
+  }
+  /**
    * Sets the spirit of this enemy.
    * @param spirit Spirit to set for this enemy.
    * @return The EnemyBuilder reference.
    */
   public EnemyBuilder spirit(int spirit) {
     this.spirit = spirit;
+    return this;
+  }
+  /**
+   * Sets the spiritWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder spiritWeight(String weight) {
+    this.spiritWeight = weight;
     return this;
   }
   /**
@@ -222,12 +309,30 @@ public class EnemyBuilder {
     return this;
   }
   /**
+   * Sets the speedWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder speedWeight(String weight) {
+    this.speedWeight = weight;
+    return this;
+  }
+  /**
    * Sets the luck of this enemy.
    * @param luck Luck to set for this enemy.
    * @return The EnemyBuilder reference.
    */
   public EnemyBuilder luck(int luck) {
     this.luck = luck;
+    return this;
+  }
+  /**
+   * Sets the luckWeight for increasing levels of this enemy.
+   * @param weight Weight which to set for this enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder luckWeight(String weight) {
+    this.luckWeight = weight;
     return this;
   }
   /**
