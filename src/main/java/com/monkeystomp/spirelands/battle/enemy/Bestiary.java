@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
 import com.monkeystomp.spirelands.battle.elemental.Elemental;
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -116,6 +117,31 @@ public class Bestiary {
           .speed(11)
           .luck(11)
           .loot(Item.SMALL_HP_POTION)
+          .dropRate(20)
+          .experienceAward(1)
+          .goldAward(10)
+          .addMove(BattleMove.BASIC_ATTACK, "Splash")
+          .addMove(BattleMove.BLUNT_FORCE, "Tidal Wave")
+          .addMove(BattleMove.MAGIC_ENERGY, "Water Jet");
+  
+  /**
+   * A poisonous lion creature.
+   */
+  public static final EnemyBuilder POISION_LION = new EnemyBuilder()
+          .spriteSheet(new SpriteSheet("./resources/enemies/poison_lion_battle.png"))
+          .name("Poison Lion")
+          .element(Elemental.POISON)
+          .elementalEffect(new ElementalEffect(Elemental.FIRE, Elemental.VERY_WEAK))
+          .level(1)
+          .health(80)
+          .mana(35)
+          .strength(6)
+          .defense(8)
+          .intellect(5)
+          .spirit(11)
+          .speed(11)
+          .luck(11)
+          .loot(Item.RIBS)
           .dropRate(20)
           .experienceAward(1)
           .goldAward(10)

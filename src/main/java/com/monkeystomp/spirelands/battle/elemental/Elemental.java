@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.elemental;
 
+import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -45,6 +46,22 @@ public class Elemental {
    * Holy elemental type.
    */
   public static final String HOLY = "Holy";
+  /**
+   * Weakness of 25% higher damage.
+   */
+  public static final int WEAK = 125;
+  /**
+   * Weakness of 50% higher damage.
+   */
+  public static final int VERY_WEAK = 150;
+  /**
+   * Resistance of 25% less damage.
+   */
+  public static final int RESISTANT = 75;
+  /**
+   * Resistance of 50% less damage.
+   */
+  public static final int VERY_RESISTANT = 50;
   
   private static JSONObject elementalTypes;
   private static final JSONUtil jsonUtil = new JSONUtil();
@@ -59,13 +76,17 @@ public class Elemental {
     }
   }
   
-  public static double getAttackModifier(String attackElement, String defensiveElement) {
-    if (attackElement != null && defensiveElement != null) {
-      return jsonUtil.getNestedInt(elementalTypes, new String[]{attackElement, defensiveElement}) / 100.0;
+  public static double getAttackModifier(String attackElement, Enemy target) {
+    if (target.effectOfElement(attackElement) != 1) return target.effectOfElement(attackElement) / 100.0;
+    else if (attackElement != null) {
+      return jsonUtil.getNestedInt(elementalTypes, new String[]{attackElement, target.getElement()}) / 100.0;
     }
     else {
       return 1;
     }
+//    if (attackElement != null && target.getElement() != null) {
+//      return jsonUtil.getNestedInt(elementalTypes, new String[]{attackElement, target.getElement()}) / 100.0;
+//    }
   }
 
 }

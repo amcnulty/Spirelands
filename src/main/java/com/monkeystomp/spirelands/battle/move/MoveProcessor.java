@@ -76,7 +76,7 @@ public class MoveProcessor {
       else {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
         System.out.println("attack power: " + attackPower);
-        if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), ((Enemy)target.getStatModel()).getElement());
+        if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), (Enemy)target.getStatModel());
         System.out.println("new attack power: " + attackPower);
         overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
       }
@@ -167,6 +167,9 @@ public class MoveProcessor {
       averagePartyLevel /= partyMembers.size();
       averagePartyIntellect /= partyMembers.size();
       attackPower = (int)(move.getPowerLevel() * averagePartyIntellect * ( .1 + ( .009 * ( averagePartyLevel ))));
+      System.out.println("attack power: " + attackPower);
+      if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), (Enemy)target.getStatModel());
+      System.out.println("new attack power: " + attackPower);
       overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
     }
     overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));

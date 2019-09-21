@@ -30,6 +30,8 @@ public class Enemy extends StatModel {
   private final int goldAward;
   // Moves that this enemy can perform.
   private final ArrayList<BattleMove> enemyMoves;
+  // List of elemental effects for this enemy.
+  private final ArrayList<ElementalEffect> elementalEffects;
   // Random class.
   private final Random random = new Random();
   /**
@@ -56,6 +58,7 @@ public class Enemy extends StatModel {
     this.experienceAward = builder.experienceAward;
     this.goldAward = builder.goldAward;
     this.enemyMoves = builder.enemyMoves;
+    this.elementalEffects = builder.elementalEffects;
   }
 
   public String getElement() {
@@ -106,6 +109,18 @@ public class Enemy extends StatModel {
             filter(move -> move.getType().equals(type) && move.getAction().equals(action))
             .collect(Collectors.<BattleMove>toList());
     return moves.get(random.nextInt(moves.size()));
+  }
+
+  public ArrayList<ElementalEffect> getWeaknesses() {
+    return elementalEffects;
+  }
+  
+  public int effectOfElement(String element) {
+    List<ElementalEffect> elEffect = elementalEffects.stream()
+            .filter(effect -> effect.getElement().equals(element))
+            .collect(Collectors.toList());
+    if (elEffect.size() > 0) return elEffect.get(0).getPercentage();
+    else return 1;
   }
 
 }

@@ -7,9 +7,9 @@ package com.monkeystomp.spirelands.battle.elemental;
 public class ElementalEffect {
 
   private final String element;
-  private final double percentage;
+  private final int percentage;
   
-  public ElementalEffect(String element, double percent) {
+  public ElementalEffect(String element, int percent) {
     this.element = element;
     this.percentage = percent;
   }
@@ -18,7 +18,7 @@ public class ElementalEffect {
     return element;
   }
 
-  public double getPercentage() {
+  public int getPercentage() {
     return percentage;
   }
   

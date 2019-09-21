@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -115,6 +116,10 @@ public class EnemyBuilder {
    * Moves that this enemy can perform.
    */
   public ArrayList<BattleMove> enemyMoves = new ArrayList<>();
+  /**
+   * List of elemental weaknesses and resistances for this enemy.
+   */
+  public ArrayList<ElementalEffect> elementalEffects = new ArrayList<>();
   /**
    * Sets the sprite sheet of the enemy.
    * @param spriteSheet SpriteSheet object to set for this enemy.
@@ -270,7 +275,12 @@ public class EnemyBuilder {
     this.enemyMoves.add(move);
     return this;
   }
-  
+  /**
+   * Adds a new move to the list of this enemy's moves but gives the move a custom name.
+   * @param move New move to be added to the enemy.
+   * @param customMoveName Custom name to set for this move.
+   * @return The EnemyBuilder reference.
+   */
   public EnemyBuilder addMove(BattleMove move, String customMoveName) {
     try {
       BattleMove clone = (BattleMove)move.clone();
@@ -281,6 +291,15 @@ public class EnemyBuilder {
     catch (CloneNotSupportedException ex) {
       Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
     }
+    return this;
+  }
+  /**
+   * Adds an elemental effect to this enemy.
+   * @param weakness The elemental weakness to be added.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder elementalEffect(ElementalEffect weakness) {
+    this.elementalEffects.add(weakness);
     return this;
   }
   /**
