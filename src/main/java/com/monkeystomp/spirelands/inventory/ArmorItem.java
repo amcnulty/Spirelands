@@ -1,7 +1,9 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  *
@@ -32,6 +34,7 @@ public class ArmorItem extends Item {
               magicalDefence,
               speedPenalty;
   private String armorType;
+  private final ArrayList<ElementalEffect> elementalEffects = new ArrayList<>();
   
   public ArmorItem(ItemBuilder builder) {
     super(builder.type(Item.ARMOR));
@@ -67,6 +70,11 @@ public class ArmorItem extends Item {
     attributes.add(new ItemAttribute(ItemAttribute.SPEED_PENALTY, power));
     this.speedPenalty = power;
   }
+  
+  public void elementalEffect(ElementalEffect effect) {
+    elementalEffects.add(effect);
+    attributes.add(new ItemAttribute(ItemAttribute.ARMOR_ELEMENT_MAP.get(effect.getElement()), effect.getPercentage() - 100));
+  }
 
   public int getPhysicalDefense() {
     return physicalDefence;
@@ -86,6 +94,10 @@ public class ArmorItem extends Item {
 
   public void setArmorType(String armorType) {
     this.armorType = armorType;
+  }
+
+  public ArrayList<ElementalEffect> getElementalEffects() {
+    return elementalEffects;
   }
   
   @Override

@@ -78,6 +78,7 @@ public class MoveProcessor {
         if (user instanceof CharacterBattleEntity) attackPower *= ((CharacterBattleEntity)user).getStatModel().getWeaponElementalModifier(move.getElement());
         if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getModifierForEnemyElement(move.getElement(), (Enemy)target.getStatModel());
         overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedSpirit() ))));
+        if (target instanceof CharacterBattleEntity) overallEffect -= overallEffect * ((CharacterBattleEntity)target).getStatModel().getArmorElementalResistance(move.getElement());
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       if (user != target) target.playDamageAnimation();
@@ -168,6 +169,7 @@ public class MoveProcessor {
       attackPower = (int)(move.getPowerLevel() * averagePartyIntellect * ( .1 + ( .009 * ( averagePartyLevel ))));
       if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getModifierForEnemyElement(move.getElement(), (Enemy)target.getStatModel());
       overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedSpirit() ))));
+      if (target instanceof CharacterBattleEntity) overallEffect -= overallEffect * ((CharacterBattleEntity)target).getStatModel().getArmorElementalResistance(move.getElement());
     }
     overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
     if (user != target) target.playDamageAnimation();

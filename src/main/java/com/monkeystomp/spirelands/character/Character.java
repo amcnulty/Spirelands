@@ -419,5 +419,36 @@ public class Character extends StatModel {
     }
     return 1.0;
   }
+  
+  public double getArmorElementalResistance(String element) {
+    int totalPercentage = 0;
+    List<ElementalEffect> elEffect;
+    if (this.equippedHelmet != null) {
+      elEffect = equippedHelmet.getElementalEffects().stream()
+              .filter(effect -> effect.getElement().equals(element))
+              .collect(Collectors.toList());
+      if (elEffect.size() > 0) totalPercentage += elEffect.get(0).getPercentage() - 100;
+    }
+    if (this.equippedChestplate != null) {
+      elEffect = equippedChestplate.getElementalEffects().stream()
+              .filter(effect -> effect.getElement().equals(element))
+              .collect(Collectors.toList());
+      if (elEffect.size() > 0) totalPercentage += elEffect.get(0).getPercentage() - 100;
+    }
+    if (this.equippedShield != null) {
+      elEffect = equippedShield.getElementalEffects().stream()
+              .filter(effect -> effect.getElement().equals(element))
+              .collect(Collectors.toList());
+      if (elEffect.size() > 0) totalPercentage += elEffect.get(0).getPercentage() - 100;
+    }
+    if (this.equippedBoots != null) {
+      elEffect = equippedBoots.getElementalEffects().stream()
+              .filter(effect -> effect.getElement().equals(element))
+              .collect(Collectors.toList());
+      if (elEffect.size() > 0) totalPercentage += elEffect.get(0).getPercentage() - 100;
+    }
+    System.out.println("totalPercentage: " + totalPercentage);
+    return totalPercentage / 100.0;
+  }
     
 }

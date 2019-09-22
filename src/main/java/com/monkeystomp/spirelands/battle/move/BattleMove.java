@@ -219,7 +219,7 @@ public class BattleMove implements Cloneable {
           .build();
   
   /**
-   * A basic typeless magic attack. Magical & Offensive.
+   * A basic fire magic attack. Magical & Offensive.
    */
   public static final BattleMove FIREBALL = new BattleMoveBuilder()
           .name("Fireball")
@@ -230,6 +230,21 @@ public class BattleMove implements Cloneable {
           .ranged(true)
           .magicalSkillAnimation()
           .thumbnail(new Sprite(16, 16, 6, 11, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.MAGICAL_ENERGY)
+          .targetAnimation(BLUE_EXPLOSION)
+          .build();
+  /**
+   * A basic water attack. Magical & Offensive.
+   */
+  public static final BattleMove TIDAL_WAVE = new BattleMoveBuilder()
+          .name("Tidal Wave")
+          .element(Elemental.WATER)
+          .magicalAttack()
+          .powerLevel(20)
+          .manaRequired(5)
+          .ranged(true)
+          .magicalSkillAnimation()
+          .thumbnail(new Sprite(16, 16, 0, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.MAGICAL_ENERGY)
           .targetAnimation(BLUE_EXPLOSION)
           .build();

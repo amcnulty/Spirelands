@@ -358,6 +358,7 @@ public class Item {
     LEATHER_JACKET.setPhysicalDefense(5);
     LEATHER_JACKET.setMagicalDefense(1);
     LEATHER_JACKET.setArmorType(ArmorItem.CHESTPLATE);
+    LEATHER_JACKET.elementalEffect(new ElementalEffect(Elemental.WATER, Elemental.TEN_PERCENT));
   }
   /**
    * War Tunic (ARMOR)
@@ -421,6 +422,7 @@ public class Item {
     LEATHER_HELMET.setPhysicalDefense(3);
     LEATHER_HELMET.setMagicalDefense(1);
     LEATHER_HELMET.setArmorType(ArmorItem.HELMET);
+    LEATHER_HELMET.elementalEffect(new ElementalEffect(Elemental.WATER, Elemental.TEN_PERCENT));
   }
   /**
    * War helmet (ARMOR)
@@ -482,6 +484,7 @@ public class Item {
     LEATHER_BOOTS.setMagicalDefense(1);
     LEATHER_BOOTS.setSpeedPenalty(1);
     LEATHER_BOOTS.setArmorType(ArmorItem.BOOTS);
+    LEATHER_BOOTS.elementalEffect(new ElementalEffect(Elemental.WATER, Elemental.TEN_PERCENT));
   }
   /**
    * War Boots (ARMOR)
@@ -545,6 +548,7 @@ public class Item {
     WOOD_SHIELD.setPhysicalDefense(5);
     WOOD_SHIELD.setSpeedPenalty(2);
     WOOD_SHIELD.setArmorType(ArmorItem.SHIELD);
+    WOOD_SHIELD.elementalEffect(new ElementalEffect(Elemental.WATER, Elemental.TEN_PERCENT));
   }
   /**
    * War Shield (ARMOR)

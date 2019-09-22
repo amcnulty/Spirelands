@@ -73,47 +73,89 @@ public class ItemAttribute {
    */
   public static final String FIRE_BONUS = "Fire Bonus %";
   /**
+   * Fire resistance percentage. Used for armor items.
+   */
+  public static final String FIRE_RESISTANCE = "Fire Resistance %";
+  /**
    * Ice bonus percentage. Used for weapons items.
    */
   public static final String ICE_BONUS = "Ice Bonus %";
+  /**
+   * Ice resistance percentage. Used for armor items.
+   */
+  public static final String ICE_RESISTANCE = "Ice Resistance %";
   /**
    * Earth bonus percentage. Used for weapons items.
    */
   public static final String EARTH_BONUS = "Earth Bonus %";
   /**
+   * Earth resistance percentage. Used for armor items.
+   */
+  public static final String EARTH_RESISTANCE = "Earth Resistance %";
+  /**
    * Water bonus percentage. Used for weapons items.
    */
   public static final String WATER_BONUS = "Water Bonus %";
+  /**
+   * Water resistance percentage. Used for armor items.
+   */
+  public static final String WATER_RESISTANCE = "Water Resistance %";
   /**
    * Electric bonus percentage. Used for weapons items.
    */
   public static final String ELECTRIC_BONUS = "Electric Bonus %";
   /**
+   * Electric resistance percentage. Used for armor items.
+   */
+  public static final String ELECTRIC_RESISTANCE = "Electric Resistance %";
+  /**
    * Poison bonus percentage. Used for weapons items.
    */
   public static final String POISON_BONUS = "Poison Bonus %";
+  /**
+   * Poison resistance percentage. Used for armor items.
+   */
+  public static final String POISON_RESISTANCE = "Poison Resistance %";
   /**
    * Undead bonus percentage. Used for weapons items.
    */
   public static final String UNDEAD_BONUS = "Undead Bonus %";
   /**
+   * Undead resistance percentage. Used for armor items.
+   */
+  public static final String UNDEAD_RESISTANCE = "Undead Resistance %";
+  /**
    * Holy bonus percentage. Used for weapons items.
    */
   public static final String HOLY_BONUS = "Holy Bonus %";
+  /**
+   * Holy resistance percentage. Used for armor items.
+   */
+  public static final String HOLY_RESISTANCE = "Holy Resistance %";
   
   private final String  label,
                         value;
-  public static final HashMap<String, String> ELEMENT_MAP = new HashMap<>();
+  public static final HashMap<String, String> WEAPON_ELEMENT_MAP = new HashMap<>(),
+                                              ARMOR_ELEMENT_MAP = new HashMap<>();
   
   static {
-    ELEMENT_MAP.put(Elemental.FIRE, FIRE_BONUS);
-    ELEMENT_MAP.put(Elemental.ICE, ICE_BONUS);
-    ELEMENT_MAP.put(Elemental.EARTH, EARTH_BONUS);
-    ELEMENT_MAP.put(Elemental.WATER, WATER_BONUS);
-    ELEMENT_MAP.put(Elemental.ELECTRIC, ELECTRIC_BONUS);
-    ELEMENT_MAP.put(Elemental.POISON, POISON_BONUS);
-    ELEMENT_MAP.put(Elemental.UNDEAD, UNDEAD_BONUS);
-    ELEMENT_MAP.put(Elemental.HOLY, HOLY_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.FIRE, FIRE_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.ICE, ICE_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.EARTH, EARTH_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.WATER, WATER_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.ELECTRIC, ELECTRIC_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.POISON, POISON_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.UNDEAD, UNDEAD_BONUS);
+    WEAPON_ELEMENT_MAP.put(Elemental.HOLY, HOLY_BONUS);
+    
+    ARMOR_ELEMENT_MAP.put(Elemental.FIRE, FIRE_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.ICE, ICE_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.EARTH, EARTH_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.WATER, WATER_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.ELECTRIC, ELECTRIC_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.POISON, POISON_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.UNDEAD, UNDEAD_RESISTANCE);
+    ARMOR_ELEMENT_MAP.put(Elemental.HOLY, HOLY_RESISTANCE);
   }
   /**
    * Creates a new ItemAttribute object with the given label and value.

@@ -59,7 +59,7 @@ public class WeaponItem extends Item {
   
   public void elementalEffect(ElementalEffect effect) {
     elementalEffects.add(effect);
-    attributes.add(new ItemAttribute(ItemAttribute.ELEMENT_MAP.get(effect.getElement()), effect.getPercentage() - 100));
+    attributes.add(new ItemAttribute(ItemAttribute.WEAPON_ELEMENT_MAP.get(effect.getElement()), effect.getPercentage() - 100));
   }
   
   public void setWeaponType(String type) {
