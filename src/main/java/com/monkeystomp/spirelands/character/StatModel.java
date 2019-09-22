@@ -180,6 +180,30 @@ public class StatModel {
     return luck;
   }
   
+  public int getCombinedAttack() {
+    return getStrength();
+  }
+  
+  public int getCombinedDefense() {
+    return getDefense();
+  }
+  
+  public int getCombinedIntellect() {
+    return getIntellect();
+  }
+  
+  public int getCombinedSpirit() {
+    return getSpirit();
+  }
+  
+  public int getCombinedSpeed() {
+    return getSpeed();
+  }
+  
+  public int getCombinedLuck() {
+    return getLuck();
+  }
+  
   public ArrayList<ElementalEffect> getElementalDefenses() {
     return new ArrayList<>();
   }

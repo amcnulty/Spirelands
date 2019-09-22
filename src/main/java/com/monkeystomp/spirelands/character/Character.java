@@ -1,12 +1,14 @@
 package com.monkeystomp.spirelands.character;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A Character defines the name and stats of a group member that can be used in the player's party.
@@ -295,6 +297,7 @@ public class Character extends StatModel {
    * Gets the combined attack stat for this character which is a figure based on the strength stat and the attack power of the current equipped weapon.
    * @return The combined attack stat for this character.
    */
+  @Override
   public int getCombinedAttack() {
     if (equippedWeapon != null) {
       return equippedWeapon.getAttackPower() + strength;
@@ -305,6 +308,7 @@ public class Character extends StatModel {
    * Gets the combined defense stat for this character which is a figure based on the defense stat and the physical defense of all combined armor.
    * @return The combined defense stat for this character.
    */
+  @Override
   public int getCombinedDefense() {
     int combinedDefense = defense;
     if (equippedHelmet != null) {
@@ -322,6 +326,7 @@ public class Character extends StatModel {
     return combinedDefense;
   }
   
+  @Override
   public int getCombinedIntellect() {
     if (equippedWeapon != null) {
       return equippedWeapon.getMagicPower() + intellect;
@@ -329,6 +334,7 @@ public class Character extends StatModel {
     else return intellect;
   }
   
+  @Override
   public int getCombinedSpirit() {
     int combinedSpirit = spirit;
     if (equippedHelmet != null) {
@@ -346,6 +352,7 @@ public class Character extends StatModel {
     return combinedSpirit;
   }
   
+  @Override
   public int getCombinedSpeed() {
     int combinedSpeed = speed;
     if (equippedHelmet != null) {
@@ -364,6 +371,7 @@ public class Character extends StatModel {
     return combinedSpeed;
   }
   
+  @Override
   public int getCombinedLuck() {
     return luck;
   }
@@ -400,6 +408,16 @@ public class Character extends StatModel {
     else {
       experience += amount;
     }
+  }
+  
+  public double getWeaponElementalModifier(String element) {
+    if (equippedWeapon != null) {
+      List<ElementalEffect> elEffect = equippedWeapon.getElementalEffects().stream()
+              .filter(effect -> effect.getElement().equals(element))
+              .collect(Collectors.toList());
+      if (elEffect.size() > 0) return elEffect.get(0).getPercentage() / 100.0;
+    }
+    return 1.0;
   }
     
 }

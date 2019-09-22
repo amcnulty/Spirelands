@@ -1,6 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.elemental.Elemental;
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -609,6 +611,7 @@ public class Item {
   static {
     COMMON_SWORD.setAttackPower(10);
     COMMON_SWORD.setWeaponType(WeaponItem.SWORD);
+    COMMON_SWORD.elementalEffect(new ElementalEffect(Elemental.FIRE, Elemental.TEN_PERCENT));
   }
   /**
    * Katana sword (WEAPON)

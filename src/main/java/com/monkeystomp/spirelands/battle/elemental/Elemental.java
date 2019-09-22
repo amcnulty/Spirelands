@@ -62,6 +62,22 @@ public class Elemental {
    * Resistance of 50% less damage.
    */
   public static final int VERY_RESISTANT = 50;
+  /**
+   * Five percent value.
+   */
+  public static final int FIVE_PERCENT = 105;
+  /**
+   * Ten percent value.
+   */
+  public static final int TEN_PERCENT = 110;
+  /**
+   * Fifteen percent value.
+   */
+  public static final int FIFTEEN_PERCENT = 115;
+  /**
+   * Twenty percent value.
+   */
+  public static final int TWENTY_PERCENT = 120;
   
   private static JSONObject elementalTypes;
   private static final JSONUtil jsonUtil = new JSONUtil();
@@ -76,7 +92,7 @@ public class Elemental {
     }
   }
   
-  public static double getAttackModifier(String attackElement, Enemy target) {
+  public static double getModifierForEnemyElement(String attackElement, Enemy target) {
     if (target.effectOfElement(attackElement) != 1) return target.effectOfElement(attackElement) / 100.0;
     else if (attackElement != null) {
       return jsonUtil.getNestedInt(elementalTypes, new String[]{attackElement, target.getElement()}) / 100.0;

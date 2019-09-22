@@ -1,5 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
+import java.util.ArrayList;
+
 /**
  *
  * @author Aaron Michael McNulty
@@ -38,6 +41,7 @@ public class WeaponItem extends Item {
   private int attackPower,
               magicPower;
   private String weaponType;
+  private final ArrayList<ElementalEffect> elementalEffects = new ArrayList<>();
 
   public WeaponItem(ItemBuilder builder) {
     super(builder.type(Item.WEAPON));
@@ -51,6 +55,11 @@ public class WeaponItem extends Item {
   public void setMagicAttackPower(int power) {
     attributes.add(new ItemAttribute(ItemAttribute.MAGIC_POWER, power));
     magicPower = power;
+  }
+  
+  public void elementalEffect(ElementalEffect effect) {
+    elementalEffects.add(effect);
+    attributes.add(new ItemAttribute(ItemAttribute.ELEMENT_MAP.get(effect.getElement()), effect.getPercentage() - 100));
   }
   
   public void setWeaponType(String type) {
@@ -67,6 +76,10 @@ public class WeaponItem extends Item {
 
   public int getMagicPower() {
     return magicPower;
+  }
+
+  public ArrayList<ElementalEffect> getElementalEffects() {
+    return elementalEffects;
   }
   
   @Override

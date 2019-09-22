@@ -61,7 +61,7 @@ public class MoveProcessor {
     }
     else {
       if (move.getType().equals(BattleMove.PHYSICAL)) {
-        attackPower = (int)(move.getPowerLevel() * user.getStatModel().getStrength() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedAttack() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
         if (user instanceof CharacterBattleEntity && random.nextInt(100) + 1 > 95) {
           attackPower *= 1.5;
           FlashMessage message = new FlashMessage(user.getX() - 5, user.getY() + 8, "Critical!");
@@ -69,16 +69,15 @@ public class MoveProcessor {
           IFlashMessage.accept(message);
         }
         if (target.isGuarding()) {
-          overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getDefense() * 1.5) ))));
+          overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getCombinedDefense() * 1.5) ))));
         }
-        else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getDefense() ))));
+        else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedDefense() ))));
       }
       else {
-        attackPower = (int)(move.getPowerLevel() * user.getStatModel().getIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
-        System.out.println("attack power: " + attackPower);
-        if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), (Enemy)target.getStatModel());
-        System.out.println("new attack power: " + attackPower);
-        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
+        attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        if (user instanceof CharacterBattleEntity) attackPower *= ((CharacterBattleEntity)user).getStatModel().getWeaponElementalModifier(move.getElement());
+        if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getModifierForEnemyElement(move.getElement(), (Enemy)target.getStatModel());
+        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedSpirit() ))));
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       if (user != target) target.playDamageAnimation();
@@ -147,15 +146,15 @@ public class MoveProcessor {
       HashMap<Integer, Character> partyMembers = CharacterManager.getCharacterManager().getPartyMembers();
       for (int i = 0; i < partyMembers.size(); i++) {
         averagePartyLevel += partyMembers.get(i).getLevel();
-        averagePartyStrength += partyMembers.get(i).getStrength();
+        averagePartyStrength += partyMembers.get(i).getCombinedAttack();
       }
       averagePartyLevel /= partyMembers.size();
       averagePartyStrength /= partyMembers.size();
       attackPower = (int)(move.getPowerLevel() * averagePartyStrength * ( .1 + ( .009 * ( averagePartyLevel ))));
       if (target.isGuarding()) {
-        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getDefense() * 1.5) ))));
+        overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( (target.getStatModel().getCombinedDefense() * 1.5) ))));
       }
-      else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getDefense() ))));
+      else overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedDefense() ))));
     }
     else {
       int averagePartyLevel = 0, averagePartyIntellect = 0;
@@ -167,10 +166,8 @@ public class MoveProcessor {
       averagePartyLevel /= partyMembers.size();
       averagePartyIntellect /= partyMembers.size();
       attackPower = (int)(move.getPowerLevel() * averagePartyIntellect * ( .1 + ( .009 * ( averagePartyLevel ))));
-      System.out.println("attack power: " + attackPower);
-      if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getAttackModifier(move.getElement(), (Enemy)target.getStatModel());
-      System.out.println("new attack power: " + attackPower);
-      overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getSpirit() ))));
+      if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getModifierForEnemyElement(move.getElement(), (Enemy)target.getStatModel());
+      overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedSpirit() ))));
     }
     overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
     if (user != target) target.playDamageAnimation();
