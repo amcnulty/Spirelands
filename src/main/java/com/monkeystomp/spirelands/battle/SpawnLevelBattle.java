@@ -35,19 +35,19 @@ public class SpawnLevelBattle extends Battle {
 //    newEntity.setBattle(this);
 //    enemies.add(newEntity);
 
-    Enemy enemy = Bestiary.WATER_BLOB.build();
+    Enemy enemy = Bestiary.PIXIE.build();
     enemy.increaseLevel(5);
     EnemyBattleEntity newEntity = new EnemyBattleEntity(new SpawnCoordinate(100, 130, 1), enemy);
     newEntity.setBattle(this);
     enemies.add(newEntity);
     
-    enemy = Bestiary.WATER_BLOB.build();
+    enemy = Bestiary.PIXIE.build();
     enemy.increaseLevel(4);
     newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 100, 1), enemy);
     newEntity.setBattle(this);
     enemies.add(newEntity);
 
-    enemy = Bestiary.WATER_BLOB.build();
+    enemy = Bestiary.PIXIE.build();
     enemy.increaseLevel(5);
     newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 170, 1), enemy);
     newEntity.setBattle(this);

@@ -100,9 +100,6 @@ public class Elemental {
     else {
       return 1;
     }
-//    if (attackElement != null && target.getElement() != null) {
-//      return jsonUtil.getNestedInt(elementalTypes, new String[]{attackElement, target.getElement()}) / 100.0;
-//    }
   }
 
 }

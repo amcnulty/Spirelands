@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
+import com.monkeystomp.spirelands.battle.elemental.Elemental;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.battle.move.Buff;
 import com.monkeystomp.spirelands.character.StatModel;
@@ -379,6 +380,10 @@ public class BattleEntity {
     return (buff.isActive()) ? buff.getSpiritModifier() : 0;
   }
   
+  public double getElementalBuffModifier(String element) {
+    return (buff.isActive()) ? buff.getElementalModifier(element) : 0;
+  }
+  
   public void setBuff(Buff buff) {
     try {
       this.buff = (Buff)buff.clone();
@@ -481,7 +486,6 @@ public class BattleEntity {
   }
   
   public void render(Screen screen, GL2 gl) {
-    screen.renderSprite(gl, x - currentAction.getWidth() / 2, y - currentAction.getHeight() / 2, currentAction, false);
     if (buff.isActive()) {
       screen.renderSprite(gl, getBuffBarX(), getBuffBarY(), buffBarEmpty, false);
       if (buffBarFilled.getWidth() > 0) screen.renderSprite(gl, getBuffBarX(), getBuffBarY(), buffBarFilled, false);

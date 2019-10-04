@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.move;
 
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.elemental.Elemental;
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -275,6 +276,7 @@ public class BattleMove implements Cloneable {
           .targetAnimation(CURE_ANIMATION)
           .manaRequired(8)
           .defensiveBuff(.5)
+          .addElementalBuff(new ElementalEffect(Elemental.WATER, 150))
           .buffTime(20)
           .defensiveAction(buffAction)
           .build();

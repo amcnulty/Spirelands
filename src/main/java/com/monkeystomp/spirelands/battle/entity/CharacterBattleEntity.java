@@ -156,8 +156,9 @@ public class CharacterBattleEntity extends BattleEntity {
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    if (showingControls) screen.renderSprite(gl, x - currentAction.getWidth() / 2 - 10, y - currentAction.getHeight() / 2 + 4 - 24, ringBack.getSprite(), false);
     super.render(screen, gl);
+    if (showingControls) screen.renderSprite(gl, x - currentAction.getWidth() / 2 - 10, y - currentAction.getHeight() / 2 + 4 - 24, ringBack.getSprite(), false);
+    screen.renderSprite(gl, x - currentAction.getWidth() / 2, y - currentAction.getHeight() / 2, currentAction, false);
     if (showingControls) screen.renderSprite(gl, x - currentAction.getWidth() / 2 - 10, y - currentAction.getHeight() / 2 + 4 + 24, ringFront.getSprite(), false);
   }
 

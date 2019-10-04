@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.battle.move;
 
+import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.message.FlashMessage;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
@@ -324,6 +325,11 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder spiritBuff(double percent) {
     this.buff.setSpiritBuff(percent);
+    return this;
+  }
+  
+  public BattleMoveBuilder addElementalBuff(ElementalEffect elEffect) {
+    this.buff.addElementalEffect(elEffect);
     return this;
   }
   /**

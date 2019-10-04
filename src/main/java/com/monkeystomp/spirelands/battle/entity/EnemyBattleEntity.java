@@ -267,6 +267,7 @@ public class EnemyBattleEntity extends BattleEntity {
   
   @Override
   public void render(Screen screen, GL2 gl) {
+    super.render(screen, gl);
     screen.renderFlippedSprite(gl, x - currentAction.getWidth() / 2, y - currentAction.getHeight() / 2, currentAction, alpha, false);
     screen.renderSprite(gl, getHealthBarX(), getHealthBarY(), healthBarEmpty, healthBarAlpha, false);
     if (healthBarFilled != null && healthBarFilled.getWidth() > 0) screen.renderSprite(gl, getHealthBarX(), getHealthBarY(), healthBarFilled, healthBarAlpha, false);
