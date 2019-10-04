@@ -40,9 +40,9 @@ import java.util.stream.Collectors;
  */
 public class Battle {
   
-  protected SpawnCoordinate partyMemberSlot1 = new SpawnCoordinate(300, 110, 3),
-                            partyMemberSlot2 = new SpawnCoordinate(320, 70, 3),
-                            partyMemberSlot3 = new SpawnCoordinate(320, 150, 3);
+  protected SpawnCoordinate partyMemberSlot1 = new SpawnCoordinate(300, 130, 3),
+                            partyMemberSlot2 = new SpawnCoordinate(320, 100, 3),
+                            partyMemberSlot3 = new SpawnCoordinate(320, 170, 3);
   private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
   private final Random random = new Random();
   private final int battleCardTop = 200;

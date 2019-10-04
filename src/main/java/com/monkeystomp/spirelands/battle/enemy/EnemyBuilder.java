@@ -146,6 +146,10 @@ public class EnemyBuilder {
    */
   public int goldAward;
   /**
+   * Size in pixels to render this enemy in the battle scene.
+   */
+  public int renderSize;
+  /**
    * Moves that this enemy can perform.
    */
   public ArrayList<BattleMove> enemyMoves = new ArrayList<>();
@@ -369,6 +373,15 @@ public class EnemyBuilder {
    */
   public EnemyBuilder goldAward(int award) {
     this.goldAward = award;
+    return this;
+  }
+  /**
+   * Sets the size this enemy will render at in pixels in the battle scene.
+   * @param size Length in pixels for the side of the square size to render the enemy.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder renderSize(int size) {
+    this.renderSize = size;
     return this;
   }
   /**

@@ -30,8 +30,8 @@ public class FlashMessage {
   private final FontInfo damageFontInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT();
   private final FontInfo mainMessageFontInfo = GameFonts.getDarkText_22();
   private final FontRenderContext frc = new FontRenderContext(null, true, true);
+  private final Random random = new Random();
   private Sprite mainMessageBackground;
-  private Random random = new Random();
   
   public FlashMessage(int x, int y, String message) {
     this.x = x;
@@ -43,8 +43,8 @@ public class FlashMessage {
   }
   
   public FlashMessage(BattleEntity target, String message) {
-    this.x = target.getX() + target.getCurrentAction().getWidth() / 2 + 4 - random.nextInt(9);
-    this.y = target.getY();
+    this.x = target.getX() + 4 - random.nextInt(9);
+    this.y = target.getY() - target.getCurrentAction().getHeight() / 2;
     damageFontInfo.setX(x);
     damageFontInfo.setY(y);
     damageFontInfo.setText(message);

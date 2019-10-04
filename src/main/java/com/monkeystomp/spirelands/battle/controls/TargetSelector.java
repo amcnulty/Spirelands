@@ -186,7 +186,7 @@ public class TargetSelector {
 
   public void render(Screen screen, GL2 gl) {
     if (targeting) {
-      screen.renderSprite(gl, currentTarget.getX() + currentTarget.getCurrentAction().getWidth() / 2 - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - 15, selectorIconAnim.getSprite(), false);
+      screen.renderSprite(gl, currentTarget.getX() - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - currentTarget.getCurrentAction().getHeight() / 2 - 15, selectorIconAnim.getSprite(), false);
       if (targeting && singleTargetOnly) {
         mouseTargetButtons.stream()
           .filter(button -> button.getEntity() == currentTarget)

@@ -28,6 +28,8 @@ public class Enemy extends StatModel {
   private int experienceAward;
   // The gold gained from defeating this enemy.
   private int goldAward;
+  // Size in pixels to render this enemy in the battle scene.
+  private int renderSize;
   // Moves that this enemy can perform.
   private final ArrayList<BattleMove> enemyMoves;
   // List of elemental effects for this enemy.
@@ -65,6 +67,7 @@ public class Enemy extends StatModel {
     this.dropRate = builder.dropRate;
     this.experienceAward = builder.experienceAward;
     this.goldAward = builder.goldAward;
+    this.renderSize = builder.renderSize;
     this.enemyMoves = builder.enemyMoves;
     this.elementalEffects = builder.elementalEffects;
   }
@@ -106,6 +109,10 @@ public class Enemy extends StatModel {
 
   public int getGoldAward() {
     return goldAward;
+  }
+
+  public int getRenderSize() {
+    return renderSize;
   }
   /**
    * Gets any random move from this enemies list of moves.

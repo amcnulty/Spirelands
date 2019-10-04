@@ -447,7 +447,6 @@ public class Character extends StatModel {
               .collect(Collectors.toList());
       if (elEffect.size() > 0) totalPercentage += elEffect.get(0).getPercentage() - 100;
     }
-    System.out.println("totalPercentage: " + totalPercentage);
     return totalPercentage / 100.0;
   }
     

@@ -54,7 +54,7 @@ public class MoveProcessor {
     if (random.nextInt(100) + 1 > move.getAccuracy()) {
       if (user != target) target.playEvadeAnimation();
       sfx.playSoundEffect(SoundEffects.HIT_MISS);
-      FlashMessage message = new FlashMessage(target.getX() + 16, target.getY(), "miss");
+      FlashMessage message = new FlashMessage(target, "miss");
       message.floatMessageUp(true);
       IFlashMessage.accept(message);
 //      System.out.println(user.getStatModel().getName() + " missed " + target.getStatModel().getName() + "!");
@@ -64,7 +64,7 @@ public class MoveProcessor {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedAttack() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
         if (user instanceof CharacterBattleEntity && random.nextInt(100) + 1 > 95) {
           attackPower *= 1.5;
-          FlashMessage message = new FlashMessage(user.getX() - 5, user.getY() + 8, "Critical!");
+          FlashMessage message = new FlashMessage(user.getX() - user.getCurrentAction().getWidth() / 2 - 5, user.getY() - user.getCurrentAction().getHeight() / 2 + 8, "Critical!");
           message.floatMessageUp(true);
           IFlashMessage.accept(message);
         }
@@ -191,7 +191,15 @@ public class MoveProcessor {
   public void render(Screen screen, GL2 gl) {
     if (currentMove != null) {
       if (currentMove.hasTargetAnimation()) {
-        if (currentMove.getTargetAnimation().isReadyToPlay()) screen.renderSprite(gl, currentTarget.getX() + currentTarget.getCurrentAction().getWidth() / 2 - currentMove.getTargetAnimation().getSprite().getWidth() / 2, currentTarget.getY() + currentTarget.getCurrentAction().getHeight() / 2 - currentMove.getTargetAnimation().getSprite().getHeight() / 2, currentMove.getTargetAnimation().getSprite(), false);
+        if (currentMove.getTargetAnimation().isReadyToPlay()) {
+          screen.renderSprite(
+                  gl,
+                  currentTarget.getX() - currentMove.getTargetAnimation().getSprite().getWidth() / 2,
+                  currentTarget.getY() - currentMove.getTargetAnimation().getSprite().getHeight() / 2,
+                  currentMove.getTargetAnimation().getSprite(),
+                  false
+          );
+        }
       }
     }
   }

@@ -16,7 +16,6 @@ import java.util.Random;
  */
 public class CharacterBattleEntity extends BattleEntity {
   
-  private final int rightOfTarget = 28;
   private final Random random = new Random();
   private boolean targetingSelf = false,
                   showingControls = false;
@@ -134,7 +133,7 @@ public class CharacterBattleEntity extends BattleEntity {
     currentMove = move;
     moveAnimation = move.getMoveAnimation();
     if (!move.isRanged() && !targetingSelf) {
-      moveToLocation(target.getX() + rightOfTarget, target.getY());
+      moveToLocation(target.getX() + target.getCurrentAction().getWidth() / 2 + currentAction.getWidth() / 2 + 4, target.getY());
     }
     else processMove();
   }
@@ -157,9 +156,9 @@ public class CharacterBattleEntity extends BattleEntity {
   
   @Override
   public void render(Screen screen, GL2 gl) {
-    if (showingControls) screen.renderSprite(gl, x - 10, y + 4 - 24, ringBack.getSprite(), false);
+    if (showingControls) screen.renderSprite(gl, x - currentAction.getWidth() / 2 - 10, y - currentAction.getHeight() / 2 + 4 - 24, ringBack.getSprite(), false);
     super.render(screen, gl);
-    if (showingControls) screen.renderSprite(gl, x - 10, y + 4 + 24, ringFront.getSprite(), false);
+    if (showingControls) screen.renderSprite(gl, x - currentAction.getWidth() / 2 - 10, y - currentAction.getHeight() / 2 + 4 + 24, ringFront.getSprite(), false);
   }
 
 }

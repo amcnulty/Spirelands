@@ -129,6 +129,7 @@ public class Bestiary {
           .dropRate(20)
           .experienceAward(1)
           .goldAward(10)
+          .renderSize(64)
           .addMove(BattleMove.BASIC_ATTACK, "Splash")
           .addMove(BattleMove.BLUNT_FORCE, "Tidal Wave")
           .addMove(BattleMove.MAGIC_ENERGY, "Water Jet");

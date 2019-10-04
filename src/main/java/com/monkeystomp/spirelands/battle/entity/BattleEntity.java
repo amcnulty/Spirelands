@@ -44,7 +44,7 @@ public class BattleEntity {
   protected Method moveAnimation;
   protected StatModel statModel;
   private final ArrayList<int[]> travelingSteps = new ArrayList<>();
-  private final HashMap<String, Sprite> actionMap = new HashMap<>();
+  protected final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
     idleAnimation = () -> {
       currentAction = actionMap.get("IDLE_" + (anim % 36) / 12);
@@ -433,7 +433,7 @@ public class BattleEntity {
   }
   
   public void render(Screen screen, GL2 gl) {
-    screen.renderSprite(gl, x, y, currentAction, false);
+    screen.renderSprite(gl, x - currentAction.getWidth() / 2, y - currentAction.getHeight() / 2, currentAction, false);
   }
   
 }

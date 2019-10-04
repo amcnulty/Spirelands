@@ -22,8 +22,8 @@ public class BattleTargetButton extends Button {
   public BattleTargetButton(BattleEntity entity, ICallback callback) {
     super(
       "",
-      entity.getX() + entity.getCurrentAction().getWidth() / 2,
-      entity.getY() + entity.getCurrentAction().getHeight() / 2,
+      entity.getX(),
+      entity.getY(),
       entity.getCurrentAction().getWidth(),
       entity.getCurrentAction().getHeight(),
       callback
