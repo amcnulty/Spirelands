@@ -3,10 +3,12 @@ package com.monkeystomp.spirelands.battle.entity;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
+import com.monkeystomp.spirelands.battle.move.Buff;
 import com.monkeystomp.spirelands.character.StatModel;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.util.Helpers;
@@ -43,6 +45,9 @@ public class BattleEntity {
   protected BattleMove currentMove;
   protected Method moveAnimation;
   protected StatModel statModel;
+  private Buff buff = new Buff();
+  private final Sprite buffBarEmpty = new Sprite(50, 1, GameColors.MANA_BAR_EMPTY);
+  private Sprite buffBarFilled;
   private final ArrayList<int[]> travelingSteps = new ArrayList<>();
   protected final HashMap<String, Sprite> actionMap = new HashMap<>();
   protected final ICallback
@@ -358,6 +363,39 @@ public class BattleEntity {
     readyGauge = 0;
   }
   
+  public double getAttackModifier() {
+    return (buff.isActive()) ? buff.getAttackModifier() : 0;
+  }
+  
+  public double getDefenseModifier() {
+    return (buff.isActive()) ? buff.getDefenseModifier() : 0;
+  }
+  
+  public double getIntellectModifier() {
+    return (buff.isActive()) ? buff.getIntellectModifier() : 0;
+  }
+  
+  public double getSpiritModifier() {
+    return (buff.isActive()) ? buff.getSpiritModifier() : 0;
+  }
+  
+  public void setBuff(Buff buff) {
+    try {
+      this.buff = (Buff)buff.clone();
+      setBuffBar();
+    } catch (CloneNotSupportedException ex) {
+      Logger.getLogger(BattleEntity.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }  
+
+  private int getBuffBarX() {
+    return x - 25;
+  }
+  
+  private int getBuffBarY() {
+    return y - currentAction.getHeight() / 2 - 1;
+  }
+  
   protected void checkHealthStatus() {
     if (statModel.getHealth() == 0) currentAnimation = deadAnimation;
     else if (statModel.getHealth() / (double)statModel.getHealthMax() < .2 && !isGuarding()) playLowHealthAnimation();
@@ -424,16 +462,30 @@ public class BattleEntity {
   
   protected void checkForHealth() {}
   
+  private void setBuffBar() {
+    buffBarFilled = new Sprite((int)(buff.getTimeRemaining() / (float)buff.getBuffTime() * 50), 1, GameColors.MANA_BAR_FILL);
+  }
+  
   public void update() {
     if (!isDead) checkForHealth();
     currentAnimation.execute();
     anim++;
-    if (battle.isGaugesFilling() && !ready && !isDead) fillGauge();
+    if (battle.isGaugesFilling() && !ready && !isDead) {
+      fillGauge();
+      if (buff.isActive()) {
+        buff.reduceTime();
+        if (buff.getBuffTime() % 60 == 0) setBuffBar();
+      }
+    }
     updateTravel();
   }
   
   public void render(Screen screen, GL2 gl) {
     screen.renderSprite(gl, x - currentAction.getWidth() / 2, y - currentAction.getHeight() / 2, currentAction, false);
+    if (buff.isActive()) {
+      screen.renderSprite(gl, getBuffBarX(), getBuffBarY(), buffBarEmpty, false);
+      if (buffBarFilled.getWidth() > 0) screen.renderSprite(gl, getBuffBarX(), getBuffBarY(), buffBarFilled, false);
+    }
   }
   
 }

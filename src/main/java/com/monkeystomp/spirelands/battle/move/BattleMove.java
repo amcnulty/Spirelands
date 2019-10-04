@@ -46,6 +46,11 @@ public class BattleMove implements Cloneable {
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
   // Instance of the Random class.
   private static final Random random = new Random();
+  // Action to use for defensive buff moves.
+  private static final Function<MoveInformation, FlashMessage> buffAction = moveInfo -> {
+            moveInfo.getTarget().setBuff(moveInfo.getMove().getBuff());
+            return null;
+          };
   // Used to track the ids when creating moves.
   private static int  nextItemId = 1000,
                       nextPhysicalId = 2000,
@@ -55,7 +60,7 @@ public class BattleMove implements Cloneable {
   // The name of the move.
   private String name;
   // The elemental type of the move.
-  private String element;
+  private final String element;
   // Physical or magical type.
   private final String type;
   // Offensive or defensive action.
@@ -84,6 +89,8 @@ public class BattleMove implements Cloneable {
   private final boolean singleTarget;
   // Item associated with item move.
   private final Item item;
+  // Buff for this move.
+  private final Buff buff;
   /**
    *          !!################################!!
    *          !!                                !!
@@ -177,46 +184,6 @@ public class BattleMove implements Cloneable {
           .thumbnail(Item.BROADAXE.getThumbnail())
           .sound(SoundEffects.STRONG_MALE_ATTACK)
           .build();
-  /**
-   * A cure spell for recovering HP. Magical & Defensive.
-   */
-  public static final BattleMove CURE = new BattleMoveBuilder()
-          .name("Cure")
-          .magicalDefensive()
-          .powerLevel(20)
-          .manaRequired(5)
-          .accuracy(100)
-          .ranged(true)
-          .magicalSkillAnimation()
-          .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
-          .sound(SoundEffects.HEALING_SOUND)
-          .targetAnimation(CURE_ANIMATION)
-          .defensiveAction(moveInfo -> {
-            int attackPower, overallEffect;
-            attackPower = (int)(moveInfo.getMove().getPowerLevel() * moveInfo.getUser().getStatModel().getIntellect() * ( .1 + ( .009 * ( moveInfo.getUser().getStatModel().getLevel() ))));
-            overallEffect = (int)( attackPower * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
-            moveInfo.getTarget().getStatModel().increaseHealth(overallEffect);
-            FlashMessage message = new FlashMessage(moveInfo.getTarget(), String.valueOf(overallEffect));
-            message.setColor(new Color(GameColors.ATB_GAUGE_BAR_FILLED));
-            message.floatMessageUp(true);
-            return message;
-          })
-          .build();
-  /**
-   * A defensive move to limit physical damage. Physical & Defensive.
-   */
-  public static final BattleMove GUARD = new BattleMoveBuilder()
-          .name("Guard")
-          .physicalDefensive()
-          .guardAnimation()
-          .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
-          .defensiveAction(moveInfo -> {
-            moveInfo.getUser().setGuarding(true);
-            moveInfo.getUser().returnToIdleState();
-            return null;
-          })
-          .singleTarget(true)
-          .build();
   
   /**
    * A basic fire magic attack. Magical & Offensive.
@@ -249,6 +216,84 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BLUE_EXPLOSION)
           .build();
   /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!        Defensive Moves         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
+   * A cure spell for recovering HP. Magical & Defensive.
+   */
+  public static final BattleMove CURE = new BattleMoveBuilder()
+          .name("Cure")
+          .magicalDefensive()
+          .powerLevel(20)
+          .manaRequired(5)
+          .accuracy(100)
+          .ranged(true)
+          .magicalSkillAnimation()
+          .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.HEALING_SOUND)
+          .targetAnimation(CURE_ANIMATION)
+          .defensiveAction(moveInfo -> {
+            int attackPower, overallEffect;
+            attackPower = (int)(moveInfo.getMove().getPowerLevel() * moveInfo.getUser().getStatModel().getCombinedIntellect() * ( .1 + ( .009 * ( moveInfo.getUser().getStatModel().getLevel() ))));
+            overallEffect = (int)( attackPower * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
+            moveInfo.getTarget().getStatModel().increaseHealth(overallEffect);
+            FlashMessage message = new FlashMessage(moveInfo.getTarget(), String.valueOf(overallEffect));
+            message.setColor(new Color(GameColors.ATB_GAUGE_BAR_FILLED));
+            message.floatMessageUp(true);
+            return message;
+          })
+          .build();
+  /**
+   * A defensive move to limit physical damage. Physical & Defensive.
+   */
+  public static final BattleMove GUARD = new BattleMoveBuilder()
+          .name("Guard")
+          .physicalDefensive()
+          .guardAnimation()
+          .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
+          .defensiveAction(moveInfo -> {
+            moveInfo.getUser().setGuarding(true);
+            moveInfo.getUser().returnToIdleState();
+            return null;
+          })
+          .singleTarget(true)
+          .build();
+  /**
+   * A defensive buff move to increase the defense of the target. Physical & Defensive.
+   */
+  public static final BattleMove WALL = new BattleMoveBuilder()
+          .name("Wall")
+          .physicalDefensive()
+          .physicalSkillAnimation()
+          .ranged(true)
+          .thumbnail(new Sprite(16, 16, 9, 1, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.EQUIP_ARMOR)
+          .targetAnimation(CURE_ANIMATION)
+          .manaRequired(8)
+          .defensiveBuff(.5)
+          .buffTime(20)
+          .defensiveAction(buffAction)
+          .build();
+  
+  public static final BattleMove HALO = new BattleMoveBuilder()
+          .name("Halo")
+          .magicalDefensive()
+          .magicalSkillAnimation()
+          .ranged(true)
+          .thumbnail(new Sprite(16, 16, 8, 13, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.VOCAL_CONFIRM)
+          .targetAnimation(CURE_ANIMATION)
+          .manaRequired(8)
+          .spiritBuff(.4)
+          .buffTime(30)
+          .defensiveAction(buffAction)
+          .build();
+  
+  /**
    * Creates a new EnemyMove object with the given configuration from the EnemyMoveBuilder object.
    * @param builder Configuration object for creating this EnemyMove instance.
    */
@@ -270,6 +315,7 @@ public class BattleMove implements Cloneable {
     this.defensiveAction = builder.defensiveAction;
     this.singleTarget = builder.singleTarget;
     this.item = builder.item;
+    this.buff = builder.buff;
   }
   
   static {
@@ -401,6 +447,10 @@ public class BattleMove implements Cloneable {
 
   public Item getItem() {
     return item;
+  }
+
+  public Buff getBuff() {
+    return buff;
   }
   
   @Override

@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
 import com.monkeystomp.spirelands.battle.entity.EnemyBattleEntity;
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.AnimatedSprite;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -13,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,12 +32,14 @@ public class TargetSelector {
   private final ArrayList<BattleTargetButton> mouseTargetButtons = new ArrayList<>();
   private BattleEntity currentTarget;
   private final Consumer<BattleEntity> IBattleEntitySelector;
+  private final Supplier<BattleMove> ICurrentBattleMoveSupplier;
   private final Consumer<KeyEvent> keyListener = event -> handleKeyEvent(event);
   private boolean targeting = false,
                   singleTargetOnly = false;
   
-  public TargetSelector(Consumer<BattleEntity> IBattleEntitySelector) {
+  public TargetSelector(Consumer<BattleEntity> IBattleEntitySelector, Supplier<BattleMove> ICurrentBattleMoveSupplier) {
     this.IBattleEntitySelector = IBattleEntitySelector;
+    this.ICurrentBattleMoveSupplier = ICurrentBattleMoveSupplier;
   }
   
   public void init(ArrayList<CharacterBattleEntity> party, ArrayList<EnemyBattleEntity> enemies) {
@@ -50,6 +54,7 @@ public class TargetSelector {
     for (BattleEntity entity: entities) {
       mouseTargetButtons.add(new BattleTargetButton(
         entity,
+        ICurrentBattleMoveSupplier,
         () -> {
           currentTarget = entity;
           IBattleEntitySelector.accept(entity);
@@ -85,25 +90,25 @@ public class TargetSelector {
   }
   
   private BattleEntity getClosestEntityAbove() {
-    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() < currentTarget.getY() && !entity.isDead()).collect(Collectors.toList());
+    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() < currentTarget.getY() && TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityRight() {
-    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() > currentTarget.getX() && !entity.isDead()).collect(Collectors.toList());
+    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() > currentTarget.getX() && TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityBelow() {
-    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() > currentTarget.getY() && !entity.isDead()).collect(Collectors.toList());
+    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getY() > currentTarget.getY() && TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
   
   private BattleEntity getClosestEntityLeft() {
-    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() < currentTarget.getX() && !entity.isDead()).collect(Collectors.toList());
+    List<BattleEntity> choices = entities.stream().filter(entity -> entity.getX() < currentTarget.getX() && TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())).collect(Collectors.toList());
     if (choices.size() > 0) return closestEntity(choices);
     return null;
   }
@@ -118,6 +123,10 @@ public class TargetSelector {
   
   private double getDistance(BattleEntity a, BattleEntity b) {
     return Math.sqrt(Math.pow(Math.abs(a.getX() - b.getX()), 2) + Math.pow(Math.abs(a.getY() - b.getY()), 2));
+  }
+  
+  public static boolean canSetTarget(BattleEntity entity, BattleMove move) {
+    return !(entity.isDead() && move.getAction().equals(BattleMove.OFFENSIVE));
   }
   
   public void destroy() {

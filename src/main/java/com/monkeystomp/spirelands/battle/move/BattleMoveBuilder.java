@@ -106,6 +106,10 @@ public class BattleMoveBuilder {
    */
   public Item item;
   /**
+   * Buff for this move.
+   */
+  public final Buff buff = new Buff();
+  /**
    * Sets the name of the move.
    * @param name Display name for the move.
    * @return The BattleMoveBuilder reference.
@@ -302,6 +306,33 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder targetAnimation(AnimatedSprite animation) {
     this.targetAnimation = animation;
+    return this;
+  }
+  /**
+   * Sets the defensive buff modifier for this move. A value of .2 would mean all physical attacks are reduced by 20%.
+   * @param percent The modifier amount for the defense stat. Values should be less than 1.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder defensiveBuff(double percent) {
+    this.buff.setDefenseBuff(percent);
+    return this;
+  }
+  /**
+   * Sets the magical buff modifier for this move. A value of .2 would mean all magical attacks are reduced by 20%.
+   * @param percent The modifier amount for the spirit stat. Values should be less than 1.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder spiritBuff(double percent) {
+    this.buff.setSpiritBuff(percent);
+    return this;
+  }
+  /**
+   * Set the time in seconds for how long this buff will last.
+   * @param time Time in seconds for buff to last.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder buffTime(int time) {
+    this.buff.setBuffTime(time);
     return this;
   }
   /**

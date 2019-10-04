@@ -66,7 +66,7 @@ public class Battle {
   private final Consumer<FlashMessage> IFlashMessage = flashMessage -> currentMessages.add(flashMessage);
   private final BattleControls battleControls = new BattleControls((move) -> handleBattleControlSelection(move));
   private BattleMove currentCharacterMove;
-  private final TargetSelector targetSelector = new TargetSelector(target -> handleTargetSelection(target));
+  private final TargetSelector targetSelector = new TargetSelector(target -> handleTargetSelection(target), () -> currentCharacterMove);
   private final LightMap lightmap = new LightMap();
   
   public Battle() {

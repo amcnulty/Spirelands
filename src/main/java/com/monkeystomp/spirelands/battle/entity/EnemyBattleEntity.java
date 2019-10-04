@@ -24,9 +24,7 @@ public class EnemyBattleEntity extends BattleEntity {
               healthBarDisapearDelay = 120,
               healthBarAnimationTick = 0,
               lastHealthBarWidth,
-              currentHealth,
-              healthBarX,
-              healthBarY;
+              currentHealth;
   private boolean animatingHealthBar = false;
   private final Sprite healthBarEmpty = new Sprite(50, 1, GameColors.HEALTH_BAR_EMPTY);
   private Sprite healthBarFilled;
@@ -219,11 +217,11 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   
   private int getHealthBarX() {
-    return healthBarX = x - 25;
+    return x - 25;
   }
   
   private int getHealthBarY() {
-    return healthBarY = y - currentAction.getHeight() / 2 - 3;
+    return y - currentAction.getHeight() / 2 - 3;
   }
   
   @Override
