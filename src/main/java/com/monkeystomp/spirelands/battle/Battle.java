@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 public class Battle {
   
   protected SpawnCoordinate partyMemberSlot1 = new SpawnCoordinate(300, 130, 3),
-                            partyMemberSlot2 = new SpawnCoordinate(320, 100, 3),
+                            partyMemberSlot2 = new SpawnCoordinate(320, 90, 3),
                             partyMemberSlot3 = new SpawnCoordinate(320, 170, 3);
   private final HashMap<Integer, SpawnCoordinate> slotMap = new HashMap<>();
   private final Random random = new Random();
@@ -140,7 +140,7 @@ public class Battle {
       currentCharacterMove = move;
       if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
       else if (move.getAction().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
-      else if (move.getAction().equals(BattleMove.DEFENSIVE)) targetSelector.selectCharacterTarget();
+      else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) targetSelector.selectCharacterTarget();
     }
     else {
       targetSelector.setTargeting(false);

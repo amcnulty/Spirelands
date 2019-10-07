@@ -102,14 +102,14 @@ public class BattleControlButton extends GroupButton {
     Rectangle2D bounds = moveNameFont.getFont().getStringBounds(move.getName(), frc);
     int nameWidth = (int)(bounds.getWidth() / Screen.getScaleX());
     bounds = moveTypeFont.getFont().getStringBounds("Action: " + move.getAction(), frc);
-    int actionWidth = (int)(bounds.getWidth() / Screen.getScaleX());
+    int longestValueWidth = (int)(bounds.getWidth() / Screen.getScaleX()) >  (int)(moveTypeFont.getFont().getStringBounds("Action: " + move.getType(), frc).getWidth() / Screen.getScaleX()) ? (int)(bounds.getWidth() / Screen.getScaleX()) : (int)(moveTypeFont.getFont().getStringBounds("Action: " + move.getType(), frc).getWidth() / Screen.getScaleX());
     
     moveNameFont.setText(move.getName());
     moveNameFont.setX(x + width / 2 - nameWidth / 2);
     moveNameFont.setY(y + height + 6);
     
     moveTypeLabelFont.setText("Type: ");
-    moveTypeLabelFont.setX(x + width / 2 - actionWidth / 2);
+    moveTypeLabelFont.setX(x + width / 2 - longestValueWidth / 2);
     moveTypeLabelFont.setY(moveNameFont.getY() + 6);
     
     moveTypeFont.setText(move.getType());
@@ -120,7 +120,7 @@ public class BattleControlButton extends GroupButton {
     else if (move.getType().equals(BattleMove.ITEM)) moveTypeFont.setColor(new Color(GameColors.DARK_GREEN));
     
     moveActionLabelFont.setText("Action: ");
-    moveActionLabelFont.setX(x + width / 2 - actionWidth / 2);
+    moveActionLabelFont.setX(x + width / 2 - longestValueWidth / 2);
     moveActionLabelFont.setY(moveTypeLabelFont.getY() + 6);
     
     moveActionFont.setText(move.getAction());
@@ -128,6 +128,7 @@ public class BattleControlButton extends GroupButton {
     moveActionFont.setY(moveActionLabelFont.getY());
     if (move.getAction().equals(BattleMove.OFFENSIVE)) moveActionFont.setColor(new Color(GameColors.DANGER_BUTTON_DOWN));
     else if (move.getAction().equals(BattleMove.DEFENSIVE)) moveActionFont.setColor(new Color(GameColors.DARK_GREEN));
+    else if (move.getAction().equals(BattleMove.BUFF)) moveActionFont.setColor(new Color(GameColors.PRIMARY_BUTTON_BLUE_HOVER));
     
     if (move.getManaRequired() > 0) {
       manaLabelFont.setText("Mana: ");
@@ -138,9 +139,9 @@ public class BattleControlButton extends GroupButton {
       manaFont.setX(moveActionLabelFont.getX() + 20);
       manaFont.setY(moveActionLabelFont.getY() + 6);
       manaFont.setColor(new Color(GameColors.PRIMARY_BUTTON_BLUE_DOWN));
-      popoverBackground = new Sprite(actionWidth + padding * 2, 27, GameColors.DIALOG_BOX_BACKGROUND);
+      popoverBackground = new Sprite(longestValueWidth + padding * 2, 27, GameColors.DIALOG_BOX_BACKGROUND);
     }
-    else popoverBackground = new Sprite(actionWidth + padding * 2, 20, GameColors.DIALOG_BOX_BACKGROUND);
+    else popoverBackground = new Sprite(longestValueWidth + padding * 2, 20, GameColors.DIALOG_BOX_BACKGROUND);
   }
   
   private void setFontInfo() {

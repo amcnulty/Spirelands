@@ -43,7 +43,7 @@ public class SpawnLevelBattle extends Battle {
     
     enemy = Bestiary.PIXIE.build();
     enemy.increaseLevel(4);
-    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 100, 1), enemy);
+    newEntity = new EnemyBattleEntity(new SpawnCoordinate(80, 90, 1), enemy);
     newEntity.setBattle(this);
     enemies.add(newEntity);
 

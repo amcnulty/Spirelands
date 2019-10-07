@@ -46,7 +46,7 @@ public class MoveProcessor {
       else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, target, move);
     }
     else if (move.getAction().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
-    else if (move.getAction().equals(BattleMove.DEFENSIVE)) processDefensiveMove(user, target, move);
+    else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) processDefensiveMove(user, target, move);
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
@@ -62,6 +62,7 @@ public class MoveProcessor {
     else {
       if (move.getType().equals(BattleMove.PHYSICAL)) {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedAttack() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        attackPower *= 1 + user.getAttackModifier();
         if (user instanceof CharacterBattleEntity && random.nextInt(100) + 1 > 95) {
           attackPower *= 1.5;
           FlashMessage message = new FlashMessage(user.getX() - user.getCurrentAction().getWidth() / 2 - 5, user.getY() - user.getCurrentAction().getHeight() / 2 + 8, "Critical!");
@@ -75,6 +76,7 @@ public class MoveProcessor {
       }
       else {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedIntellect() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
+        attackPower *= 1 + user.getIntellectModifier();
         if (user instanceof CharacterBattleEntity) attackPower *= ((CharacterBattleEntity)user).getStatModel().getWeaponElementalModifier(move.getElement());
         if (target instanceof EnemyBattleEntity) attackPower *= Elemental.getModifierForEnemyElement(move.getElement(), (Enemy)target.getStatModel());
         overallEffect = (int)(attackPower - ( attackPower * ( .002 * ( target.getStatModel().getCombinedSpirit() ))));

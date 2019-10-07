@@ -161,6 +161,15 @@ public class BattleMoveBuilder {
     return this;
   }
   /**
+   * Sets the type as magical and the action as buff.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder magicalBuff() {
+    this.type = BattleMove.MAGICAL;
+    this.action = BattleMove.BUFF;
+    return this;
+  }
+  /**
    * Sets the power level to the given amount.
    * @param amount Integer value to set the power level to.
    * @return The BattleMoveBuilder reference.
@@ -310,12 +319,30 @@ public class BattleMoveBuilder {
     return this;
   }
   /**
+   * Sets the attack buff modifier for this move. A value of .2 would mean attack power is increased by 20%.
+   * @param percent The modifier amount for the attack stat. Values should be less than 1.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder attackBuff(double percent) {
+    this.buff.setAttackBuff(percent);
+    return this;
+  }
+  /**
    * Sets the defensive buff modifier for this move. A value of .2 would mean all physical attacks are reduced by 20%.
    * @param percent The modifier amount for the defense stat. Values should be less than 1.
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder defensiveBuff(double percent) {
     this.buff.setDefenseBuff(percent);
+    return this;
+  }
+  /**
+   * Sets the intellect buff modifier for this move. A value of .2 would mean magic attack power is increased by 20%.
+   * @param percent The modifier amount for the intellect stat. Values should be less than 1.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder intellectBuff(double percent) {
+    this.buff.setIntellectBuff(percent);
     return this;
   }
   /**

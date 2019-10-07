@@ -43,6 +43,10 @@ public class BattleMove implements Cloneable {
    * Used for the 'action' property for defensive moves.
    */
   public static final String DEFENSIVE = "Defensive";
+  /**
+   * Used for the 'action' property for buff moves.
+   */
+  public static final String BUFF = "Buff";
   // Map of all the moves to their ids.
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
   // Instance of the Random class.
@@ -138,7 +142,7 @@ public class BattleMove implements Cloneable {
   /**
    *          !!################################!!
    *          !!                                !!
-   *          !!             Moves              !!
+   *          !!        Physical Moves          !!
    *          !!                                !!
    *          !!################################!!
    */
@@ -158,6 +162,42 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BASIC_SLASH)
           .build();
   /**
+   * A stronger but less accurate attack. Physical & Offensive.
+   */
+  public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
+          .name("Blunt Force")
+          .physicalAttack()
+          .powerLevel(30)
+          .accuracy(60)
+          .ranged(false)
+          .swingingAnimation()
+          .thumbnail(Item.BROADAXE.getThumbnail())
+          .sound(SoundEffects.STRONG_MALE_ATTACK)
+          .build();
+  /**
+   * A defensive move to limit physical damage. Physical & Defensive.
+   */
+  public static final BattleMove GUARD = new BattleMoveBuilder()
+          .name("Guard")
+          .physicalDefensive()
+          .guardAnimation()
+          .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
+          .defensiveAction(moveInfo -> {
+            moveInfo.getUser().setGuarding(true);
+            moveInfo.getUser().returnToIdleState();
+            return null;
+          })
+          .singleTarget(true)
+          .build();
+  
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!          Magical Moves         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
    * A basic typeless magic attack. Magical & Offensive.
    */
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
@@ -172,20 +212,6 @@ public class BattleMove implements Cloneable {
           .sound(SoundEffects.MAGICAL_ENERGY)
           .targetAnimation(BLUE_EXPLOSION)
           .build();
-  /**
-   * A stronger but less accurate attack. Physical & Offensive.
-   */
-  public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
-          .name("Blunt Force")
-          .physicalAttack()
-          .powerLevel(30)
-          .accuracy(60)
-          .ranged(false)
-          .swingingAnimation()
-          .thumbnail(Item.BROADAXE.getThumbnail())
-          .sound(SoundEffects.STRONG_MALE_ATTACK)
-          .build();
-  
   /**
    * A basic fire magic attack. Magical & Offensive.
    */
@@ -217,13 +243,6 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BLUE_EXPLOSION)
           .build();
   /**
-   *          !!################################!!
-   *          !!                                !!
-   *          !!        Defensive Moves         !!
-   *          !!                                !!
-   *          !!################################!!
-   */
-  /**
    * A cure spell for recovering HP. Magical & Defensive.
    */
   public static final BattleMove CURE = new BattleMoveBuilder()
@@ -249,26 +268,11 @@ public class BattleMove implements Cloneable {
           })
           .build();
   /**
-   * A defensive move to limit physical damage. Physical & Defensive.
-   */
-  public static final BattleMove GUARD = new BattleMoveBuilder()
-          .name("Guard")
-          .physicalDefensive()
-          .guardAnimation()
-          .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
-          .defensiveAction(moveInfo -> {
-            moveInfo.getUser().setGuarding(true);
-            moveInfo.getUser().returnToIdleState();
-            return null;
-          })
-          .singleTarget(true)
-          .build();
-  /**
-   * A defensive buff move to increase the defense of the target. Physical & Defensive.
+   * A defensive buff move to increase the defense of the target. Magical & Defensive.
    */
   public static final BattleMove WALL = new BattleMoveBuilder()
           .name("Wall")
-          .physicalDefensive()
+          .magicalBuff()
           .physicalSkillAnimation()
           .ranged(true)
           .thumbnail(new Sprite(16, 16, 9, 1, SpriteSheet.itemsSheet))
@@ -280,10 +284,12 @@ public class BattleMove implements Cloneable {
           .buffTime(20)
           .defensiveAction(buffAction)
           .build();
-  
+  /**
+   * A defensive buff move to increase spirit and water resistance. Magical & Defensive.
+   */
   public static final BattleMove HALO = new BattleMoveBuilder()
           .name("Halo")
-          .magicalDefensive()
+          .magicalBuff()
           .magicalSkillAnimation()
           .ranged(true)
           .thumbnail(new Sprite(16, 16, 8, 13, SpriteSheet.itemsSheet))
@@ -291,6 +297,39 @@ public class BattleMove implements Cloneable {
           .targetAnimation(CURE_ANIMATION)
           .manaRequired(8)
           .spiritBuff(.4)
+          .addElementalBuff(new ElementalEffect(Elemental.WATER, Elemental.TWENTY_PERCENT))
+          .buffTime(30)
+          .defensiveAction(buffAction)
+          .build();
+  /**
+   * Buff type move to increase target's intellect stat. Magical & Defensive.
+   */
+  public static final BattleMove HOPE = new BattleMoveBuilder()
+          .name("Hope")
+          .magicalBuff()
+          .magicalSkillAnimation()
+          .ranged(true)
+          .thumbnail(new Sprite(16, 16, 0, 6, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.VOCAL_CONFIRM)
+          .targetAnimation(CURE_ANIMATION)
+          .manaRequired(8)
+          .intellectBuff(.4)
+          .buffTime(30)
+          .defensiveAction(buffAction)
+          .build();
+  /**
+   * Buff type move to increase target's strength stat. Magical & Defensive.
+   */
+  public static final BattleMove RALLY = new BattleMoveBuilder()
+          .name("Rally")
+          .magicalBuff()
+          .physicalSkillAnimation()
+          .ranged(true)
+          .thumbnail(new Sprite(16, 16, 9, 2, SpriteSheet.itemsSheet))
+          .sound(SoundEffects.VOCAL_CONFIRM)
+          .targetAnimation(CURE_ANIMATION)
+          .manaRequired(8)
+          .attackBuff(.4)
           .buffTime(30)
           .defensiveAction(buffAction)
           .build();
