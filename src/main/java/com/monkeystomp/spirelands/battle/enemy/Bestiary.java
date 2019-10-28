@@ -8,10 +8,11 @@ import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 
 /**
- *
+ * A collection of enemy builder definitions to be used to create enemies in the game.
  * @author Aaron Michael McNulty
  */
 public class Bestiary {
+
   /**
    * A plant monster that does physical and magical attacks
    */
@@ -101,8 +102,17 @@ public class Bestiary {
           .dropRate(20)
           .experienceAward(1)
           .goldAward(10)
+          .addMove(BattleMove.FIREBALL, EnemyMoveInformation.EIGHT_WEIGHT)
           .addMove(BattleMove.BASIC_ATTACK, "Splash")
-          .addMove(BattleMove.TIDAL_WAVE, "Tidal Wave");
+          .addMove(BattleMove.TIDAL_WAVE, "Tidal Wave")
+          .addMove(
+            BattleMove.CURE,
+            (party, enemies, user) -> {
+              return (((double)user.getStatModel().getHealth() / (double)user.getStatModel().getHealthMax()) < .25);
+            },
+            EnemyMoveInformation.TARGET_ENEMIES,
+            EnemyMoveInformation.EIGHT_WEIGHT
+          );
   
   /**
    * A poisonous lion creature.

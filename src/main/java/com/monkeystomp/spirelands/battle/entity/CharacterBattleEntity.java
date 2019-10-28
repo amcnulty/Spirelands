@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.controls.TargetInformation;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.character.Character;
@@ -119,23 +120,28 @@ public class CharacterBattleEntity extends BattleEntity {
     }
   }
 
-  public void makeMove(BattleMove move, BattleEntity target) {
+  public void makeMove(BattleMove move, TargetInformation targetInfo) {
+    this.targetInfo = targetInfo;
     moving = true;
     finishedAttacking = false;
     showingControls = false;
-    currentTarget = target;
+    targetingSelf = false;
     // Show the name of the move as a message on the screen by calling the battle class show move name method.
     battle.showBattleMoveName(move.getName());
-    if (target instanceof CharacterBattleEntity) {
-      targetingSelf = target == this;
-    }
-    else targetingSelf = false;
     currentMove = move;
     moveAnimation = move.getMoveAnimation();
-    if (!move.isRanged() && !targetingSelf) {
-      moveToLocation(target.getX() + target.getCurrentAction().getWidth() / 2 + currentAction.getWidth() / 2 + 4, target.getY());
+    if (targetInfo.isMultiTarget()) {
+      processMove();
     }
-    else processMove();
+    else {
+      if (targetInfo.getTarget() instanceof CharacterBattleEntity) {
+        targetingSelf = targetInfo.getTarget() == this;
+      }
+      if (!move.isRanged() && !targetingSelf) {
+        moveToLocation(targetInfo.getTarget().getX() + targetInfo.getTarget().getCurrentAction().getWidth() / 2 + currentAction.getWidth() / 2 + 4, targetInfo.getTarget().getY());
+      }
+      else processMove();
+    }
   }
   
   @Override

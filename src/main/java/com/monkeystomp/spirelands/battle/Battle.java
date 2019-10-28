@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.battlecard.BattleCard;
 import com.monkeystomp.spirelands.battle.controls.BattleControls;
 import com.monkeystomp.spirelands.battle.controls.FlyoutMenu;
+import com.monkeystomp.spirelands.battle.controls.TargetInformation;
 import com.monkeystomp.spirelands.battle.controls.TargetSelector;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.entity.CharacterBattleEntity;
@@ -66,7 +67,7 @@ public class Battle {
   private final Consumer<FlashMessage> IFlashMessage = flashMessage -> currentMessages.add(flashMessage);
   private final BattleControls battleControls = new BattleControls((move) -> handleBattleControlSelection(move));
   private BattleMove currentCharacterMove;
-  private final TargetSelector targetSelector = new TargetSelector(target -> handleTargetSelection(target), () -> currentCharacterMove);
+  private final TargetSelector targetSelector = new TargetSelector(targetInfo -> handleTargetSelection(targetInfo), () -> currentCharacterMove);
   private final LightMap lightmap = new LightMap();
   
   public Battle() {
@@ -139,16 +140,22 @@ public class Battle {
     if (move != null) {
       currentCharacterMove = move;
       if (move.isSingleTarget()) targetSelector.selectSingleTarget(readyEntities.get(0));
-      else if (move.getAction().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
-      else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) targetSelector.selectCharacterTarget();
+      else if (move.isMultiTarget()) {
+        if (move.getAction().equals(BattleMove.OFFENSIVE)) targetSelector.selectAllEnemies();
+        else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) targetSelector.selectAllCharacters();
+      }
+      else {
+        if (move.getAction().equals(BattleMove.OFFENSIVE)) targetSelector.selectEnemyTarget();
+        else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) targetSelector.selectCharacterTarget();
+      }
     }
     else {
       targetSelector.setTargeting(false);
     }
   }
   
-  private void handleTargetSelection(BattleEntity target) {
-    ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, target);
+  private void handleTargetSelection(TargetInformation targetInfo) {
+    ((CharacterBattleEntity)readyEntities.get(0)).makeMove(currentCharacterMove, targetInfo);
     battleControls.hideControls();
     targetSelector.setTargeting(false);
   }
@@ -164,12 +171,6 @@ public class Battle {
             .collect(Collectors.toList()));
     FlashMessage message = new FlashMessage(moveName);
     currentMessages.add(message);
-  }
-  
-  private CharacterBattleEntity getTarget() {
-    CharacterBattleEntity nextTarget = party.get(random.nextInt(party.size()));
-    if (nextTarget.isDead()) return getTarget();
-    else return nextTarget;
   }
   
   private void checkForReadyEntities() {
@@ -195,7 +196,7 @@ public class Battle {
       if (!readyEntities.isEmpty()) {
         if (readyEntities.get(0) instanceof EnemyBattleEntity) {
           if (!(readyEntities.get(0)).isMoving()) {
-            ((EnemyBattleEntity)readyEntities.get(0)).makeMove(getTarget());
+            ((EnemyBattleEntity)readyEntities.get(0)).makeMove(party, enemies);
           }
         }
         else if (readyEntities.get(0) instanceof CharacterBattleEntity) {
@@ -309,8 +310,11 @@ public class Battle {
       }
     }
     moveProcessor.render(screen, gl);
-    for (FlashMessage message: currentMessages) {
-      message.render(screen, gl);
+    for (int i = 0; i < currentMessages.size(); i++) {
+      try { currentMessages.get(i).render(screen, gl); }
+      catch (ArrayIndexOutOfBoundsException e) {
+        e.printStackTrace();
+      }
     }
     targetSelector.render(screen, gl);
     if (battleControls.isShowing()) battleControls.render(screen, gl);

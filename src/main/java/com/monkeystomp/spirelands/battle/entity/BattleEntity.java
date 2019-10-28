@@ -2,7 +2,7 @@ package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.Battle;
-import com.monkeystomp.spirelands.battle.elemental.Elemental;
+import com.monkeystomp.spirelands.battle.controls.TargetInformation;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.battle.move.Buff;
 import com.monkeystomp.spirelands.character.StatModel;
@@ -42,7 +42,7 @@ public class BattleEntity {
   protected boolean finishedAttacking = true;
   protected boolean traveling = false;
   protected boolean guarding = false;
-  protected BattleEntity currentTarget;
+  protected TargetInformation targetInfo;
   protected BattleMove currentMove;
   protected Method moveAnimation;
   protected StatModel statModel;
@@ -441,9 +441,9 @@ public class BattleEntity {
       Logger.getLogger(EnemyBattleEntity.class.getName()).log(Level.SEVERE, null, ex);
     }
     if (currentMove.getTargetAnimationDelay() > 0) {
-      Helpers.setTimeout(() -> battle.getMoveProcessor().process(this, currentTarget, currentMove), currentMove.getTargetAnimationDelay());
+      Helpers.setTimeout(() -> battle.getMoveProcessor().process(this, targetInfo, currentMove), currentMove.getTargetAnimationDelay());
     }
-    else battle.getMoveProcessor().process(this, currentTarget, currentMove);
+    else battle.getMoveProcessor().process(this, targetInfo, currentMove);
   }
   
   private void fillGauge() {

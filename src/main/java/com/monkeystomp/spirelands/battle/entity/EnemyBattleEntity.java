@@ -1,14 +1,23 @@
 package com.monkeystomp.spirelands.battle.entity;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.battle.controls.TargetInformation;
+import com.monkeystomp.spirelands.battle.controls.TargetSelector;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
+import com.monkeystomp.spirelands.battle.enemy.EnemyMoveInformation;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.NavigableMap;
 import java.util.Random;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -193,21 +202,65 @@ public class EnemyBattleEntity extends BattleEntity {
     setReadyGaugeStart();
   }
   
-  public void makeMove(CharacterBattleEntity target) {
-    currentTarget = target;
+  public void makeMove(ArrayList<CharacterBattleEntity> party, ArrayList<EnemyBattleEntity> enemies) {
     moving = true;
     finishedAttacking = false;
-    setNextMove();
+    setNextMove(party, enemies);
     // Show the name of the move as a message on the screen by calling the battle class show move name method.
     battle.showBattleMoveName(currentMove.getName());
-    if (!currentMove.isRanged()) {
-      moveToLocation(target.getSlot().getX() - target.getCurrentAction().getWidth() / 2 - currentAction.getWidth() / 2 - 4, target.getSlot().getY());
+    if (targetInfo.isMultiTarget()) processMove();
+    else {
+      if (!currentMove.isRanged()) {
+        moveToLocation(targetInfo.getTarget().getSlot().getX() - targetInfo.getTarget().getCurrentAction().getWidth() / 2 - currentAction.getWidth() / 2 - 4, targetInfo.getTarget().getSlot().getY());
+      }
+      else processMove();
     }
-    else processMove();
   }
-  
-  private void setNextMove() {
-    currentMove = ((Enemy)statModel).getRandomMove();
+  // In this method set the 'currentMove' and 'targetInfo' variables.
+  private void setNextMove(ArrayList<CharacterBattleEntity> party, ArrayList<EnemyBattleEntity> enemies) {
+    System.out.println("Remaining MP: " + statModel.getMana());
+    List<EnemyMoveInformation> movePool = ((Enemy)statModel).getEnemyMoveInformation().stream()
+            .filter(moveInfo -> {
+              if (moveInfo.hasMoveCriteria()) {
+                if (moveInfo.getMoveCriteria().filter(party, enemies, this)) {
+                  return statModel.getMana() >= moveInfo.getMove().getManaRequired();
+                }
+                else return false;
+              }
+              return statModel.getMana() >= moveInfo.getMove().getManaRequired();
+            })
+            .collect(Collectors.toList());
+    int sumOfWeights = 0;
+    int percentPerAverage = 0;
+    int randomPosition = 0;
+    int percentagePosition = 0;
+    int sumOfSteps = 0;
+    for (int i = 0; i < movePool.size(); i++) {
+      sumOfWeights += movePool.get(i).getMoveWeight();
+    }
+    percentPerAverage = 10000 / sumOfWeights;
+    List<EnemyMoveInformation> moves = movePool.stream().sorted(Comparator.comparingInt(moveInfo -> moveInfo.getMoveWeight())).collect(Collectors.toList());
+    NavigableMap<Integer, EnemyMoveInformation> map = new TreeMap<>();
+    for (int i = 0; i < moves.size(); i++) {
+      sumOfSteps += moves.get(i).getMoveWeight();
+      percentagePosition = sumOfSteps * percentPerAverage;
+      map.put(percentagePosition, moves.get(i));
+    }
+    randomPosition = random.nextInt(9999);
+    EnemyMoveInformation currentMoveInfo = map.get(map.higherKey(randomPosition));
+    currentMove = currentMoveInfo.getMove();
+    targetInfo = new TargetInformation();
+    ArrayList<BattleEntity> entities = new ArrayList<>();
+    entities.addAll(party);
+    entities.addAll(enemies);
+    ArrayList<BattleEntity> listOfEntity = (ArrayList<BattleEntity>)entities.stream().filter(currentMoveInfo.getTargetFilter()).filter(entity -> TargetSelector.canSetTarget((BattleEntity)entity, currentMove)).collect(Collectors.toList());
+    if (currentMove.isMultiTarget()) {
+      targetInfo.setMultiTarget(true);
+      targetInfo.setTargets((ArrayList<? extends BattleEntity>)listOfEntity);
+    }
+    else {
+      targetInfo.setTarget(listOfEntity.get(random.nextInt(listOfEntity.size())));
+    }
     moveAnimation = currentMove.getMoveAnimation();
   }
   

@@ -1,11 +1,13 @@
 package com.monkeystomp.spirelands.battle.enemy;
 
 import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
+import com.monkeystomp.spirelands.battle.entity.BattleEntity;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.character.StatModel;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -152,7 +154,7 @@ public class EnemyBuilder {
   /**
    * Moves that this enemy can perform.
    */
-  public ArrayList<BattleMove> enemyMoves = new ArrayList<>();
+  public ArrayList<EnemyMoveInformation> enemyMoveInformation = new ArrayList<>();
   /**
    * List of elemental weaknesses and resistances for this enemy.
    */
@@ -390,7 +392,17 @@ public class EnemyBuilder {
    * @return The EnemyBuilder reference.
    */
   public EnemyBuilder addMove(BattleMove move) {
-    this.enemyMoves.add(move);
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of this enemy's moves.
+   * @param move New move to be added to this enemy.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, int moveWeight) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveWeight));
     return this;
   }
   /**
@@ -403,8 +415,203 @@ public class EnemyBuilder {
     try {
       BattleMove clone = (BattleMove)move.clone();
       clone.setCustomName(customMoveName);
-      this.enemyMoves.add(clone);
-      return this;
+      this.enemyMoveInformation.add(new EnemyMoveInformation(clone));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of this enemy's moves but gives the move a custom name.
+   * @param move New move to be added to the enemy.
+   * @param customMoveName Custom name to set for this move.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customMoveName, int moveWeight) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customMoveName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(clone, moveWeight));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given move criteria.
+   * @param move New move to be added to the enemy.
+   * @param moveCriteria Criteria for using the move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, IMoveCriteria moveCriteria) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given move criteria.
+   * @param move New move to be added to the enemy.
+   * @param moveCriteria Criteria for using the move.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, IMoveCriteria moveCriteria, int moveWeight) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, moveWeight));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given move criteria.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param moveCriteria Criteria for using the move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, IMoveCriteria moveCriteria) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given move criteria.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param moveCriteria Criteria for using the move.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, IMoveCriteria moveCriteria, int moveWeight) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, moveWeight));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given target filter.
+   * @param move New move to be added to the enemy.
+   * @param targetFilter Filter for who move should target.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, Predicate<BattleEntity> targetFilter) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, targetFilter));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given target filter.
+   * @param move New move to be added to the enemy.
+   * @param targetFilter Filter for who move should target.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, Predicate<BattleEntity> targetFilter, int moveWeight) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, targetFilter, moveWeight));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given target filter.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param targetFilter Filter for who move should target.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, Predicate<BattleEntity> targetFilter) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, targetFilter));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given target filter.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param targetFilter Filter for who move should target.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, Predicate<BattleEntity> targetFilter, int moveWeight) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, targetFilter, moveWeight));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given move criteria and target filter.
+   * @param move New move to be added to the enemy.
+   * @param moveCriteria Criteria for using the move.
+   * @param targetFilter Filter for who move should target.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, IMoveCriteria moveCriteria, Predicate<BattleEntity> targetFilter) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, targetFilter));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with the given move criteria and target filter.
+   * @param move New move to be added to the enemy.
+   * @param moveCriteria Criteria for using the move.
+   * @param targetFilter Filter for who move should target.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, IMoveCriteria moveCriteria, Predicate<BattleEntity> targetFilter, int moveWeight) {
+    this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, targetFilter, moveWeight));
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given move criteria and target filter.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param moveCriteria Criteria for using the move.
+   * @param targetFilter Filter for who move should target.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, IMoveCriteria moveCriteria, Predicate<BattleEntity> targetFilter) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, targetFilter));
+    }
+    catch (CloneNotSupportedException ex) {
+      Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return this;
+  }
+  /**
+   * Adds a new move to the list of enemy's moves with a custom name and the given move criteria and target filter.
+   * @param move New move to be added to the enemy.
+   * @param customName Custom name to set for this move.
+   * @param moveCriteria Criteria for using the move.
+   * @param targetFilter Filter for who move should target.
+   * @param moveWeight Weight priority to apply to this move.
+   * @return The EnemyBuilder reference.
+   */
+  public EnemyBuilder addMove(BattleMove move, String customName, IMoveCriteria moveCriteria, Predicate<BattleEntity> targetFilter, int moveWeight) {
+    try {
+      BattleMove clone = (BattleMove)move.clone();
+      clone.setCustomName(customName);
+      this.enemyMoveInformation.add(new EnemyMoveInformation(move, moveCriteria, targetFilter, moveWeight));
     }
     catch (CloneNotSupportedException ex) {
       Logger.getLogger(EnemyBuilder.class.getName()).log(Level.SEVERE, null, ex);

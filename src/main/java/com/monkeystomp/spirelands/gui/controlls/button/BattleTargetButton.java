@@ -19,6 +19,7 @@ import java.util.function.Supplier;
 public class BattleTargetButton extends Button {
   
   private final BattleEntity entity;
+  private boolean showing = false;
   private final Sprite invisibleSprite = new Sprite(5, 5, GameColors.TRANSPARENT);
   private final AnimatedSprite selectorIconAnim = new AnimatedSprite(48, 16, new SpriteSheet("./resources/gui/battle_arrow_sheet.png"), AnimatedSprite.VERY_SLOW, 3);
   private final Supplier<BattleMove> ICurrentBattleMoveSupplier;
@@ -48,6 +49,14 @@ public class BattleTargetButton extends Button {
     return entity;
   }
   
+  public void show() {
+    showing = true;
+  }
+  
+  public void hide() {
+    showing = false;
+  }
+  
   @Override
   public void update() {
     if (TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())) {
@@ -60,7 +69,7 @@ public class BattleTargetButton extends Button {
   public void render(Screen screen, GL2 gl) {
     if (TargetSelector.canSetTarget(entity, ICurrentBattleMoveSupplier.get())) {
       if (isDown()) screen.renderSprite(gl, x + selectorIconAnim.getSprite().getWidth() / 2, y - 15, selectorIconAnim.getSprite(), false);
-      else if (isHovering()) screen.renderSprite(gl, x + selectorIconAnim.getSprite().getWidth() / 2, y - 15, selectorIconAnim.getSprite(), .5f, false);
+      else if (isHovering() || showing) screen.renderSprite(gl, x + selectorIconAnim.getSprite().getWidth() / 2, y - 15, selectorIconAnim.getSprite(), .5f, false);
     }
   }
 

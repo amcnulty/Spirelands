@@ -31,7 +31,7 @@ public class Enemy extends StatModel {
   // Size in pixels to render this enemy in the battle scene.
   private int renderSize;
   // Moves that this enemy can perform.
-  private final ArrayList<BattleMove> enemyMoves;
+  private final ArrayList<EnemyMoveInformation> enemyMoveInformation;
   // List of elemental effects for this enemy.
   private final ArrayList<ElementalEffect> elementalEffects;
   // Random class.
@@ -68,7 +68,7 @@ public class Enemy extends StatModel {
     this.experienceAward = builder.experienceAward;
     this.goldAward = builder.goldAward;
     this.renderSize = builder.renderSize;
-    this.enemyMoves = builder.enemyMoves;
+    this.enemyMoveInformation = builder.enemyMoveInformation;
     this.elementalEffects = builder.elementalEffects;
   }
 
@@ -114,24 +114,9 @@ public class Enemy extends StatModel {
   public int getRenderSize() {
     return renderSize;
   }
-  /**
-   * Gets any random move from this enemies list of moves.
-   * @return An EnemyMove object.
-   */
-  public BattleMove getRandomMove() {
-    return enemyMoves.get(random.nextInt(enemyMoves.size()));
-  }
-  /**
-   * Gets a random move of the specified type and action.
-   * @param type Physical | Magical
-   * @param action Offensive | Defensive
-   * @return An EnemyMove object.
-   */
-  public BattleMove getRandomMove(String type, String action) {
-    List<BattleMove> moves = enemyMoves.stream().
-            filter(move -> move.getType().equals(type) && move.getAction().equals(action))
-            .collect(Collectors.<BattleMove>toList());
-    return moves.get(random.nextInt(moves.size()));
+
+  public ArrayList<EnemyMoveInformation> getEnemyMoveInformation() {
+    return enemyMoveInformation;
   }
 
   public ArrayList<ElementalEffect> getWeaknesses() {

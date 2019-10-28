@@ -73,7 +73,11 @@ public class BattleMoveBuilder {
   /**
    * Flag to check if this move is ranged.
    */
-  public boolean ranged;
+  public boolean ranged = false;
+  /**
+   * Flag to check if this move is multi-target.
+   */
+  public boolean multiTarget = false;
   /**
    * The battle entity animation for this move.
    */
@@ -197,12 +201,19 @@ public class BattleMoveBuilder {
     return this;
   }
   /**
-   * Sets this move to ranged if passed true.
-   * @param isRanged Flag for if this move should be ranged.
+   * Sets this move to ranged.
    * @return The BattleMoveBuilder reference.
    */
-  public BattleMoveBuilder ranged(boolean isRanged) {
-    this.ranged = isRanged;
+  public BattleMoveBuilder ranged() {
+    this.ranged = true;
+    return this;
+  }
+  /**
+   * Sets this move as a multi-target move.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder multiTarget() {
+    this.multiTarget = true;
     return this;
   }
   /**
@@ -378,12 +389,11 @@ public class BattleMoveBuilder {
     return this;
   }
   /**
-   * Sets the single target flag for this move.
-   * @param singleTarget Indicates if the move can only target the user.
+   * Sets this move to only target the user.
    * @return The BattleMoveBuilder reference.
    */
-  public BattleMoveBuilder singleTarget(boolean singleTarget) {
-    this.singleTarget = singleTarget;
+  public BattleMoveBuilder singleTarget() {
+    this.singleTarget = true;
     return this;
   }
   /**

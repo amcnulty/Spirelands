@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -25,19 +26,20 @@ import java.util.stream.Stream;
 public class TargetSelector {
   
   private int x, y;
+  private final TargetInformation targetInfo = new TargetInformation();
   private final AnimatedSprite selectorIconAnim = new AnimatedSprite(48, 16, new SpriteSheet("./resources/gui/battle_arrow_sheet.png"), AnimatedSprite.VERY_SLOW, 3);
   private ArrayList<CharacterBattleEntity>  party = new ArrayList<>();
   private ArrayList<EnemyBattleEntity> enemies = new ArrayList<>();
   private List<BattleEntity> entities;
   private final ArrayList<BattleTargetButton> mouseTargetButtons = new ArrayList<>();
   private BattleEntity currentTarget;
-  private final Consumer<BattleEntity> IBattleEntitySelector;
+  private final Consumer<TargetInformation> IBattleEntitySelector;
   private final Supplier<BattleMove> ICurrentBattleMoveSupplier;
   private final Consumer<KeyEvent> keyListener = event -> handleKeyEvent(event);
   private boolean targeting = false,
                   singleTargetOnly = false;
   
-  public TargetSelector(Consumer<BattleEntity> IBattleEntitySelector, Supplier<BattleMove> ICurrentBattleMoveSupplier) {
+  public TargetSelector(Consumer<TargetInformation> IBattleEntitySelector, Supplier<BattleMove> ICurrentBattleMoveSupplier) {
     this.IBattleEntitySelector = IBattleEntitySelector;
     this.ICurrentBattleMoveSupplier = ICurrentBattleMoveSupplier;
   }
@@ -57,7 +59,17 @@ public class TargetSelector {
         ICurrentBattleMoveSupplier,
         () -> {
           currentTarget = entity;
-          IBattleEntitySelector.accept(entity);
+          TargetInformation info = new TargetInformation();
+          if (ICurrentBattleMoveSupplier.get().isMultiTarget()) {
+            if (entity instanceof CharacterBattleEntity) info.setTargets(party);
+            else info.setTargets(enemies);
+            IBattleEntitySelector.accept(info);
+          }
+          else {
+            info = new TargetInformation();
+            info.setTarget(entity);
+            IBattleEntitySelector.accept(info);
+          }
         }
       ));
     }
@@ -66,7 +78,11 @@ public class TargetSelector {
   private void handleKeyEvent(KeyEvent event) {
     if (targeting) {
       if (event.getKeyCode() == Keyboard.SPACE_KEY || event.getKeyCode() == Keyboard.ENTER_KEY) {
-        IBattleEntitySelector.accept(currentTarget);
+        if (!isMultiTargetMove()) {
+          targetInfo.setMultiTarget(false);
+          targetInfo.setTarget(currentTarget);
+        }
+        IBattleEntitySelector.accept(targetInfo);
       }
       if (!singleTargetOnly) {
         if (event.getKeyCode() == Keyboard.W_KEY || event.getKeyCode() == Keyboard.UP_KEY) {
@@ -74,16 +90,22 @@ public class TargetSelector {
           if (nextTarget != null) currentTarget = nextTarget;
         }
         else if (event.getKeyCode() == Keyboard.A_KEY || event.getKeyCode() == Keyboard.LEFT_KEY) {
-          BattleEntity nextTarget = getClosestEntityLeft();
-          if (nextTarget != null) currentTarget = nextTarget;
+          if (isMultiTargetMove()) selectAllEnemies();
+          else {
+            BattleEntity nextTarget = getClosestEntityLeft();
+            if (nextTarget != null) currentTarget = nextTarget;
+          }
         }
         else if (event.getKeyCode() == Keyboard.S_KEY || event.getKeyCode() == Keyboard.DOWN_KEY) {
           BattleEntity nextTarget = getClosestEntityBelow();
           if (nextTarget != null) currentTarget = nextTarget;
         }
         else if (event.getKeyCode() == Keyboard.D_KEY || event.getKeyCode() == Keyboard.RIGHT_KEY) {
-          BattleEntity nextTarget = getClosestEntityRight();
-          if (nextTarget != null) currentTarget = nextTarget;
+          if (isMultiTargetMove()) selectAllCharacters();
+          else {
+            BattleEntity nextTarget = getClosestEntityRight();
+            if (nextTarget != null) currentTarget = nextTarget;
+          }
         }
       }
     }
@@ -125,6 +147,13 @@ public class TargetSelector {
     return Math.sqrt(Math.pow(Math.abs(a.getX() - b.getX()), 2) + Math.pow(Math.abs(a.getY() - b.getY()), 2));
   }
   
+  private boolean isMultiTargetMove() {
+    if (ICurrentBattleMoveSupplier.get() != null) {
+      return ICurrentBattleMoveSupplier.get().isMultiTarget();
+    }
+    return false;
+  }
+  
   public static boolean canSetTarget(BattleEntity entity, BattleMove move) {
     return !(entity.isDead() && move.getAction().equals(BattleMove.OFFENSIVE));
   }
@@ -156,6 +185,18 @@ public class TargetSelector {
     targeting = true;
   }
   
+  public void selectAllEnemies() {
+    singleTargetOnly = false;
+    targetInfo.setMultiTarget(true);
+    targetInfo.setTargets(
+      (ArrayList<? extends BattleEntity>)enemies.stream()
+      .filter(
+        character -> TargetSelector.canSetTarget(character, ICurrentBattleMoveSupplier.get()))
+      .collect(Collectors.toList())
+    );
+    targeting = true;
+  }
+  
   public void selectCharacterTarget() {
     singleTargetOnly = false;
     if (currentTarget != null) {
@@ -172,6 +213,18 @@ public class TargetSelector {
     }
     targeting = true;
   }
+  
+  public void selectAllCharacters() {
+    singleTargetOnly = false;
+    targetInfo.setMultiTarget(true);
+    targetInfo.setTargets(
+      (ArrayList<? extends BattleEntity>)party.stream()
+      .filter(
+        character -> TargetSelector.canSetTarget(character, ICurrentBattleMoveSupplier.get()))
+      .collect(Collectors.toList())
+    );
+    targeting = true;
+  }
 
   public void setTargeting(boolean targeting) {
     this.targeting = targeting;
@@ -180,30 +233,51 @@ public class TargetSelector {
   public void update() {
     selectorIconAnim.update();
     if (targeting && singleTargetOnly) {
-      mouseTargetButtons.stream()
-        .filter(button -> button.getEntity() == currentTarget)
-        .findAny()
-        .get()
-        .update();
+      for (BattleTargetButton button: mouseTargetButtons) {
+        if (button.getEntity() == currentTarget) button.update();
+      }
     }
     else if (targeting && !singleTargetOnly) {
       for (BattleTargetButton button: mouseTargetButtons) {
         button.update();
+        button.hide();
+      }
+    }
+    if (isMultiTargetMove()) {
+      for (BattleTargetButton button: mouseTargetButtons) {
+        if (button.isHovering()) {
+          Predicate<BattleTargetButton> predicate;
+          if (button.getEntity() instanceof CharacterBattleEntity) {
+            predicate = but -> but.getEntity() instanceof CharacterBattleEntity;
+          }
+          else {
+            predicate = but -> but.getEntity() instanceof EnemyBattleEntity;
+          }
+          for (BattleTargetButton charBut: mouseTargetButtons.stream().filter(predicate).collect(Collectors.toList())) {
+            charBut.show();
+          }
+          break;
+        }
       }
     }
   }
 
   public void render(Screen screen, GL2 gl) {
     if (targeting) {
-      screen.renderSprite(gl, currentTarget.getX() - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - currentTarget.getCurrentAction().getHeight() / 2 - 15, selectorIconAnim.getSprite(), false);
-      if (targeting && singleTargetOnly) {
-        mouseTargetButtons.stream()
-          .filter(button -> button.getEntity() == currentTarget)
-          .findAny()
-          .get()
-          .render(screen, gl);
+      if (isMultiTargetMove()) {
+        for (BattleEntity entity: targetInfo.getTargets()) {
+          screen.renderSprite(gl, entity.getX() - selectorIconAnim.getSprite().getWidth() / 2, entity.getY() - entity.getCurrentAction().getHeight() / 2 - 15, selectorIconAnim.getSprite(), false);    
+        }
       }
-      else if (targeting && !singleTargetOnly) {
+      else {
+        screen.renderSprite(gl, currentTarget.getX() - selectorIconAnim.getSprite().getWidth() / 2, currentTarget.getY() - currentTarget.getCurrentAction().getHeight() / 2 - 15, selectorIconAnim.getSprite(), false);
+        if (targeting && singleTargetOnly) {
+          for (BattleTargetButton button: mouseTargetButtons) {
+            if (button.getEntity() != currentTarget) button.render(screen, gl);
+          }
+        }
+      }
+      if (targeting && !singleTargetOnly) {
         for (BattleTargetButton button: mouseTargetButtons) {
           if (button.getEntity() != currentTarget) button.render(screen, gl);
         }

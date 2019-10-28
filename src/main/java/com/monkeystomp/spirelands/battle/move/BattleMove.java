@@ -78,6 +78,8 @@ public class BattleMove implements Cloneable {
   private final int accuracy;
   // Is the move a ranged move?
   private final boolean ranged;
+  // Is the move a multi-target move?
+  private final boolean multiTarget;
   // The animation method for the battle entity.
   private final Method moveAnimation;
   // The thumbnail for this move.
@@ -155,7 +157,6 @@ public class BattleMove implements Cloneable {
           .physicalAttack()
           .powerLevel(20)
           .accuracy(95)
-          .ranged(false)
           .stabbingAnimation()
           .thumbnail(Item.COMMON_SWORD.getThumbnail())
           .sound(SoundEffects.QUICK_HIT)
@@ -169,7 +170,6 @@ public class BattleMove implements Cloneable {
           .physicalAttack()
           .powerLevel(30)
           .accuracy(60)
-          .ranged(false)
           .swingingAnimation()
           .thumbnail(Item.BROADAXE.getThumbnail())
           .sound(SoundEffects.STRONG_MALE_ATTACK)
@@ -187,7 +187,7 @@ public class BattleMove implements Cloneable {
             moveInfo.getUser().returnToIdleState();
             return null;
           })
-          .singleTarget(true)
+          .singleTarget()
           .build();
   
   /**
@@ -206,7 +206,7 @@ public class BattleMove implements Cloneable {
           .powerLevel(20)
           .manaRequired(5)
           .accuracy(100)
-          .ranged(true)
+          .ranged()
           .magicalSkillAnimation()
           .thumbnail(Item.PUPIL_WAND.getThumbnail())
           .sound(SoundEffects.MAGICAL_ENERGY)
@@ -221,7 +221,8 @@ public class BattleMove implements Cloneable {
           .magicalAttack()
           .powerLevel(20)
           .manaRequired(5)
-          .ranged(true)
+          .ranged()
+          .multiTarget()
           .magicalSkillAnimation()
           .thumbnail(new Sprite(16, 16, 6, 11, SpriteSheet.itemsSheet))
           .sound(SoundEffects.MAGICAL_ENERGY)
@@ -236,7 +237,7 @@ public class BattleMove implements Cloneable {
           .magicalAttack()
           .powerLevel(20)
           .manaRequired(5)
-          .ranged(true)
+          .ranged()
           .magicalSkillAnimation()
           .thumbnail(new Sprite(16, 16, 0, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.MAGICAL_ENERGY)
@@ -251,7 +252,7 @@ public class BattleMove implements Cloneable {
           .powerLevel(20)
           .manaRequired(5)
           .accuracy(100)
-          .ranged(true)
+          .ranged()
           .magicalSkillAnimation()
           .thumbnail(new Sprite(16, 16, 3, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.HEALING_SOUND)
@@ -274,7 +275,7 @@ public class BattleMove implements Cloneable {
           .name("Wall")
           .magicalBuff()
           .physicalSkillAnimation()
-          .ranged(true)
+          .ranged()
           .thumbnail(new Sprite(16, 16, 9, 1, SpriteSheet.itemsSheet))
           .sound(SoundEffects.EQUIP_ARMOR)
           .targetAnimation(CURE_ANIMATION)
@@ -291,7 +292,7 @@ public class BattleMove implements Cloneable {
           .name("Halo")
           .magicalBuff()
           .magicalSkillAnimation()
-          .ranged(true)
+          .ranged()
           .thumbnail(new Sprite(16, 16, 8, 13, SpriteSheet.itemsSheet))
           .sound(SoundEffects.VOCAL_CONFIRM)
           .targetAnimation(CURE_ANIMATION)
@@ -308,7 +309,7 @@ public class BattleMove implements Cloneable {
           .name("Hope")
           .magicalBuff()
           .magicalSkillAnimation()
-          .ranged(true)
+          .ranged()
           .thumbnail(new Sprite(16, 16, 0, 6, SpriteSheet.itemsSheet))
           .sound(SoundEffects.VOCAL_CONFIRM)
           .targetAnimation(CURE_ANIMATION)
@@ -324,7 +325,7 @@ public class BattleMove implements Cloneable {
           .name("Rally")
           .magicalBuff()
           .physicalSkillAnimation()
-          .ranged(true)
+          .ranged()
           .thumbnail(new Sprite(16, 16, 9, 2, SpriteSheet.itemsSheet))
           .sound(SoundEffects.VOCAL_CONFIRM)
           .targetAnimation(CURE_ANIMATION)
@@ -348,6 +349,7 @@ public class BattleMove implements Cloneable {
     this.manaRequired = builder.manaRequired;
     this.accuracy = builder.accuracy;
     this.ranged = builder.ranged;
+    this.multiTarget = builder.multiTarget;
     this.moveAnimation = builder.moveAnimation;
     this.thumbnail = builder.thumbnail;
     this.sound = builder.sound;
@@ -442,6 +444,10 @@ public class BattleMove implements Cloneable {
 
   public boolean isRanged() {
     return ranged;
+  }
+
+  public boolean isMultiTarget() {
+    return multiTarget;
   }
 
   public Method getMoveAnimation() {

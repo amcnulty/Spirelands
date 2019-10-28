@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.battle.move;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.battle.controls.TargetInformation;
 import com.monkeystomp.spirelands.battle.elemental.Elemental;
 import com.monkeystomp.spirelands.battle.enemy.Enemy;
 import com.monkeystomp.spirelands.battle.entity.BattleEntity;
@@ -28,38 +29,65 @@ import java.util.function.Consumer;
  */
 public class MoveProcessor {
   
+  private boolean playEvadeSound = false,
+                  playMoveSound = false;
   private final Random random = new Random();
   private Consumer<FlashMessage> IFlashMessage;
   private final SoundEffects sfx = new SoundEffects();
   private BattleMove currentMove;
   private BattleEntity currentTarget;
+  private ArrayList<? extends BattleEntity> currentTargets;
 
   public void setIFlashMessage(Consumer<FlashMessage> IFlashMessage) {
     this.IFlashMessage = IFlashMessage;
   }
   
-  public void process(BattleEntity user, BattleEntity target, BattleMove move) {
-    currentTarget = target;
+  public void process(BattleEntity user, TargetInformation targetInfo, BattleMove move) {
     currentMove = move;
-    if (move.getType().equals(BattleMove.ITEM)) {
-      if (move.getItem() instanceof EquipmentItem) processEquipmentItemMove(user, target, move);
-      else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, target, move);
+    if (targetInfo.isMultiTarget()) {
+      currentTargets = targetInfo.getTargets();
+      for (BattleEntity entity: currentTargets) {
+        currentTarget = entity;
+        if (move.getType().equals(BattleMove.ITEM)) {
+          if (move.getItem() instanceof EquipmentItem) processEquipmentItemMove(user, currentTarget, move);
+          else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, currentTarget, move);
+        }
+        else if (move.getAction().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, currentTarget, move);
+        else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) processDefensiveMove(user, currentTarget, move);
+      }
     }
-    else if (move.getAction().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, target, move);
-    else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) processDefensiveMove(user, target, move);
+    else {
+      currentTarget = targetInfo.getTarget();
+      if (move.getType().equals(BattleMove.ITEM)) {
+        if (move.getItem() instanceof EquipmentItem) processEquipmentItemMove(user, currentTarget, move);
+        else if (move.getItem() instanceof BattleItem) processBattleItemMove(user, currentTarget, move);
+      }
+      else if (move.getAction().equals(BattleMove.OFFENSIVE)) processOffensiveMove(user, currentTarget, move);
+      else if (move.getAction().equals(BattleMove.DEFENSIVE) || move.getAction().equals(BattleMove.BUFF)) processDefensiveMove(user, currentTarget, move);
+    }
+    user.getStatModel().decreaseMana(move.getManaRequired());
+    if (playEvadeSound) {
+      sfx.playSoundEffect(SoundEffects.HIT_MISS);
+      playEvadeSound = false;
+    }
+    if (playMoveSound) {
+      if (move.hasSound()) sfx.playSoundEffect(move.getSound());
+      playMoveSound = false;
+    }
   }
   
   private void processOffensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
     int attackPower, overallEffect;
     if (random.nextInt(100) + 1 > move.getAccuracy()) {
       if (user != target) target.playEvadeAnimation();
-      sfx.playSoundEffect(SoundEffects.HIT_MISS);
+      playEvadeSound = true;
       FlashMessage message = new FlashMessage(target, "miss");
       message.floatMessageUp(true);
       IFlashMessage.accept(message);
 //      System.out.println(user.getStatModel().getName() + " missed " + target.getStatModel().getName() + "!");
     }
     else {
+      playMoveSound = true;
       if (move.getType().equals(BattleMove.PHYSICAL)) {
         attackPower = (int)(move.getPowerLevel() * user.getStatModel().getCombinedAttack() * ( .1 + ( .009 * ( user.getStatModel().getLevel() ))));
         attackPower *= 1 + user.getAttackModifier();
@@ -86,13 +114,9 @@ public class MoveProcessor {
       }
       overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
       if (user != target) target.playDamageAnimation();
-      if (move.hasSound()) {
-        sfx.playSoundEffect(move.getSound());
-      }
       if (currentMove.hasTargetAnimation()) {
         currentMove.getTargetAnimation().setReadyToPlay(true);
       }
-      user.getStatModel().decreaseMana(move.getManaRequired());
       target.getStatModel().decreaseHealth(overallEffect);
       FlashMessage message = new FlashMessage(target, String.valueOf(overallEffect));
       message.floatMessageUp(true);
@@ -102,13 +126,10 @@ public class MoveProcessor {
   }
   
   private void processDefensiveMove(BattleEntity user, BattleEntity target, BattleMove move) {
-      if (move.hasSound()) {
-        sfx.playSoundEffect(move.getSound());
-      }
       if (currentMove.hasTargetAnimation()) {
         currentMove.getTargetAnimation().setReadyToPlay(true);
       }
-      user.getStatModel().decreaseMana(move.getManaRequired());
+      playMoveSound = true;
       FlashMessage message = move.getDefensiveAction().apply(new MoveInformation(user, target, move));
       if (message != null) IFlashMessage.accept(message);
   }
@@ -179,7 +200,6 @@ public class MoveProcessor {
     }
     overallEffect = (int)( overallEffect * ( 1 + (  ( random.nextDouble() - .5 ) / 5 )));
     if (user != target) target.playDamageAnimation();
-    user.getStatModel().decreaseMana(move.getManaRequired());
     target.getStatModel().decreaseHealth(overallEffect);
     FlashMessage message = new FlashMessage(target, String.valueOf(overallEffect));
     message.floatMessageUp(true);
@@ -198,13 +218,26 @@ public class MoveProcessor {
     if (currentMove != null) {
       if (currentMove.hasTargetAnimation()) {
         if (currentMove.getTargetAnimation().isReadyToPlay()) {
-          screen.renderSprite(
-                  gl,
-                  currentTarget.getX() - currentMove.getTargetAnimation().getSprite().getWidth() / 2,
-                  currentTarget.getY() - currentMove.getTargetAnimation().getSprite().getHeight() / 2,
-                  currentMove.getTargetAnimation().getSprite(),
-                  false
-          );
+          if (currentMove.isMultiTarget()) {
+            for (BattleEntity entity: currentTargets) {
+              screen.renderSprite(
+                      gl,
+                      entity.getX() - currentMove.getTargetAnimation().getSprite().getWidth() / 2,
+                      entity.getY() - currentMove.getTargetAnimation().getSprite().getHeight() / 2,
+                      currentMove.getTargetAnimation().getSprite(),
+                      false
+              );             
+            }
+          }
+          else {
+            screen.renderSprite(
+                    gl,
+                    currentTarget.getX() - currentMove.getTargetAnimation().getSprite().getWidth() / 2,
+                    currentTarget.getY() - currentMove.getTargetAnimation().getSprite().getHeight() / 2,
+                    currentMove.getTargetAnimation().getSprite(),
+                    false
+            );
+          }
         }
       }
     }
