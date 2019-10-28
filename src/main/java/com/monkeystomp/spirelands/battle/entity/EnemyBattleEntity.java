@@ -218,7 +218,6 @@ public class EnemyBattleEntity extends BattleEntity {
   }
   // In this method set the 'currentMove' and 'targetInfo' variables.
   private void setNextMove(ArrayList<CharacterBattleEntity> party, ArrayList<EnemyBattleEntity> enemies) {
-    System.out.println("Remaining MP: " + statModel.getMana());
     List<EnemyMoveInformation> movePool = ((Enemy)statModel).getEnemyMoveInformation().stream()
             .filter(moveInfo -> {
               if (moveInfo.hasMoveCriteria()) {

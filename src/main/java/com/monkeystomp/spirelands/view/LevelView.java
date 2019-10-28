@@ -41,7 +41,7 @@ public class LevelView extends GameView {
   }
 
   private void handleKeypress(KeyEvent e) {
-    if (e.getKeyCode() == Keyboard.ESCAPE_KEY) {
+    if (e.getKeyCode() == Keyboard.ESCAPE_KEY && level.canPause()) {
       if (gamePaused) resumeLevel();
       else pauseLevel();
     }

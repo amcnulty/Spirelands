@@ -115,7 +115,7 @@ public class Level implements Runnable {
   }
   
   public void handleKeypress(KeyEvent e) {
-    if (e.getKeyCode() == Keyboard.I_KEY) {
+    if (e.getKeyCode() == Keyboard.I_KEY && !battleTransition.isAnimating()) {
       if (!dialogOpen) {
         if (gameMenuOpen) closeGameMenu();
         else openGameMenu();
@@ -272,6 +272,10 @@ public class Level implements Runnable {
   
   public boolean getDialogOpen() {
     return dialogOpen;
+  }
+  
+  public boolean canPause() {
+    return !battleTransition.isAnimating();
   }
   
   public void setDialogOpen(Boolean bool) {
