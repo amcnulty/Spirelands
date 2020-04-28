@@ -10,6 +10,30 @@ import java.util.function.Consumer;
  */
 public abstract class DisplayView implements Viewable {
   /**
+   * The default view. This is the first view that is seen when opening the game menu.
+   */
+  public static final String DEFAULT = "default";
+  /**
+   * The items view.
+   */
+  public static final String ITEMS = "items";
+  /**
+   * The weapon view.
+   */
+  public static final String WEAPON = "weapon";
+  /**
+   * The armor view.
+   */
+  public static final String ARMOR = "armor";
+  /**
+   * The abilities view.
+   */
+  public static final String ABILITIES = "abilities";
+  /**
+   * The crafting view.
+   */
+  public static final String CRAFTING = "crafting";
+  /**
    * Y coordinate of the top most edge in the display view in pixels.
    */
   protected final int TOP = 23;

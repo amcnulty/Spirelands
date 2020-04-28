@@ -9,6 +9,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
 
@@ -65,7 +66,7 @@ public class GameMenu {
   
   private void handleBackButtonPress() {
     if (!displayPanel.isDefaultView()) {
-      displayPanel.changeView(DisplayPanel.DEFAULT);
+      displayPanel.changeView(DisplayView.DEFAULT);
       buttonPanel.resetNavButtons();
     }
   }
@@ -90,7 +91,7 @@ public class GameMenu {
   public void closeMenu() {
     playMenuCloseSound();
     buttonPanel.resetNavButtons();
-    displayPanel.changeView(DisplayPanel.DEFAULT);
+    displayPanel.changeView(DisplayView.DEFAULT);
   }
 
   private void playMenuOpenSound() {

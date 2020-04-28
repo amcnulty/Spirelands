@@ -93,11 +93,6 @@ public class WeaponView extends DisplayView {
     }
   }
   
-  private void checkCharacter() {
-    if (weaponDetailCard.getCharacter() == null || character != weaponDetailCard.getCharacter()) {
-      weaponDetailCard.setCharacter(character);
-    }
-  }
   
   @Override
   public void setCharacter(Character character) {
@@ -124,7 +119,6 @@ public class WeaponView extends DisplayView {
   @Override
   public void update() {
     checkItemCount();
-    checkCharacter();
     if (pages.size() > 0) {
       for (InventoryListItem item: pages.get(currentPageIndex)) {
         item.update();

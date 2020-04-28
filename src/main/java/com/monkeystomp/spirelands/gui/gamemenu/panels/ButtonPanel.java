@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.panels;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuNavButton;
+import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -24,19 +25,19 @@ public class ButtonPanel {
 
   private void createNavButtons() {
     navButtons.add(new GameMenuNavButton("Weapons", 70, 39, () -> {
-      nextViewChanger.accept(DisplayPanel.WEAPON);
+      nextViewChanger.accept(DisplayView.WEAPON);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Armor", 70, 59, () -> {
-      nextViewChanger.accept(DisplayPanel.ARMOR);
+      nextViewChanger.accept(DisplayView.ARMOR);
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Spells", 70, 79, () -> {
-      System.out.println("Spells Button Clicked");
+    navButtons.add(new GameMenuNavButton("Abilities", 70, 79, () -> {
+      nextViewChanger.accept(DisplayView.ABILITIES);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Items", 70, 99, () -> {
-      viewChanger.accept(DisplayPanel.ITEMS);
+      viewChanger.accept(DisplayView.ITEMS);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Collectables", 70, 119, () -> {
@@ -48,7 +49,7 @@ public class ButtonPanel {
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Crafting", 70, 159, () -> {
-      System.out.println("Crafting Button Clicked");
+      viewChanger.accept(DisplayView.CRAFTING);
       resetNavButtons();
     }));
   }

@@ -2,7 +2,9 @@ package com.monkeystomp.spirelands.gui.gamemenu.panels;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.gui.gamemenu.views.AbilitiesView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ArmorView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.CraftingView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
@@ -15,27 +17,13 @@ import java.util.HashMap;
  * @author Aaron Michael McNulty
  */
 public class DisplayPanel {
-  /**
-   * The default view. This is the first view that is seen when opening the game menu.
-   */
-  public static final String DEFAULT = "default";
-  /**
-   * The items view.
-   */
-  public static final String ITEMS = "items";
-  /**
-   * The weapon view.
-   */
-  public static final String WEAPON = "weapon";
-  /**
-   * The armor view.
-   */
-  public static final String ARMOR = "armor";
   
   private final DisplayView defaultView = new DefaultView();
   private final DisplayView itemsView = new ItemsView();
   private final DisplayView weaponView = new WeaponView();
-  private final DisplayView armorView = new ArmorView(); 
+  private final DisplayView armorView = new ArmorView();
+  private final DisplayView abilitiesView = new AbilitiesView();
+  private final DisplayView craftingView = new CraftingView();
   private DisplayView currentView;
   private final ICallback IViewChanged;
   private String nextViewKey;
@@ -55,10 +43,12 @@ public class DisplayPanel {
   }
   
   private void createMap() {
-    viewMap.put(DEFAULT, defaultView);
-    viewMap.put(ITEMS, itemsView);
-    viewMap.put(WEAPON, weaponView);
-    viewMap.put(ARMOR, armorView);
+    viewMap.put(DisplayView.DEFAULT, defaultView);
+    viewMap.put(DisplayView.ITEMS, itemsView);
+    viewMap.put(DisplayView.WEAPON, weaponView);
+    viewMap.put(DisplayView.ARMOR, armorView);
+    viewMap.put(DisplayView.ABILITIES, abilitiesView);
+    viewMap.put(DisplayView.CRAFTING, craftingView);
   }
   /**
    * WARNING! DO NOT CALL THIS METHOD DIRECTLY!! Use changeView() method because it will call exitingView() on the current view.
@@ -75,8 +65,8 @@ public class DisplayPanel {
   
   public void prepareNextViewWithCharacter(String key) {
     setNextViewKey(key);
-    changeView(DEFAULT);
-    DefaultView view = (DefaultView)viewMap.get(DEFAULT);
+    changeView(DisplayView.DEFAULT);
+    DefaultView view = (DefaultView)viewMap.get(DisplayView.DEFAULT);
     view.activateCharacterButtons();
   }
   /**
@@ -86,6 +76,7 @@ public class DisplayPanel {
   public void changeView(String viewKey) {
     currentView.exitingView();
     setCurrentView(viewMap.get(viewKey));
+    currentView.enteringView();
   }
   /**
    * Checks if the default view is the current view.

@@ -102,12 +102,6 @@ public class ArmorView extends DisplayView {
     }
   }
   
-  private void checkCharacter() {
-    if (armorDetailCard.getCharacter() == null || character != armorDetailCard.getCharacter()) {
-      armorDetailCard.setCharacter(character);
-    }
-  }
-  
   @Override
   public void setCharacter(com.monkeystomp.spirelands.character.Character character) {
     super.setCharacter(character);
@@ -134,7 +128,6 @@ public class ArmorView extends DisplayView {
   @Override
   public void update() {
     checkItemCount();
-    checkCharacter();
     if (pages.size() > 0) {
       for (InventoryListItem item: pages.get(currentPageIndex)) {
         item.update();
