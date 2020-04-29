@@ -47,6 +47,10 @@ public class BattleMoveBuilder {
    */
   public String name;
   /**
+   * The level of this move.
+   */
+  public int level;
+  /**
    * The elemental type of this move.
    */
   public String element;
@@ -123,7 +127,20 @@ public class BattleMoveBuilder {
     this.name = name;
     return this;
   }
-  
+  /**
+   * Sets the level of the move.
+   * @param level Level to set the move to.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder level(int level) {
+    this.level = level;
+    return this;
+  }
+  /**
+   * Sets the element of the move.
+   * @param element Element to set for the move.
+   * @return The BattleMoveBuilder reference.
+   */
   public BattleMoveBuilder element(String element) {
     this.element = element;
     return this;

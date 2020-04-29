@@ -64,6 +64,8 @@ public class BattleMove implements Cloneable {
   private final int id;
   // The name of the move.
   private String name;
+  // The level of the move.
+  private final int level;
   // The elemental type of the move.
   private final String element;
   // Physical or magical type.
@@ -154,6 +156,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove BASIC_ATTACK = new BattleMoveBuilder()
           .name("Basic Attack")
+          .level(1)
           .physicalAttack()
           .powerLevel(20)
           .accuracy(95)
@@ -167,6 +170,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
           .name("Blunt Force")
+          .level(2)
           .physicalAttack()
           .powerLevel(30)
           .accuracy(60)
@@ -179,6 +183,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove GUARD = new BattleMoveBuilder()
           .name("Guard")
+          .level(1)
           .physicalDefensive()
           .guardAnimation()
           .thumbnail(new Sprite(16, 16, 9, 0, SpriteSheet.itemsSheet))
@@ -202,6 +207,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
           .name("Magic Energy")
+          .level(1)
           .magicalAttack()
           .powerLevel(20)
           .manaRequired(5)
@@ -217,6 +223,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove FIREBALL = new BattleMoveBuilder()
           .name("Fireball")
+          .level(1)
           .element(Elemental.FIRE)
           .magicalAttack()
           .powerLevel(20)
@@ -233,6 +240,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove TIDAL_WAVE = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -248,6 +256,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove CURE = new BattleMoveBuilder()
           .name("Cure")
+          .level(1)
           .magicalDefensive()
           .powerLevel(20)
           .manaRequired(5)
@@ -273,6 +282,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove WALL = new BattleMoveBuilder()
           .name("Wall")
+          .level(2)
           .magicalBuff()
           .physicalSkillAnimation()
           .ranged()
@@ -290,6 +300,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove HALO = new BattleMoveBuilder()
           .name("Halo")
+          .level(1)
           .magicalBuff()
           .magicalSkillAnimation()
           .ranged()
@@ -307,6 +318,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove HOPE = new BattleMoveBuilder()
           .name("Hope")
+          .level(1)
           .magicalBuff()
           .magicalSkillAnimation()
           .ranged()
@@ -323,6 +335,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove RALLY = new BattleMoveBuilder()
           .name("Rally")
+          .level(1)
           .magicalBuff()
           .physicalSkillAnimation()
           .ranged()
@@ -343,6 +356,7 @@ public class BattleMove implements Cloneable {
     this.type = builder.type;
     this.id = getNextId();
     this.name = builder.name;
+    this.level = builder.level;
     this.element = builder.element;
     this.action = builder.action;
     this.powerLevel = builder.powerLevel;
@@ -416,6 +430,10 @@ public class BattleMove implements Cloneable {
   
   public String getName() {
     return name;
+  }
+  
+  public int getLevel() {
+    return level;
   }
 
   public String getElement() {

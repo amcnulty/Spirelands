@@ -135,7 +135,8 @@ public class Button {
    * @throws Error 
    */
   public Button(int x, int y, Sprite defaultState, Sprite hover, Sprite down, Sprite disabled, ICallback callback) throws Error {
-    if (!areAllEqual(defaultState, hover, down, disabled)) throw new Error("Dimensions of provided sprites do not match! Only sprites of matching width and height are allowed!");
+    if (!areAllEqual(defaultState, hover, down, disabled))
+      throw new IllegalArgumentException("Dimensions of provided sprites do not match! Only sprites of matching width and height are allowed!");
     this.width = defaultState.getWidth();
     this.height = defaultState.getHeight();
     this.x = x - width / 2;

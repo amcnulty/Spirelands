@@ -50,6 +50,13 @@ public class GameMenuPrimaryButton extends Button {
     button = createBorderSprite();
     buttonHover = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT);
     buttonDown = new Sprite(width, height, GameColors.GAME_MENU_LABEL_TEXT_DARK);
+    int[] pixels = new int[width * height];
+    for (int yy = 0; yy < height; yy++) {
+      for(int xx = 0; xx < width; xx++) {
+        pixels[xx + yy * width] = GameColors.GAME_MENU_MUTED_TEXT;
+      }
+    }
+    disabledButton = new Sprite(pixels, width, height);
     currentButton = button;
   }
   
@@ -82,6 +89,17 @@ public class GameMenuPrimaryButton extends Button {
   protected void setDefault() {
     super.setDefault();
     fontInfo.setColor(new Color(GameColors.GAME_MENU_LABEL_TEXT));
+  }
+  
+  @Override
+  public void setDisabled(boolean disabled) {
+    super.setDisabled(disabled);
+    if (disabled) {
+      fontInfo.setColor(new Color(GameColors.DARK_TEXT));
+    }
+    else {
+      fontInfo.setColor(new Color(GameColors.GAME_MENU_LABEL_TEXT));
+    }
   }
   
   public void disableButtonClickSound() {
