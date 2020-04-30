@@ -141,14 +141,25 @@ public class InventoryManager {
     battleMoveMap.put(battleMove.getId(), battleMove);
   }
   /**
-   * Get a list of BattleMove objects from the inventory based on the given type or action.
-   * This method will use either property independently to filter the results.
+   * Get a list of BattleMove objects from the inventory based on the given type.
    * @param searchTerm BattleMove.type to filter by.
+   * @param excludedAction BattleMove.action to exclude from type or action.
    * @return The list of BattleMove objects after they have been filtered.
    */
-  public ArrayList<BattleMove> getBattleMovesByTypeOrAction(String searchTerm) {
+  public ArrayList<BattleMove> getBattleMovesByType(String searchTerm, String excludedAction) {
     return (ArrayList<BattleMove>)battleMoveMap.entrySet().stream()
-      .filter(map -> map.getValue().getType().equals(searchTerm) || map.getValue().getAction().equals(searchTerm))
+      .filter(map -> map.getValue().getType().equals(searchTerm) && !map.getValue().getAction().equals(excludedAction))
+      .map(entry -> entry.getValue())
+      .collect(Collectors.toList());
+  }
+  /**
+   * Get a list of BattleMove objects from the inventory based on the given action.
+   * @param searchTerm BattleMove.action to filter by.
+   * @return The list of BattleMove objects after they have been filtered.
+   */
+  public ArrayList<BattleMove> getBattleMovesByAction(String searchTerm) {
+    return (ArrayList<BattleMove>)battleMoveMap.entrySet().stream()
+      .filter(map -> map.getValue().getAction().equals(searchTerm))
       .map(entry -> entry.getValue())
       .collect(Collectors.toList());
   }

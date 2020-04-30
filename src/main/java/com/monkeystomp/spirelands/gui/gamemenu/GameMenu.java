@@ -106,6 +106,7 @@ public class GameMenu {
    */
   public void update() {
     buttonPanel.update();
+    goldPanel.update();
     displayPanel.update();
     backButton.update();
     closeMenuButton.update();

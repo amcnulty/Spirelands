@@ -220,7 +220,7 @@ public class Button {
   
   public void setLeft(int left) {
     this.x = left;
-    right = x + width / 2;
+    right = x + width;
   }
   
   public boolean isDisabled() {

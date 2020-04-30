@@ -11,6 +11,21 @@ import java.util.function.Consumer;
 public class GroupButton extends Button {
   
   private Consumer<GroupButton> IGroupNotifier;
+
+  /**
+   * Creates a Button object with a callback that gets fired when button is clicked.
+   * The active state must be set after creation by calling the setButtonActive() method.
+   * @param text The text to be rendered on the button.
+   * @param x The x coordinate to render the button.
+   * @param y The y coordinate to render the button.
+   * @param width The width of the button.
+   * @param height The height of the button.
+   * @param callback The callback function that fires when the button is clicked on.
+   */
+  public GroupButton(String text, int x, int y, int width, int height, ICallback callback) {
+    super(text, x, y, width, height, callback);
+    this.disabledButton = buttonHover;
+  }
   
   /**
    * Creates a Button object with a callback that gets fired when button is clicked.
@@ -40,6 +55,13 @@ public class GroupButton extends Button {
    */
   public GroupButton(String text, int x, int y, int width, int height, Sprite buttonActive, Object consumable, Consumer consumer) {
     super(text, x, y, width, height, consumable, consumer);
+    this.disabledButton = buttonActive;
+  }
+  /**
+   * Sets the active button state for this group button.
+   * @param buttonActive Sprite that the button will show when active.
+   */
+  public void setButtonActive(Sprite buttonActive) {
     this.disabledButton = buttonActive;
   }
    

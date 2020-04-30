@@ -4,38 +4,34 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
-import com.monkeystomp.spirelands.gui.controlls.button.Button;
+import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.controlls.button.GroupButton;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
  * Ability slots are shown in the game menu under the Abilities section and represent what battle moves are currently equipped for a particular character.
  * @author Aaron Michael McNulty
  */
-public class AbilitySlot extends Button {
+public class AbilitySlot extends GroupButton {
   
   private final String type;
   private final int level;
-  private final Consumer<AbilitySlotClickEvent> clickHandler;
+  private Consumer<AbilitySlotClickEvent> clickHandler;
+  private BattleMove equippedMove;
+  private final ArrayList<BattleMove> equippedItemMoves = new ArrayList<>();
+  private Sprite itemIcon;
   
-  public AbilitySlot(int x, int y, String type, Consumer<AbilitySlotClickEvent> clickHandler) {
-    super("", x, y, 19, 19, () -> {});
+  public AbilitySlot(String type, int level) {
+    super("", 0, 0, 19, 19, () -> {});
     this.type = type;
     if (!this.type.equals(BattleMove.PHYSICAL) && !this.type.equals(BattleMove.MAGICAL) && !this.type.equals(BattleMove.BUFF) && !this.type.equals(BattleMove.ITEM))
       throw new IllegalArgumentException("Improper 'type' supplied. Ability slots must have a 'type' property of 'Physical' | 'Magical' | 'Buff' | 'Item'");
-    this.level = 0;
-    this.clickHandler = clickHandler;
-    createButtonSprites();
-  }
-  
-  public AbilitySlot(int x, int y, String type, int level, Consumer<AbilitySlotClickEvent> clickHandler) {
-    super("", x, y, 19, 19, () -> {});
-    this.type = type;
-    if (!this.type.equals(BattleMove.PHYSICAL) && !this.type.equals(BattleMove.MAGICAL) && !this.type.equals(BattleMove.BUFF) && !this.type.equals(BattleMove.ITEM))
-      throw new IllegalArgumentException("Improper 'type' supplied. Ability slots must have a 'type' property of 'Physical' | 'Magical' | 'Buff' | 'Item'");
+    if (this.type.equals(BattleMove.ITEM))
+      itemIcon = new Sprite(16, 16, 0, 11, SpriteSheet.itemsSheet);
     this.level = level;
-    this.clickHandler = clickHandler;
     createButtonSprites();
   }
   
@@ -44,6 +40,7 @@ public class AbilitySlot extends Button {
     buttonHover = createHoverSprite();
     buttonDown = createDownSprite();
     currentButton = button;
+    setButtonActive(buttonHover);
   }
   
   private Sprite createDefaultSprite() {
@@ -94,6 +91,18 @@ public class AbilitySlot extends Button {
     return new Sprite(pixels, width, height);
   }
   
+  public void addMove(BattleMove move) {
+    equippedMove = move;
+  }
+  
+  public void addItemMove(BattleMove move) {
+    equippedItemMoves.add(move);
+  }
+
+  public void setClickHandler(Consumer<AbilitySlotClickEvent> clickHandler) {
+    this.clickHandler = clickHandler;
+  }
+  
   @Override
   protected void click() {
     super.click();
@@ -108,6 +117,13 @@ public class AbilitySlot extends Button {
   @Override
   public void render(Screen screen, GL2 gl) {
     super.render(screen, gl);
+    if (level == 0)
+      screen.renderSprite(gl, x + 5, y + 6, Sprite.LOCK, false);
+    else if (equippedMove != null)
+      screen.renderSprite(gl, x + 1, y + 1, equippedMove.getThumbnail(), false);
+    else if (type.equals(BattleMove.ITEM))
+      screen.renderSprite(gl, x + 1, y + 1, itemIcon, false);
+      
   }
 
 }

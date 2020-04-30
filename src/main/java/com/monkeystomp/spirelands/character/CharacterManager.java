@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.gamemenu.components.AbilitySlot;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
@@ -30,7 +31,6 @@ public class CharacterManager {
   private final HashMap<Integer, Character> partyMap = new HashMap<>();
   private Character partyLeader;
   private JSONObject characterBaseInformation;
-  private JSONArray slots;
   private final JSONParser parser = new JSONParser();
   private final JSONUtil jsonUtil = new JSONUtil();
   
@@ -146,12 +146,15 @@ public class CharacterManager {
       character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.BOOTS})));
     else
       character.setEquippedBoots(null);
-    slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
+    JSONArray slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
     ArrayList<BattleMove> equippedMoves = new ArrayList<>();
     slots.forEach(i -> {
       JSONObject slot = (JSONObject)i;
+      AbilitySlot newSlot = new AbilitySlot(jsonUtil.getString(slot, JSONUtil.TYPE), jsonUtil.getInt(slot, JSONUtil.LEVEL));
+      character.addAbilitySlot(newSlot);
       if (!slot.get(JSONUtil.TYPE).equals(BattleMove.ITEM)) {
         if (slot.get(JSONUtil.MOVE) != null && BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(slot, JSONUtil.MOVE))) {
+          newSlot.addMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
           equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
         }
       }
@@ -161,6 +164,7 @@ public class CharacterManager {
           itemMoves.forEach(itemMove -> {
             JSONObject move = (JSONObject)itemMove;
             if (BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(move, JSONUtil.ID))) {
+              newSlot.addItemMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(move, JSONUtil.ID)));
               equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(move, JSONUtil.ID)));
             }
           });
@@ -212,10 +216,6 @@ public class CharacterManager {
   
   public ArrayList<Character> getCharacters() {
     return gameCharacters;
-  }
-  
-  public JSONArray getCharacterAbilitySlots() {
-    return slots;
   }
 
 }

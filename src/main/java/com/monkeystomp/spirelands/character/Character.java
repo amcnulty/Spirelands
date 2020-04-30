@@ -4,6 +4,7 @@ import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
+import com.monkeystomp.spirelands.gui.gamemenu.components.AbilitySlot;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
@@ -41,6 +42,8 @@ public class Character extends StatModel {
   private ArmorItem equippedBoots;
   // Array of equipped moves.
   private final ArrayList<BattleMove> equippedMoves = new ArrayList<>();
+  // Array of ability slots.
+  private final ArrayList<AbilitySlot> abilitySlots = new ArrayList<>();
   
   public String getId() {
     return id;
@@ -115,6 +118,17 @@ public class Character extends StatModel {
   public void setEquippedMoves(ArrayList<BattleMove> moves) {
     equippedMoves.clear();
     equippedMoves.addAll(moves);
+  }
+  /**
+   * Adds the given ability slot to this character's array of slots.
+   * @param slot The ability slot to add.
+   */
+  public void addAbilitySlot(AbilitySlot slot) {
+    abilitySlots.add(slot);
+  }
+
+  public ArrayList<AbilitySlot> getAbilitySlots() {
+    return abilitySlots;
   }
     
   /**

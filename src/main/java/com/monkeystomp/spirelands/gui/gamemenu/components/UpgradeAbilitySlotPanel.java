@@ -3,10 +3,12 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gamedata.values.GameValues;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 
 /**
  * Panel shown below the character ability card in the abilities screen of the game menu. Used to show a control for upgrading the current selected ability slot.
@@ -34,14 +36,14 @@ public class UpgradeAbilitySlotPanel {
     this.y = y;
     buttonX = x + 135;
     buttonY = y + 4;
-    labelX = buttonX + buttonWidth / 2 + 7;
-    labelY = buttonY;
-    valueX = labelX + 38;
+    labelX = buttonX + buttonWidth / 2 + 10;
+    labelY = buttonY - Sprite.ABILITY_POINTS_INDICATOR.getHeight() / 2 + 1;
+    valueX = labelX + 16;
     costLabel.setText("Ability Points:");
     costLabel.setX(labelX);
     costLabel.setY(labelY);
     costValue.setX(valueX);
-    costValue.setY(labelY);
+    costValue.setY(buttonY);
   }
   
   public void updatePanel(AbilitySlotClickEvent event) {
@@ -52,7 +54,9 @@ public class UpgradeAbilitySlotPanel {
     else
       pointsToUpgrade = 0;
     button = new GameMenuPrimaryButton(buttonText, buttonX, buttonY, buttonWidth, buttonHeight, () -> {});
-    // TODO: Disable button if player doesn't have enough ability points
+    if (pointsToUpgrade > InventoryManager.getInventoryManager().getAbilityPoints()) {
+      button.setDisabled(true);
+    }
     costValue.setText(Integer.toString(pointsToUpgrade));
     showing = pointsToUpgrade > 0;
   }
@@ -82,7 +86,7 @@ public class UpgradeAbilitySlotPanel {
   public void render(Screen screen, GL2 gl) {
     if (showing) {
       button.render(screen, gl);
-      screen.renderFonts(costLabel);
+      screen.renderSprite(gl, labelX, labelY, Sprite.ABILITY_POINTS_INDICATOR, false);
       screen.renderFonts(costValue);
     }
   }

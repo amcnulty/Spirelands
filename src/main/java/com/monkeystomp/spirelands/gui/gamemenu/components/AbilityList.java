@@ -24,8 +24,17 @@ public class AbilityList {
   }
   
   public void show(AbilitySlotClickEvent event) {
-    moveList = InventoryManager.getInventoryManager().getBattleMovesByTypeOrAction(event.getType());
+    if (!event.getType().equals(BattleMove.BUFF)) {
+      moveList = InventoryManager.getInventoryManager().getBattleMovesByType(event.getType(), BattleMove.BUFF);
+    }
+    else {
+      moveList = InventoryManager.getInventoryManager().getBattleMovesByAction(event.getType());
+    }
     showing = true;
+  }
+  
+  public void hide() {
+    showing = false;
   }
   
   public void update() {

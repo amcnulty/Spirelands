@@ -1,13 +1,13 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
-import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
+import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
-import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -22,13 +22,14 @@ public class CharacterAbilityCard {
                     thumbnailHeight = 32,
                     cardBottom,
                     buttonRowXStart,
-                    buttonRowY;
+                    buttonRowY,
+                    spaceBetweenSlots = 22;
   private int characterIndex;
   private final Consumer<Character> ICharacterChanger;
   private final Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent;
   private Character character;
   private GameMenuSecondaryButton previousButton, nextButton;
-  private final ArrayList<AbilitySlot> abilitySlots = new ArrayList<>();
+  private final ButtonGroup buttonGroup = new ButtonGroup();
   
   public CharacterAbilityCard(int top, int left, Consumer<Character> ICharacterChanger, Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent) {
     this.top = top;
@@ -37,7 +38,7 @@ public class CharacterAbilityCard {
     thumbnailY = top + 10;
     cardBottom = thumbnailY + thumbnailHeight;
     buttonRowXStart = thumbnailX + thumbnailWidth + 24;
-    buttonRowY = thumbnailY + thumbnailHeight / 2;
+    buttonRowY = thumbnailY + thumbnailHeight / 2 - 9;
     this.ICharacterChanger = ICharacterChanger;
     this.IAbilitySlotClickEvent = IAbilitySlotClickEvent;
     createChevronButtons();
@@ -65,16 +66,12 @@ public class CharacterAbilityCard {
    * Set the ability slots for the current character.
    */
   private void setAbilitySlots() {
-    // TODO: get data for creating slots from the current character.
-    // Temporarily setting the slots manually.
-    abilitySlots.add(new AbilitySlot(buttonRowXStart, buttonRowY, BattleMove.PHYSICAL, 3, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 22, buttonRowY, BattleMove.PHYSICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 44, buttonRowY, BattleMove.MAGICAL, 2, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 66, buttonRowY, BattleMove.MAGICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 88, buttonRowY, BattleMove.MAGICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 110, buttonRowY, BattleMove.BUFF, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 132, buttonRowY, BattleMove.BUFF, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(buttonRowXStart + 154, buttonRowY, BattleMove.ITEM, 1, IAbilitySlotClickEvent));
+    for(AbilitySlot slot: character.getAbilitySlots()) {
+      slot.setLeft(buttonRowXStart + spaceBetweenSlots * character.getAbilitySlots().indexOf(slot));
+      slot.setTop(buttonRowY);
+      slot.setClickHandler(IAbilitySlotClickEvent);
+      buttonGroup.addButton(slot);
+    }
   }
    
   private void setPreviousCharacter() {
@@ -102,17 +99,13 @@ public class CharacterAbilityCard {
   public void update() {
     previousButton.update();
     nextButton.update();
-    for (AbilitySlot slot: abilitySlots) {
-      slot.update();
-    }
+    buttonGroup.update();
   }
 
   public void render(Screen screen, GL2 gl) {
     previousButton.render(screen, gl);
     screen.renderSprite(gl, thumbnailX, thumbnailY, character.getThumbnail(), false);
     nextButton.render(screen, gl);
-    for (AbilitySlot slot: abilitySlots) {
-      slot.render(screen, gl);
-    }
+    buttonGroup.render(screen, gl);
   }
 }

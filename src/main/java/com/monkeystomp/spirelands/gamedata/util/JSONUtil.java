@@ -215,6 +215,10 @@ public class JSONUtil {
     return returnValue;
   }
   
+  public String getString(JSONObject parent, String key) {
+    return parent.get(key).toString();
+  }
+  
   public String getNestedString(JSONObject parent, String[] keys) {
     JSONObject object = parent;
     for (int i = 0; i < keys.length - 1; i++) {

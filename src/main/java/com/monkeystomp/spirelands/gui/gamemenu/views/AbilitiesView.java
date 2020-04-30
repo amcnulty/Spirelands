@@ -27,7 +27,10 @@ public class AbilitiesView extends DisplayView {
   
   private void handleAbilitySlotClick(AbilitySlotClickEvent event) {
     upgradeAbilitySlotPanel.updatePanel(event);
-    abilityList.show(event);
+    if (event.getLevel() > 0)
+      abilityList.show(event);
+    else
+      abilityList.hide();
   }
   // The ability list.
   private final AbilityList abilityList = new AbilityList(upgradeAbilitySlotPanel.getPanelBottom(), left);

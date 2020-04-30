@@ -55,6 +55,10 @@ public class Sprite {
    */
   public static final Sprite GOLD_INDICATOR = new Sprite(new Sprite("./resources/gui/gold_indicator.png"), 50.0);
   /**
+   * The ability points indicator icon.
+   */
+  public static final Sprite ABILITY_POINTS_INDICATOR = new Sprite(new Sprite("./resources/gui/ability_points_indicator.png"), 12);
+  /**
    * Wooden stairs that turn left at the end
    */
   public static final Sprite STAIRS_WOOD_TURN_LEFT = new Sprite("./resources/objects/stairs_wood_turn_left.png");
@@ -133,6 +137,10 @@ public class Sprite {
    * The fantasy cursor.
    */
   public static final Sprite FANTASY_CURSOR = new Sprite(new Sprite("./resources/gui/fantasy_cursor.png"), 16);
+  /**
+   * Lock icon
+   */
+  public static final Sprite LOCK = new Sprite(new Sprite("./resources/gui/lock.png"), 9);
   /**
    * Creates a Sprite object of equal width and height from a specific point cut from a sprite sheet.
    * @param rawSize The width and height in pixels of the sprite to cut from the given sprite sheet. This is the size of the sprite on the sheet.
