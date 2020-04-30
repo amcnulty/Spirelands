@@ -16,13 +16,13 @@ import java.util.function.Consumer;
  */
 public class CharacterAbilityCard {
   
-  private final int TOP, LEFT, THUMBNAIL_X, THUMBNAIL_Y,
-                    THUMBNAIL_PADDING = 6,
-                    THUMBNAIL_WIDTH = 32,
-                    THUMBNAIL_HEIGHT = 32,
-                    CARD_BOTTOM,
-                    BUTTON_ROW_X_START,
-                    BUTTON_ROW_Y;
+  private final int top, left, thumbnailX, thumbnailY,
+                    thumbnailPadding = 6,
+                    thumbnailWidth = 32,
+                    thumbnailHeight = 32,
+                    cardBottom,
+                    buttonRowXStart,
+                    buttonRowY;
   private int characterIndex;
   private final Consumer<Character> ICharacterChanger;
   private final Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent;
@@ -31,13 +31,13 @@ public class CharacterAbilityCard {
   private final ArrayList<AbilitySlot> abilitySlots = new ArrayList<>();
   
   public CharacterAbilityCard(int top, int left, Consumer<Character> ICharacterChanger, Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent) {
-    this.TOP = top;
-    this.LEFT = left;
-    THUMBNAIL_X = LEFT + 14;
-    THUMBNAIL_Y = TOP + 10;
-    CARD_BOTTOM = THUMBNAIL_Y + THUMBNAIL_HEIGHT;
-    BUTTON_ROW_X_START = THUMBNAIL_X + THUMBNAIL_WIDTH + 24;
-    BUTTON_ROW_Y = THUMBNAIL_Y + THUMBNAIL_HEIGHT / 2;
+    this.top = top;
+    this.left = left;
+    thumbnailX = left + 14;
+    thumbnailY = top + 10;
+    cardBottom = thumbnailY + thumbnailHeight;
+    buttonRowXStart = thumbnailX + thumbnailWidth + 24;
+    buttonRowY = thumbnailY + thumbnailHeight / 2;
     this.ICharacterChanger = ICharacterChanger;
     this.IAbilitySlotClickEvent = IAbilitySlotClickEvent;
     createChevronButtons();
@@ -46,16 +46,16 @@ public class CharacterAbilityCard {
   private void createChevronButtons() {
     previousButton = new GameMenuSecondaryButton(
       "\u2039",
-      THUMBNAIL_X - THUMBNAIL_PADDING,
-      THUMBNAIL_Y + THUMBNAIL_HEIGHT / 2,
+      thumbnailX - thumbnailPadding,
+      thumbnailY + thumbnailHeight / 2,
       9,
       29,
       () -> setPreviousCharacter()
     );
     nextButton = new GameMenuSecondaryButton(
       "\u203A",
-      THUMBNAIL_X + THUMBNAIL_WIDTH + THUMBNAIL_PADDING,
-      THUMBNAIL_Y + THUMBNAIL_HEIGHT / 2,
+      thumbnailX + thumbnailWidth + thumbnailPadding,
+      thumbnailY + thumbnailHeight / 2,
       9,
       29,
       () -> setNextCharacter()
@@ -67,14 +67,14 @@ public class CharacterAbilityCard {
   private void setAbilitySlots() {
     // TODO: get data for creating slots from the current character.
     // Temporarily setting the slots manually.
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START, BUTTON_ROW_Y, BattleMove.PHYSICAL, 3, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 22, BUTTON_ROW_Y, BattleMove.PHYSICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 44, BUTTON_ROW_Y, BattleMove.MAGICAL, 2, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 66, BUTTON_ROW_Y, BattleMove.MAGICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 88, BUTTON_ROW_Y, BattleMove.MAGICAL, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 110, BUTTON_ROW_Y, BattleMove.BUFF, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 132, BUTTON_ROW_Y, BattleMove.BUFF, IAbilitySlotClickEvent));
-    abilitySlots.add(new AbilitySlot(BUTTON_ROW_X_START + 154, BUTTON_ROW_Y, BattleMove.ITEM, 1, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart, buttonRowY, BattleMove.PHYSICAL, 3, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 22, buttonRowY, BattleMove.PHYSICAL, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 44, buttonRowY, BattleMove.MAGICAL, 2, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 66, buttonRowY, BattleMove.MAGICAL, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 88, buttonRowY, BattleMove.MAGICAL, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 110, buttonRowY, BattleMove.BUFF, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 132, buttonRowY, BattleMove.BUFF, IAbilitySlotClickEvent));
+    abilitySlots.add(new AbilitySlot(buttonRowXStart + 154, buttonRowY, BattleMove.ITEM, 1, IAbilitySlotClickEvent));
   }
    
   private void setPreviousCharacter() {
@@ -96,7 +96,7 @@ public class CharacterAbilityCard {
   }
 
   public int getCARD_BOTTOM() {
-    return CARD_BOTTOM;
+    return cardBottom;
   }
 
   public void update() {
@@ -109,7 +109,7 @@ public class CharacterAbilityCard {
 
   public void render(Screen screen, GL2 gl) {
     previousButton.render(screen, gl);
-    screen.renderSprite(gl, THUMBNAIL_X, THUMBNAIL_Y, character.getThumbnail(), false);
+    screen.renderSprite(gl, thumbnailX, thumbnailY, character.getThumbnail(), false);
     nextButton.render(screen, gl);
     for (AbilitySlot slot: abilitySlots) {
       slot.render(screen, gl);

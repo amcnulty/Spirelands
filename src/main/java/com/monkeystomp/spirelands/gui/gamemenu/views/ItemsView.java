@@ -46,7 +46,7 @@ public class ItemsView extends DisplayView {
   private final PrimaryButton returnToListButton = new PrimaryButton(
           "Back To List",
           280,
-          TOP + 21,
+          top + 21,
           39,
           11,
           () -> selectingCharacter = false
@@ -59,7 +59,7 @@ public class ItemsView extends DisplayView {
   public ItemsView() {
     characterSelectorHeader.setText("Select Character To Use Item");
     characterSelectorHeader.setX(215);
-    characterSelectorHeader.setY(TOP + 7);
+    characterSelectorHeader.setY(top + 7);
     characterSelectorHeader.centerText();
   }
   
@@ -118,7 +118,7 @@ public class ItemsView extends DisplayView {
   private void setSelectedFont() {
     selectedItemAmountFont.setText(": " + String.valueOf(selectedRef.getAmount()));
     selectedItemAmountFont.setX(228);
-    selectedItemAmountFont.setY(TOP + 21);
+    selectedItemAmountFont.setY(top + 21);
     selectedItemAmountFont.rightAlignText();
   }
   
@@ -211,7 +211,7 @@ public class ItemsView extends DisplayView {
     itemDetailCard.render(screen, gl);
     if (selectingCharacter) {
       screen.renderFonts(characterSelectorHeader);
-      screen.renderSprite(gl, 200, TOP + 14, selectedItem.getThumbnail(), false);
+      screen.renderSprite(gl, 200, top + 14, selectedItem.getThumbnail(), false);
       screen.renderFonts(selectedItemAmountFont);
       returnToListButton.render(screen, gl);
       for (ItemOnCharacterButton button: itemOnCharacterButtons) {

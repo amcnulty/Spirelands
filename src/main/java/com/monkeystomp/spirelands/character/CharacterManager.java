@@ -30,6 +30,7 @@ public class CharacterManager {
   private final HashMap<Integer, Character> partyMap = new HashMap<>();
   private Character partyLeader;
   private JSONObject characterBaseInformation;
+  private JSONArray slots;
   private final JSONParser parser = new JSONParser();
   private final JSONUtil jsonUtil = new JSONUtil();
   
@@ -145,10 +146,26 @@ public class CharacterManager {
       character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.BOOTS})));
     else
       character.setEquippedBoots(null);
-    JSONArray moves = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.MOVES, JSONUtil.EQUIPPED_MOVES});
+    slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
     ArrayList<BattleMove> equippedMoves = new ArrayList<>();
-    moves.forEach(move -> {
-      equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getNestedInt((JSONObject)move, new String[]{JSONUtil.ID})));
+    slots.forEach(i -> {
+      JSONObject slot = (JSONObject)i;
+      if (!slot.get(JSONUtil.TYPE).equals(BattleMove.ITEM)) {
+        if (slot.get(JSONUtil.MOVE) != null && BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(slot, JSONUtil.MOVE))) {
+          equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
+        }
+      }
+      else {
+        if (slot.get(JSONUtil.ITEM_MOVES) != null) {
+          JSONArray itemMoves = (JSONArray)slot.get(JSONUtil.ITEM_MOVES);
+          itemMoves.forEach(itemMove -> {
+            JSONObject move = (JSONObject)itemMove;
+            if (BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(move, JSONUtil.ID))) {
+              equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(move, JSONUtil.ID)));
+            }
+          });
+        }
+      }
     });
     character.setEquippedMoves(equippedMoves);
   }
@@ -195,6 +212,10 @@ public class CharacterManager {
   
   public ArrayList<Character> getCharacters() {
     return gameCharacters;
+  }
+  
+  public JSONArray getCharacterAbilitySlots() {
+    return slots;
   }
 
 }

@@ -36,19 +36,19 @@ public abstract class DisplayView implements Viewable {
   /**
    * Y coordinate of the top most edge in the display view in pixels.
    */
-  protected final int TOP = 23;
+  protected final int top = 23;
   /**
    * X coordinate of the right most edge in the display view in pixels.
    */
-  protected final int RIGHT = 395;
+  protected final int right = 395;
   /**
    * Y coordinate of the bottom most edge in the display view in pixels.
    */
-  protected final int BOTTOM = 178;
+  protected final int bottom = 178;
   /**
    * X coordinate of the left most edge in the display view in pixels.
    */
-  protected final int LEFT = 124;
+  protected final int left = 124;
   /**
    * Character associated with the view.
    */

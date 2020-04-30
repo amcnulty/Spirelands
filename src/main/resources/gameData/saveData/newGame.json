@@ -21,18 +21,56 @@
         "eNAP1loLmD": 10
       },
       "8FRT4q5CKl": {},
-      "Moves": {
-        "EquippedMoves": [
-          { "bHJncPLq94": 2000 },
-          { "bHJncPLq94": 2001 },
-          { "bHJncPLq94": 3000 },
-          { "bHJncPLq94": 3003 },
-          { "bHJncPLq94": 3006 },
-          { "bHJncPLq94": 3007 },
-          { "bHJncPLq94": 1000 },
-          { "bHJncPLq94": 1001 }
-        ]
-      }
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 1,
+          "itemMoves": [{"bHJncPLq94": 1000}]
+        }
+      ]
     },
     "0LUWKjxGG7": {
       "bHJncPLq94": "sara02",
@@ -55,20 +93,56 @@
         "eNAP1loLmD": 9
       },
       "8FRT4q5CKl": {},
-      "Moves": {
-        "EquippedMoves": [
-          { "bHJncPLq94": 2000 },
-          { "bHJncPLq94": 3000 },
-          { "bHJncPLq94": 3001 },
-          { "bHJncPLq94": 3002 },
-          { "bHJncPLq94": 3003 },
-          { "bHJncPLq94": 3006 },
-          { "bHJncPLq94": 3007 },
-          { "bHJncPLq94": 1000 },
-          { "bHJncPLq94": 1001 },
-          { "bHJncPLq94": 1002 }
-        ]
-      }
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 1,
+          "itemMoves": [{"bHJncPLq94": 1000}]
+        }
+      ]
     },
     "aRbmU7JFgB": {
       "bHJncPLq94": "will03",
@@ -91,17 +165,56 @@
         "eNAP1loLmD": 7
       },
       "8FRT4q5CKl": {},
-      "Moves": {
-        "EquippedMoves": [
-          { "bHJncPLq94": 2000 },
-          { "bHJncPLq94": 2001 },
-          { "bHJncPLq94": 2002 },
-          { "bHJncPLq94": 3007 },
-          { "bHJncPLq94": 1001 },
-          { "bHJncPLq94": 1002 },
-          { "bHJncPLq94": 1003 }
-        ]
-      }
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 1,
+          "itemMoves": [{"bHJncPLq94": 1000}]
+        }
+      ]
     }
   },
   "DHlVpJMNLN": {},
@@ -115,6 +228,7 @@
   "dyYJ9VY0sF": "luke01",
   "5sI67QIas5": {
     "STlGH2brLY": 643,
+    "abilityPoints": 25,
     "gBmuNMUWDb": [
       { "bHJncPLq94": 1003, "DoQd94zuo4": 1 },
       { "bHJncPLq94": 1000, "DoQd94zuo4": 2},
@@ -129,6 +243,14 @@
       { "bHJncPLq94": 4000, "DoQd94zuo4": 1},
       { "bHJncPLq94": 4060, "DoQd94zuo4": 1},
       { "bHJncPLq94": 4072, "DoQd94zuo4": 1}
+    ],
+    "battleMoves": [
+      { "bHJncPLq94": 1000 },
+      { "bHJncPLq94": 1001 },
+      { "bHJncPLq94": 2000 },
+      { "bHJncPLq94": 2001 },
+      { "bHJncPLq94": 3000 },
+      { "bHJncPLq94": 3001 }
     ]
   }
 }

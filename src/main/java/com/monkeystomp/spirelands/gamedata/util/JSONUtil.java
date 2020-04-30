@@ -117,13 +117,25 @@ public class JSONUtil {
    */
   public static final String BOOTS = "T4gs8cvhf3";
   /**
-   * The moves object for each character.
+   * The ability slots object for each character.
    */
-  public static final String MOVES = "Moves";
+  public static final String ABILITY_SLOTS = "AbilitySlots";
   /**
-   * The equipped moves for each character.
+   * The type used for ability slots.
    */
-  public static final String EQUIPPED_MOVES = "EquippedMoves";
+  public static final String TYPE = "type";
+  /**
+   * The level used for ability slots.
+   */
+  public static final String LEVEL = "level";
+  /**
+   * Equipped move for ability slots.
+   */
+  public static final String MOVE = "move";
+  /**
+   * Equipped item moves for ability slots.
+   */
+  public static final String ITEM_MOVES = "itemMoves";
   /**
    * Key for main levels object.
    */
@@ -169,9 +181,17 @@ public class JSONUtil {
    */
   public static final String GOLD = "STlGH2brLY";
   /**
+   * Number value for the ability points in the player's inventory.
+   */
+  public static final String ABILITY_POINTS = "abilityPoints";
+  /**
    * Key for the JSONArray object for all the inventory references.
    */
   public static final String REFS = "gBmuNMUWDb";
+  /**
+   * Key for the array of battle moves in the inventory.
+   */
+  public static final String BATTLE_MOVES = "battleMoves";
   /**
    * Number value for the amount within each inventory reference.
    */
@@ -201,6 +221,10 @@ public class JSONUtil {
       object = (JSONObject) object.get(keys[i]);
     }
     return object.get(keys[keys.length - 1]).toString();
+  }
+  
+  public int getInt(JSONObject parent, String key) {
+    return Math.toIntExact((long)parent.get(key));
   }
   
   public int getNestedInt(JSONObject parent, String[] keys) {

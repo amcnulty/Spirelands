@@ -24,8 +24,8 @@ public class UpgradeAbilitySlotPanelTest {
   @Test
   public void panelVisibilityTest() {
     slotPanel.updatePanel(new AbilitySlotClickEvent(1, BattleMove.PHYSICAL, new AbilitySlot(0, 0, BattleMove.PHYSICAL, null)));
-    Assert.assertTrue("Level one ability slots should render the panel", slotPanel.isShow());
+    Assert.assertTrue("Level one ability slots should render the panel", slotPanel.isShowing());
     slotPanel.updatePanel(new AbilitySlotClickEvent(100, BattleMove.PHYSICAL, new AbilitySlot(0, 0, BattleMove.PHYSICAL, null)));
-    Assert.assertFalse("Level that is out of range for example 100 will not show the panel", slotPanel.isShow());
+    Assert.assertFalse("Level that is out of range for example 100 will not show the panel", slotPanel.isShowing());
   }
 }

@@ -15,16 +15,16 @@ import com.monkeystomp.spirelands.gui.styles.GameFonts;
 public class UpgradeAbilitySlotPanel {
   
   private final int x, y,
-                    BUTTON_X,
-                    BUTTON_Y,
-                    BUTTON_WIDTH = 60,
-                    BUTTON_HEIGHT = 9,
-                    LABEL_X,
-                    LABEL_Y,
-                    VALUE_X;
+                    buttonX,
+                    buttonY,
+                    buttonWidth = 60,
+                    buttonHeight = 9,
+                    labelX,
+                    labelY,
+                    valueX;
   private String buttonText;
   private int pointsToUpgrade;
-  private boolean show = false;
+  private boolean showing = false;
   private GameMenuPrimaryButton button;
   private final FontInfo costLabel = GameFonts.getGAME_MENU_LABEL_TEXT(),
                          costValue = GameFonts.getGAME_MENU_MUTED_TEXT();
@@ -32,16 +32,16 @@ public class UpgradeAbilitySlotPanel {
   public UpgradeAbilitySlotPanel(int x, int y) {
     this.x = x;
     this.y = y;
-    BUTTON_X = x + 135;
-    BUTTON_Y = y + 4;
-    LABEL_X = BUTTON_X + BUTTON_WIDTH / 2 + 7;
-    LABEL_Y = BUTTON_Y;
-    VALUE_X = LABEL_X + 38;
+    buttonX = x + 135;
+    buttonY = y + 4;
+    labelX = buttonX + buttonWidth / 2 + 7;
+    labelY = buttonY;
+    valueX = labelX + 38;
     costLabel.setText("Ability Points:");
-    costLabel.setX(LABEL_X);
-    costLabel.setY(LABEL_Y);
-    costValue.setX(VALUE_X);
-    costValue.setY(LABEL_Y);
+    costLabel.setX(labelX);
+    costLabel.setY(labelY);
+    costValue.setX(valueX);
+    costValue.setY(labelY);
   }
   
   public void updatePanel(AbilitySlotClickEvent event) {
@@ -51,11 +51,14 @@ public class UpgradeAbilitySlotPanel {
     }
     else
       pointsToUpgrade = 0;
-    button = new GameMenuPrimaryButton(buttonText, BUTTON_X, BUTTON_Y, BUTTON_WIDTH, BUTTON_HEIGHT, () -> {});
+    button = new GameMenuPrimaryButton(buttonText, buttonX, buttonY, buttonWidth, buttonHeight, () -> {});
     // TODO: Disable button if player doesn't have enough ability points
     costValue.setText(Integer.toString(pointsToUpgrade));
-    show = pointsToUpgrade > 0;
-    
+    showing = pointsToUpgrade > 0;
+  }
+  
+  public int getPanelBottom() {
+    return buttonY + buttonHeight;
   }
 
   public String getButtonText() {
@@ -66,18 +69,18 @@ public class UpgradeAbilitySlotPanel {
     return pointsToUpgrade;
   }
 
-  public boolean isShow() {
-    return show;
+  public boolean isShowing() {
+    return showing;
   }
   
   public void update() {
-    if (show) {
+    if (showing) {
       button.update();
     }
   }
   
   public void render(Screen screen, GL2 gl) {
-    if (show) {
+    if (showing) {
       button.render(screen, gl);
       screen.renderFonts(costLabel);
       screen.renderFonts(costValue);

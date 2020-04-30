@@ -47,7 +47,9 @@ public class BattleMove implements Cloneable {
    * Used for the 'action' property for buff moves.
    */
   public static final String BUFF = "Buff";
-  // Map of all the moves to their ids.
+  /**
+   * Map of all the moves to their ids.
+   */
   public static final HashMap<Integer, BattleMove> MOVE_MAP = new HashMap<>();
   // Instance of the Random class.
   private static final Random random = new Random();

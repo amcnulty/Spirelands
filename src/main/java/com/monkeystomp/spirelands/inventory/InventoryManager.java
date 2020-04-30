@@ -1,6 +1,8 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,10 +15,13 @@ import org.json.simple.JSONObject;
  */
 public class InventoryManager {
   
-  private JSONUtil jsonUtil = new JSONUtil();
+  private final JSONUtil jsonUtil = new JSONUtil();
   private int gold = 0;
+  private int abilityPoints = 0;
   // A map of all items id to their inventory reference object.
   private final HashMap<Integer, InventoryReference> itemMap = new HashMap<>();
+  // A map of all ids to battle moves in the inventory.
+  private final HashMap<Integer, BattleMove> battleMoveMap = new HashMap<>();
   
   private static final InventoryManager INSTANCE = new InventoryManager();
 
@@ -36,12 +41,15 @@ public class InventoryManager {
   public void setInventoryData(JSONObject inventory) {
     itemMap.clear();
     setGold(jsonUtil.getNestedInt(inventory, new String[]{JSONUtil.GOLD}));
+    setAbilityPoints(jsonUtil.getInt(inventory, JSONUtil.ABILITY_POINTS));
     JSONArray refs = (JSONArray) inventory.get(JSONUtil.REFS);
     refs.forEach(ref -> {
       int id = jsonUtil.getNestedInt((JSONObject)ref, new String[]{JSONUtil.ID});
       int amount = jsonUtil.getNestedInt((JSONObject)ref, new String[]{JSONUtil.AMOUNT});
       setInventoryReference(Item.ITEM_MAP.get(id), amount);
     });
+    JSONArray battleMoves = (JSONArray) inventory.get(JSONUtil.BATTLE_MOVES);
+    battleMoves.forEach(move -> addBattleMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt((JSONObject)move, JSONUtil.ID))));
   }
   /**
    * Adds an item to the inventory.
@@ -125,6 +133,25 @@ public class InventoryManager {
   public InventoryReference getInventoryReferenceById(int id) {
     return itemMap.get(id);
   }
+  /**
+   * Add the given battle move to the inventory.
+   * @param battleMove BattleMove object to add to the inventory.
+   */
+  public void addBattleMove(BattleMove battleMove) {
+    battleMoveMap.put(battleMove.getId(), battleMove);
+  }
+  /**
+   * Get a list of BattleMove objects from the inventory based on the given type or action.
+   * This method will use either property independently to filter the results.
+   * @param searchTerm BattleMove.type to filter by.
+   * @return The list of BattleMove objects after they have been filtered.
+   */
+  public ArrayList<BattleMove> getBattleMovesByTypeOrAction(String searchTerm) {
+    return (ArrayList<BattleMove>)battleMoveMap.entrySet().stream()
+      .filter(map -> map.getValue().getType().equals(searchTerm) || map.getValue().getAction().equals(searchTerm))
+      .map(entry -> entry.getValue())
+      .collect(Collectors.toList());
+  }
   
   public void setGold(int amount) {
     this.gold = amount;
@@ -132,6 +159,14 @@ public class InventoryManager {
   
   public int getGold() {
     return gold;
+  }
+
+  public int getAbilityPoints() {
+    return abilityPoints;
+  }
+
+  public void setAbilityPoints(int abilityPoints) {
+    this.abilityPoints = abilityPoints;
   }
   /**
    * Adds gold to the supply of gold in the inventory.
