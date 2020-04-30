@@ -19,11 +19,11 @@ public class AbilitySlotTest {
     AbilitySlot slot4 = null;
     AbilitySlot failSlot = null;
     try {
-      slot1 = new AbilitySlot(0, 0, BattleMove.PHYSICAL, null);
-      slot2 = new AbilitySlot(0, 0, BattleMove.MAGICAL, null);
-      slot3 = new AbilitySlot(0, 0, BattleMove.BUFF, null);
-      slot4 = new AbilitySlot(0, 0, BattleMove.ITEM, null);
-      failSlot = new AbilitySlot(0, 0, "my bad type argument", null);
+      slot1 = new AbilitySlot(BattleMove.PHYSICAL, 1);
+      slot2 = new AbilitySlot(BattleMove.MAGICAL, 1);
+      slot3 = new AbilitySlot(BattleMove.BUFF, 1);
+      slot4 = new AbilitySlot(BattleMove.ITEM, 1);
+      failSlot = new AbilitySlot("my bad type argument", 1);
     }
     catch (IllegalArgumentException e) {
       Assert.assertTrue("Should throw an error if provided with bad arguments", true);

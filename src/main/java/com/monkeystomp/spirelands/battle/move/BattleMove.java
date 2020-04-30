@@ -58,6 +58,7 @@ public class BattleMove implements Cloneable {
             moveInfo.getTarget().setBuff(moveInfo.getMove().getBuff());
             return null;
           };
+  private static final int  SPRITE_SIZE = 16, WEAPON_SPRITE_SIZE = 32;
   // Used to track the ids when creating moves.
   private static int  nextItemId = 1000,
                       nextPhysicalId = 2000,
@@ -163,7 +164,7 @@ public class BattleMove implements Cloneable {
           .powerLevel(20)
           .accuracy(95)
           .stabbingAnimation()
-          .thumbnail(Item.COMMON_SWORD.getThumbnail())
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 0, SpriteSheet.weaponsSheet))
           .sound(SoundEffects.QUICK_HIT)
           .targetAnimation(BASIC_SLASH)
           .build();
@@ -177,7 +178,7 @@ public class BattleMove implements Cloneable {
           .powerLevel(30)
           .accuracy(60)
           .swingingAnimation()
-          .thumbnail(Item.BROADAXE.getThumbnail())
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 4, SpriteSheet.weaponsSheet))
           .sound(SoundEffects.STRONG_MALE_ATTACK)
           .build();
   /**
@@ -216,7 +217,7 @@ public class BattleMove implements Cloneable {
           .accuracy(100)
           .ranged()
           .magicalSkillAnimation()
-          .thumbnail(Item.PUPIL_WAND.getThumbnail())
+          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 5, SpriteSheet.weaponsSheet))
           .sound(SoundEffects.MAGICAL_ENERGY)
           .targetAnimation(BLUE_EXPLOSION)
           .build();
