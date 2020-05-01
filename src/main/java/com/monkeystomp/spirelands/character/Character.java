@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.inventory.WeaponItem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * A Character defines the name and stats of a group member that can be used in the player's party.
@@ -108,16 +109,21 @@ public class Character extends StatModel {
   public ArrayList<BattleMove> getEquippedMoves() {
     return equippedMoves;
   }
-  
-  public void equipMove(BattleMove move) {
-    if (equippedMoves.size() < equippedMoveMax) {
-      equippedMoves.add(move);
-    }
-  }
-  
-  public void setEquippedMoves(ArrayList<BattleMove> moves) {
+  /**
+   * Updates the equipped moves for this character based on what is equipped in the ability slots.
+   */
+  public void updateEquippedMoves() {
     equippedMoves.clear();
-    equippedMoves.addAll(moves);
+    List<BattleMove> nonItemMoves = abilitySlots.stream()
+      .filter(slot -> slot.getEquippedMove() != null)
+      .map(AbilitySlot::getEquippedMove)
+      .collect(Collectors.toList());
+    List<BattleMove> itemMoves = abilitySlots.stream()
+      .filter(slot -> slot.getType().equals(BattleMove.ITEM))
+      .collect(Collectors.toList()).get(0).getEquippedItemMoves();
+    equippedMoves.addAll((ArrayList<BattleMove>)Stream.of(nonItemMoves, itemMoves)
+      .flatMap(x -> x.stream())
+      .collect(Collectors.toList()));
   }
   /**
    * Adds the given ability slot to this character's array of slots.
@@ -129,6 +135,11 @@ public class Character extends StatModel {
 
   public ArrayList<AbilitySlot> getAbilitySlots() {
     return abilitySlots;
+  }
+  
+  public void equipAbilitySlotMove(AbilitySlot slot, BattleMove move) {
+    abilitySlots.get(abilitySlots.indexOf(slot)).setMove(move);
+    updateEquippedMoves();
   }
     
   /**

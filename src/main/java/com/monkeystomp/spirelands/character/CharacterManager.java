@@ -147,15 +147,13 @@ public class CharacterManager {
     else
       character.setEquippedBoots(null);
     JSONArray slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
-    ArrayList<BattleMove> equippedMoves = new ArrayList<>();
     slots.forEach(i -> {
       JSONObject slot = (JSONObject)i;
       AbilitySlot newSlot = new AbilitySlot(jsonUtil.getString(slot, JSONUtil.TYPE), jsonUtil.getInt(slot, JSONUtil.LEVEL));
       character.addAbilitySlot(newSlot);
       if (!slot.get(JSONUtil.TYPE).equals(BattleMove.ITEM)) {
         if (slot.get(JSONUtil.MOVE) != null && BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(slot, JSONUtil.MOVE))) {
-          newSlot.addMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
-          equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
+          newSlot.setMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
         }
       }
       else {
@@ -165,13 +163,12 @@ public class CharacterManager {
             JSONObject move = (JSONObject)itemMove;
             if (BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(move, JSONUtil.ID))) {
               newSlot.addItemMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(move, JSONUtil.ID)));
-              equippedMoves.add(BattleMove.MOVE_MAP.get(jsonUtil.getInt(move, JSONUtil.ID)));
             }
           });
         }
       }
     });
-    character.setEquippedMoves(equippedMoves);
+    character.updateEquippedMoves();
   }
   /**
    * Adds a character to the party at the specified position. Positions start at index 0;

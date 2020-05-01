@@ -119,7 +119,7 @@ public class BattleMoveBuilder {
    */
   public final Buff buff = new Buff();
   /**
-   * Sets the name of the move.
+   * Sets the name of the move. Keep name length less than 20 characters.
    * @param name Display name for the move.
    * @return The BattleMoveBuilder reference.
    */

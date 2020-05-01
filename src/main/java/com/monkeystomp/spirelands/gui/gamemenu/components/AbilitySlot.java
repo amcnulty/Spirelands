@@ -90,8 +90,20 @@ public class AbilitySlot extends GroupButton {
     }
     return new Sprite(pixels, width, height);
   }
+
+  public String getType() {
+    return type;
+  }
+
+  public BattleMove getEquippedMove() {
+    return equippedMove;
+  }
+
+  public ArrayList<BattleMove> getEquippedItemMoves() {
+    return equippedItemMoves;
+  }
   
-  public void addMove(BattleMove move) {
+  public void setMove(BattleMove move) {
     equippedMove = move;
   }
   

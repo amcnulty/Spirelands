@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;
-import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.controlls.buttongroup.ButtonGroup;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
@@ -29,7 +28,7 @@ public class CharacterAbilityCard {
   private final Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent;
   private Character character;
   private GameMenuSecondaryButton previousButton, nextButton;
-  private final ButtonGroup buttonGroup = new ButtonGroup();
+  private ButtonGroup buttonGroup = new ButtonGroup();
   
   public CharacterAbilityCard(int top, int left, Consumer<Character> ICharacterChanger, Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent) {
     this.top = top;
@@ -66,12 +65,14 @@ public class CharacterAbilityCard {
    * Set the ability slots for the current character.
    */
   private void setAbilitySlots() {
+    buttonGroup = new ButtonGroup();
     for(AbilitySlot slot: character.getAbilitySlots()) {
       slot.setLeft(buttonRowXStart + spaceBetweenSlots * character.getAbilitySlots().indexOf(slot));
       slot.setTop(buttonRowY);
       slot.setClickHandler(IAbilitySlotClickEvent);
       buttonGroup.addButton(slot);
     }
+    buttonGroup.resetButtons();
   }
    
   private void setPreviousCharacter() {

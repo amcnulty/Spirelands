@@ -15,23 +15,28 @@ public class Pagination {
   
   private int listLength = 0,
               currentPageIndex = 0;
-  private final int minLengthToShowPagination = 9,
-                    paginationY = 169,
+  private final int itemsPerPage,
+                    minLengthToShowPagination,
+                    paginationY,
                     paginationHeight = 11,
-                    centerHoriz = 214,
+                    centerHoriz,
                     pageButtonWidth = 13;
   private GameMenuPrimaryButton lastPage;
   private final ArrayList<GameMenuPaginationButton> pageButtons = new ArrayList<>();
   private GameMenuPrimaryButton nextPage;
   private final Consumer<Integer> IPageSetter;
   
-  public Pagination(Consumer<Integer> IPageSetter) {
+  public Pagination(int itemsPerPage, int xCenter, int yCenter, Consumer<Integer> IPageSetter) {
+    this.itemsPerPage = itemsPerPage;
+    this.minLengthToShowPagination = itemsPerPage + 1;
+    this.centerHoriz = xCenter;
+    this.paginationY = yCenter;
     this.IPageSetter = IPageSetter;
   }
   
   private void setPageButtons() {
     pageButtons.clear();
-    int numberOfPages = ((listLength - 1) / 8) + 1;
+    int numberOfPages = ((listLength - 1) / itemsPerPage) + 1;
     if (numberOfPages > 1) {
       if (numberOfPages % 2 == 0) {
         for (int i = 0; i < numberOfPages; i++) {

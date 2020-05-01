@@ -25,7 +25,7 @@ public class WeaponView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
-  private final Pagination pagination = new Pagination(pageIndex -> currentPageIndex = pageIndex);
+  private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private int itemCount = 0;
   private final int startingY = 35,
                     spaceBetweenRows = 16,

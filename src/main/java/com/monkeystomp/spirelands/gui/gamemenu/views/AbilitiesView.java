@@ -47,6 +47,8 @@ public class AbilitiesView extends DisplayView {
   public void setCharacter(Character character) {
     super.setCharacter(character);
     abilityCard.setCharacter(character);
+    abilityList.hide();
+    abilityList.setCharacter(character);
   }
 
   @Override
