@@ -77,6 +77,10 @@ public class UpgradeAbilitySlotPanel {
     return showing;
   }
   
+  public void hide() {
+    showing = false;
+  }
+  
   public void update() {
     if (showing) {
       button.update();

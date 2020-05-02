@@ -103,8 +103,17 @@ public class AbilitySlot extends GroupButton {
     return equippedItemMoves;
   }
   
+  public void setEquippedItemMoves(ArrayList<BattleMove> moves) {
+    equippedItemMoves.clear();
+    equippedItemMoves.addAll(moves);
+  }
+  
   public void setMove(BattleMove move) {
     equippedMove = move;
+  }
+  
+  public void unequip() {
+    equippedMove = null;
   }
   
   public void addItemMove(BattleMove move) {

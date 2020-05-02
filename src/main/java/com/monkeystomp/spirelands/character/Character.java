@@ -109,6 +109,25 @@ public class Character extends StatModel {
   public ArrayList<BattleMove> getEquippedMoves() {
     return equippedMoves;
   }
+  
+  public ArrayList<BattleMove> getEquippedItemMoves() {
+    return abilitySlots.stream()
+            .filter(slot -> slot.getType().equals(BattleMove.ITEM))
+            .collect(Collectors.toList()).get(0).getEquippedItemMoves();
+  }
+  /**
+   * Sets the equipped item moves to the given list. Any null values in the list will be filtered out.
+   * @param moves List of moves to set as the equipped item moves.
+   */
+  public void setEquippedItemMoves(ArrayList<BattleMove> moves) {
+    List<BattleMove> filteredList = moves.stream()
+            .filter(move -> move != null)
+            .collect(Collectors.toList());
+    abilitySlots.stream()
+      .filter(slot -> slot.getType().equals(BattleMove.ITEM))
+      .collect(Collectors.toList()).get(0).setEquippedItemMoves((ArrayList<BattleMove>)filteredList);
+    updateEquippedMoves();
+  }
   /**
    * Updates the equipped moves for this character based on what is equipped in the ability slots.
    */
@@ -118,10 +137,7 @@ public class Character extends StatModel {
       .filter(slot -> slot.getEquippedMove() != null)
       .map(AbilitySlot::getEquippedMove)
       .collect(Collectors.toList());
-    List<BattleMove> itemMoves = abilitySlots.stream()
-      .filter(slot -> slot.getType().equals(BattleMove.ITEM))
-      .collect(Collectors.toList()).get(0).getEquippedItemMoves();
-    equippedMoves.addAll((ArrayList<BattleMove>)Stream.of(nonItemMoves, itemMoves)
+    equippedMoves.addAll((ArrayList<BattleMove>)Stream.of(nonItemMoves, getEquippedItemMoves())
       .flatMap(x -> x.stream())
       .collect(Collectors.toList()));
   }
@@ -137,11 +153,16 @@ public class Character extends StatModel {
     return abilitySlots;
   }
   
-  public void equipAbilitySlotMove(AbilitySlot slot, BattleMove move) {
+  public void equipAbilitySlot(AbilitySlot slot, BattleMove move) {
     abilitySlots.get(abilitySlots.indexOf(slot)).setMove(move);
     updateEquippedMoves();
   }
-    
+  
+  public void unequipAbilitySlot(AbilitySlot slot) {
+    abilitySlots.get(abilitySlots.indexOf(slot)).unequip();
+    updateEquippedMoves();
+  }
+
   /**
    *      !!################################################!!
    *      !!                                                !!

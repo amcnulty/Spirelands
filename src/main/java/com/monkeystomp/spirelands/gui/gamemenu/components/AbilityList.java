@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.character.Character;
+import com.monkeystomp.spirelands.gamedata.values.GameValues;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
@@ -22,6 +23,7 @@ public class AbilityList {
   private Character character;
   private AbilitySlotClickEvent currentEvent;
   private ArrayList<BattleMove> moveList;
+  private final ArrayList<BattleMove> editingItemMoves = new ArrayList<>();
   private ArrayList<AbilityListItem> listItems = new ArrayList<>();
   private final Pagination pagination = new Pagination(10, 260, 169, (pageIndex) -> createListItems(pageIndex));
   
@@ -44,6 +46,16 @@ public class AbilityList {
     pagination.setListLength(moveList.size());
     pagination.highlightCurrentPage(0);
     createListItems(0);
+    if (event.getType().equals(BattleMove.ITEM)) {
+      editingItemMoves.clear();
+      for (int i = 0; i < GameValues.AVAILABLE_ITEM_SLOTS_PER_LEVEL_MAP.get(currentEvent.getLevel()); i++) {
+        if (character.getEquippedItemMoves().size() > i)
+          editingItemMoves.add(character.getEquippedItemMoves().get(i));
+        else
+          editingItemMoves.add(null);
+      }
+      setBadges();
+    }
     showing = true;
   }
 
@@ -57,9 +69,10 @@ public class AbilityList {
       if (page * itemsPerPage + i > moveList.size() - 1)
         break;
       listItems.add(
-        new AbilityListItem(listItemYStart + listItemYSpacing * i, leftRowX, moveList.get(page * itemsPerPage + i),
+        new AbilityListItem(listItemYStart + listItemYSpacing * i, leftRowX, moveList.get(page * itemsPerPage + i), character,
           () -> {},
-          move -> character.equipAbilitySlotMove(currentEvent.getSlot(), move)
+          move -> handleEquipClick(move),
+          move -> handleUnequipClick(move)
         )
       );
     }
@@ -67,11 +80,50 @@ public class AbilityList {
       if (page * itemsPerPage + i > moveList.size() - 1)
         break;
       listItems.add(
-        new AbilityListItem(listItemYStart + listItemYSpacing * (i - itemsPerRow), rightRowX, moveList.get(page * itemsPerPage + i),
+        new AbilityListItem(listItemYStart + listItemYSpacing * (i - itemsPerRow), rightRowX, moveList.get(page * itemsPerPage + i), character,
           () -> {},
-          move -> character.equipAbilitySlotMove(currentEvent.getSlot(), move)
+          move -> handleEquipClick(move),
+          move -> handleUnequipClick(move)
         )
       );
+    }
+  }
+  
+  private void handleEquipClick(BattleMove move) {
+    if (currentEvent.getSlot().getType().equals(BattleMove.ITEM)) {
+      System.out.println("handle equipping this item move");
+      for (int i = 0; i < editingItemMoves.size(); i++) {
+        if (editingItemMoves.get(i) == null || i == editingItemMoves.size() - 1) {
+          editingItemMoves.set(i, move);
+          character.setEquippedItemMoves(editingItemMoves);
+          setBadges();
+          break;
+        }
+      }
+    }
+    else
+      character.equipAbilitySlot(currentEvent.getSlot(), move);
+  }
+  
+  private void handleUnequipClick(BattleMove move) {
+    if (currentEvent.getSlot().getType().equals(BattleMove.ITEM)) {
+      System.out.println("handle unequipping this item move");
+      System.out.println("index of move in editinglist " + editingItemMoves.indexOf(move));
+      editingItemMoves.set(editingItemMoves.indexOf(move), null);
+      character.setEquippedItemMoves(editingItemMoves);
+      setBadges();
+    }
+    else
+      character.unequipAbilitySlot(currentEvent.getSlot());
+  }
+  
+  public void setBadges() {
+    for (AbilityListItem listItem: listItems) {
+      if (editingItemMoves.contains(listItem.getMove())) {
+        listItem.showBadge(editingItemMoves.indexOf(listItem.getMove()) + 1);
+      }
+      else
+        listItem.hideBadge();
     }
   }
   

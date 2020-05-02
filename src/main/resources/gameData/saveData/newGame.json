@@ -67,8 +67,8 @@
         {
           "bHJncPLq94": 1007,
           "type": "Item",
-          "level": 1,
-          "itemMoves": [{"bHJncPLq94": 1000}]
+          "level": 2,
+          "itemMoves": [{"bHJncPLq94": 1000}, {"bHJncPLq94": 1002}]
         }
       ]
     },

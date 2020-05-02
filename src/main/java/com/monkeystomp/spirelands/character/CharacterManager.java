@@ -88,6 +88,8 @@ public class CharacterManager {
    * @param characterDetails JSON object containing the details for all game characters.
    */
   public void setupCharactersDetails(JSONObject characterDetails) {
+    // Initializing the Item class
+    String itemInitilizer = Item.ANCIENT_STAFF.getTitle();
     partyCharacters.clear();
     Set<?> keys = characterDetails.keySet();
     setPartyLeader(

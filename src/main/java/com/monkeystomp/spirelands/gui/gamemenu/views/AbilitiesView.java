@@ -49,6 +49,7 @@ public class AbilitiesView extends DisplayView {
     abilityCard.setCharacter(character);
     abilityList.hide();
     abilityList.setCharacter(character);
+    upgradeAbilitySlotPanel.hide();
   }
 
   @Override
