@@ -149,10 +149,11 @@ public class CharacterManager {
     else
       character.setEquippedBoots(null);
     JSONArray slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
+    ArrayList<AbilitySlot> characterSlots = new ArrayList<>();
     slots.forEach(i -> {
       JSONObject slot = (JSONObject)i;
       AbilitySlot newSlot = new AbilitySlot(jsonUtil.getString(slot, JSONUtil.TYPE), jsonUtil.getInt(slot, JSONUtil.LEVEL));
-      character.addAbilitySlot(newSlot);
+      characterSlots.add(newSlot);
       if (!slot.get(JSONUtil.TYPE).equals(BattleMove.ITEM)) {
         if (slot.get(JSONUtil.MOVE) != null && BattleMove.MOVE_MAP.containsKey(jsonUtil.getInt(slot, JSONUtil.MOVE))) {
           newSlot.setMove(BattleMove.MOVE_MAP.get(jsonUtil.getInt(slot, JSONUtil.MOVE)));
@@ -170,6 +171,7 @@ public class CharacterManager {
         }
       }
     });
+    character.setAbilitySlots(characterSlots);
     character.updateEquippedMoves();
   }
   /**

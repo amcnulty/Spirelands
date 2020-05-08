@@ -256,7 +256,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE1 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
-          .level(1)
+          .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -294,8 +294,8 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BLUE_EXPLOSION)
           .build();
   public static final BattleMove TIDAL_WAVE4 = new BattleMoveBuilder()
-          .name("Tidal Wave")
-          .level(1)
+          .name("Tidal Wave2")
+          .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -307,8 +307,8 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BLUE_EXPLOSION)
           .build();
   public static final BattleMove TIDAL_WAVE5 = new BattleMoveBuilder()
-          .name("Tidal Wave")
-          .level(1)
+          .name("Tidal Wave2")
+          .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -334,7 +334,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE7 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
-          .level(1)
+          .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -360,7 +360,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE9 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
-          .level(1)
+          .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)
@@ -372,8 +372,8 @@ public class BattleMove implements Cloneable {
           .targetAnimation(BLUE_EXPLOSION)
           .build();
   public static final BattleMove TIDAL_WAVE10 = new BattleMoveBuilder()
-          .name("Tidal Wave")
-          .level(1)
+          .name("Tidal Wave2")
+          .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
           .powerLevel(20)

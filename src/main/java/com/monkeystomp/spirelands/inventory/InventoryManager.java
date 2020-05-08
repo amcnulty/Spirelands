@@ -171,20 +171,44 @@ public class InventoryManager {
   public int getGold() {
     return gold;
   }
-
-  public int getAbilityPoints() {
-    return abilityPoints;
-  }
-
-  public void setAbilityPoints(int abilityPoints) {
-    this.abilityPoints = abilityPoints;
-  }
   /**
    * Adds gold to the supply of gold in the inventory.
    * @param amount The amount of gold to add to the inventory.
    */
   public void addGold(int amount) {
     gold += amount;
+  }
+  /**
+   * Reduces gold from the supply of gold in the inventory.
+   * @param amount The amount of gold to remove from inventory.
+   */
+  public void reduceGold(int amount) {
+    gold -= amount;
+  }
+  /**
+   * Use this for initially setting the ability points on game load.
+   * @param abilityPoints 
+   */
+  public void setAbilityPoints(int abilityPoints) {
+    this.abilityPoints = abilityPoints;
+  }
+
+  public int getAbilityPoints() {
+    return abilityPoints;
+  }
+  /**
+   * Adds ability points to the supply in the inventory.
+   * @param amount The amount of ability points to add to the inventory.
+   */
+  public void addAbilityPoints(int amount) {
+    abilityPoints += amount;
+  }
+  /**
+   * Reduces the amount of ability points from the supply in the inventory.
+   * @param amount The amount of ability points to remove from the inventory.
+   */
+  public void reduceAbilityPoints(int amount) {
+    abilityPoints -= amount;
   }
 
   public HashMap<Integer, InventoryReference> getItemMap() {

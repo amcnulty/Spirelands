@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 public class AbilitySlot extends GroupButton {
   
   private final String type;
-  private final int level;
+  private int level;
   private Consumer<AbilitySlotClickEvent> clickHandler;
   private BattleMove equippedMove;
   private final ArrayList<BattleMove> equippedItemMoves = new ArrayList<>();
@@ -118,6 +118,13 @@ public class AbilitySlot extends GroupButton {
   
   public void addItemMove(BattleMove move) {
     equippedItemMoves.add(move);
+  }
+  /**
+   * Upgrades this ability slot by one level. This will fire the click handler to reload the list view and upgrade panel component.
+   */
+  public void upgradeSlot() {
+    level++;
+    clickHandler.accept(new AbilitySlotClickEvent(level, type, this));
   }
 
   public void setClickHandler(Consumer<AbilitySlotClickEvent> clickHandler) {

@@ -53,7 +53,10 @@ public class UpgradeAbilitySlotPanel {
     }
     else
       pointsToUpgrade = 0;
-    button = new GameMenuPrimaryButton(buttonText, buttonX, buttonY, buttonWidth, buttonHeight, () -> {});
+    button = new GameMenuPrimaryButton(buttonText, buttonX, buttonY, buttonWidth, buttonHeight, () -> {
+      InventoryManager.getInventoryManager().reduceAbilityPoints(pointsToUpgrade);
+      event.getSlot().upgradeSlot();
+    });
     if (pointsToUpgrade > InventoryManager.getInventoryManager().getAbilityPoints()) {
       button.setDisabled(true);
     }

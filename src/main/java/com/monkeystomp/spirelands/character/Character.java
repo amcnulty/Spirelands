@@ -142,11 +142,12 @@ public class Character extends StatModel {
       .collect(Collectors.toList()));
   }
   /**
-   * Adds the given ability slot to this character's array of slots.
-   * @param slot The ability slot to add.
+   * Sets the ability slots to this character's array of slots during game load.
+   * @param slots The ability slot to add.
    */
-  public void addAbilitySlot(AbilitySlot slot) {
-    abilitySlots.add(slot);
+  public void setAbilitySlots(ArrayList<AbilitySlot> slots) {
+    abilitySlots.clear();
+    abilitySlots.addAll(slots);
   }
 
   public ArrayList<AbilitySlot> getAbilitySlots() {
@@ -161,6 +162,20 @@ public class Character extends StatModel {
   public void unequipAbilitySlot(AbilitySlot slot) {
     abilitySlots.get(abilitySlots.indexOf(slot)).unequip();
     updateEquippedMoves();
+  }
+  /**
+   * Checks to see if the given battle move is equipped on the provided slot
+   * @param slot Slot to check against
+   * @param move Battle move to check if it is equipped
+   * @return True if the current equipped move in this slot is the same as the one provided otherwise false.
+   */
+  public boolean slotContainsMove(AbilitySlot slot, BattleMove move) {
+    List<AbilitySlot> slots = abilitySlots.stream().filter(s -> s.equals(slot))
+      .collect(Collectors.toList());
+    if (slots.size() > 0)
+      if (slots.get(0).getEquippedMove() != null)
+        return slots.get(0).getEquippedMove().equals(move);
+    return false;
   }
 
   /**

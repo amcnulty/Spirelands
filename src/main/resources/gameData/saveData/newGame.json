@@ -43,13 +43,13 @@
         {
           "bHJncPLq94": 1003,
           "type": "Magical",
-          "level": 0,
+          "level": 2,
           "move": null
         },
         {
           "bHJncPLq94": 1004,
           "type": "Magical",
-          "level": 0,
+          "level": 3,
           "move": null
         },
         {
@@ -228,7 +228,7 @@
   "dyYJ9VY0sF": "luke01",
   "5sI67QIas5": {
     "STlGH2brLY": 643,
-    "abilityPoints": 25,
+    "abilityPoints": 1000,
     "gBmuNMUWDb": [
       { "bHJncPLq94": 1003, "DoQd94zuo4": 1 },
       { "bHJncPLq94": 1000, "DoQd94zuo4": 2},

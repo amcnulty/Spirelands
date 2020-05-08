@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * The Ability list is shown on the abilities screen and allows users to equip moves.
@@ -24,7 +25,7 @@ public class AbilityList {
   private AbilitySlotClickEvent currentEvent;
   private ArrayList<BattleMove> moveList;
   private final ArrayList<BattleMove> editingItemMoves = new ArrayList<>();
-  private ArrayList<AbilityListItem> listItems = new ArrayList<>();
+  private final ArrayList<AbilityListItem> listItems = new ArrayList<>();
   private final Pagination pagination = new Pagination(10, 260, 169, (pageIndex) -> createListItems(pageIndex));
   
   public AbilityList(int top, int left) {
@@ -37,11 +38,18 @@ public class AbilityList {
   
   public void show(AbilitySlotClickEvent event) {
     this.currentEvent = event;
-    if (!event.getType().equals(BattleMove.BUFF)) {
+    if (event.getType().equals(BattleMove.ITEM)) {
       moveList = InventoryManager.getInventoryManager().getBattleMovesByType(event.getType(), BattleMove.BUFF);
     }
+    else if (event.getType().equals(BattleMove.BUFF)) {
+      moveList = (ArrayList<BattleMove>)InventoryManager.getInventoryManager().getBattleMovesByAction(event.getType())
+                  .stream().filter(move -> move.getLevel() <= this.currentEvent.getLevel())
+                  .collect(Collectors.toList());
+    }
     else {
-      moveList = InventoryManager.getInventoryManager().getBattleMovesByAction(event.getType());
+      moveList = (ArrayList<BattleMove>)InventoryManager.getInventoryManager().getBattleMovesByType(event.getType(), BattleMove.BUFF)
+                  .stream().filter(move -> move.getLevel() <= this.currentEvent.getLevel())
+                  .collect(Collectors.toList());
     }
     pagination.setListLength(moveList.size());
     pagination.highlightCurrentPage(0);
@@ -69,7 +77,7 @@ public class AbilityList {
       if (page * itemsPerPage + i > moveList.size() - 1)
         break;
       listItems.add(
-        new AbilityListItem(listItemYStart + listItemYSpacing * i, leftRowX, moveList.get(page * itemsPerPage + i), character,
+        new AbilityListItem(listItemYStart + listItemYSpacing * i, leftRowX, moveList.get(page * itemsPerPage + i), character, currentEvent.getSlot(),
           () -> {},
           move -> handleEquipClick(move),
           move -> handleUnequipClick(move)
@@ -80,7 +88,7 @@ public class AbilityList {
       if (page * itemsPerPage + i > moveList.size() - 1)
         break;
       listItems.add(
-        new AbilityListItem(listItemYStart + listItemYSpacing * (i - itemsPerRow), rightRowX, moveList.get(page * itemsPerPage + i), character,
+        new AbilityListItem(listItemYStart + listItemYSpacing * (i - itemsPerRow), rightRowX, moveList.get(page * itemsPerPage + i), character, currentEvent.getSlot(),
           () -> {},
           move -> handleEquipClick(move),
           move -> handleUnequipClick(move)
@@ -91,7 +99,6 @@ public class AbilityList {
   
   private void handleEquipClick(BattleMove move) {
     if (currentEvent.getSlot().getType().equals(BattleMove.ITEM)) {
-      System.out.println("handle equipping this item move");
       for (int i = 0; i < editingItemMoves.size(); i++) {
         if (editingItemMoves.get(i) == null || i == editingItemMoves.size() - 1) {
           editingItemMoves.set(i, move);
@@ -107,8 +114,6 @@ public class AbilityList {
   
   private void handleUnequipClick(BattleMove move) {
     if (currentEvent.getSlot().getType().equals(BattleMove.ITEM)) {
-      System.out.println("handle unequipping this item move");
-      System.out.println("index of move in editinglist " + editingItemMoves.indexOf(move));
       editingItemMoves.set(editingItemMoves.indexOf(move), null);
       character.setEquippedItemMoves(editingItemMoves);
       setBadges();

@@ -34,16 +34,18 @@ public class AbilityListItem {
   private final int[] badgePixels = new int[49];
   private final Sprite badgeSprite;
   private final Character character;
+  private final AbilitySlot slot;
   private PrimaryButton equipButton;
   private DangerButton unequipButton;
   private GameMenuPrimaryButton infoButton;
   private boolean showBadge = false;
   
-  public AbilityListItem(int top, int left, BattleMove move, Character character, ICallback infoClickHandler, Consumer<BattleMove> equipClickHandler, Consumer<BattleMove> unequipClickHandler) {
+  public AbilityListItem(int top, int left, BattleMove move, Character character, AbilitySlot slot, ICallback infoClickHandler, Consumer<BattleMove> equipClickHandler, Consumer<BattleMove> unequipClickHandler) {
     this.top = top;
     this.left = left;
     this.move = move;
     this.character = character;
+    this.slot = slot;
     this.textX = left + 18;
     this.textY = top + 8;
     this.equipButtonX = left + 97;
@@ -89,7 +91,7 @@ public class AbilityListItem {
   }
   
   public void update() {
-    if (character.getEquippedMoves().contains(move))
+    if (character.slotContainsMove(slot, move))
       unequipButton.update();
     else
       equipButton.update();
@@ -103,7 +105,7 @@ public class AbilityListItem {
       screen.renderFonts(badgeFont);
     }
     screen.renderFonts(moveNameFont);
-    if (character.getEquippedMoves().contains(move))
+    if (character.slotContainsMove(slot, move))
       unequipButton.render(screen, gl);
     else
       equipButton.render(screen, gl);
