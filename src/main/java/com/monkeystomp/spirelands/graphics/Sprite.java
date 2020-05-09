@@ -142,6 +142,54 @@ public class Sprite {
    */
   public static final Sprite LOCK = new Sprite(new Sprite("./resources/gui/lock.png"), 9);
   /**
+   * Level two physical battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_PHYSICAL_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_physical_level_2.png"), 23);
+  /**
+   * Level three physical battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_PHYSICAL_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_physical_level_3.png"), 23);
+  /**
+   * Level two magical battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_MAGICAL_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_magical_level_2.png"), 23);
+  /**
+   * Level three magical battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_MAGICAL_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_magical_level_3.png"), 23);
+  /**
+   * Level two buff battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_BUFF_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_buff_level_2.png"), 23);
+  /**
+   * Level three buff battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_BUFF_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_buff_level_3.png"), 23);
+  /**
+   * Level two item battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_ITEM_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_item_level_2.png"), 23);
+  /**
+   * Level three item battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_ITEM_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_item_level_3.png"), 23);
+  /**
+   * Level two hover battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_HOVER_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_hover_level_2.png"), 23);
+  /**
+   * Level three hover battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_HOVER_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_hover_level_3.png"), 23);
+  /**
+   * Level two down battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_DOWN_LV2 = new Sprite(new Sprite("./resources/gui/battle_slot_down_level_2.png"), 23);
+  /**
+   * Level three down battle slot.
+   */
+  public static final Sprite BATTLE_SLOT_DOWN_LV3 = new Sprite(new Sprite("./resources/gui/battle_slot_down_level_3.png"), 23);
+  /**
    * Creates a Sprite object of equal width and height from a specific point cut from a sprite sheet.
    * @param rawSize The width and height in pixels of the sprite to cut from the given sprite sheet. This is the size of the sprite on the sheet.
    * @param renderSize The size to render this sprite at. This will set the width and height of the sprite.

@@ -22,7 +22,7 @@ public class CharacterAbilityCard {
                     cardBottom,
                     buttonRowXStart,
                     buttonRowY,
-                    spaceBetweenSlots = 22;
+                    spaceBetweenSlots = 25;
   private int characterIndex;
   private final Consumer<Character> ICharacterChanger;
   private final Consumer<AbilitySlotClickEvent> IAbilitySlotClickEvent;
@@ -36,7 +36,7 @@ public class CharacterAbilityCard {
     thumbnailX = left + 14;
     thumbnailY = top + 10;
     cardBottom = thumbnailY + thumbnailHeight;
-    buttonRowXStart = thumbnailX + thumbnailWidth + 24;
+    buttonRowXStart = thumbnailX + thumbnailWidth + 19;
     buttonRowY = thumbnailY + thumbnailHeight / 2 - 9;
     this.ICharacterChanger = ICharacterChanger;
     this.IAbilitySlotClickEvent = IAbilitySlotClickEvent;

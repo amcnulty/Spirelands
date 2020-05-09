@@ -161,6 +161,22 @@ public class GameColors {
    */
   public static final int TITLE_SCREEN_MENU_BACKDROP = 0xDDFFFFFF;
   /**
+   * Battle move slot color for physical moves #0xFFBB0A1E
+   */
+  public static final int BATTLE_MOVE_SLOT_PHYSICAL = 0xFFBB0A1E;
+  /**
+   * Battle move slot color for magical moves #0xFF1E0ABB
+   */
+  public static final int BATTLE_MOVE_SLOT_MAGICAL = 0xFF1E0ABB;
+  /**
+   * Battle move slot color for buff moves #0xFF1EBBBB
+   */
+  public static final int BATTLE_MOVE_SLOT_BUFF = 0xFF1EBBBB;
+  /**
+   * Battle move slot color for buff moves #0xFF0ABB1E
+   */
+  public static final int BATTLE_MOVE_SLOT_ITEM = 0xFF0ABB1E;
+  /**
    *        !!########################################!!
    *        !!                                        !!
    *        !!              Font Colors               !!
