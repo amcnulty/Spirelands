@@ -172,9 +172,17 @@ public class Character extends StatModel {
   public boolean slotContainsMove(AbilitySlot slot, BattleMove move) {
     List<AbilitySlot> slots = abilitySlots.stream().filter(s -> s.equals(slot))
       .collect(Collectors.toList());
-    if (slots.size() > 0)
-      if (slots.get(0).getEquippedMove() != null)
-        return slots.get(0).getEquippedMove().equals(move);
+    if (slots.size() > 0) {
+      if (slot.getType().equals(BattleMove.ITEM)) {
+        return slots.get(0).getEquippedItemMoves().contains(move);
+      }
+      else {
+        if (slots.get(0).getEquippedMove() != null) {
+          return slots.get(0).getEquippedMove().equals(move);
+        }
+      }
+      
+    }
     return false;
   }
 

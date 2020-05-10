@@ -62,8 +62,8 @@ public class AbilitiesView extends DisplayView {
   @Override
   public void render(Screen screen, GL2 gl) {
     abilityCard.render(screen, gl);
-    upgradeAbilitySlotPanel.render(screen, gl);
     abilityList.render(screen, gl);
+    upgradeAbilitySlotPanel.render(screen, gl);
   }
     
 }

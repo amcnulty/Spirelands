@@ -37,7 +37,7 @@ public class CharacterAbilityCard {
     thumbnailY = top + 10;
     cardBottom = thumbnailY + thumbnailHeight;
     buttonRowXStart = thumbnailX + thumbnailWidth + 19;
-    buttonRowY = thumbnailY + thumbnailHeight / 2 - 9;
+    buttonRowY = thumbnailY;
     this.ICharacterChanger = ICharacterChanger;
     this.IAbilitySlotClickEvent = IAbilitySlotClickEvent;
     createChevronButtons();

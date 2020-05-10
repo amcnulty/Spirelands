@@ -14,11 +14,11 @@ public class EnemyMoveInformation {
   /**
    * Target filter to include all character battle entities.
    */
-  public static final Predicate<BattleEntity> TARGET_CHARACTERS = entity -> entity instanceof CharacterBattleEntity;
+  public static final Predicate<BattleEntity> TARGET_CHARACTERS = entity -> entity instanceof CharacterBattleEntity && !entity.isDead();
   /**
    * Target filter to include all enemy battle entities.
    */
-  public static final Predicate<BattleEntity> TARGET_ENEMIES = entity -> entity instanceof EnemyBattleEntity;
+  public static final Predicate<BattleEntity> TARGET_ENEMIES = entity -> entity instanceof EnemyBattleEntity && !entity.isDead();
   /**
    * Represents double the chance this move will be used over standard weighted moves.
    */

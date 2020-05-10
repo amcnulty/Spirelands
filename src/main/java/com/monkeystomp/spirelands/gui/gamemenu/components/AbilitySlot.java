@@ -6,9 +6,12 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
 import com.monkeystomp.spirelands.gui.controlls.button.GroupButton;
+import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
+import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.function.Consumer;
 
@@ -23,7 +26,9 @@ public class AbilitySlot extends GroupButton {
   private Consumer<AbilitySlotClickEvent> clickHandler;
   private BattleMove equippedMove;
   private final ArrayList<BattleMove> equippedItemMoves = new ArrayList<>();
-  private Sprite itemIcon;
+  private Sprite itemIcon, equipSprite;
+  private final FontInfo  equipFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
+                          levelFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private static final HashMap<String, Sprite> BATTLE_MOVE_SPRITE_MAP = new HashMap<>();
   
   static {
@@ -50,7 +55,18 @@ public class AbilitySlot extends GroupButton {
     if (this.type.equals(BattleMove.ITEM))
       itemIcon = new Sprite(16, 16, 0, 11, SpriteSheet.itemsSheet);
     this.level = level;
+    levelFont.setText(level == 0 ? "Locked" : "Lv " + level);
     createButtonSprites();
+    createEquipBadge();
+  }
+  
+  private void createEquipBadge() {
+    equipFont.setText("Equip");
+    equipFont.setX(100);
+    equipFont.setY(100);
+    int[] pixels = new int[17 * 7];
+    Arrays.fill(pixels, GameColors.GAME_MENU_LABEL_TEXT_DARK);
+    equipSprite = new Sprite(pixels, 17, 7);
   }
   
   private void createButtonSprites() {
@@ -172,6 +188,9 @@ public class AbilitySlot extends GroupButton {
    */
   public void upgradeSlot() {
     level++;
+    levelFont.setText("Lv " + level);
+    levelFont.setX(getLeft() + width / 2);
+    levelFont.centerText();
     createButtonSprites();
     currentButton = buttonHover;
     clickHandler.accept(new AbilitySlotClickEvent(level, type, this));
@@ -179,6 +198,22 @@ public class AbilitySlot extends GroupButton {
 
   public void setClickHandler(Consumer<AbilitySlotClickEvent> clickHandler) {
     this.clickHandler = clickHandler;
+  }
+  
+  @Override
+  public void setTop(int top) {
+    super.setTop(top);
+    equipFont.setY(getBottom() - 7);
+    levelFont.setY(getBottom() + 3);
+  }
+  
+  @Override
+  public void setLeft(int left) {
+    super.setLeft(left);
+    equipFont.setX(left + width / 2);
+    equipFont.centerText();
+    levelFont.setX(left + width / 2);
+    levelFont.centerText();
   }
   
   @Override
@@ -199,9 +234,15 @@ public class AbilitySlot extends GroupButton {
       screen.renderSprite(gl, x + 7, y + 8, Sprite.LOCK, false);
     else if (equippedMove != null)
       screen.renderSprite(gl, x + 3, y + 3, equippedMove.getThumbnail(), false);
-    else if (type.equals(BattleMove.ITEM))
+    else if (equippedMove == null && !type.equals(BattleMove.ITEM)) {
+      screen.renderSprite(gl, x + 3, getBottom() - 10, equipSprite, false);
+      screen.renderFonts(equipFont);
+    }
+    else if (type.equals(BattleMove.ITEM)) {
       screen.renderSprite(gl, x + 3, y + 3, itemIcon, false);
-      
+    }
+    if (isHovering())
+      screen.renderFonts(levelFont);
   }
 
 }

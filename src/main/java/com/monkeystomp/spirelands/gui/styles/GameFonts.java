@@ -19,6 +19,13 @@ public class GameFonts {
     return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.BOLD, getAdjustedFontSize(16)), new Color(GameColors.DARK_TEXT)));
   }
   /**
+   * Dark text for light backgrounds not bold.
+   * @return The font info object.
+   */
+  public static FontInfo getDarkText_normal_16() {
+    return new FontInfo(new FontStyle(new Font(Font.SANS_SERIF, Font.PLAIN, getAdjustedFontSize(16)), new Color(GameColors.DARK_TEXT)));
+  }
+  /**
    * Light text for the primary button.
    * @return The font info object.
    */
