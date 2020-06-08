@@ -7,36 +7,47 @@ import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.gui.gamemenu.components.AbilityList;
 import com.monkeystomp.spirelands.gui.gamemenu.components.UpgradeAbilitySlotPanel;
 import com.monkeystomp.spirelands.gui.gamemenu.events.AbilitySlotClickEvent;
+import java.awt.Rectangle;
 
 /**
  * The abilities view is shown in the game menu when users click the Abilities button.
  * @author amcnu
  */
 public class AbilitiesView extends DisplayView {
+  /**
+   * The bounds of the ability list area.
+   */
+  public static final Rectangle ABILITY_LIST_BOUNDS = new Rectangle(
+    DisplayView.DISPLAY_VIEW_BOUNDS.x,
+    78,
+    DisplayView.DISPLAY_VIEW_BOUNDS.width,
+    DisplayView.DISPLAY_VIEW_BOUNDS.height
+  );
+
   // The abilities card with the character thumbnail and ability slots.
   private final CharacterAbilityCard abilityCard =
     new CharacterAbilityCard(
-      top,
-      left,
+      TOP,
+      LEFT,
       nextCharacter -> setCharacter(nextCharacter),
       event -> handleAbilitySlotClick(event)
     );
   // The panel below the abilities card for showing the upgrade button.
   private final UpgradeAbilitySlotPanel upgradeAbilitySlotPanel =
-    new UpgradeAbilitySlotPanel(left, abilityCard.getCARD_BOTTOM());
+    new UpgradeAbilitySlotPanel(LEFT, abilityCard.getCARD_BOTTOM());
   
   private void handleAbilitySlotClick(AbilitySlotClickEvent event) {
     upgradeAbilitySlotPanel.updatePanel(event);
     if (event.getLevel() > 0)
-      abilityList.show(event);
+      abilityList.handleAbilitySlotClick(event);
     else
       abilityList.hide();
   }
   // The ability list.
-  private final AbilityList abilityList = new AbilityList(upgradeAbilitySlotPanel.getPanelBottom(), left);
+  private final AbilityList abilityList = new AbilityList(upgradeAbilitySlotPanel.getPanelBottom(), LEFT);
 
   @Override
-  public void enteringView() {  
+  public void enteringView() {
   }
 
   @Override

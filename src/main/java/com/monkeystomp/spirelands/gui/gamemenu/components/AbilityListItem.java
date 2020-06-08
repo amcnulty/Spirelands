@@ -11,7 +11,6 @@ import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
-import com.monkeystomp.spirelands.input.ICallback;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -27,7 +26,7 @@ public class AbilityListItem {
                     infoButtonX, infoButtonY,
                     badgeX, badgeY;
   private final BattleMove move;
-  private final ICallback infoClickHandler;
+  private final Consumer<BattleMove> infoClickHandler;
   private final Consumer<BattleMove> equipClickHandler, unequipClickHandler;
   private final FontInfo moveNameFont = GameFonts.getGAME_MENU_LABEL_TEXT();
   private final FontInfo badgeFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
@@ -40,7 +39,7 @@ public class AbilityListItem {
   private GameMenuPrimaryButton infoButton;
   private boolean showBadge = false;
   
-  public AbilityListItem(int top, int left, BattleMove move, Character character, AbilitySlot slot, ICallback infoClickHandler, Consumer<BattleMove> equipClickHandler, Consumer<BattleMove> unequipClickHandler) {
+  public AbilityListItem(int top, int left, BattleMove move, Character character, AbilitySlot slot, Consumer<BattleMove> infoClickHandler, Consumer<BattleMove> equipClickHandler, Consumer<BattleMove> unequipClickHandler) {
     this.top = top;
     this.left = left;
     this.move = move;
@@ -70,7 +69,7 @@ public class AbilityListItem {
   }
   
   private void createButtons() {
-    infoButton = new GameMenuPrimaryButton("Info", infoButtonX, infoButtonY, 19, 11, () -> infoClickHandler.execute());
+    infoButton = new GameMenuPrimaryButton("Info", infoButtonX, infoButtonY, 19, 11, () -> infoClickHandler.accept(move));
     equipButton = new PrimaryButton("Equip", equipButtonX, equipButtonY, 19, 11, () -> equipClickHandler.accept(move));
     unequipButton = new DangerButton("\u2716", equipButtonX, equipButtonY, 19, 11, () -> unequipClickHandler.accept(move));
   }

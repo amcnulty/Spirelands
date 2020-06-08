@@ -30,7 +30,7 @@ public class GameMenu {
     "\u2A2F",
     379,
     19,
-    9,
+    8,
     9,
     () -> handleExitPress()
   );

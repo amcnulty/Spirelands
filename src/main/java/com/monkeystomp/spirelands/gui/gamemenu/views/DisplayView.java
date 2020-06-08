@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.gui.interfaces.Viewable;
+import java.awt.Rectangle;
 import java.util.function.Consumer;
 
 /**
@@ -36,19 +37,23 @@ public abstract class DisplayView implements Viewable {
   /**
    * Y coordinate of the top most edge in the display view in pixels.
    */
-  protected final int top = 23;
+  protected static final int TOP = 23;
   /**
    * X coordinate of the right most edge in the display view in pixels.
    */
-  protected final int right = 395;
+  protected static final int RIGHT = 395;
   /**
    * Y coordinate of the bottom most edge in the display view in pixels.
    */
-  protected final int bottom = 178;
+  protected static final int BOTTOM = 178;
   /**
    * X coordinate of the left most edge in the display view in pixels.
    */
-  protected final int left = 124;
+  protected static final int LEFT = 124;
+  /**
+   * The bounds of the display view area.
+   */
+  protected static final Rectangle DISPLAY_VIEW_BOUNDS = new Rectangle(LEFT, TOP, RIGHT - LEFT, BOTTOM - TOP);
   /**
    * Character associated with the view.
    */

@@ -20,13 +20,15 @@ public class AbilityList {
                     itemsPerPage = 10, itemsPerRow = 5,
                     leftRowX, rightRowX,
                     listItemYStart, listItemYSpacing = 17;
-  private boolean showing = false;
+  private boolean showing = false,
+                  showingDetails = false;
   private Character character;
   private AbilitySlotClickEvent currentEvent;
   private ArrayList<BattleMove> moveList;
   private final ArrayList<BattleMove> editingItemMoves = new ArrayList<>();
   private final ArrayList<AbilityListItem> listItems = new ArrayList<>();
   private final Pagination pagination = new Pagination(10, 260, 169, (pageIndex) -> createListItems(pageIndex));
+  private final BattleMoveDetailCard battleMoveDetailCard = new BattleMoveDetailCard(() -> hideDetails());
   
   public AbilityList(int top, int left) {
     this.top = top;
@@ -36,7 +38,7 @@ public class AbilityList {
     listItemYStart = top;
   }
   
-  public void show(AbilitySlotClickEvent event) {
+  public void handleAbilitySlotClick(AbilitySlotClickEvent event) {
     this.currentEvent = event;
     if (event.getType().equals(BattleMove.ITEM)) {
       moveList = InventoryManager.getInventoryManager().getBattleMovesByType(event.getType(), BattleMove.BUFF);
@@ -64,11 +66,23 @@ public class AbilityList {
       }
       setBadges();
     }
+    show();
+  }
+  
+  public void show() {
     showing = true;
   }
 
   public void hide() {
     showing = false;
+  }
+  
+  private void showDetails() {
+    showingDetails = true;
+  }
+  
+  private void hideDetails() {
+    showingDetails = false;
   }
   
   private void createListItems(int page) {
@@ -78,7 +92,7 @@ public class AbilityList {
         break;
       listItems.add(
         new AbilityListItem(listItemYStart + listItemYSpacing * i, leftRowX, moveList.get(page * itemsPerPage + i), character, currentEvent.getSlot(),
-          () -> {},
+          move -> handleInfoClick(move, character),
           move -> handleEquipClick(move),
           move -> handleUnequipClick(move)
         )
@@ -89,12 +103,17 @@ public class AbilityList {
         break;
       listItems.add(
         new AbilityListItem(listItemYStart + listItemYSpacing * (i - itemsPerRow), rightRowX, moveList.get(page * itemsPerPage + i), character, currentEvent.getSlot(),
-          () -> {},
+          move -> handleInfoClick(move, character),
           move -> handleEquipClick(move),
           move -> handleUnequipClick(move)
         )
       );
     }
+  }
+  
+  private void handleInfoClick(BattleMove battleMove, Character character) {
+    battleMoveDetailCard.show(battleMove, character);
+    showDetails();
   }
   
   private void handleEquipClick(BattleMove move) {
@@ -138,19 +157,29 @@ public class AbilityList {
   
   public void update() {
     if (showing) {
-      for (AbilityListItem listItem: listItems) {
-        listItem.update();
+      if (showingDetails) {
+        battleMoveDetailCard.update();
       }
-      pagination.update();
+      else {
+        for (AbilityListItem listItem: listItems) {
+          listItem.update();
+        }
+        pagination.update();
+      }
     }
   }
   
   public void render(Screen screen, GL2 gl) {
     if (showing) {
-      for (AbilityListItem listItem: listItems) {
-        listItem.render(screen, gl);
+      if (showingDetails) {
+        battleMoveDetailCard.render(screen, gl);
       }
-      pagination.render(screen, gl);
+      else {
+        for (AbilityListItem listItem: listItems) {
+          listItem.render(screen, gl);
+        }
+        pagination.render(screen, gl);
+      }
     }
   }
 
