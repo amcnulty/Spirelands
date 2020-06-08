@@ -112,7 +112,7 @@ public class ItemDetailCard {
       labelInfo.setY(attributeListStartingY + i * 7);
       attributeLabelList.add(labelInfo);
       
-      FontInfo valueInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT();
+      FontInfo valueInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
       valueInfo.setText(attributes.get(i).getValue());
       valueInfo.setX(cardRight - sidePadding);
       valueInfo.setY(attributeListStartingY + i * 7);

@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,10 @@ public class BattleMoveBuilder {
    */
   public String name;
   /**
+   * The description of the move.
+   */
+  public String description;
+  /**
    * The level of this move.
    */
   public int level;
@@ -59,7 +64,7 @@ public class BattleMoveBuilder {
    */
   public String type;
   /**
-   * The action of move Offensive | Defensive
+   * The action of move Offensive | Defensive | Buff
    */
   public String action;
   /**
@@ -118,6 +123,10 @@ public class BattleMoveBuilder {
    * Buff for this move.
    */
   public final Buff buff = new Buff();
+  /** 
+   * he list of attributes for this BattleMove object.
+   */
+  public final ArrayList<BattleMoveAttribute> attributes = new ArrayList<>();
   /**
    * Sets the name of the move. Keep name length less than 20 characters.
    * @param name Display name for the move.
@@ -125,6 +134,15 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder name(String name) {
     this.name = name;
+    return this;
+  }
+  /**
+   * Sets the description text for the move.
+   * @param description Description to show for this move.
+   * @return The BattleMoveBuilder reference.
+   */
+  public BattleMoveBuilder description(String description) {
+    this.description = description;
     return this;
   }
   /**
@@ -143,6 +161,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder element(String element) {
     this.element = element;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ELEMENT, element));
     return this;
   }
   /**
@@ -151,7 +170,9 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder physicalAttack() {
     this.type = BattleMove.PHYSICAL;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.TYPE, BattleMove.PHYSICAL));
     this.action = BattleMove.OFFENSIVE;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACTION, BattleMove.OFFENSIVE));
     return this;
   }
   /**
@@ -160,7 +181,9 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder physicalDefensive() {
     this.type = BattleMove.PHYSICAL;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.TYPE, BattleMove.PHYSICAL));
     this.action = BattleMove.DEFENSIVE;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACTION, BattleMove.DEFENSIVE));
     return this;
   }
   /**
@@ -169,7 +192,9 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder magicalAttack() {
     this.type = BattleMove.MAGICAL;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.TYPE, BattleMove.MAGICAL));
     this.action = BattleMove.OFFENSIVE;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACTION, BattleMove.OFFENSIVE));
     return this;
   }
   /**
@@ -178,7 +203,9 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder magicalDefensive() {
     this.type = BattleMove.MAGICAL;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.TYPE, BattleMove.MAGICAL));
     this.action = BattleMove.DEFENSIVE;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACTION, BattleMove.DEFENSIVE));
     return this;
   }
   /**
@@ -187,7 +214,9 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder magicalBuff() {
     this.type = BattleMove.MAGICAL;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.TYPE, BattleMove.MAGICAL));
     this.action = BattleMove.BUFF;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACTION, BattleMove.BUFF));
     return this;
   }
   /**
@@ -197,6 +226,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder powerLevel(int amount) {
     this.powerLevel = amount;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.POWER_LEVEL, String.valueOf(amount)));
     return this;
   }
   /**
@@ -206,6 +236,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder manaRequired(int amount) {
     this.manaRequired = amount;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.MANA_REQUIRED, String.valueOf(amount)));
     return this;
   }
   /**
@@ -214,7 +245,10 @@ public class BattleMoveBuilder {
    * @return The BattleMoveBuilder reference.
    */
   public BattleMoveBuilder accuracy(int amount) {
-    this.accuracy = amount;
+    if (amount != 100) {
+      this.accuracy = amount;
+      attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACCURACY, String.valueOf(amount) + "%"));
+    }
     return this;
   }
   /**
@@ -223,6 +257,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder ranged() {
     this.ranged = true;
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.RANGED, "true"));
     return this;
   }
   /**
@@ -231,6 +266,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder multiTarget() {
     this.multiTarget = true;
+      attributes.add(new BattleMoveAttribute(BattleMoveAttribute.MULTI_TARGET, "true"));
     return this;
   }
   /**
@@ -353,6 +389,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder attackBuff(double percent) {
     this.buff.setAttackBuff(percent);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ATTACK_BUFF, String.valueOf((int)(percent * 100)) + "%"));
     return this;
   }
   /**
@@ -362,6 +399,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder defensiveBuff(double percent) {
     this.buff.setDefenseBuff(percent);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.DEFENSE_BUFF, String.valueOf((int)(percent * 100)) + "%"));
     return this;
   }
   /**
@@ -371,6 +409,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder intellectBuff(double percent) {
     this.buff.setIntellectBuff(percent);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.INTELLECT_BUFF, String.valueOf((int)(percent * 100)) + "%"));
     return this;
   }
   /**
@@ -380,11 +419,17 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder spiritBuff(double percent) {
     this.buff.setSpiritBuff(percent);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.SPIRIT_BUFF, String.valueOf((int)(percent * 100)) + "%"));
     return this;
   }
-  
+  /**
+   * Sets the elemental effect of this move with the type and percentage.
+   * @param elEffect ElementalEffect object to set the type and percentage of the effect.
+   * @return The BattleMoveBuilder reference.
+   */
   public BattleMoveBuilder addElementalBuff(ElementalEffect elEffect) {
     this.buff.addElementalEffect(elEffect);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ELEMENTAL_EFFECT_MAP.get(elEffect.getElement()), String.valueOf(elEffect.getPercentage() - 100) + "%"));
     return this;
   }
   /**
@@ -394,6 +439,7 @@ public class BattleMoveBuilder {
    */
   public BattleMoveBuilder buffTime(int time) {
     this.buff.setBuffTime(time);
+    attributes.add(new BattleMoveAttribute(BattleMoveAttribute.BUFF_TIME, String.valueOf(time) + "s"));
     return this;
   }
   /**
@@ -428,6 +474,7 @@ public class BattleMoveBuilder {
       this.element = ((BattleItem)this.item).getElementalType();
     }
     this.name = item.getTitle();
+    this.description = item.getDescription();
     this.type = BattleMove.ITEM;
     this.action = action;
     this.ranged = true;
@@ -441,6 +488,10 @@ public class BattleMoveBuilder {
    * @return The newly created EnemyMove.
    */
   public BattleMove build() {
+    if (!this.multiTarget)
+      attributes.add(new BattleMoveAttribute(BattleMoveAttribute.MULTI_TARGET, "false"));
+    if (this.accuracy == 100)
+      attributes.add(new BattleMoveAttribute(BattleMoveAttribute.ACCURACY, "100"));
     return new BattleMove(this);
   }
   

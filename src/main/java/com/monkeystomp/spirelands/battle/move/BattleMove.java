@@ -14,6 +14,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.function.Function;
@@ -67,6 +68,8 @@ public class BattleMove implements Cloneable {
   private final int id;
   // The name of the move.
   private String name;
+  // The description of the move.
+  private String description;
   // The level of the move.
   private final int level;
   // The elemental type of the move.
@@ -103,6 +106,8 @@ public class BattleMove implements Cloneable {
   private final Item item;
   // Buff for this move.
   private final Buff buff;
+  // The list of attributes for this BattleMove object.
+  private final ArrayList<BattleMoveAttribute> attributes;
   /**
    *          !!################################!!
    *          !!                                !!
@@ -159,6 +164,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove BASIC_ATTACK = new BattleMoveBuilder()
           .name("Basic Attack")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .physicalAttack()
           .powerLevel(20)
@@ -173,6 +179,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove BLUNT_FORCE = new BattleMoveBuilder()
           .name("Blunt Force")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(2)
           .physicalAttack()
           .powerLevel(30)
@@ -186,6 +193,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove GUARD = new BattleMoveBuilder()
           .name("Guard")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .physicalDefensive()
           .guardAnimation()
@@ -210,6 +218,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove MAGIC_ENERGY = new BattleMoveBuilder()
           .name("Magic Energy")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .magicalAttack()
           .powerLevel(20)
@@ -226,6 +235,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove FIREBALL = new BattleMoveBuilder()
           .name("Fireball")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.FIRE)
           .magicalAttack()
@@ -243,6 +253,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove TIDAL_WAVE = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -256,6 +267,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE1 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -269,6 +281,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE2 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -282,6 +295,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE3 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -295,6 +309,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE4 = new BattleMoveBuilder()
           .name("Tidal Wave2")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -308,6 +323,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE5 = new BattleMoveBuilder()
           .name("Tidal Wave2")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -321,6 +337,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE6 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -334,6 +351,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE7 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -347,6 +365,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE8 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -360,6 +379,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE9 = new BattleMoveBuilder()
           .name("Tidal Wave Extreme")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(3)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -373,6 +393,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE10 = new BattleMoveBuilder()
           .name("Tidal Wave2")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(2)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -386,6 +407,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE11 = new BattleMoveBuilder()
           .name("Sword Of The Spire")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -399,6 +421,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE12 = new BattleMoveBuilder()
           .name("wwwwwwwwwwwwwwww")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -412,6 +435,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE13 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -425,6 +449,7 @@ public class BattleMove implements Cloneable {
           .build();
   public static final BattleMove TIDAL_WAVE14 = new BattleMoveBuilder()
           .name("Tidal Wave")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .element(Elemental.WATER)
           .magicalAttack()
@@ -441,6 +466,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove CURE = new BattleMoveBuilder()
           .name("Cure")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .magicalDefensive()
           .powerLevel(20)
@@ -467,6 +493,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove WALL = new BattleMoveBuilder()
           .name("Wall")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(2)
           .magicalBuff()
           .physicalSkillAnimation()
@@ -485,6 +512,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove HALO = new BattleMoveBuilder()
           .name("Halo")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .magicalBuff()
           .magicalSkillAnimation()
@@ -503,6 +531,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove HOPE = new BattleMoveBuilder()
           .name("Hope")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .magicalBuff()
           .magicalSkillAnimation()
@@ -520,6 +549,7 @@ public class BattleMove implements Cloneable {
    */
   public static final BattleMove RALLY = new BattleMoveBuilder()
           .name("Rally")
+          .description("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
           .level(1)
           .magicalBuff()
           .physicalSkillAnimation()
@@ -541,6 +571,7 @@ public class BattleMove implements Cloneable {
     this.type = builder.type;
     this.id = getNextId();
     this.name = builder.name;
+    this.description = builder.description;
     this.level = builder.level;
     this.element = builder.element;
     this.action = builder.action;
@@ -558,6 +589,7 @@ public class BattleMove implements Cloneable {
     this.singleTarget = builder.singleTarget;
     this.item = builder.item;
     this.buff = builder.buff;
+    this.attributes = builder.attributes;
   }
   
   static {
@@ -615,6 +647,10 @@ public class BattleMove implements Cloneable {
   
   public String getName() {
     return name;
+  }
+
+  public String getDescription() {
+    return description;
   }
   
   public int getLevel() {
@@ -701,6 +737,10 @@ public class BattleMove implements Cloneable {
 
   public Buff getBuff() {
     return buff;
+  }
+
+  public ArrayList<BattleMoveAttribute> getAttributes() {
+    return attributes;
   }
   
   @Override
