@@ -29,11 +29,11 @@ public class AnimatedSprite {
   public static final int VERY_SLOW = 10;
   private int x = 0,
               tick = 0,
-              speed,
               currentIndex = 0;
+  private final int speed;
   private boolean playOnce = false,
                   readyToPlay = true;
-  private ArrayList<Sprite> sprites = new ArrayList<>();
+  private final ArrayList<Sprite> sprites = new ArrayList<>();
   private Sprite currentSprite;
   
   public AnimatedSprite(int rawSize, int renderSize, SpriteSheet sheet, int speed, int frames) {
@@ -59,6 +59,7 @@ public class AnimatedSprite {
 
   public void setReadyToPlay(boolean readyToPlay) {
     this.readyToPlay = readyToPlay;
+    this.currentIndex = 0;
   }
   
   public void update() {

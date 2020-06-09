@@ -21,7 +21,7 @@ public class AbilitiesView extends DisplayView {
     DisplayView.DISPLAY_VIEW_BOUNDS.x,
     78,
     DisplayView.DISPLAY_VIEW_BOUNDS.width,
-    DisplayView.DISPLAY_VIEW_BOUNDS.height
+    100
   );
 
   // The abilities card with the character thumbnail and ability slots.
