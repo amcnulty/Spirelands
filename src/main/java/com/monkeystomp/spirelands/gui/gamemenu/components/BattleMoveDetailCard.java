@@ -72,7 +72,10 @@ public class BattleMoveDetailCard {
     this.battleMove = battleMove;
     this.character = character;
     setFontInfo();
-    moveAnimation = this.battleMove.getTargetAnimation();
+    if (this.battleMove.getType().equals(BattleMove.MAGICAL) && !this.battleMove.getAction().equals(BattleMove.BUFF))
+      moveAnimation = this.battleMove.getTargetAnimation();
+    else
+      moveAnimation = null;
   }
   
   private void setFontInfo() {
@@ -130,7 +133,8 @@ public class BattleMoveDetailCard {
   
   public void update() {
     closeButton.update();
-    moveAnimation.update();
+    if (moveAnimation != null)
+      moveAnimation.update();
   }
   
   public void render(Screen screen, GL2 gl) {
@@ -146,7 +150,12 @@ public class BattleMoveDetailCard {
     for (FontInfo info: attributeValueList) {
       screen.renderFonts(info);
     }
-    screen.renderSprite(gl, movePreviewX - moveAnimation.getSprite().getWidth() / 2, movePreviewY - moveAnimation.getSprite().getHeight() / 2, moveAnimation.getSprite(), false);
+    if (moveAnimation == null) {
+      screen.renderSprite(gl, movePreviewX - battleMove.getThumbnail().getWidth() / 2, movePreviewY - battleMove.getThumbnail().getHeight() / 2, battleMove.getThumbnail(), false);
+    }
+    else {
+      screen.renderSprite(gl, movePreviewX - moveAnimation.getSprite().getWidth() / 2, movePreviewY - moveAnimation.getSprite().getHeight() / 2, moveAnimation.getSprite(), false);
+    }
   }
 
 }
