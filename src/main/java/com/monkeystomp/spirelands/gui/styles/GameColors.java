@@ -77,9 +77,9 @@ public class GameColors {
    */
   public static final int ATB_GAUGE_BAR_FILLED = 0xFF99FF99;
   /**
-   * ATB gauge bar empty color #0xFFFFFF99
+   * ATB gauge bar empty color #0xDDFFFFFF
    */
-  public static final int ATB_GAUGE_BAR_EMPTY = 0xFFFFFF99;
+  public static final int ATB_GAUGE_BAR_EMPTY = 0xDDFFFFFF;
   /**
    * Experience gauge filled color #0xFF00B400;
    */

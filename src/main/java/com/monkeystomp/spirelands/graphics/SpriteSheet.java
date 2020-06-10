@@ -58,6 +58,7 @@ public class SpriteSheet {
       
     }
     catch (IOException e) {
+      System.out.println("Failed to load file at: " + path);
       e.printStackTrace();
     }
   }

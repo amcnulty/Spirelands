@@ -25,11 +25,11 @@ public class DefaultView extends DisplayView {
    * Creates a DefaultView object that displays the party member buttons.
    */
   public DefaultView() {
-    createCharacterButtons();
   }
   
   private void createCharacterButtons() {
     int i = 0;
+    buttons.clear();
     for (Entry<Integer, Character> partyMember : characterManager.getPartyMembers().entrySet()) {
       buttons.add(new PartyMemberButton(partyMember.getValue(), playerButtonX, playerButtonStartingY + verticalSpacing * i, () -> {handleButtonClick(partyMember.getValue());}));
       buttons.get(i).setDisabled(true);
@@ -67,6 +67,7 @@ public class DefaultView extends DisplayView {
 
   @Override
   public void enteringView() {
+    createCharacterButtons();
   }
   
   @Override

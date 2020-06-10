@@ -58,7 +58,8 @@ public class DisplayPanel {
    * @param view The view to change to.
    */
   private void setCurrentView(DisplayView view) {
-    this.currentView = view;
+    currentView = view;
+    currentView.enteringView();
     IViewChanged.execute();
   }
   

@@ -25,9 +25,33 @@ import org.json.simple.parser.ParseException;
  * @author Aaron Michael McNulty
  */
 public class CharacterManager {
+  /**
+   * Id for the Luke character.
+   */
+  public static final String LUKE = "luke01";
+  /**
+   * Id for the Luke character.
+   */
+  public static final String SARA = "sara02";
+  /**
+   * Id for the Luke character.
+   */
+  public static final String WILLIAM = "will03";
+  /**
+   * Id for the Luke character.
+   */
+  public static final String AARON = "aaron04";
+  /**
+   * Id for the Luke character.
+   */
+  public static final String MILEY = "miley05";
+  /**
+   * Id for the Luke character.
+   */
+  public static final String JUSTIN = "justin06";
   
   private final ArrayList<Character> gameCharacters = new ArrayList<>();
-  private final ArrayList<Character> partyCharacters = new ArrayList<>();
+  private final ArrayList<Character> availableCharacters = new ArrayList<>();
   private final HashMap<Integer, Character> partyMap = new HashMap<>();
   private Character partyLeader;
   private JSONObject characterBaseInformation;
@@ -90,7 +114,6 @@ public class CharacterManager {
   public void setupCharactersDetails(JSONObject characterDetails) {
     // Initializing the Item class
     String itemInitilizer = Item.ANCIENT_STAFF.getTitle();
-    partyCharacters.clear();
     Set<?> keys = characterDetails.keySet();
     setPartyLeader(
       CharacterManager.getCharacterManager().getCharacters().stream().filter(
@@ -106,6 +129,9 @@ public class CharacterManager {
           setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
           if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
             addPartyMember(gameCharacter, jsonUtil.getNestedInt(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.PARTY_POSITION}));
+          }
+          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.AVAILABLE})) {
+            addAvailableCharacter(gameCharacter);
           }
         }
       });
@@ -184,6 +210,20 @@ public class CharacterManager {
     return partyMap.put(position, character);
   }
   /**
+   * Adds a character to the party at the lowest open position.
+   * @param character Character to add to the party.
+   * @return False if all slots are taken up true if success.
+   */
+  public boolean addPartyMemberAtLowestPosition(Character character) {
+    for (Integer i = 0; i < 3; i++) {
+      if (partyMap.get(i) == null) {
+        partyMap.put(i, character);
+        return true;
+      }
+    }
+    return false;
+  }
+  /**
    * Removes the given character from the party and returns true if successful.
    * @param character Character to remove from party.
    * @return True if successful otherwise returns false.
@@ -198,6 +238,29 @@ public class CharacterManager {
 
   public void setPartyLeader(Character partyLeader) {
     this.partyLeader = partyLeader;
+  }
+  /**
+   * Adds a character to the list of available characters.
+   * @param character Character to add to list of available characters.
+   */
+  public void addAvailableCharacter(Character character) {
+    if (!availableCharacters.contains(character))
+      availableCharacters.add(character);
+  }
+  /**
+   * Sets a character as unavailable.
+   * @param character Character to set unavailable.
+   */
+  public void setCharacterUnavailable(Character character) {
+    availableCharacters.remove(character);
+  }
+  /**
+   * Checks if the given character is available.
+   * @param character Character to check availability.
+   * @return True if character is available.
+   */
+  public boolean checkIfCharacterIsAvailable(Character character) {
+    return availableCharacters.contains(character);
   }
   /**
    * Gets the position the given character is set to in the party. If character is not in party this method will return -1;
@@ -217,6 +280,10 @@ public class CharacterManager {
   
   public ArrayList<Character> getCharacters() {
     return gameCharacters;
+  }
+
+  public ArrayList<Character> getAvailableCharacters() {
+    return availableCharacters;
   }
 
 }

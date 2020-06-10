@@ -83,9 +83,9 @@
     "id": "miley05",
     "details": {
       "name": "Miley Cyrus",
-      "thumbnail": "./resources/characters/sara/sara_thumbnail.png",
-      "overworldSheet": "./resources/characters/sara/sara_overworld.png",
-      "battleSheet": "./resources/characters/sara/sara_battle.png",
+      "thumbnail": "./resources/characters/miley/miley_thumbnail.png",
+      "overworldSheet": "./resources/characters/miley/miley_overworld.png",
+      "battleSheet": "./resources/characters/miley/miley_battle.png",
       "weaponType": "Wand"
     },
     "stats": {
@@ -103,9 +103,9 @@
     "id": "justin06",
     "details": {
       "name": "Justin Timberlake",
-      "thumbnail": "./resources/characters/luke/luke_thumbnail.png",
-      "overworldSheet": "./resources/characters/luke/luke_overworld.png",
-      "battleSheet": "./resources/characters/luke/luke_battle.png",
+      "thumbnail": "./resources/characters/justin/justin_thumbnail.png",
+      "overworldSheet": "./resources/characters/justin/justin_overworld.png",
+      "battleSheet": "./resources/characters/justin/justin_battle.png",
       "weaponType": "Sword"
     },
     "stats": {

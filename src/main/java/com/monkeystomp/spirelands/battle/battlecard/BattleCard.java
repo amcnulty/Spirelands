@@ -42,7 +42,7 @@ public class BattleCard {
     this.index = index;
     this.left = index * cardWidth + sidePadding;
     this.right = left + cardWidth - sidePadding;
-    backgroundSprite = new Sprite(cardWidth - sidePadding * 2, 32, GameColors.TITLE_SCREEN_MENU_BACKDROP);
+    backgroundSprite = new Sprite(cardWidth - sidePadding * 2, 32, GameColors.ATB_GAUGE_BAR_EMPTY);
     ATBSprite = new Sprite(cardWidth - sidePadding * 2, 16, GameColors.ATB_GAUGE_BAR_FILLED);
     setupFonts();
     updateStatBars();

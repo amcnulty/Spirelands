@@ -49,6 +49,10 @@ public class JSONUtil {
    */
   public static final String IN_PARTY = "TNhGlhRMpi";
   /**
+   * Boolean value for if character is available to be added to the party.
+   */
+  public static final String AVAILABLE = "AVAILABLE";
+  /**
    * Number value for position in party.
    */
   public static final String PARTY_POSITION = "L2MzPWN5OQ";
