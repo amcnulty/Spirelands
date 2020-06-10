@@ -215,6 +215,219 @@
           "itemMoves": [{"bHJncPLq94": 1000}]
         }
       ]
+    },
+    "AARON": {
+      "bHJncPLq94": "aaron04",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": false
+      },
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 3,
+        "kLwwSDho64": 2,
+        "vODbbb8Alx": 14,
+        "yZpYl62ZxQ": 11,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 30,
+        "R1Jgagop66": 7,
+        "uqWyiIdj8r": 110,
+        "0qv84towQw": 3,
+        "JSb14I8V1n": 73,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 7
+      },
+      "8FRT4q5CKl": {},
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 1,
+          "itemMoves": [{"bHJncPLq94": 1000}]
+        }
+      ]
+    },
+    "MILEY": {
+      "bHJncPLq94": "miley05",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": false
+      },
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 8,
+        "kLwwSDho64": 4,
+        "vODbbb8Alx": 40,
+        "yZpYl62ZxQ": 8,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 45,
+        "R1Jgagop66": 5,
+        "uqWyiIdj8r": 100,
+        "0qv84towQw": 8,
+        "JSb14I8V1n": 79,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 9
+      },
+      "8FRT4q5CKl": {},
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 1,
+          "itemMoves": [{"bHJncPLq94": 1000}]
+        }
+      ]
+    },
+    "JUSTIN": {
+      "bHJncPLq94": "justin06",
+      "588Z6sPUkF": {
+        "TNhGlhRMpi": false
+      },
+      "apU4KX7T8e": {
+        "V7x9C8oRTm": 8,
+        "kLwwSDho64": 5,
+        "vODbbb8Alx": 20,
+        "yZpYl62ZxQ": 12,
+        "DN6CO1Rsu8": 1,
+        "NBIHRUJHHr": 40,
+        "R1Jgagop66": 6,
+        "uqWyiIdj8r": 120,
+        "0qv84towQw": 6,
+        "JSb14I8V1n": 110,
+        "M43HMFzkSv": 0,
+        "eNAP1loLmD": 10
+      },
+      "8FRT4q5CKl": {},
+      "AbilitySlots": [
+        {
+          "bHJncPLq94": 1000,
+          "type": "Physical",
+          "level": 1,
+          "move": 2000
+        },
+        {
+          "bHJncPLq94": 1001,
+          "type": "Physical",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1002,
+          "type": "Magical",
+          "level": 1,
+          "move": 3000
+        },
+        {
+          "bHJncPLq94": 1003,
+          "type": "Magical",
+          "level": 2,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1004,
+          "type": "Magical",
+          "level": 3,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1005,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1006,
+          "type": "Buff",
+          "level": 0,
+          "move": null
+        },
+        {
+          "bHJncPLq94": 1007,
+          "type": "Item",
+          "level": 2,
+          "itemMoves": [{"bHJncPLq94": 1000}, {"bHJncPLq94": 1002}]
+        }
+      ]
     }
   },
   "DHlVpJMNLN": {},

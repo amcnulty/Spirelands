@@ -39,7 +39,7 @@
       "luckWeight": "Low"
     }
   },
-  "William": {,
+  "William": {
     "id": "will03",
     "details": {
       "name": "William Wallace",
@@ -57,6 +57,66 @@
       "spiritWeight": "Low",
       "speedWeight": "Very Low",
       "luckWeight": "Average"
+    }
+  },
+  "Aaron": {
+    "id": "aaron04",
+    "details": {
+      "name": "Aaron Michael",
+      "thumbnail": "./resources/characters/william/william_thumbnail.png",
+      "overworldSheet": "./resources/characters/william/william_overworld.png",
+      "battleSheet": "./resources/characters/william/william_battle.png",
+      "weaponType": "Blunt"
+    },
+    "stats": {
+      "healthWeight": "Very High",
+      "manaWeight": "Very Low",
+      "strengthWeight": "Very High",
+      "defenseWeight": "Very High"
+      "intellectWeight": "Very Low",
+      "spiritWeight": "Low",
+      "speedWeight": "Very Low",
+      "luckWeight": "Average"
+    }
+  },
+  "Miley": {
+    "id": "miley05",
+    "details": {
+      "name": "Miley Cyrus",
+      "thumbnail": "./resources/characters/sara/sara_thumbnail.png",
+      "overworldSheet": "./resources/characters/sara/sara_overworld.png",
+      "battleSheet": "./resources/characters/sara/sara_battle.png",
+      "weaponType": "Wand"
+    },
+    "stats": {
+      "healthWeight": "Average",
+      "manaWeight": "Very High",
+      "strengthWeight": "Low",
+      "defenseWeight": "Very Low",
+      "intellectWeight": "High",
+      "spiritWeight": "Very High",
+      "speedWeight": "Average",
+      "luckWeight": "Low"
+    }
+  },
+  "Justin": {
+    "id": "justin06",
+    "details": {
+      "name": "Justin Timberlake",
+      "thumbnail": "./resources/characters/luke/luke_thumbnail.png",
+      "overworldSheet": "./resources/characters/luke/luke_overworld.png",
+      "battleSheet": "./resources/characters/luke/luke_battle.png",
+      "weaponType": "Sword"
+    },
+    "stats": {
+      "healthWeight": "High",
+      "manaWeight": "Average",
+      "strengthWeight": "Very High",
+      "defenseWeight": "High",
+      "intellectWeight": "High",
+      "spiritWeight": "Average",
+      "speedWeight": "High",
+      "luckWeight": "Very Low"
     }
   }
 }

@@ -17,14 +17,13 @@ import java.awt.Color;
 public class GameMenuNavButton extends Button {
   
   private static final int  WIDTH = 94,
-                            HEIGHT = 20,
+                            HEIGHT = 16,
                             TOP_PADDING = 6,
                             LEFT_PADDING = 10;
   private final int defaultText = GameColors.GAME_MENU_DEFAULT_TEXT,
-                    selectedText = GameColors.GAME_MENU_SELECTED_TEXT,
-                    FONT_SIZE = 27;
+                    selectedText = GameColors.GAME_MENU_SELECTED_TEXT;
   private final Sprite selectedBackground = new Sprite(WIDTH, HEIGHT, GameColors.GAME_MENU_BUTTON_HOVER);
-  private final FontInfo fontInfo = GameFonts.getGAME_MENU_NAV_BUTTON();
+  private final FontInfo fontInfo = GameFonts.getlightText_bold_23();
   /**
    * Creates a GameMenuNavButton with the given text and with a callback that gets fired when button is clicked.
    * @param text The text to be rendered on the button.

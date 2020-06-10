@@ -24,32 +24,36 @@ public class ButtonPanel {
   }
 
   private void createNavButtons() {
-    navButtons.add(new GameMenuNavButton("Weapons", 70, 39, () -> {
+    navButtons.add(new GameMenuNavButton("Weapons", 70, 40, () -> {
       nextViewChanger.accept(DisplayView.WEAPON);
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Armor", 70, 59, () -> {
+    navButtons.add(new GameMenuNavButton("Armor", 70, 57, () -> {
       nextViewChanger.accept(DisplayView.ARMOR);
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Abilities", 70, 79, () -> {
+    navButtons.add(new GameMenuNavButton("Abilities", 70, 74, () -> {
       nextViewChanger.accept(DisplayView.ABILITIES);
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Items", 70, 99, () -> {
+    navButtons.add(new GameMenuNavButton("Items", 70, 91, () -> {
       viewChanger.accept(DisplayView.ITEMS);
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Collectables", 70, 119, () -> {
-      System.out.println("Collectables Button Clicked");
-      resetNavButtons();
-    }));
-    navButtons.add(new GameMenuNavButton("Quests", 70, 139, () -> {
+    navButtons.add(new GameMenuNavButton("Quests", 70, 108, () -> {
       System.out.println("Quests Button Clicked");
       resetNavButtons();
     }));
-    navButtons.add(new GameMenuNavButton("Crafting", 70, 159, () -> {
+    navButtons.add(new GameMenuNavButton("Crafting", 70, 125, () -> {
       viewChanger.accept(DisplayView.CRAFTING);
+      resetNavButtons();
+    }));
+    navButtons.add(new GameMenuNavButton("Collectables", 70, 142, () -> {
+      System.out.println("Collectables Button Clicked");
+      resetNavButtons();
+    }));
+    navButtons.add(new GameMenuNavButton("Party", 70, 159, () -> {
+      viewChanger.accept(DisplayView.PARTY);
       resetNavButtons();
     }));
   }

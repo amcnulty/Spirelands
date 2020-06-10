@@ -29,6 +29,18 @@ public class JSONUtil {
    */
   public static final String WILLIAM = "aRbmU7JFgB";
   /**
+   * Key for Aaron character.
+   */
+  public static final String AARON = "AARON";
+  /**
+   * Key for Miley character.
+   */
+  public static final String MILEY = "MILEY";
+  /**
+   * Key for Justin character.
+   */
+  public static final String JUSTIN = "JUSTIN";
+  /**
    * Key for party info object on each character.
    */
   public static final String PARTY_INFO = "588Z6sPUkF";

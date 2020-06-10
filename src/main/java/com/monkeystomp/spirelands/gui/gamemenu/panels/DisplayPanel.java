@@ -8,6 +8,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.views.CraftingView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.PartyView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.WeaponView;
 import com.monkeystomp.spirelands.input.ICallback;
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class DisplayPanel {
   private final DisplayView armorView = new ArmorView();
   private final DisplayView abilitiesView = new AbilitiesView();
   private final DisplayView craftingView = new CraftingView();
+  private final DisplayView partyView = new PartyView();
   private DisplayView currentView;
   private final ICallback IViewChanged;
   private String nextViewKey;
@@ -49,6 +51,7 @@ public class DisplayPanel {
     viewMap.put(DisplayView.ARMOR, armorView);
     viewMap.put(DisplayView.ABILITIES, abilitiesView);
     viewMap.put(DisplayView.CRAFTING, craftingView);
+    viewMap.put(DisplayView.PARTY, partyView);
   }
   /**
    * WARNING! DO NOT CALL THIS METHOD DIRECTLY!! Use changeView() method because it will call exitingView() on the current view.

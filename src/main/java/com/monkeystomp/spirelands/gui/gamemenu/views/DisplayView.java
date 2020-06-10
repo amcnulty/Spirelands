@@ -35,6 +35,10 @@ public abstract class DisplayView implements Viewable {
    */
   public static final String CRAFTING = "crafting";
   /**
+   * The party view.
+   */
+  public static final String PARTY = "party";
+  /**
    * Y coordinate of the top most edge in the display view in pixels.
    */
   protected static final int TOP = 23;
