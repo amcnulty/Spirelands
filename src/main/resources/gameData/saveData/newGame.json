@@ -1,498 +1,449 @@
 {
-  "awNbSE58uK": {
-    "na2rRC7tcp": {
-      "bHJncPLq94": "luke01",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": true,
+  "CHARACTERS": {
+    "LUKE": {
+      "ID": "luke01",
+      "PARTY_INFO": {
+        "IN_PARTY": true,
         "AVAILABLE": true,
-        "L2MzPWN5OQ": 1
+        "PARTY_POSITION": 1
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 8,
-        "kLwwSDho64": 5,
-        "vODbbb8Alx": 20,
-        "yZpYl62ZxQ": 12,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 40,
-        "R1Jgagop66": 6,
-        "uqWyiIdj8r": 120,
-        "0qv84towQw": 6,
-        "JSb14I8V1n": 110,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 10
+      "STATS": {
+        "INTELLECT": 8,
+        "LUCK": 5,
+        "MANA": 20,
+        "STRENGTH": 12,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 40,
+        "DEFENSE": 6,
+        "HEALTH_MAX": 120,
+        "SPIRIT": 6,
+        "HEALTH": 110,
+        "EXPERIENCE": 0,
+        "SPEED": 10
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 2,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 3,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 2,
-          "itemMoves": [{"bHJncPLq94": 1000}, {"bHJncPLq94": 1002}]
+          "itemMoves": [{"ID": 1000}, {"ID": 1002}]
         }
       ]
     },
-    "0LUWKjxGG7": {
-      "bHJncPLq94": "sara02",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": true,
+    "SARA": {
+      "ID": "sara02",
+      "PARTY_INFO": {
+        "IN_PARTY": true,
         "AVAILABLE": true,
-        "L2MzPWN5OQ": 2
+        "PARTY_POSITION": 2
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 8,
-        "kLwwSDho64": 4,
-        "vODbbb8Alx": 40,
-        "yZpYl62ZxQ": 8,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 45,
-        "R1Jgagop66": 5,
-        "uqWyiIdj8r": 100,
-        "0qv84towQw": 8,
-        "JSb14I8V1n": 79,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 9
+      "STATS": {
+        "INTELLECT": 8,
+        "LUCK": 4,
+        "MANA": 40,
+        "STRENGTH": 8,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 45,
+        "DEFENSE": 5,
+        "HEALTH_MAX": 100,
+        "SPIRIT": 8,
+        "HEALTH": 79,
+        "EXPERIENCE": 0,
+        "SPEED": 9
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 1,
-          "itemMoves": [{"bHJncPLq94": 1000}]
+          "itemMoves": [{"ID": 1000}]
         }
       ]
     },
-    "aRbmU7JFgB": {
-      "bHJncPLq94": "will03",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": false,
+    "WILLIAM": {
+      "ID": "will03",
+      "PARTY_INFO": {
+        "IN_PARTY": false,
         "AVAILABLE": true
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 3,
-        "kLwwSDho64": 2,
-        "vODbbb8Alx": 14,
-        "yZpYl62ZxQ": 11,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 30,
-        "R1Jgagop66": 7,
-        "uqWyiIdj8r": 110,
-        "0qv84towQw": 3,
-        "JSb14I8V1n": 73,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 7
+      "STATS": {
+        "INTELLECT": 3,
+        "LUCK": 2,
+        "MANA": 14,
+        "STRENGTH": 11,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 30,
+        "DEFENSE": 7,
+        "HEALTH_MAX": 110,
+        "SPIRIT": 3,
+        "HEALTH": 73,
+        "EXPERIENCE": 0,
+        "SPEED": 7
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 1,
-          "itemMoves": [{"bHJncPLq94": 1000}]
+          "itemMoves": [{"ID": 1000}]
         }
       ]
     },
     "AARON": {
-      "bHJncPLq94": "aaron04",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": false
+      "ID": "aaron04",
+      "PARTY_INFO": {
+        "IN_PARTY": false
         "AVAILABLE": true,
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 3,
-        "kLwwSDho64": 2,
-        "vODbbb8Alx": 14,
-        "yZpYl62ZxQ": 11,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 30,
-        "R1Jgagop66": 7,
-        "uqWyiIdj8r": 110,
-        "0qv84towQw": 3,
-        "JSb14I8V1n": 73,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 7
+      "STATS": {
+        "INTELLECT": 3,
+        "LUCK": 2,
+        "MANA": 14,
+        "STRENGTH": 11,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 30,
+        "DEFENSE": 7,
+        "HEALTH_MAX": 110,
+        "SPIRIT": 3,
+        "HEALTH": 73,
+        "EXPERIENCE": 0,
+        "SPEED": 7
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 1,
-          "itemMoves": [{"bHJncPLq94": 1000}]
+          "itemMoves": [{"ID": 1000}]
         }
       ]
     },
     "MILEY": {
-      "bHJncPLq94": "miley05",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": true
-        "AVAILABLE": true,
-        "L2MzPWN5OQ": 0
+      "ID": "miley05",
+      "PARTY_INFO": {
+        "IN_PARTY": false
+        "AVAILABLE": false
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 8,
-        "kLwwSDho64": 4,
-        "vODbbb8Alx": 40,
-        "yZpYl62ZxQ": 8,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 45,
-        "R1Jgagop66": 5,
-        "uqWyiIdj8r": 100,
-        "0qv84towQw": 8,
-        "JSb14I8V1n": 79,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 9
+      "STATS": {
+        "INTELLECT": 8,
+        "LUCK": 4,
+        "MANA": 40,
+        "STRENGTH": 8,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 45,
+        "DEFENSE": 5,
+        "HEALTH_MAX": 100,
+        "SPIRIT": 8,
+        "HEALTH": 79,
+        "EXPERIENCE": 0,
+        "SPEED": 9
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 1,
-          "itemMoves": [{"bHJncPLq94": 1000}]
+          "itemMoves": [{"ID": 1000}]
         }
       ]
     },
     "JUSTIN": {
-      "bHJncPLq94": "justin06",
-      "588Z6sPUkF": {
-        "TNhGlhRMpi": false
-        "AVAILABLE": false,
+      "ID": "justin06",
+      "PARTY_INFO": {
+        "IN_PARTY": true
+        "AVAILABLE": true,
+        "PARTY_POSITION": 0
       },
-      "apU4KX7T8e": {
-        "V7x9C8oRTm": 8,
-        "kLwwSDho64": 5,
-        "vODbbb8Alx": 20,
-        "yZpYl62ZxQ": 12,
-        "DN6CO1Rsu8": 1,
-        "NBIHRUJHHr": 40,
-        "R1Jgagop66": 6,
-        "uqWyiIdj8r": 120,
-        "0qv84towQw": 6,
-        "JSb14I8V1n": 110,
-        "M43HMFzkSv": 0,
-        "eNAP1loLmD": 10
+      "STATS": {
+        "INTELLECT": 8,
+        "LUCK": 5,
+        "MANA": 20,
+        "STRENGTH": 12,
+        "LEVEL_STAT": 1,
+        "MANA_MAX": 40,
+        "DEFENSE": 6,
+        "HEALTH_MAX": 120,
+        "SPIRIT": 6,
+        "HEALTH": 110,
+        "EXPERIENCE": 0,
+        "SPEED": 10
       },
-      "8FRT4q5CKl": {},
+      "EQUIPMENT": {},
       "AbilitySlots": [
         {
-          "bHJncPLq94": 1000,
           "type": "Physical",
           "level": 1,
           "move": 2000
         },
         {
-          "bHJncPLq94": 1001,
           "type": "Physical",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1002,
           "type": "Magical",
           "level": 1,
           "move": 3000
         },
         {
-          "bHJncPLq94": 1003,
           "type": "Magical",
           "level": 2,
           "move": null
         },
         {
-          "bHJncPLq94": 1004,
           "type": "Magical",
           "level": 3,
           "move": null
         },
         {
-          "bHJncPLq94": 1005,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1006,
           "type": "Buff",
           "level": 0,
           "move": null
         },
         {
-          "bHJncPLq94": 1007,
           "type": "Item",
           "level": 2,
-          "itemMoves": [{"bHJncPLq94": 1000}, {"bHJncPLq94": 1002}]
+          "itemMoves": [{"ID": 1000}, {"ID": 1002}]
         }
       ]
     }
   },
-  "DHlVpJMNLN": {},
-  "4VPmsx452s": {
-    "43Djs2IJ3f": "shoAqugrlW",
-    "BKOJJqghnB": "Sandbox area for testing!",
-    "BDqLEP7Yas": 100,
-    "7updRAspaV": 100,
-    "1ozadLPvm2": 2
+  "LEVELS": {},
+  "LOCATION": {
+    "LEVEL_KEY": "shoAqugrlW",
+    "LEVEL_NAME": "Sandbox area for testing!",
+    "X": 100,
+    "Y": 100,
+    "DIRECTION": 2
   },
-  "dyYJ9VY0sF": "miley05",
-  "5sI67QIas5": {
-    "STlGH2brLY": 643,
+  "INVENTORY": {
+    "GOLD": 643,
     "abilityPoints": 1000,
-    "gBmuNMUWDb": [
-      { "bHJncPLq94": 1003, "DoQd94zuo4": 1 },
-      { "bHJncPLq94": 1000, "DoQd94zuo4": 2},
-      { "bHJncPLq94": 1008, "DoQd94zuo4": 1},
-      { "bHJncPLq94": 1014, "DoQd94zuo4": 222 },
-      { "bHJncPLq94": 2000, "DoQd94zuo4": 3 },
-      { "bHJncPLq94": 2001, "DoQd94zuo4": 12 },
-      { "bHJncPLq94": 3004, "DoQd94zuo4": 3},
-      { "bHJncPLq94": 3000, "DoQd94zuo4": 2},
-      { "bHJncPLq94": 3012, "DoQd94zuo4": 1},
-      { "bHJncPLq94": 3008, "DoQd94zuo4": 3},
-      { "bHJncPLq94": 4000, "DoQd94zuo4": 1},
-      { "bHJncPLq94": 4060, "DoQd94zuo4": 1},
-      { "bHJncPLq94": 4072, "DoQd94zuo4": 1}
+    "REFS": [
+      { "ID": 1003, "AMOUNT": 1 },
+      { "ID": 1000, "AMOUNT": 2},
+      { "ID": 1008, "AMOUNT": 1},
+      { "ID": 1014, "AMOUNT": 222 },
+      { "ID": 2000, "AMOUNT": 3 },
+      { "ID": 2001, "AMOUNT": 12 },
+      { "ID": 3004, "AMOUNT": 3},
+      { "ID": 3000, "AMOUNT": 2},
+      { "ID": 3012, "AMOUNT": 1},
+      { "ID": 3008, "AMOUNT": 3},
+      { "ID": 4000, "AMOUNT": 1},
+      { "ID": 4060, "AMOUNT": 1},
+      { "ID": 4072, "AMOUNT": 1}
     ],
     "battleMoves": [
-      { "bHJncPLq94": 1000 },
-      { "bHJncPLq94": 1001 },
-      { "bHJncPLq94": 1002 },
-      { "bHJncPLq94": 1003 },
-      { "bHJncPLq94": 2000 },
-      { "bHJncPLq94": 2001 },
-      { "bHJncPLq94": 2002 },
-      { "bHJncPLq94": 3000 },
-      { "bHJncPLq94": 3001 },
-      { "bHJncPLq94": 3002 },
-      { "bHJncPLq94": 3003 },
-      { "bHJncPLq94": 3004 },
-      { "bHJncPLq94": 3005 },
-      { "bHJncPLq94": 3006 },
-      { "bHJncPLq94": 3007 },
-      { "bHJncPLq94": 3008 },
-      { "bHJncPLq94": 3009 },
-      { "bHJncPLq94": 3010 },
-      { "bHJncPLq94": 3011 },
-      { "bHJncPLq94": 3012 },
-      { "bHJncPLq94": 3013 },
-      { "bHJncPLq94": 3014 },
-      { "bHJncPLq94": 3015 },
-      { "bHJncPLq94": 3016 },
-      { "bHJncPLq94": 3017 },
-      { "bHJncPLq94": 3018 },
-      { "bHJncPLq94": 3019 },
-      { "bHJncPLq94": 3020 },
-      { "bHJncPLq94": 3021 }
+      { "ID": 1000 },
+      { "ID": 1001 },
+      { "ID": 1002 },
+      { "ID": 1003 },
+      { "ID": 2000 },
+      { "ID": 2001 },
+      { "ID": 2002 },
+      { "ID": 3000 },
+      { "ID": 3001 },
+      { "ID": 3002 },
+      { "ID": 3003 },
+      { "ID": 3004 },
+      { "ID": 3005 },
+      { "ID": 3006 },
+      { "ID": 3007 },
+      { "ID": 3008 },
+      { "ID": 3009 },
+      { "ID": 3010 },
+      { "ID": 3011 },
+      { "ID": 3012 },
+      { "ID": 3013 },
+      { "ID": 3014 },
+      { "ID": 3015 },
+      { "ID": 3016 },
+      { "ID": 3017 },
+      { "ID": 3018 },
+      { "ID": 3019 },
+      { "ID": 3020 },
+      { "ID": 3021 }
     ]
   }
 }

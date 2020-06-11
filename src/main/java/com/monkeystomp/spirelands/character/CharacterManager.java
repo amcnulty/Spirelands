@@ -1,7 +1,6 @@
 package com.monkeystomp.spirelands.character;
 
 import com.monkeystomp.spirelands.battle.move.BattleMove;
-import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.graphics.SpriteSheet;
@@ -115,24 +114,11 @@ public class CharacterManager {
     // Initializing the Item class
     String itemInitilizer = Item.ANCIENT_STAFF.getTitle();
     Set<?> keys = characterDetails.keySet();
-    setPartyLeader(
-      CharacterManager.getCharacterManager().getCharacters().stream().filter(
-        character -> character.getId().equals(
-          jsonUtil.getNestedString(SaveDataManager.getSaveDataManager().getSaveObject(), new String[]{JSONUtil.PARTY_LEADER})
-        )
-      ).findAny().orElse(null)
-    );
     keys.forEach(key -> {
       JSONObject character = (JSONObject)characterDetails.get(key);
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) {
-          setupCharacterDetails(gameCharacter, (JSONObject)characterDetails.get(key));
-          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
-            addPartyMember(gameCharacter, jsonUtil.getNestedInt(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.PARTY_POSITION}));
-          }
-          if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.AVAILABLE})) {
-            addAvailableCharacter(gameCharacter);
-          }
+          setupCharacterDetails(gameCharacter, character);
         }
       });
     });
@@ -140,43 +126,47 @@ public class CharacterManager {
   
   @SuppressWarnings("unchecked")
   private void setupCharacterDetails(Character character, JSONObject detailInfo) {
-    JSONObject detailStats = (JSONObject)detailInfo.get(JSONUtil.STATS);
+    JSONObject stats = (JSONObject)detailInfo.get(JSONUtil.STATS);
     JSONObject equipment = (JSONObject) detailInfo.get(JSONUtil.EQUIPMENT);
-    character.setLevel(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.LEVEL_STAT}));
-    character.setExperience(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.EXPERIENCE}));
-    character.setHealth(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.HEALTH}));
-    character.setHealthMax(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.HEALTH_MAX}));
-    character.setMana(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.MANA}));
-    character.setManaMax(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.MANA_MAX}));
-    character.setStrength(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.STRENGTH}));
-    character.setDefense(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.DEFENSE}));
-    character.setIntellect(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.INTELLECT}));
-    character.setSpirit(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.SPIRIT}));
-    character.setSpeed(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.SPEED}));
-    character.setLuck(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.STATS, JSONUtil.LUCK}));
+    JSONArray abilitySlots = (JSONArray) detailInfo.get(JSONUtil.ABILITY_SLOTS);
+    JSONObject partyInfo = (JSONObject) detailInfo.get(JSONUtil.PARTY_INFO);
+    // Stats
+    character.setLevel(jsonUtil.getInt(stats, JSONUtil.LEVEL_STAT));
+    character.setExperience(jsonUtil.getInt(stats, JSONUtil.EXPERIENCE));
+    character.setHealth(jsonUtil.getInt(stats, JSONUtil.HEALTH));
+    character.setHealthMax(jsonUtil.getInt(stats, JSONUtil.HEALTH_MAX));
+    character.setMana(jsonUtil.getInt(stats, JSONUtil.MANA));
+    character.setManaMax(jsonUtil.getInt(stats, JSONUtil.MANA_MAX));
+    character.setStrength(jsonUtil.getInt(stats, JSONUtil.STRENGTH));
+    character.setDefense(jsonUtil.getInt(stats, JSONUtil.DEFENSE));
+    character.setIntellect(jsonUtil.getInt(stats, JSONUtil.INTELLECT));
+    character.setSpirit(jsonUtil.getInt(stats, JSONUtil.SPIRIT));
+    character.setSpeed(jsonUtil.getInt(stats, JSONUtil.SPEED));
+    character.setLuck(jsonUtil.getInt(stats, JSONUtil.LUCK));
+    // Equipment
     if (equipment.get(JSONUtil.WEAPON) != null)
-      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.WEAPON})));
+      character.setEquippedWeapon((WeaponItem)Item.ITEM_MAP.get(jsonUtil.getInt(equipment, JSONUtil.WEAPON)));
     else
       character.setEquippedWeapon(null);
     if (equipment.get(JSONUtil.HELMET) != null)
-      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.HELMET})));
+      character.setEquippedHelmet((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getInt(equipment, JSONUtil.HELMET)));
     else
       character.setEquippedHelmet(null);
     if (equipment.get(JSONUtil.CHESTPLATE) != null)
-      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.CHESTPLATE})));
+      character.setEquippedChestplate((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getInt(equipment, JSONUtil.CHESTPLATE)));
     else
       character.setEquippedChestplate(null);
     if (equipment.get(JSONUtil.SHIELD) != null)
-      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.SHIELD})));
+      character.setEquippedShield((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getInt(equipment, JSONUtil.SHIELD)));
     else
       character.setEquippedShield(null);
     if (equipment.get(JSONUtil.BOOTS) != null)
-      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getNestedInt(detailInfo, new String[]{JSONUtil.EQUIPMENT, JSONUtil.BOOTS})));
+      character.setEquippedBoots((ArmorItem)Item.ITEM_MAP.get(jsonUtil.getInt(equipment, JSONUtil.BOOTS)));
     else
       character.setEquippedBoots(null);
-    JSONArray slots = jsonUtil.getNestedArray(detailInfo, new String[]{JSONUtil.ABILITY_SLOTS});
+    // Ability Slots
     ArrayList<AbilitySlot> characterSlots = new ArrayList<>();
-    slots.forEach(i -> {
+    abilitySlots.forEach(i -> {
       JSONObject slot = (JSONObject)i;
       AbilitySlot newSlot = new AbilitySlot(jsonUtil.getString(slot, JSONUtil.TYPE), jsonUtil.getInt(slot, JSONUtil.LEVEL));
       characterSlots.add(newSlot);
@@ -199,14 +189,24 @@ public class CharacterManager {
     });
     character.setAbilitySlots(characterSlots);
     character.updateEquippedMoves();
+    // Party Info
+    if (jsonUtil.getBoolean(partyInfo, JSONUtil.IN_PARTY)) {
+      addPartyMember(character, jsonUtil.getInt(partyInfo, JSONUtil.PARTY_POSITION));
+    }
+    if (jsonUtil.getBoolean(partyInfo, JSONUtil.AVAILABLE)) {
+      addAvailableCharacter(character);
+    }
   }
   /**
-   * Adds a character to the party at the specified position. Positions start at index 0;
+   * Adds a character to the party at the specified position. Positions start at index 0.
+   * If character is at position 0 they will also be added as the party leader.
    * @param character Character to add to the party.
    * @param position Position to put the character in the party at starting at index 0;
    * @return The character that was previously in this position otherwise returns null.
    */
   public Character addPartyMember(Character character, int position) {
+    if (position == 0)
+      setPartyLeader(character);
     return partyMap.put(position, character);
   }
   /**
@@ -259,8 +259,16 @@ public class CharacterManager {
    * @param character Character to check availability.
    * @return True if character is available.
    */
-  public boolean checkIfCharacterIsAvailable(Character character) {
+  public boolean isCharacterAvailable(Character character) {
     return availableCharacters.contains(character);
+  }
+  /**
+   * Checks if the given character is in the party.
+   * @param character Character to check party status.
+   * @return True if character is in party.
+   */
+  public boolean isCharacterInParty(Character character) {
+    return getPartyMemberPosition(character) != -1;
   }
   /**
    * Gets the position the given character is set to in the party. If character is not in party this method will return -1;

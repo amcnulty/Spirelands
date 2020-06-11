@@ -76,11 +76,11 @@ public class Game extends GLCanvas implements Runnable {
     addMouseMotionListener(mouse);
     
     // Temporarily add items to player inventory for testing.
-    InventoryManager manager = InventoryManager.getInventoryManager();
+//    InventoryManager manager = InventoryManager.getInventoryManager();
     // Equipment
-    Helpers.setTimeout(() -> {
-      Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
-    }, 4000);
+//    Helpers.setTimeout(() -> {
+//      Item.ITEM_MAP.forEach((id, item) -> manager.setInventoryReference(item, 33));
+//    }, 4000);
 //    manager.setGold(2019);
 
     if (SettingsManager.getSettingsManager().isCustomCursor()) setCursor();

@@ -19,7 +19,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Main data saving class for saving the state of the game to the JSON files.
  * @author Aaron Michael McNulty
  */
 @SuppressWarnings("unchecked")
@@ -131,15 +131,17 @@ public class SaveDataManager {
   
   private void saveCharacters() {
     JSONObject characters = (JSONObject) saveObject.get(JSONUtil.CHARACTERS);
-    saveObject.put(JSONUtil.PARTY_LEADER, CharacterManager.getCharacterManager().getPartyLeader().getId());
     ArrayList<Character> gameCharacters = CharacterManager.getCharacterManager().getCharacters();
     Set<?> keys = characters.keySet();
     keys.forEach(key -> {
       JSONObject character = (JSONObject) characters.get(key);
       JSONObject stats = (JSONObject) character.get(JSONUtil.STATS);
       JSONObject equipment = (JSONObject) character.get(JSONUtil.EQUIPMENT);
+      JSONArray abilitySlots = (JSONArray) character.get(JSONUtil.ABILITY_SLOTS);
+      JSONObject partyInfo = (JSONObject) character.get(JSONUtil.PARTY_INFO);
       gameCharacters.forEach(gameCharacter -> {
         if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) {
+          // Stats
           stats.put(JSONUtil.LEVEL_STAT, gameCharacter.getLevel());
           stats.put(JSONUtil.EXPERIENCE, gameCharacter.getExperience());
           stats.put(JSONUtil.HEALTH, gameCharacter.getHealth());
@@ -152,6 +154,7 @@ public class SaveDataManager {
           stats.put(JSONUtil.SPIRIT, gameCharacter.getSpirit());
           stats.put(JSONUtil.SPEED, gameCharacter.getSpeed());
           stats.put(JSONUtil.LUCK, gameCharacter.getLuck());
+          // Equipment
           if (gameCharacter.getEquippedWeapon() != null)
             equipment.put(JSONUtil.WEAPON, gameCharacter.getEquippedWeapon().getId());
           if (gameCharacter.getEquippedHelmet() != null)
@@ -162,6 +165,12 @@ public class SaveDataManager {
             equipment.put(JSONUtil.SHIELD, gameCharacter.getEquippedShield().getId());
           if (gameCharacter.getEquippedBoots() != null)
             equipment.put(JSONUtil.BOOTS, gameCharacter.getEquippedBoots().getId());
+          // Ability Slots
+//          abilitySlots.put(JSONUtil.ABILITY_SLOTS, [Array of data for the abilities]);
+          // Party Info
+          partyInfo.put(JSONUtil.AVAILABLE, CharacterManager.getCharacterManager().isCharacterAvailable(gameCharacter));
+          partyInfo.put(JSONUtil.IN_PARTY, CharacterManager.getCharacterManager().isCharacterInParty(gameCharacter));
+          partyInfo.put(JSONUtil.PARTY_POSITION, CharacterManager.getCharacterManager().getPartyMemberPosition(gameCharacter));
         }
       });
     });

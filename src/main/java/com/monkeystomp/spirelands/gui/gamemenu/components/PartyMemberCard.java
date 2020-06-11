@@ -175,13 +175,9 @@ public class PartyMemberCard {
   }
   
   private void checkParty() {
-    isAvailable = CharacterManager.getCharacterManager().checkIfCharacterIsAvailable(character);
+    isAvailable = CharacterManager.getCharacterManager().isCharacterAvailable(character);
     int position = CharacterManager.getCharacterManager().getPartyMemberPosition(character);
-    // If character is not in the party ie. position -1
-    if (position == -1) {
-      isInParty = false;
-    }
-    else {
+    if (CharacterManager.getCharacterManager().isCharacterInParty(character)) {
       if (CharacterManager.getCharacterManager().getPartyLeader().equals(character))
         isPartyLeader = true;
       isInParty = true;
@@ -189,6 +185,9 @@ public class PartyMemberCard {
       positionValueFont.setX(positionValueX);
       positionValueFont.setY(positionY);
       positionValueFont.rightAlignText();
+    }
+    else {
+      isInParty = false;
     }
   }
   
