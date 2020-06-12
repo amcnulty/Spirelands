@@ -13,7 +13,8 @@ import com.monkeystomp.spirelands.input.ICallback;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -38,7 +39,7 @@ public class SaveSlotButton extends Button {
   private final FontInfo  levelNameFont = GameFonts.getDarkText_plain_18(),
                           levelFontInfo = GameFonts.getDarkText_plain_18(),
                           goldFontInfo = GameFonts.getDarkText_plain_18();
-  private final ArrayList<Sprite> partyMembers = new ArrayList<>();
+  private final List<Sprite> partyMembers = Arrays.asList(new Sprite[3]);
   private JSONObject  json,
                       characters,
                       location;
@@ -80,14 +81,14 @@ public class SaveSlotButton extends Button {
     goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{JSONUtil.INVENTORY, JSONUtil.GOLD})));
     goldFontInfo.setX(x + width / 5 + 17);
     goldFontInfo.setY(levelFontInfo.getY() + 10);
-    partyMembers.clear();
+    partyMembers.replaceAll(e -> null);
     Set<?> keys = characters.keySet();
     keys.forEach(characterName -> {
       JSONObject character = (JSONObject)characters.get(characterName);
       JSONObject partyInfo = (JSONObject)character.get(JSONUtil.PARTY_INFO);
-      if (jsonUtil.getNestedBoolean(character, new String[]{JSONUtil.PARTY_INFO, JSONUtil.IN_PARTY})) {
+      if (jsonUtil.getBoolean(partyInfo, JSONUtil.IN_PARTY)) {
         CharacterManager.getCharacterManager().getCharacters().forEach(gameCharacter -> {
-          if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) partyMembers.add(gameCharacter.getThumbnail());
+          if (gameCharacter.getId().equals((String)character.get(JSONUtil.ID))) partyMembers.set(jsonUtil.getInt(partyInfo, JSONUtil.PARTY_POSITION), gameCharacter.getThumbnail());
         });
       }
     });
@@ -151,7 +152,8 @@ public class SaveSlotButton extends Button {
       screen.renderFonts(goldFontInfo);
       screen.renderSprite(gl, x + width / 2 - separator.getWidth() / 2, levelNameFont.getY() + 10, separator, false);
       for (int i = 0; i < partyMembers.size(); i++) {
-        screen.renderSprite(gl, x + thumbnailX + i * spaceBetweenThumbnails, y + thumbnailY, partyMembers.get(i), 1f, false, .5f);
+        if (partyMembers.get(i) != null)
+          screen.renderSprite(gl, x + thumbnailX + i * spaceBetweenThumbnails, y + thumbnailY, partyMembers.get(i), 1f, false, .5f);
       }
     }
   }

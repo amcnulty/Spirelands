@@ -113,6 +113,9 @@ public class CharacterManager {
   public void setupCharactersDetails(JSONObject characterDetails) {
     // Initializing the Item class
     String itemInitilizer = Item.ANCIENT_STAFF.getTitle();
+    // Clear the party map and available characters array.
+    partyMap.clear();
+    availableCharacters.clear();
     Set<?> keys = characterDetails.keySet();
     keys.forEach(key -> {
       JSONObject character = (JSONObject)characterDetails.get(key);

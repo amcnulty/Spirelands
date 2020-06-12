@@ -5,7 +5,8 @@ import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.components.PartyMemberButton;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
@@ -19,7 +20,7 @@ public class DefaultView extends DisplayView {
                     playerButtonStartingY = 49,
                     verticalSpacing = 52;
   private final CharacterManager characterManager = CharacterManager.getCharacterManager();
-  private final ArrayList<PartyMemberButton> buttons = new ArrayList<>();
+  private final List<PartyMemberButton> buttons = Arrays.asList(new PartyMemberButton[3]);
   private Consumer<Character> openViewWithCharacter;
   /**
    * Creates a DefaultView object that displays the party member buttons.
@@ -29,10 +30,12 @@ public class DefaultView extends DisplayView {
   
   private void createCharacterButtons() {
     int i = 0;
-    buttons.clear();
+    buttons.replaceAll(e -> null);
     for (Entry<Integer, Character> partyMember : characterManager.getPartyMembers().entrySet()) {
-      buttons.add(new PartyMemberButton(partyMember.getValue(), playerButtonX, playerButtonStartingY + verticalSpacing * i, () -> {handleButtonClick(partyMember.getValue());}));
-      buttons.get(i).setDisabled(true);
+      int position = characterManager.getPartyMemberPosition(partyMember.getValue());
+      buttons.set(position, new PartyMemberButton(partyMember.getValue(), playerButtonX, playerButtonStartingY + verticalSpacing * position, () -> {handleButtonClick(partyMember.getValue());}));
+      if (buttons.get(position) != null)
+        buttons.get(position).setDisabled(true);
       i++;
     }
   }
@@ -53,7 +56,8 @@ public class DefaultView extends DisplayView {
    */
   public void activateCharacterButtons() {
     for (PartyMemberButton button: buttons) {
-      button.setDisabled(false);
+      if (button != null)
+        button.setDisabled(false);
     }
   }
   /**
@@ -61,7 +65,8 @@ public class DefaultView extends DisplayView {
    */
   public void disableCharacterButtons() {
     for (PartyMemberButton button: buttons) {
-      button.setDisabled(true);
+      if (button != null)
+        button.setDisabled(true);
     }
   }
 
@@ -78,14 +83,16 @@ public class DefaultView extends DisplayView {
   @Override
   public void update() {
     buttons.forEach(button -> {
-      button.update();
+      if (button != null)
+        button.update();
     });
   }
   
   @Override
   public void render(Screen screen, GL2 gl) {
     buttons.forEach(button -> {
-      button.render(screen, gl);
+      if (button != null)
+        button.render(screen, gl);
     });
   }
 

@@ -77,14 +77,30 @@ public class CharacterAbilityCard {
    
   private void setPreviousCharacter() {
     characterIndex--;
-    if (characterIndex == -1) characterIndex = CharacterManager.getCharacterManager().getPartyMembers().size() - 1;
-    ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
+    if (characterIndex == -1) characterIndex = 2;
+    if (CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex) == null) {
+      characterIndex--;
+      if (characterIndex == -1) characterIndex = 2;
+      if (CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex) != null) {
+        ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
+      }
+    }
+    else
+      ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
   }
   
   private void setNextCharacter() {
     characterIndex++;
-    if (characterIndex == CharacterManager.getCharacterManager().getPartyMembers().size()) characterIndex = 0;
-    ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
+    if (characterIndex == 3) characterIndex = 0;
+    if (CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex) == null) {
+      characterIndex++;
+      if (characterIndex == 3) characterIndex = 0;
+      if (CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex) != null) {
+        ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
+      }
+    }
+    else
+      ICharacterChanger.accept(CharacterManager.getCharacterManager().getPartyMembers().get(characterIndex));
   }
     
   public void setCharacter(Character character) {
