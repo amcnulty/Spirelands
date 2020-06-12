@@ -141,6 +141,13 @@ public class InventoryManager {
     battleMoveMap.put(battleMove.getId(), battleMove);
   }
   /**
+   * Gets all the battle moves as a map of their ids.
+   * @return The battleMoveMap object.
+   */
+  public HashMap<Integer, BattleMove> getBattleMoves() {
+    return battleMoveMap;
+  }
+  /**
    * Get a list of BattleMove objects from the inventory based on the given type.
    * @param searchTerm BattleMove.type to filter by.
    * @param excludedAction BattleMove.action to exclude from type or action.

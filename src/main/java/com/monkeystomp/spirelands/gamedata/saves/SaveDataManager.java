@@ -1,10 +1,12 @@
 package com.monkeystomp.spirelands.gamedata.saves;
 
+import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.character.CharacterManager;
 import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
+import com.monkeystomp.spirelands.gui.gamemenu.components.AbilitySlot;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import java.io.FileWriter;
@@ -166,7 +168,27 @@ public class SaveDataManager {
           if (gameCharacter.getEquippedBoots() != null)
             equipment.put(JSONUtil.BOOTS, gameCharacter.getEquippedBoots().getId());
           // Ability Slots
-//          abilitySlots.put(JSONUtil.ABILITY_SLOTS, [Array of data for the abilities]);
+          abilitySlots.clear();
+          gameCharacter.getAbilitySlots().forEach((slot) -> {
+            JSONObject item = new JSONObject();
+            if (slot.getType().equals(BattleMove.ITEM)) {
+              JSONArray itemMoves = new JSONArray();
+              item.put(JSONUtil.LEVEL, slot.getLevel());
+              item.put(JSONUtil.TYPE, slot.getType());
+              slot.getEquippedItemMoves().forEach(move -> {
+                JSONObject moveObj = new JSONObject();
+                moveObj.put(JSONUtil.ID, move.getId());
+                itemMoves.add(moveObj);
+              });
+              item.put(JSONUtil.ITEM_MOVES, itemMoves);
+            }
+            else {
+              item.put(JSONUtil.MOVE, slot.getEquippedMove() != null ? slot.getEquippedMove().getId() : null);
+              item.put(JSONUtil.LEVEL, slot.getLevel());
+              item.put(JSONUtil.TYPE, slot.getType());
+            }
+            abilitySlots.add(item);
+          });
           // Party Info
           partyInfo.put(JSONUtil.AVAILABLE, CharacterManager.getCharacterManager().isCharacterAvailable(gameCharacter));
           partyInfo.put(JSONUtil.IN_PARTY, CharacterManager.getCharacterManager().isCharacterInParty(gameCharacter));
@@ -178,7 +200,11 @@ public class SaveDataManager {
 
   private void saveInventory() {
     JSONObject inventory = (JSONObject) saveObject.get(JSONUtil.INVENTORY);
+    // Gold
     inventory.put(JSONUtil.GOLD, InventoryManager.getInventoryManager().getGold());
+    // Ability Points
+    inventory.put(JSONUtil.ABILITY_POINTS, InventoryManager.getInventoryManager().getAbilityPoints());
+    // Item References
     JSONArray refs = (JSONArray) inventory.get(JSONUtil.REFS);
     refs.clear();
     HashMap<Integer, InventoryReference> inventoryMap = InventoryManager.getInventoryManager().getItemMap();
@@ -187,6 +213,14 @@ public class SaveDataManager {
       item.put(JSONUtil.AMOUNT, ref.getAmount());
       item.put(JSONUtil.ID, id);
       refs.add(item);
+    });
+    // Battle Moves
+    JSONArray battleMoves = (JSONArray)inventory.get(JSONUtil.BATTLE_MOVES);
+    battleMoves.clear();
+    InventoryManager.getInventoryManager().getBattleMoves().keySet().forEach(key -> {
+      JSONObject battleMove = new JSONObject();
+      battleMove.put(JSONUtil.ID, key);
+      battleMoves.add(battleMove);
     });
   }
   

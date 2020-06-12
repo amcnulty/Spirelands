@@ -163,6 +163,10 @@ public class AbilitySlot extends GroupButton {
     return equippedMove;
   }
 
+  public int getLevel() {
+    return level;
+  }
+
   public ArrayList<BattleMove> getEquippedItemMoves() {
     return equippedItemMoves;
   }
