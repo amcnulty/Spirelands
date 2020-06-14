@@ -36,7 +36,7 @@ public class SpawnLevel extends Level {
     this.spawnCoordinate = coordinate;
     this.levelName = LEVEL_NAME;
     this.levelId = LEVEL_ID;
-    this.hasBattles = HAS_BATTLES;
+//    this.hasBattles = HAS_BATTLES;
     this.battle = BATTLE;
     // INSANE ENCOUNTERS!!
     this.encounterRate = 10;

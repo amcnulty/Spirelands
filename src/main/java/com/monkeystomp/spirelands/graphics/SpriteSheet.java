@@ -22,7 +22,11 @@ public class SpriteSheet {
   /**
    * A test sheet that contains tile sprites.
    */
-  public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet_stretch.png");
+  public static SpriteSheet smallTestSheet = new SpriteSheet("./resources/textures/sheets/smallTestSheet.png");
+  /**
+   * A high resolution sheet that contains tile spirtes.
+   */
+  public static SpriteSheet highResSheet = new SpriteSheet("./resources/textures/sheets/high-res-sheet.png");
   /**
    * A collection of treasure chests of various styles and states.
    */

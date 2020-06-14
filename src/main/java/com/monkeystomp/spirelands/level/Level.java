@@ -144,10 +144,10 @@ public class Level implements Runnable {
   protected void loadBitmap() {
     try {
       BufferedImage image = ImageIO.read(new File(path));
-      setLevelTileWidth(image.getWidth());
-      setLevelTileHeight(image.getHeight());
-      bitmap = new int[getLevelTileWidth() * getLevelTileHeight()];
-      image.getRGB(0, 0, getLevelTileWidth(), getLevelTileHeight(), bitmap, 0, getLevelTileWidth());
+      setLevelTileWidth(image.getWidth() / 2);
+      setLevelTileHeight(image.getHeight() / 2);
+      bitmap = new int[image.getWidth() * image.getHeight()];
+      image.getRGB(0, 0, image.getWidth(), image.getHeight(), bitmap, 0, image.getWidth());
     }
     catch (IOException e) {
       e.printStackTrace();
@@ -156,15 +156,32 @@ public class Level implements Runnable {
   }
   
   private void createTiles() {
-    for (int i = 0; i < bitmap.length; i++) {
-      tiles.add(
-        new Tile(
-          TileData.library.get(bitmap[i]).isSolid(),
-          TileData.library.get(bitmap[i]).getX(),
-          TileData.library.get(bitmap[i]).getY()
-        )
-      );
+    for (int y = 0; y < getLevelTileHeight() * 2; y += 2) {
+      for (int x = 0; x < getLevelTileWidth() * 2; x += 2) {
+        TileData tileData = TileData.LIBRARY.get(
+          String.valueOf(bitmap[x + y * getLevelTileWidth() * 2])
+          + String.valueOf(bitmap[(x + 1) + y * getLevelTileWidth() * 2])
+          + String.valueOf(bitmap[x + (y + 1) * getLevelTileWidth() * 2])
+          + String.valueOf(bitmap[(x + 1) + (y + 1) * getLevelTileWidth() * 2])
+        );
+        tiles.add(
+          new Tile(
+            tileData.isSolid(),
+            tileData.getX(),
+            tileData.getY()
+          )
+        );
+      }
     }
+//    for (int i = 0; i < bitmap.length; i += 2) {
+//      tiles.add(
+//        new Tile(
+//          TileData.LIBRARY.get(.isSolid(),
+//          TileData.LIBRARY.get(bitmap[i]).getX(),
+//          TileData.LIBRARY.get(bitmap[i]).getY()
+//        )
+//      );
+//    }
   }
   
   protected void generateLevel(){
