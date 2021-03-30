@@ -81,6 +81,10 @@ public class GameColors {
    */
   public static final int ATB_GAUGE_BAR_EMPTY = 0xDDFFFFFF;
   /**
+   * Experience gauge underline color #0xFF006400
+   */
+  public static final int EXP_GAUGE_UNDERLINE = 0xFF006400;
+  /**
    * Experience gauge filled color #0xFF00B400;
    */
   public static final int EXP_GAUGE_FILL = 0xFF00B400;
