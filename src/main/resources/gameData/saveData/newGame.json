@@ -412,7 +412,12 @@
       { "ID": 3008, "AMOUNT": 3},
       { "ID": 4000, "AMOUNT": 1},
       { "ID": 4060, "AMOUNT": 1},
-      { "ID": 4072, "AMOUNT": 1}
+      { "ID": 4072, "AMOUNT": 1},
+      { "ID": 5000, "AMOUNT": 1},
+      { "ID": 5001, "AMOUNT": 1},
+      { "ID": 6000, "AMOUNT": 5 },
+      { "ID": 6001, "AMOUNT": 6 },
+      { "ID": 6002, "AMOUNT": 7 }
     ],
     "battleMoves": [
       { "ID": 1000 },

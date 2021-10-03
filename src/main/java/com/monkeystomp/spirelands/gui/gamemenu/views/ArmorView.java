@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.components.CharacterArmorDetailCa
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
+import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.inventory.ArmorItem;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
@@ -70,8 +71,7 @@ public class ArmorView extends DisplayView {
       ArrayList<InventoryListItem> newPage = new ArrayList<>();
       for (int j = i * itemsPerPage; j < itemsPerPage + (i * itemsPerPage); j++) {
         if (refs.size() - 1 < j) break;
-        newPage.add(
-        new InventoryListItem(
+        newPage.add(new UsableInventoryListItem(
           refs.get(j),
           startingY + newPage.size() * spaceBetweenRows,
           "Equip",

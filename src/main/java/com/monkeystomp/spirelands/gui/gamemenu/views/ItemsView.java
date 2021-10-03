@@ -8,10 +8,12 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.gamemenu.components.BasicInventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemOnCharacterButton;
 import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
+import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.EquipmentItem;
@@ -30,6 +32,7 @@ public class ItemsView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
+  private final ArrayList<String> itemTypes = new ArrayList<>();
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private int itemCount = 0,
               selectedItemAmount = 0;
@@ -57,6 +60,9 @@ public class ItemsView extends DisplayView {
   private final SoundEffects sfx = new SoundEffects();
   
   public ItemsView() {
+    itemTypes.add(Item.EQUIPMENT);
+    itemTypes.add(Item.JUNK);
+    itemTypes.add(Item.SPECIAL);
     characterSelectorHeader.setText("Select Character To Use Item");
     characterSelectorHeader.setX(215);
     characterSelectorHeader.setY(TOP + 7);
@@ -78,21 +84,29 @@ public class ItemsView extends DisplayView {
       ArrayList<InventoryListItem> newPage = new ArrayList<>();
       for (int j = i * itemsPerPage; j < itemsPerPage + (i * itemsPerPage); j++) {
         if (refs.size() - 1 < j) break;
-        newPage.add(
-        new InventoryListItem(
-          refs.get(j),
-          startingY + newPage.size() * spaceBetweenRows,
-          "Use",
-          item -> {
-            EquipmentItem thisItem = (EquipmentItem) item;
-            handleUseItem(thisItem);
-          },
-          item -> showItemDetails(item))
-        );
+        if (refs.get(j).getItem().getType().equals(Item.EQUIPMENT)) {
+          newPage.add(new UsableInventoryListItem(
+            refs.get(j),
+            startingY + newPage.size() * spaceBetweenRows,
+            "Use",
+            item -> {
+              EquipmentItem thisItem = (EquipmentItem) item;
+              handleUseItem(thisItem);
+            },
+            item -> showItemDetails(item)
+          ));
+        }
+        else {
+          newPage.add(new BasicInventoryListItem(
+            refs.get(j),
+            startingY + newPage.size() * spaceBetweenRows,
+            item -> showItemDetails(item)
+          ));
+        }
       }
       if (newPage.size() > 0) pages.add(newPage);
     }
-    itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
+    itemCount = manager.getItemsByMultipleTypes(itemTypes).size();
     pagination.setListLength(itemCount);
     setCurrentPage();
   }
@@ -158,9 +172,10 @@ public class ItemsView extends DisplayView {
   }
   
   private void checkItemCount() {
-    if (itemCount != manager.getItemsByType(Item.EQUIPMENT).size()) {
-      createListItems(manager.getItemsByType(Item.EQUIPMENT));
-      itemCount = manager.getItemsByType(Item.EQUIPMENT).size();
+    Map<Integer, InventoryReference> Items = manager.getItemsByMultipleTypes(itemTypes);
+    if (itemCount != Items.size()) {
+      createListItems(Items);
+      itemCount = Items.size();
     }
   }
 

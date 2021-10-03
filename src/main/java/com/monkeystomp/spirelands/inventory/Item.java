@@ -36,6 +36,10 @@ public class Item {
    */
   public static final String BATTLE = "Battle";
   /**
+   * Junk type item
+   */
+  public static final String JUNK = "Junk";
+  /**
    * Special type item
    */
   public static final String SPECIAL = "Special";
@@ -45,6 +49,7 @@ public class Item {
   private final String  title,
                         description,
                         type;
+  private final boolean craftable;
   private final Sprite thumbnail;
   private final int id,
                     price;
@@ -52,7 +57,8 @@ public class Item {
                       nextBattleId = 2000,
                       nextArmorId = 3000,
                       nextWeaponId = 4000,
-                      nextSpecialId = 5000;
+                      nextSpecialId = 5000,
+                      nextJunkId = 6000;
   private StatModel statModel;
   protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
   protected static final InventoryManager INVENTORY_MANAGER = InventoryManager.getInventoryManager();
@@ -1802,6 +1808,50 @@ public class Item {
     POWER_ORB_MACE.setWeaponType(WeaponItem.BLUNT);
   }
   /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!            Junk Items          !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
+   * A slime ball. (Junk)
+   */
+  public static final JunkItem
+    SLIME = new ItemBuilder()
+          .title("Slime")
+          .description("Goopy slime that can be rolled up into a ball. Do not leave unattended around children. May be used for crafting.")
+          .price(5)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 9, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
+  /**
+   * A wooden log. (Junk)
+   */
+  public static final JunkItem
+    LOG = new ItemBuilder()
+          .title("Log")
+          .description("Wooden log that can be used in crafting.")
+          .price(12)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 10, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
+  /**
+   * A wooden board. (Junk)
+   */
+  public static final JunkItem
+    BOARD = new ItemBuilder()
+          .title("Board")
+          .description("A common milled wooden board that would be used in construction or other building projects. Can be used for crafting.")
+          .price(5)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 10, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
+  /**
+   *          !!################################!!
+   *          !!                                !!
+   *          !!          Special Items         !!
+   *          !!                                !!
+   *          !!################################!!
+   */
+  /**
    * A briefcase to hold more items. (SPECIAL)
    */
   public static final SpecialItem
@@ -1830,6 +1880,7 @@ public class Item {
     this.id = getNextId();
     this.title = builder.title;
     this.description = builder.description;
+    this.craftable = builder.craftable;
     this.price = builder.price;
     this.thumbnail = builder.thumbnail;
   }
@@ -1866,6 +1917,8 @@ public class Item {
         return nextWeaponId++;
       case Item.SPECIAL:
         return nextSpecialId++;
+      case Item.JUNK:
+        return nextJunkId++;
       default:
         return 0;
     }
@@ -1877,6 +1930,10 @@ public class Item {
   
   public String getType() {
     return type;
+  }
+  
+  public boolean isCraftable() {
+    return craftable;
   }
 
   public void setStatModel(StatModel statModel) {

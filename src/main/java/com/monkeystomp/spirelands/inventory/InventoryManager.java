@@ -95,6 +95,12 @@ public class InventoryManager {
       .filter(map -> map.getValue().getItem().getType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
+  
+  public Map<Integer, InventoryReference> getItemsByMultipleTypes(ArrayList<String> types) {
+    return itemMap.entrySet().stream()
+      .filter(map -> types.contains(map.getValue().getItem().getType()))
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+  }
   /**
    * Gets all the weapons of the given type. This is returned as a map.
    * <p>

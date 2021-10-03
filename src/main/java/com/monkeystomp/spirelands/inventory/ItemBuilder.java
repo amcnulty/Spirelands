@@ -32,6 +32,10 @@ public class ItemBuilder {
    */
   public String description;
   /**
+   * If this item is able to be used in crafting. Default value is false.
+   */
+  public boolean craftable = false;
+  /**
    * The thumbnail image of the item.
    */
   public Sprite thumbnail;
@@ -59,6 +63,14 @@ public class ItemBuilder {
    */
   public ItemBuilder description(String description) {
     this.description = description;
+    return this;
+  }
+  /**
+   * Sets this item as craftable.
+   * @return This ItemBuilder reference.
+   */
+  public ItemBuilder craftable() {
+    this.craftable = true;
     return this;
   }
   /**
