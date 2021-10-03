@@ -95,7 +95,22 @@ public class InventoryManager {
       .filter(map -> map.getValue().getItem().getType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
-  
+  /**
+   * Gets all the items matching the given array of types. This is returned as a map.
+   * <p>
+   * Example Usage:
+   * </p>
+   * <pre>
+   * {@code
+   *ArrayList<String> itemTypes = new ArrayList<>();
+   * itemTypes.add(Item.EQUIPMENT);
+   * itemTypes.add(Item.JUNK);
+   * Map<Integer, InventoryReference> Items = manager.getItemsByMultipleTypes(itemTypes);
+   * }
+   * </pre>
+   * @param types The types of items to fetch results for.
+   * @return The map of items based on the given type.
+   */
   public Map<Integer, InventoryReference> getItemsByMultipleTypes(ArrayList<String> types) {
     return itemMap.entrySet().stream()
       .filter(map -> types.contains(map.getValue().getItem().getType()))

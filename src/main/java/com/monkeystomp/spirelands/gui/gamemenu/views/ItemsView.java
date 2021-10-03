@@ -61,6 +61,7 @@ public class ItemsView extends DisplayView {
   
   public ItemsView() {
     itemTypes.add(Item.EQUIPMENT);
+    itemTypes.add(Item.BATTLE);
     itemTypes.add(Item.JUNK);
     itemTypes.add(Item.SPECIAL);
     characterSelectorHeader.setText("Select Character To Use Item");

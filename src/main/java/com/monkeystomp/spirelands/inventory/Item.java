@@ -63,7 +63,7 @@ public class Item {
   protected final ArrayList<ItemAttribute> attributes = new ArrayList<>();
   protected static final InventoryManager INVENTORY_MANAGER = InventoryManager.getInventoryManager();
   private static final int  SPRITE_SIZE = 16,
-                            WEAPON_SPRITE_SIZE = 32,
+                            SPRITE_SIZE_32X32 = 32,
                             NO_PRICE = -1;
   /**
    *          !!################################!!
@@ -87,6 +87,7 @@ public class Item {
           .title("Small HP Potion")
           .description("A basic health potion for replenishing HP.")
           .price(50)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 9, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
@@ -102,6 +103,7 @@ public class Item {
           .title("Medium Potion")
           .description("A medium size health potion for replenishing HP.")
           .price(150)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 3, 9, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
@@ -130,6 +132,7 @@ public class Item {
           .title("Mana Vile")
           .description("A vile of mana potion for a small increase in magic power.")
           .price(200)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 8, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
@@ -145,6 +148,7 @@ public class Item {
           .title("Mana Potion")
           .description("A wonderful potion used to restore drained magic power.")
           .price(800)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 8, SpriteSheet.itemsSheet))
           .build(EquipmentItem.class);
   static {
@@ -302,6 +306,36 @@ public class Item {
     TRAINING_BOOK_V2.setLevelUp(1);
     TRAINING_BOOK_V2.setUseItemSound(SoundEffects.LEVEL_UP);
   }
+  /**
+   * A block of cheese (Equipment)
+   */
+  public static final EquipmentItem
+    CHEESE = new ItemBuilder()
+          .title("Cheese")
+          .description("A block of cheese. Can be eaten alone or used as ingredient for a dish.")
+          .price(10)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 2, 7, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    CHEESE.setHealingPoints(10);
+    CHEESE.setUseItemSound(SoundEffects.GULP_EAT);
+  }
+  /**
+   * A piece of meat (Equipment)
+   */
+  public static final EquipmentItem
+    MEAT = new ItemBuilder()
+          .title("Meat")
+          .description("A delicious piece of fresh meat.")
+          .price(15)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 7, SpriteSheet.itemsSheet))
+          .build(EquipmentItem.class);
+  static {
+    MEAT.setHealingPoints(10);
+    MEAT.setUseItemSound(SoundEffects.GULP_EAT);
+  }
   
   /**
    *          !!################################!!
@@ -335,6 +369,7 @@ public class Item {
           .title("Throwing Egg")
           .description("This is a great thowing egg! Use it to start an egg attack. Causes minimal physical damage, however, it will leave your enemies stunned.")
           .price(200)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 7, SpriteSheet.itemsSheet))
           .build(BattleItem.class);
   static {
@@ -616,7 +651,7 @@ public class Item {
           .title("Common Sword")
           .description("A common sword wielded by many townspeople across Spirelands. This inexpensize sword is good for a novice as it will only inflict minor damage to those it is used against.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     COMMON_SWORD.setAttackPower(10);
@@ -631,7 +666,7 @@ public class Item {
           .title("Katana")
           .description("The katana is characterized by its distinctive appearance: a curved, single-edged blade with a circular or squared guard and long grip to accommodate two hands.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     KATANA_SWORD.setAttackPower(25);
@@ -645,7 +680,7 @@ public class Item {
           .title("Sky Saber")
           .description("This light sword is both fast and deadly. It is very lightweight and easy to swing. It was created in the sky relm.")
           .price(1200)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SKY_SABER.setAttackPower(27);
@@ -659,7 +694,7 @@ public class Item {
           .title("Scimitar")
           .description("The Scimitar makes a great warior's swoard because of its relatively light weight when compared to larger swords and its curved design, good for slashing opponents.")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SCIMITAR_SWORD.setAttackPower(30);
@@ -673,7 +708,7 @@ public class Item {
           .title("The Crusader")
           .description("A heavy straight sword with a single edged blade and deadly double edged point. The Crusader is the ideal weapon for an officer's side arm so they are always ready to duel.")
           .price(1750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     CRUSADER_SWORD.setAttackPower(33);
@@ -687,7 +722,7 @@ public class Item {
           .title("Talon Sword")
           .description("This intimidating blade will strike terror in the opponents it will eventually cut down. It has a double handed grip to allow for powerful thrusts and slashes.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     TALON_SWORD.setAttackPower(40);
@@ -701,7 +736,7 @@ public class Item {
           .title("Spellblade")
           .description("Magical powers enchant this unique sword. The engergy within it greatly raises the wielder's magical abilities allowing them to unleash physical and magical attacks upon their foes.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SPELLBLADE.setAttackPower(38);
@@ -716,7 +751,7 @@ public class Item {
           .title("Dark Sword")
           .description("This evil sword will fill the hearts of its opponents with terror. It is thought to have been originally crafted by an evil dark lord over 900 years in the past.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     DARK_SWORD.setAttackPower(50);
@@ -731,7 +766,7 @@ public class Item {
           .title("Poison Sword")
           .description("Poisonous venom fills this sword. When a victim is cut with this blade they are not only damaged by its sharp blade but by the lasting poison effect that it infects them with.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     POISON_SWORD.setAttackPower(55);
@@ -745,7 +780,7 @@ public class Item {
           .title("Longsword")
           .description("A sword used by knights that has a cruciform hilt with a grip for two-handed use and a straight double-edged blade. The user must be strong enough to weild this mighty weapon.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     LONGSWORD.setAttackPower(60);
@@ -759,7 +794,7 @@ public class Item {
           .title("Dragon Sword")
           .description("Deep within the realm of the dragons this sword was crafted to slay the mightiest of beasts. Anyone who challenges a holder of the Dragon Sword is sure to be out of their mind!")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     DRAGON_SWORD.setAttackPower(65);
@@ -773,7 +808,7 @@ public class Item {
           .title("Sword Of The Spire")
           .description("Long ago a legendary warrior fought for the right to own the Sword Of The Spire. He went on to become king of Spireland and some say he never let this sword out of his sight.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 0, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 0, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SWORD_OF_THE_SPIRE.setAttackPower(80);
@@ -788,7 +823,7 @@ public class Item {
           .title("Basic Bow")
           .description("A basic short bow with a reflex shape. This lightweight, cheap, and easy to use weapon is a great beginners bow.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     BASIC_BOW.setAttackPower(10);
@@ -802,7 +837,7 @@ public class Item {
           .title("Sparrow Bow")
           .description("This bow features a smooth curved body with a solid grip. It is a medium range bow that offers a great balance of weight, range, and arrow speed.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SPARROW_BOW.setAttackPower(15);
@@ -816,7 +851,7 @@ public class Item {
           .title("Small Crossbow")
           .description("Due to its light weight and medium recoil this small crossbow is easy to use. What it lacks in shooting power it makes up for in its fast reload time and compact small design.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SMALL_CROSSBOW.setAttackPower(20);
@@ -830,7 +865,7 @@ public class Item {
           .title("Short Bow")
           .description("Once thought of as a less than desireable weapon, the Short Bow has the unique advantages of being better in tight spaces and traveling long distances where weight is an issue.")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SHORT_BOW.setAttackPower(25);
@@ -844,7 +879,7 @@ public class Item {
           .title("Common Longbow")
           .description("A mainstay weapon of large armies. Standing at six feet tall the Longbow has superior range and arrow speed which allow arrows shot from it to penetrate metal armor.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     COMMON_LONGBOW.setAttackPower(30);
@@ -858,7 +893,7 @@ public class Item {
           .title("Lightning Strike")
           .description("It is said the arrows that fly from this bow are equal to the bolts of lightning that are thrown from the heavens by the gods. One can feel the energy coming from this weapon if close enough.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     LIGHTNING_STRIKE.setAttackPower(35);
@@ -873,7 +908,7 @@ public class Item {
           .title("Heavy Crossbow")
           .description("A serious crossbow with serious attacking power. Due to its bulky frame shots fired from this weapon have the ability to penetrate metal armor and to knock back opponents.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     HEAVY_CROSSBOW.setAttackPower(40);
@@ -887,7 +922,7 @@ public class Item {
           .title("Metallic Bow")
           .description("This special bow has a body crafted out of metal. It is heavier than a wood bow, but for those strong enough to use it the power that it generates is unparalleled.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     METALLIC_BOW.setAttackPower(50);
@@ -901,7 +936,7 @@ public class Item {
           .title("Heavy Longbow")
           .description("A more powerful variant of the Common Longbow with increased range and arrow speed. This bow requires both a strong and tall user to effectively harness its power.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     HEAVY_LONGBOW.setAttackPower(55);
@@ -915,7 +950,7 @@ public class Item {
           .title("Power Bow")
           .description("Built by a master weapon maker the Power Bow is unique in all of Spirelands. Its design produces a powerful shot and the ability to stab enemies should the user be engaged in melee combat.")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     POWER_BOW.setAttackPower(60);
@@ -929,7 +964,7 @@ public class Item {
           .title("Golden Hawk")
           .description("A truely stunning bow! Highly accurate, powerful, compact and beautifully guilded in gold this bow is as much a joy to use as it is to look at.")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GOLDEN_HAWK.setAttackPower(65);
@@ -944,7 +979,7 @@ public class Item {
           .title("Calamity Shot")
           .description("The Calamity Shot is a weapon of legend. It is said that the first shot ever taken from this bow caused a 100 year war between nations. Where this bow goes disaster follows in its wake.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 1, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 1, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     CALAMITY_SHOT.setAttackPower(80);
@@ -959,7 +994,7 @@ public class Item {
           .title("Field Dagger")
           .description("A basic weapon for a basic purpose, protection. This knife is commonly used by pesants who work in the field for protection from wildlife and robbers.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     FIELD_DAGGER.setAttackPower(7);
@@ -973,7 +1008,7 @@ public class Item {
           .title("Shank Dagger")
           .description("Simple in design, the Shank Dagger is a perfect travel companion as it is easy to carry and store. This dagger can be useful as a hunting knife or for personal protection.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SHANK_DAGGER.setAttackPower(12);
@@ -987,7 +1022,7 @@ public class Item {
           .title("Bowie Knife")
           .description("This knife has a long curved thick blade with a tipped point and features a crossguard on the grip so you can press hard into what you are stabbing into.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     BOWIE_KNIFE.setAttackPower(20);
@@ -1001,7 +1036,7 @@ public class Item {
           .title("Stumpblade")
           .description("Short and wide double edged blade with a high quality handle. The wideness of the blade adds weight which translates to harder hitting power but with reduced speed")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     STUMPBLADE_DAGGER.setAttackPower(25);
@@ -1013,7 +1048,7 @@ public class Item {
           .title("Serrator")
           .description("Rip your enemies to shreds while you feel like you are slicing them like bread. With this blade at your side you are always ready to kill or just be useful in the kitchen.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SERRATOR_DAGGER.setAttackPower(30);
@@ -1027,7 +1062,7 @@ public class Item {
           .title("Stiletto")
           .description("This long skinny dagger is quick to cut its foes due to its light weight. The Stiletto's extra length gives it the advantage of acting more like a short sword that does less damage.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     STILETTO.setAttackPower(35);
@@ -1041,7 +1076,7 @@ public class Item {
           .title("Dragon Claw")
           .description("It is said that this knife has the same effect as a dragon impaling you with one of its deadly claws. The deadly inward curved tip of the blade digs into those that it is cutting.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     DRAGON_CLAW.setAttackPower(40);
@@ -1055,7 +1090,7 @@ public class Item {
           .title("Shadow Blade")
           .description("An evil blade that fills those who get near it with horror. He who holds the Shadow Blade may find themselves surrounded with shadows from the dark relm who looking to wreak havoc in this world.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SHADOW_BLADE.setAttackPower(45);
@@ -1070,7 +1105,7 @@ public class Item {
           .title("Poison Dagger")
           .description("There is a legend of a blade so sinister that whoever owns it is cursed by a fatal tragedy. Said to be over 2000 years old the Poison Blade was the most powerful weapon in the world at the time.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     POISON_DAGGER.setAttackPower(50);
@@ -1085,7 +1120,7 @@ public class Item {
           .title("King's Shortblade")
           .description("A noble weapon that blurs the line between dagger and sword. It's long double edge blade with protective hand guard makes it a superior sidearm for close combat situations.")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     KINGS_SHORTBLADE.setAttackPower(55);
@@ -1099,7 +1134,7 @@ public class Item {
           .title("The Crippler")
           .description("This dagger does massive internal damage to those who are stabbed by it. The dramatic ribbed sides of the blade help tear through flesh while stabbing or slashing enemies.")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     CRIPPLER.setAttackPower(60);
@@ -1113,7 +1148,7 @@ public class Item {
           .title("Golden Touch")
           .description("The Golden Touch is a beautifuly crafted weapon that is equally as deadly. Unlike the name insinuates the blade does not turn everything it touches into gold, however, it will save your life in a fight.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 2, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 2, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GOLDEN_TOUCH.setAttackPower(70);
@@ -1128,7 +1163,7 @@ public class Item {
           .title("Wooden Staff")
           .description("A wooden staff to be used by a magic user. Though it is very simple in design and presentation it still holds some magical quality about it.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     WOODEN_STAFF.setAttackPower(1);
@@ -1143,7 +1178,7 @@ public class Item {
           .title("Ancient Staff")
           .description("A staff as old as time. Once held by a great king wizard that ruled thousands of years ago this staff has stood the test of time and remained intact bound by the magical energy within.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     ANCIENT_STAFF.setAttackPower(1);
@@ -1158,7 +1193,7 @@ public class Item {
           .title("Caterpillar")
           .description("Named after the green caterpillars found in the woods of the region this magical staff embodies the power of the insets and small animals of the forest.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     CATERPILLAR.setAttackPower(4);
@@ -1173,7 +1208,7 @@ public class Item {
           .title("Solar Staff")
           .description("This staff draws its magical powers from the star it is nearest. This means that in Spirelands the staff's power will remain mostly constant since there is only one star nearby.")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SOLAR_STAFF.setAttackPower(7);
@@ -1188,7 +1223,7 @@ public class Item {
           .title("Life Staff")
           .description("All life around this staff embues it with power to create a strong magical aura. The Life Staff responds to the life energy like a well tuned chord making it resonate at times of high energy.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     LIFE_STAFF.setAttackPower(9);
@@ -1203,7 +1238,7 @@ public class Item {
           .title("Metal Staff")
           .description("The alloy that makes this staff is unique. It was forged by a great wizard out of special high quality metals such as platinum and silver. No one truely knows how it was made.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     METAL_STAFF.setAttackPower(18);
@@ -1218,7 +1253,7 @@ public class Item {
           .title("Enchanted Rod")
           .description("Don't let the appearance of this staff deceive you, it is a powerful magical staff that is strong and light. Skilled users can summon more power by quickly spinning the rod overhead")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     ENCHANTED_ROD.setAttackPower(14);
@@ -1233,7 +1268,7 @@ public class Item {
           .title("Necromancer")
           .description("Evil energy pulsates out of this dark and mysterious staff. It has the power to summon the dead to do its user's bidding. The dark power can consume the user if they are weak spirited.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     NECROMANCER_STAFF.setAttackPower(25);
@@ -1248,7 +1283,7 @@ public class Item {
           .title("Fire Staff")
           .description("Harness the power of fire with this staff! Fire energy swarms around the user improving their ability to cast fire type magic spells and attacks.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     FIRE_STAFF.setAttackPower(29);
@@ -1263,7 +1298,7 @@ public class Item {
           .title("Shock Staff")
           .description("Send shockwaves of electrical energy out in all directions with increased power using this lightning based staff. Increases lightning spells and attacks")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SHOCK_STAFF.setAttackPower(32);
@@ -1278,7 +1313,7 @@ public class Item {
           .title("Tsunami")
           .description("Oceans of power are bestowed upon the user of this great enchanted staff. Within it the power of the ocean tides, currents, and the animals of the deap are unlocked.")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     TSUNAMI_STAFF.setAttackPower(35);
@@ -1293,7 +1328,7 @@ public class Item {
           .title("Sorcerer's Heart")
           .description("Once crafted by a legendar master Sorcerer this staff is designed to bring out the one true power that lies hidden inside each one of us. Only a true master wizard can use the powers of this staff.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 3, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 3, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SORCERERS_HEART.setAttackPower(38);
@@ -1308,7 +1343,7 @@ public class Item {
           .title("Simple Axe")
           .description("A small battle axe with a single sided blade that can easily be used with one hand. Not the most impressive weapon, but it comes in handy whenever you need to do some chopping.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SIMPLE_AXE.setAttackPower(10);
@@ -1322,7 +1357,7 @@ public class Item {
           .title("Sledgehammer")
           .description("You must be strong and skilled to properly use this hammer in combat. This hammer is very heavy and costs a lot of energy to swing suggesting that it may be better served as a tool.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SLEDGEHAMMER.setAttackPower(17);
@@ -1336,7 +1371,7 @@ public class Item {
           .title("Broadaxe")
           .description("The blade on this axe is actually two normal sized blades that have been forged together to create one broad blade. A larger blade makes for more damage with each hit.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     BROADAXE.setAttackPower(25);
@@ -1350,7 +1385,7 @@ public class Item {
           .title("Twin Crescent")
           .description("A long handled battle axe with a twin blade. Designed for hand to hand combat coming from all sides with its long reach and sharp, deadly, double sided blade.")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     TWIN_CRESCENT.setAttackPower(30);
@@ -1364,7 +1399,7 @@ public class Item {
           .title("Masakari")
           .description("Made with destruction in mind, this deadly weapon has a long, uniquely curved blade affixed to a short handle. Perfect for close combat situations where a light deadly weapon is needed.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     MASAKARI_AXE.setAttackPower(35);
@@ -1378,7 +1413,7 @@ public class Item {
           .title("Obsidian Axe")
           .description("This one of a kind weapon is both destructive and beautiful. A double sided axe blade made from carefully sharpened obsidian with a long rosewood handle makes this a weapon to be proud of.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     OBSIDIAN_AXE.setAttackPower(40);
@@ -1392,7 +1427,7 @@ public class Item {
           .title("Twin Broadblade")
           .description("The Twin Broadblade is a weapon for a serious warrior. The long cutting edges, and its supprising light weight are what stand out most about its design.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     TWIN_BROADBLADE.setAttackPower(45);
@@ -1406,7 +1441,7 @@ public class Item {
           .title("Doom Hammer")
           .description("This is known by ledgend as 'the hammer of doom and destruction'. Only evil can come from those who use it and it is said to be the only weapon that can kill purely evil spirits.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     DOOM_HAMMER.setAttackPower(50);
@@ -1420,7 +1455,7 @@ public class Item {
           .title("Kings Axe")
           .description("An axe forged for a great king nearly two centuries ago. It is constructed with golden blades and its handle is adorned with golden hand grips and end pieces. A stunning and unique weapon.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     KINGS_AXE.setAttackPower(55);
@@ -1434,7 +1469,7 @@ public class Item {
           .title("Dragon Slayer")
           .description("The dragon slayer is certainly powerful enough to live up to its name. The blades are shaped like the wings of a dragon in flight and forged with light weight and durable metals.")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     DRAGON_SLAYER.setAttackPower(60);
@@ -1448,7 +1483,7 @@ public class Item {
           .title("Golden Brute")
           .description("A rare axe created entirely from gold. The brilliance of this weapon will stun enemies on the battle field. A unique treasure that is also capable of doing great amounts of damage.")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GOLDEN_BRUTE.setAttackPower(65);
@@ -1462,7 +1497,7 @@ public class Item {
           .title("Gods Hammer")
           .description("The ultimate weapon for anyone who has mastered the art of the axe and hammer. God's Hammer is made for the gods themselves and to use it is to be one with them.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 4, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 4, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GODS_HAMMER.setAttackPower(80);
@@ -1477,7 +1512,7 @@ public class Item {
           .title("The Pupil")
           .description("This is the first wand that students of magic receive when they train at the school of wizardry. It is designed to use low level magic targeted for the budding wizard.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     PUPIL_WAND.setMagicAttackPower(8);
@@ -1491,7 +1526,7 @@ public class Item {
           .title("The Graduate")
           .description("This wand is issued by the school of wizardry to those deserving students who have proven their skills in magic and made it to graduation.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GRADUATE_WAND.setMagicAttackPower(15);
@@ -1505,7 +1540,7 @@ public class Item {
           .title("Tri-Coil Want")
           .description("An interesting wand that features a board tip wrapped in three distinct coils. These three coils radiate magical energy out of the wand which produces powerful attacks and spells.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     TRI_COIL_WAND.setMagicAttackPower(24);
@@ -1519,7 +1554,7 @@ public class Item {
           .title("Blunt Tip Wand")
           .description("Some may mistake this wand for a hammer or some sort of gardening tool, but it is infact a wizard's wand to be used in casting magic spells. It can also be used as a hammer...")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     BLUNT_TIP_WAND.setAttackPower(8);
@@ -1534,7 +1569,7 @@ public class Item {
           .title("Earth Power")
           .description("Harness the natural energy of the earth with this wand. Your allies are the plants and animals of nature that lend their power to the holder of this special magic wand.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     EARTH_POWER.setMagicAttackPower(35);
@@ -1548,7 +1583,7 @@ public class Item {
           .title("Rainbow Wand")
           .description("Is this a toy? Is this a weapon? Is anyone supposed to take this thing seriously? Find out for yourself by trying the rainbow wand in your next encounter with a monster or a villain.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     RAINBOW_WAND.setMagicAttackPower(40);
@@ -1562,7 +1597,7 @@ public class Item {
           .title("Aquastrike")
           .description("The aquastrike is a wand that specializes in harnessing the power of water. At first thought water may not seem all that powerful, however, the power of the tides is not to be underestimated.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     AQUASTRIKE_WAND.setMagicAttackPower(45);
@@ -1576,7 +1611,7 @@ public class Item {
           .title("Voodoo Wand")
           .description("Those who use black magic are said to be in line with the devil or do the devils work. This wand was found in the home of three evil witches hundreds of years ago. Who knows what horror this wand has unleashed.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     VOODOO_WAND.setMagicAttackPower(50);
@@ -1590,7 +1625,7 @@ public class Item {
           .title("Wand Of Riches")
           .description("The Wand Of Riches has been sought out by those looking for fortune and glory. Tales of this wand say that whomever uses it can create gold out of thin air!")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     WAND_OF_RICHES.setMagicAttackPower(55);
@@ -1604,7 +1639,7 @@ public class Item {
           .title("Electro")
           .description("There is a warning labeled on this wand that the electrical energy that this produces can kill the spellcaster if they are not careful. Better make sure you are properly grounded before use.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     ELECTRO_WAND.setMagicAttackPower(60);
@@ -1618,7 +1653,7 @@ public class Item {
           .title("Azula's Wand")
           .description("Azula was a powerful wizard from a long time ago. Not much is known about her but her wand has survived the ages. Magical energy surges from the wand in an almost uncontrollable frenzy.")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     AZULAS_WAND.setMagicAttackPower(65);
@@ -1632,7 +1667,7 @@ public class Item {
           .title("Fire Element")
           .description("A powerful wand that radiates intense heat and is capable of sending out waves of fire in all directions. Some say this wand rivals the power of the sun.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 5, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 5, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     FIRE_ELEMENT.setMagicAttackPower(80);
@@ -1646,7 +1681,7 @@ public class Item {
           .title("Wood Club")
           .description("A primitive wood club to be used as an offensive weapon. Beat your foes into submission with this oversized stick, but just don't expect it to do much damage.")
           .price(550)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 0, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 0, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     WOOD_CLUB.setAttackPower(8);
@@ -1660,7 +1695,7 @@ public class Item {
           .title("Small Mace")
           .description("This mace is perfect travel companion due to its small size and light weight. As far as maces go it is a bit on the too small size but can still be an effective weapon for self defense.")
           .price(750)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 1, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 1, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SMALL_MACE.setAttackPower(16);
@@ -1674,7 +1709,7 @@ public class Item {
           .title("Steel Mace")
           .description("The head of this mace is made from steel that has been formed into a egg-like shape with a rough surface. The overall weight of this weapon makes each attack a slow methodical procedure.")
           .price(1000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 2, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 2, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     STEEL_MACE.setAttackPower(25);
@@ -1688,7 +1723,7 @@ public class Item {
           .title("Snaggletooth")
           .description("Holding this weapon you might feel like you belong to a band of wandering raiders. The Snaggletooth is a wood club with shards of metal sticking out of the top, which, have a tendency to get caught on things.")
           .price(1500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 3, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 3, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     SNAGGLETOOTH_MACE.setAttackPower(30);
@@ -1702,7 +1737,7 @@ public class Item {
           .title("Copperhead")
           .description("An interesting mace made of a special, strong copper alloy. At first it may seem a strange idea to make a weapon out of copper but the weight to strength ratio pays of in this case.")
           .price(2000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 4, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 4, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     COPPERHEAD_MACE.setAttackPower(35);
@@ -1716,7 +1751,7 @@ public class Item {
           .title("Mad Ball")
           .description("Featuring a long handle with an intimidating metal head with sharp protruding spikes this mace is standard issue for many armies in the region. Truly a combat ready weapon.")
           .price(2500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 5, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 5, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     MAD_BALL_MACE.setAttackPower(40);
@@ -1730,7 +1765,7 @@ public class Item {
           .title("Blue Steel")
           .description("The Blue Steel is a professional's weapon of choice. This mace is constructed with the finest of materials to create a both lightweight and strong metal shaped into a sleek and deadly design.")
           .price(3000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 6, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 6, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     BLUE_STEEL.setAttackPower(45);
@@ -1744,7 +1779,7 @@ public class Item {
           .title("Ebony Mace")
           .description("This all black weapon is as dark as it's origins. Said to be used in the war between good and evil, the Ebony Mace was often seen in the hands of the evil forces hellbent on destruction.")
           .price(3500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 7, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 7, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     EBONY_MACE.setAttackPower(50);
@@ -1758,7 +1793,7 @@ public class Item {
           .title("Gold Mace")
           .description("A mace gilded with gold and adorned with gold on its handle. The creator of this weapon wanted to make a something with the elegance fit for a king and the power to destroy any adversary.")
           .price(4000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 8, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GOLD_MACE.setAttackPower(55);
@@ -1772,7 +1807,7 @@ public class Item {
           .title("Axe Club")
           .description("Not quite an axe and not quite a club, it's the Axe Club! A unique combination of weapons come together to make this light and powerful weapon that can be used to slash and bash all in one!")
           .price(4500)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 9, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     AXE_CLUB.setAttackPower(60);
@@ -1786,7 +1821,7 @@ public class Item {
           .title("Golden Nugget")
           .description("Originally made for a wealthy prince who liked to spend his money on extravagant weapons this mace features a head that is made of a solid gold head. Your foes will become gold striken by it...literally.")
           .price(5000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 10, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     GOLDEN_NUGGET.setAttackPower(65);
@@ -1800,7 +1835,7 @@ public class Item {
           .title("Power Orb Mace")
           .description("A one of a kind treasure. The Power Orb is a mace with a magical orb as the head that is able to unleash spells and deadly physical attacks. Only a master of blunt weaponry should use the Power Orb.")
           .price(7000)
-          .thumbnail(new Sprite(WEAPON_SPRITE_SIZE, SPRITE_SIZE, 11, 6, SpriteSheet.weaponsSheet))
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 11, 6, SpriteSheet.weaponsSheet))
           .build(WeaponItem.class);
   static {
     POWER_ORB_MACE.setAttackPower(80);
@@ -1814,6 +1849,26 @@ public class Item {
    *          !!                                !!
    *          !!################################!!
    */
+  /**
+   * A piece of leather. (Junk)
+   */
+  public static final JunkItem
+    LEATHER = new ItemBuilder()
+          .title("Leather")
+          .description("A piece of leather that can be used in crafting.")
+          .price(20)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 9, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
+  /**
+   * A piece of cloth. (Junk)
+   */
+  public static final JunkItem
+    CLOTH = new ItemBuilder()
+          .title("Cloth")
+          .description("A piece of cloth that can be used in crafting.")
+          .price(12)
+          .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 9, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
   /**
    * A slime ball. (Junk)
    */
@@ -1843,6 +1898,116 @@ public class Item {
           .description("A common milled wooden board that would be used in construction or other building projects. Can be used for crafting.")
           .price(5)
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 10, SpriteSheet.itemsSheet))
+          .build(JunkItem.class);
+  /**
+   * LV1 healing powder. (Junk)
+   */
+  public static final JunkItem
+    LV1_HEALING_POWDER = new ItemBuilder()
+          .title("Healing Powder lv-1")
+          .description("A powder with a very small amount of healing properties. Can be used in crafting")
+          .price(12)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 15, 11, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * LV2 healing powder. (Junk)
+   */
+  public static final JunkItem
+    LV2_HEALING_POWDER = new ItemBuilder()
+          .title("Healing Powder lv-2")
+          .description("A powder that contains healing properties. Can be used in crafting")
+          .price(50)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 15, 6, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * LV3 healing powder. (Junk)
+   */
+  public static final JunkItem
+    LV3_HEALING_POWDER = new ItemBuilder()
+          .title("Healing Powder lv-3")
+          .description("A powder with a large amount of healing properties. Can be used in crafting")
+          .price(200)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 14, 6, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * LV1 magic powder. (Junk)
+   */
+  public static final JunkItem
+    LV1_MAGIC_POWDER = new ItemBuilder()
+          .title("Magic Powder lv-1")
+          .description("A strange powder with a very small amount of magic properties. Can be used in crafting")
+          .price(80)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 15, 4, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * LV2 magic powder. (Junk)
+   */
+  public static final JunkItem
+    LV2_MAGIC_POWDER = new ItemBuilder()
+          .title("Magic Powder lv-2")
+          .description("A strange powder that contains magic properties. Can be used in crafting")
+          .price(350)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 15, 9, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * LV3 magic powder. (Junk)
+   */
+  public static final JunkItem
+    LV3_MAGIC_POWDER = new ItemBuilder()
+          .title("Magic Powder lv-3")
+          .description("A mystical powder with a large amount of magic properties. Can be used in crafting")
+          .price(850)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 14, 9, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * Empty Bottle. (Junk)
+   */
+  public static final JunkItem
+    EMPTY_BOTTLE = new ItemBuilder()
+          .title("Empty Bottle")
+          .description("An empty glass bottle. Can be used in crafting.")
+          .price(10)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 10, 9, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * Water Bottle. (Junk)
+   */
+  public static final JunkItem
+    WATER_BOTTLE = new ItemBuilder()
+          .title("Water Bottle")
+          .description("Water in a glass bottle. Can be used in crafting.")
+          .price(15)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 12, 8, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * Enchanted Water Bottle. (Junk)
+   */
+  public static final JunkItem
+    ENCHANTED_WATER = new ItemBuilder()
+          .title("Enchanted Water")
+          .description("This is special water that has been imbued with magical energy. Can be used in crafting.")
+          .price(40)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 9, 9, SpriteSheet.itemsSheet_32x32))
+          .build(JunkItem.class);
+  /**
+   * Wood Tar. (Junk)
+   */
+  public static final JunkItem
+    WOOD_TAR = new ItemBuilder()
+          .title("Wood Tar")
+          .description("Highly flamable tar produced from heating wooden logs and collecting the heated sap. Can be used in crafting.")
+          .price(300)
+          .craftable()
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 2, SpriteSheet.itemsSheet_32x32))
           .build(JunkItem.class);
   /**
    *          !!################################!!

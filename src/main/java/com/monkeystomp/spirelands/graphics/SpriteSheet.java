@@ -36,6 +36,10 @@ public class SpriteSheet {
    */
   public static SpriteSheet itemsSheet = new SpriteSheet("./resources/textures/sheets/items_sheet.png");
   /**
+   * A collection of game items sprites in 32 x 32 size.
+   */
+  public static SpriteSheet itemsSheet_32x32 = new SpriteSheet("./resources/textures/sheets/32x32_items_sheet.png");
+  /**
    * A collection of weapon item sprites.
    */
   public static SpriteSheet weaponsSheet = new SpriteSheet("./resources/textures/sheets/weapons_sheet.png");

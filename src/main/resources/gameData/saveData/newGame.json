@@ -404,6 +404,8 @@
       { "ID": 1000, "AMOUNT": 2},
       { "ID": 1008, "AMOUNT": 1},
       { "ID": 1014, "AMOUNT": 222 },
+      { "ID": 1015, "AMOUNT": 4 },
+      { "ID": 1016, "AMOUNT": 4 },
       { "ID": 2000, "AMOUNT": 3 },
       { "ID": 2001, "AMOUNT": 12 },
       { "ID": 3004, "AMOUNT": 3},
@@ -417,7 +419,17 @@
       { "ID": 5001, "AMOUNT": 1},
       { "ID": 6000, "AMOUNT": 5 },
       { "ID": 6001, "AMOUNT": 6 },
-      { "ID": 6002, "AMOUNT": 7 }
+      { "ID": 6002, "AMOUNT": 7 },
+      { "ID": 6005, "AMOUNT": 7 },
+      { "ID": 6006, "AMOUNT": 7 },
+      { "ID": 6007, "AMOUNT": 7 },
+      { "ID": 6008, "AMOUNT": 7 },
+      { "ID": 6009, "AMOUNT": 7 },
+      { "ID": 6010, "AMOUNT": 7 },
+      { "ID": 6011, "AMOUNT": 7 },
+      { "ID": 6012, "AMOUNT": 7 },
+      { "ID": 6013, "AMOUNT": 7 },
+      { "ID": 6014, "AMOUNT": 7 }
     ],
     "battleMoves": [
       { "ID": 1000 },
