@@ -31,12 +31,14 @@ import java.util.Set;
 public class ItemsView extends DisplayView {
   
   private final InventoryManager manager = InventoryManager.getInventoryManager();
+  private Map<Integer, InventoryReference> Items;
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
   private final ArrayList<String> itemTypes = new ArrayList<>();
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private int itemCount = 0,
               selectedItemAmount = 0;
   private final int startingY = 35,
+                    listItemX = 140,
                     spaceBetweenRows = 16,
                     itemsPerPage = 8;
   private int currentPageIndex = 0;
@@ -68,6 +70,7 @@ public class ItemsView extends DisplayView {
     characterSelectorHeader.setX(215);
     characterSelectorHeader.setY(TOP + 7);
     characterSelectorHeader.centerText();
+    Items = manager.getItemsByMultipleTypes(itemTypes);
   }
   
   private void showItemDetails(Item item) {
@@ -88,6 +91,7 @@ public class ItemsView extends DisplayView {
         if (refs.get(j).getItem().getType().equals(Item.EQUIPMENT)) {
           newPage.add(new UsableInventoryListItem(
             refs.get(j),
+            listItemX,
             startingY + newPage.size() * spaceBetweenRows,
             "Use",
             item -> {
@@ -100,6 +104,7 @@ public class ItemsView extends DisplayView {
         else {
           newPage.add(new BasicInventoryListItem(
             refs.get(j),
+            listItemX,
             startingY + newPage.size() * spaceBetweenRows,
             item -> showItemDetails(item)
           ));
@@ -159,6 +164,7 @@ public class ItemsView extends DisplayView {
     }
     selectedItem.setStatModel(targetCharacter);
     selectedItem.useItem();
+    Items = manager.getItemsByMultipleTypes(itemTypes);
   }
   
   private void checkAnimations() {
@@ -173,7 +179,6 @@ public class ItemsView extends DisplayView {
   }
   
   private void checkItemCount() {
-    Map<Integer, InventoryReference> Items = manager.getItemsByMultipleTypes(itemTypes);
     if (itemCount != Items.size()) {
       createListItems(Items);
       itemCount = Items.size();

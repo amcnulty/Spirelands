@@ -19,8 +19,7 @@ public abstract class InventoryListItem {
   private final Sprite thumbnail;
   private final String name;
   private int amount;
-  protected final int x = 140,
-                    y;
+  protected final int x, y;
   private final InventoryReference inventoryReference;
   protected final Item item;
   private final FontInfo  label = GameFonts.getGAME_MENU_LABEL_TEXT(),
@@ -28,12 +27,13 @@ public abstract class InventoryListItem {
   private final GameMenuPrimaryButton infoButton;
   private final Consumer<Item>  IShowItemDetails;
 
-  public InventoryListItem(InventoryReference ref, int y, Consumer<Item> IShowItemDetails) {
+  public InventoryListItem(InventoryReference ref, int x, int y, Consumer<Item> IShowItemDetails) {
     this.inventoryReference = ref;
     this.item = ref.getItem();
     this.amount = ref.getAmount();
     this.thumbnail = item.getThumbnail();
     this.name = item.getTitle();
+    this.x = x;
     this.y = y;
     this.IShowItemDetails = IShowItemDetails;
     this.infoButton = new GameMenuPrimaryButton("Info", x + 148, y, 19, 11, () -> this.IShowItemDetails.accept(item));

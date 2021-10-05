@@ -30,6 +30,7 @@ public class ArmorView extends DisplayView {
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private int itemCount = 0;
   private final int startingY = 35,
+                    listItemX = 140,
                     spaceBetweenRows = 16,
                     itemsPerPage = 8;
   private int currentPageIndex = 0;
@@ -73,6 +74,7 @@ public class ArmorView extends DisplayView {
         if (refs.size() - 1 < j) break;
         newPage.add(new UsableInventoryListItem(
           refs.get(j),
+          listItemX,
           startingY + newPage.size() * spaceBetweenRows,
           "Equip",
           item -> {

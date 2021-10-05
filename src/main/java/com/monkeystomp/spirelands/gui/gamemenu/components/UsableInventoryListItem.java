@@ -17,8 +17,8 @@ public class UsableInventoryListItem extends InventoryListItem {
   private PrimaryButton useButton;
   private final Consumer<Item> IHandlePrimaryClick;
 
-  public UsableInventoryListItem(InventoryReference ref, int y, String primaryButtonText, Consumer<Item> IHandlePrimaryClick, Consumer<Item> IShowItemDetails) {
-    super(ref, y, IShowItemDetails);
+  public UsableInventoryListItem(InventoryReference ref, int x, int y, String primaryButtonText, Consumer<Item> IHandlePrimaryClick, Consumer<Item> IShowItemDetails) {
+    super(ref, x, y, IShowItemDetails);
     this.primaryButtonText = primaryButtonText;
     this.IHandlePrimaryClick = IHandlePrimaryClick;
     addPrimaryButton();

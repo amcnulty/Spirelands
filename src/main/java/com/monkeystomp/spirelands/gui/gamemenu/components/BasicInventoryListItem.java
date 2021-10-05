@@ -10,8 +10,8 @@ import java.util.function.Consumer;
  */
 public class BasicInventoryListItem extends InventoryListItem {
 
-  public BasicInventoryListItem(InventoryReference ref, int y, Consumer<Item> IShowItemDetails) {
-    super(ref, y, IShowItemDetails);
+  public BasicInventoryListItem(InventoryReference ref, int x, int y, Consumer<Item> IShowItemDetails) {
+    super(ref, x, y, IShowItemDetails);
   }
 
 }

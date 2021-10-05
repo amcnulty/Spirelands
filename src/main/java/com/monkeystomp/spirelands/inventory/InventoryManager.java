@@ -137,6 +137,13 @@ public class InventoryManager {
       .filter(map -> ((WeaponItem) map.getValue().getItem()).getWeaponType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
+  
+  public Map<Integer, InventoryReference> getCraftableItems() {
+    Map<Integer, InventoryReference> craftableItems = itemMap.entrySet().stream()
+      .filter(map -> map.getValue().getItem().isCraftable())
+      .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    return craftableItems;
+  }
   /**
    * Gets the amount of an item in the current inventory.
    * @param id The id of the item to get the amount of.
