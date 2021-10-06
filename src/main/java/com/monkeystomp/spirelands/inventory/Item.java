@@ -336,6 +336,20 @@ public class Item {
     MEAT.setHealingPoints(10);
     MEAT.setUseItemSound(SoundEffects.GULP_EAT);
   }
+  /**
+   * An Omelette. (Equipment)
+   */
+  public static final EquipmentItem
+    OMELETTE = new ItemBuilder()
+          .title("Omelette")
+          .description("A warm freshly cooked omelette prepared with love and care.")
+          .price(55)
+          .thumbnail(new Sprite(SPRITE_SIZE_32X32, SPRITE_SIZE, 8, 7, SpriteSheet.itemsSheet_32x32))
+          .build(EquipmentItem.class);
+  static {
+    OMELETTE.setHealingPoints(50);
+    OMELETTE.setUseItemSound(SoundEffects.GULP_EAT);
+  }
   
   /**
    *          !!################################!!
@@ -368,7 +382,7 @@ public class Item {
     THROWING_EGG = new ItemBuilder()
           .title("Throwing Egg")
           .description("This is a great thowing egg! Use it to start an egg attack. Causes minimal physical damage, however, it will leave your enemies stunned.")
-          .price(200)
+          .price(20)
           .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 4, 7, SpriteSheet.itemsSheet))
           .build(BattleItem.class);

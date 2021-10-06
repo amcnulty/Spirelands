@@ -137,7 +137,18 @@ public class InventoryManager {
       .filter(map -> ((WeaponItem) map.getValue().getItem()).getWeaponType().equals(type))
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
-  
+  /**
+   * Gets all the craftable items in the players inventory. This is returned as a map.
+   * <p>
+   * Example Usage:
+   * </p>
+   * <pre>
+   * {@code
+   * Map<Integer, InventoryReference> craftableItems = manager.getCraftableItems();
+   * }
+   * </pre>
+   * @return The map of craftable items.
+   */
   public Map<Integer, InventoryReference> getCraftableItems() {
     Map<Integer, InventoryReference> craftableItems = itemMap.entrySet().stream()
       .filter(map -> map.getValue().getItem().isCraftable())
