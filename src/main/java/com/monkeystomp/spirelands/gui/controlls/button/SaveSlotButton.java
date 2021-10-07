@@ -30,6 +30,7 @@ public class SaveSlotButton extends Button {
   private final int thumbnailX = 14,
                     thumbnailY = 20,
                     spaceBetweenThumbnails = 20;
+  private int partyLeaderLevel;
   private final SaveGameSlot slot;
   private final Sprite  separator = new Sprite(40, 1, GameColors.GAME_MENU_MUTED_TEXT),
                         smallGoldIndicator = new Sprite(Sprite.GOLD_INDICATOR, 75.0);
@@ -70,11 +71,12 @@ public class SaveSlotButton extends Button {
   }
 
   private void setSlotDisplayData() {
+    
     levelNameFont.setText((String)location.get(JSONUtil.LEVEL_NAME));
     levelNameFont.setX(x + WIDTH / 2);
     levelNameFont.setY(y + 10);
     levelNameFont.centerText();
-    levelFontInfo.setText("Level: " + jsonUtil.getNestedString(characters, new String[]{JSONUtil.LUKE, JSONUtil.STATS, JSONUtil.LEVEL_STAT}));
+    levelFontInfo.setText("Level: " + getPartyLeaderLevel(jsonUtil.getNestedObject(json, new String[]{JSONUtil.CHARACTERS})));
     levelFontInfo.setX(x + width / 5);
     levelFontInfo.setY(levelNameFont.getY() + 45);
     goldFontInfo.setText(String.valueOf(jsonUtil.getNestedInt(json, new String[]{JSONUtil.INVENTORY, JSONUtil.GOLD})));
@@ -91,6 +93,17 @@ public class SaveSlotButton extends Button {
         });
       }
     });
+  }
+
+  private String getPartyLeaderLevel(JSONObject characters) {
+    Set<?> keys = characters.keySet();
+    keys.forEach(key -> {
+      String position = jsonUtil.getNestedString(characters, new String[]{(String)key, JSONUtil.PARTY_INFO, JSONUtil.PARTY_POSITION});
+      if (position.equals("0")) {
+        partyLeaderLevel = jsonUtil.getNestedInt(characters, new String[]{(String)key, JSONUtil.STATS, JSONUtil.LEVEL_STAT});
+      }
+    });
+    return Integer.toString(partyLeaderLevel);
   }
   /**
    * Initializes this save slot by checking if the file exists and if it does it will update the label.
