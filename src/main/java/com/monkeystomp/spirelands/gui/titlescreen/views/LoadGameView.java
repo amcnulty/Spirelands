@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
+import com.monkeystomp.spirelands.gamedata.saves.SaveGameSlot;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
@@ -10,9 +11,7 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.view.LevelView;
-import java.io.IOException;
 import java.util.function.Consumer;
-import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -31,24 +30,24 @@ public class LoadGameView extends TitleView {
                           slot3Font = GameFonts.getDarkText_plain_18(),
                           warningFont = GameFonts.getWarningText_bold_18();
   private boolean showWarning = false;
-  private String selectedSlot;
+  private SaveGameSlot selectedSlot;
   private final PrimaryButton
     cancelButton = new PrimaryButton("Cancel", buttonRowStartX, buttonRowY, 40, 13, () -> handleCancelClick()),
     loadButton = new PrimaryButton("Load", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleLoadClick());
   private SaveSlotButton selectedSlotButton;
   private final SaveSlotButton
-    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, "slot1.json", () -> {
-      selectedSlot = "slot1.json";
+    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2 + 20, SaveGameSlot.SLOT1, () -> {
+      selectedSlot = SaveGameSlot.SLOT1;
       resetSlotButtons();
       selectedSlotButton = this.slot1;
     }),
-    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, "slot2.json", () -> {
-      selectedSlot = "slot2.json";
+    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2 + 20, SaveGameSlot.SLOT2, () -> {
+      selectedSlot = SaveGameSlot.SLOT2;
       resetSlotButtons();
       selectedSlotButton = this.slot2;
     }),
-    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, "slot3.json", () -> {
-      selectedSlot = "slot3.json";
+    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2 + 20, SaveGameSlot.SLOT3, () -> {
+      selectedSlot = SaveGameSlot.SLOT3;
       resetSlotButtons();
       selectedSlotButton = this.slot3;
     });
@@ -89,15 +88,11 @@ public class LoadGameView extends TitleView {
     if (selectedSlotButton != null) {
       if (!selectedSlotButton.isSlotEmpty()) {
         try {
-          ILevelViewSetter.accept(loader.getLevelView(selectedSlot));
-        } catch (IOException e) {
+          loader.loadGame(selectedSlot);
+        } catch (Exception e) {
           e.printStackTrace();
           showWarning = true;
-          setWarningText("Problem loading file at saves/" + selectedSlot);
-        } catch (ParseException e) {
-          e.printStackTrace();
-          showWarning = true;
-          setWarningText("Problem reading data in file saves/" + selectedSlot);
+          setWarningText("Problem loading file.");
         }
       }
       else {

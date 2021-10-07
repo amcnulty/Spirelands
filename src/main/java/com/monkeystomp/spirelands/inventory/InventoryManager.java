@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.inventory;
 
 import com.monkeystomp.spirelands.battle.move.BattleMove;
+import com.monkeystomp.spirelands.gamedata.saves.SaveDataHydratable;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,7 +14,12 @@ import org.json.simple.JSONObject;
  * Inventory Manager class is a singleton class that is responsible for performing CRUD operations on the inventory in the game.
  * @author Aaron Michael McNulty
  */
-public class InventoryManager {
+@SuppressWarnings("unchecked")
+public class InventoryManager implements SaveDataHydratable {
+  /**
+   * Slice of save object for this manager. JSON Name - INVENTORY
+   */
+  private JSONObject inventory;
   
   private final JSONUtil jsonUtil = new JSONUtil();
   private int gold = 0;
@@ -35,10 +41,9 @@ public class InventoryManager {
   }
   /**
    * Sets up all inventory data for the current game.
-   * @param inventory The JSON data containing the inventory.
    */
   @SuppressWarnings("unchecked")
-  public void setInventoryData(JSONObject inventory) {
+  private void setInventoryData() {
     itemMap.clear();
     setGold(jsonUtil.getNestedInt(inventory, new String[]{JSONUtil.GOLD}));
     setAbilityPoints(jsonUtil.getInt(inventory, JSONUtil.ABILITY_POINTS));
@@ -259,6 +264,40 @@ public class InventoryManager {
 
   public HashMap<Integer, InventoryReference> getItemMap() {
     return itemMap;
+  }
+
+  @Override
+  public void hydrate(JSONObject json) {
+    inventory = (JSONObject) json.get(JSONUtil.INVENTORY);
+    setInventoryData();
+  }
+
+  @Override
+  public void populateSaveData(JSONObject saveObject) {
+    saveObject.put(JSONUtil.INVENTORY, inventory);
+    JSONObject inventoryToSave = (JSONObject) saveObject.get(JSONUtil.INVENTORY);
+    // Gold
+    inventoryToSave.put(JSONUtil.GOLD, getGold());
+    // Ability Points
+    inventoryToSave.put(JSONUtil.ABILITY_POINTS, getAbilityPoints());
+    // Item References
+    JSONArray refs = (JSONArray) inventoryToSave.get(JSONUtil.REFS);
+    refs.clear();
+    HashMap<Integer, InventoryReference> inventoryMap = getItemMap();
+    inventoryMap.forEach((id, ref) -> {
+      JSONObject item = new JSONObject();
+      item.put(JSONUtil.AMOUNT, ref.getAmount());
+      item.put(JSONUtil.ID, id);
+      refs.add(item);
+    });
+    // Battle Moves
+    JSONArray battleMoves = (JSONArray)inventoryToSave.get(JSONUtil.BATTLE_MOVES);
+    battleMoves.clear();
+    getBattleMoves().keySet().forEach(key -> {
+      JSONObject battleMove = new JSONObject();
+      battleMove.put(JSONUtil.ID, key);
+      battleMoves.add(battleMove);
+    });
   }
   
 }

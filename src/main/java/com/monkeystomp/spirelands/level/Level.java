@@ -4,7 +4,6 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.Music;
 import com.monkeystomp.spirelands.battle.Battle;
 import com.monkeystomp.spirelands.level.util.ILevelChanger;
-import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
 import com.monkeystomp.spirelands.level.entity.fixed.Portal;
 import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
 import com.monkeystomp.spirelands.level.tile.Tile;
@@ -21,6 +20,7 @@ import com.monkeystomp.spirelands.level.location.Location;
 import com.monkeystomp.spirelands.level.transitions.BattleTransition;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.level.transitions.TransitionFader;
+import com.monkeystomp.spirelands.level.util.LevelStateManager;
 import com.monkeystomp.spirelands.view.BattleView;
 import com.monkeystomp.spirelands.view.ViewManager;
 import java.awt.event.KeyEvent;
@@ -78,6 +78,8 @@ public class Level implements Runnable {
   protected ArrayList<Tile> tiles = new ArrayList<>();
   // LightMap Manager
   protected LightMap lightMap = new LightMap();
+  // State manager for all save data related to levels
+  protected LevelStateManager levelStateManager = LevelStateManager.getLevelStateManager();
   // Entities
   protected ArrayList<Portal> portals = new ArrayList<>();
   // Solid Entities
@@ -222,7 +224,7 @@ public class Level implements Runnable {
   protected void finalLevelSetup() {}
   
   private void setChestState() {
-    boolean[] openedChests = SaveDataManager.getSaveDataManager().getChests(levelId);
+    boolean[] openedChests = levelStateManager.getChests(levelId);
     if (openedChests != null) {
       for (int i = 0; i < openedChests.length; i++) {
         Chest chest = (Chest) chests.get(i);
@@ -268,7 +270,7 @@ public class Level implements Runnable {
       Chest chest = (Chest) chests.get(i);
       chestData[i] = chest.isChestOpen();
     }
-    SaveDataManager.getSaveDataManager().setChests(levelId, chestData);
+    levelStateManager.setChests(levelId, chestData);
   }
 
   public ArrayList<Portal> getPortals() {

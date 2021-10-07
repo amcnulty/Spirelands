@@ -197,8 +197,8 @@
     "AARON": {
       "ID": "aaron04",
       "PARTY_INFO": {
-        "IN_PARTY": false
-        "AVAILABLE": true,
+        "IN_PARTY": false,
+        "AVAILABLE": true
       },
       "STATS": {
         "INTELLECT": 3,
@@ -261,7 +261,7 @@
     "MILEY": {
       "ID": "miley05",
       "PARTY_INFO": {
-        "IN_PARTY": false
+        "IN_PARTY": false,
         "AVAILABLE": false
       },
       "STATS": {
@@ -325,7 +325,7 @@
     "JUSTIN": {
       "ID": "justin06",
       "PARTY_INFO": {
-        "IN_PARTY": true
+        "IN_PARTY": true,
         "AVAILABLE": true,
         "PARTY_POSITION": 0
       },
@@ -393,8 +393,8 @@
     "LEVEL_KEY": "shoAqugrlW",
     "LEVEL_NAME": "Sandbox area for testing!",
     "X": 100,
-    "Y": 100,
-    "DIRECTION": 2
+    "Y": 200,
+    "DIRECTION": 3
   },
   "INVENTORY": {
     "GOLD": 643,

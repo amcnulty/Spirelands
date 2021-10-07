@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.gui.pausemenu.views;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
+import com.monkeystomp.spirelands.gamedata.saves.SaveGameSlot;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
@@ -10,11 +11,10 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
-import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
- *
+ * The save screen when user pauses the game and clicks the save button.
  * @author Aaron Michael McNulty
  */
 public class SaveView extends PauseView {
@@ -36,20 +36,20 @@ public class SaveView extends PauseView {
     saveButton = new PrimaryButton("Save", cancelButton.getRight() + spaceBetweenButtons, buttonRowY, 40, 13, () -> handleSaveClick());
   private SaveSlotButton selectedSlot;
   private final SaveSlotButton
-    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2, "slot1.json", () -> {
-      SaveDataManager.getSaveDataManager().setFileName("slot1.json");
+    slot1 = new SaveSlotButton(Screen.getWidth() / 5, Screen.getHeight() / 2, SaveGameSlot.SLOT1, () -> {
+      SaveDataManager.getSaveDataManager().setSlot(SaveGameSlot.SLOT1);
       resetSlotButtons();
       slotSelected = true;
       selectedSlot = this.slot1;
     }),
-    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2, "slot2.json", () -> {
-      SaveDataManager.getSaveDataManager().setFileName("slot2.json");
+    slot2 = new SaveSlotButton(Screen.getWidth() / 2, Screen.getHeight() / 2, SaveGameSlot.SLOT2, () -> {
+      SaveDataManager.getSaveDataManager().setSlot(SaveGameSlot.SLOT2);
       resetSlotButtons();
       slotSelected = true;
       selectedSlot = this.slot2;
     }),
-    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2, "slot3.json", () -> {
-      SaveDataManager.getSaveDataManager().setFileName("slot3.json");
+    slot3 = new SaveSlotButton(Screen.getWidth() * 4 / 5, Screen.getHeight() / 2, SaveGameSlot.SLOT3, () -> {
+      SaveDataManager.getSaveDataManager().setSlot(SaveGameSlot.SLOT3);
       resetSlotButtons();
       slotSelected = true;
       selectedSlot = this.slot3;
@@ -101,7 +101,7 @@ public class SaveView extends PauseView {
         try {
           SaveDataManager.getSaveDataManager().saveGame();
           initSlots();
-        } catch (IOException e) {
+        } catch (Exception e) {
           e.printStackTrace();
         }
       }

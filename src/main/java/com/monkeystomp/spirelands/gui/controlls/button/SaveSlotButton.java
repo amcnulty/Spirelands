@@ -3,6 +3,8 @@ package com.monkeystomp.spirelands.gui.controlls.button;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.character.CharacterManager;
+import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
+import com.monkeystomp.spirelands.gamedata.saves.SaveGameSlot;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -10,18 +12,15 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
- *
+ * Shows a preview of the level, party members, and gold as a large button.
+ * This is used on the save game screens for selecting which slot you want to save to.
  * @author Aaron Michael McNulty
  */
 public class SaveSlotButton extends Button {
@@ -31,8 +30,7 @@ public class SaveSlotButton extends Button {
   private final int thumbnailX = 14,
                     thumbnailY = 20,
                     spaceBetweenThumbnails = 20;
-  private final String  fileName,
-                        pathToSave = "./saves/";
+  private final SaveGameSlot slot;
   private final Sprite  separator = new Sprite(40, 1, GameColors.GAME_MENU_MUTED_TEXT),
                         smallGoldIndicator = new Sprite(Sprite.GOLD_INDICATOR, 75.0);
   private boolean slotEmpty = true;
@@ -45,28 +43,29 @@ public class SaveSlotButton extends Button {
                       location;
   private final JSONParser parser = new JSONParser();
   private final JSONUtil jsonUtil = new JSONUtil();
+  private final DataLoader loader = new DataLoader();
   
-  public SaveSlotButton(int x, int y, String fileName, ICallback callback) {
+  public SaveSlotButton(int x, int y, SaveGameSlot slot, ICallback callback) {
     super("", x, y, WIDTH, HEIGHT, callback);
-    this.fileName = fileName;
+    this.slot = slot;
     checkIfFileExists();
     createButtonSprites();
     setButtonSounds();
   }
   
   private void checkIfFileExists() {
-    File saveFile = new File(pathToSave + fileName);
-    slotEmpty = !saveFile.exists();
+    try {
+      json = loader.getSaveDataForSlot(slot);
+      slotEmpty = false;
+    }
+    catch (Exception e) {
+      slotEmpty = true;
+    }
     if (!slotEmpty) {
-      try {
-        json = (JSONObject) parser.parse(new FileReader(saveFile));
-        characters = (JSONObject) json.get(JSONUtil.CHARACTERS);
-        location = (JSONObject) json.get(JSONUtil.LOCATION);
-        createButtonSprites();
-        setSlotDisplayData();
-      } catch (IOException | ParseException e) {
-        e.printStackTrace();
-      }
+      characters = (JSONObject) json.get(JSONUtil.CHARACTERS);
+      location = (JSONObject) json.get(JSONUtil.LOCATION);
+      createButtonSprites();
+      setSlotDisplayData();
     }
   }
 

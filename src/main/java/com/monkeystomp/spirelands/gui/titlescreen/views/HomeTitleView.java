@@ -1,28 +1,22 @@
 package com.monkeystomp.spirelands.gui.titlescreen.views;
 
 import com.jogamp.opengl.GL2;
-import com.monkeystomp.spirelands.character.CharacterManager;
-import com.monkeystomp.spirelands.gamedata.saves.SaveDataManager;
-import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
+import com.monkeystomp.spirelands.gamedata.saves.DataLoader;
+import com.monkeystomp.spirelands.gamedata.saves.SaveGameSlot;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
-import com.monkeystomp.spirelands.inventory.InventoryManager;
-import com.monkeystomp.spirelands.level.SpawnLevel;
-import com.monkeystomp.spirelands.level.TestLevel;
-import com.monkeystomp.spirelands.level.location.coordinate.SpawnCoordinate;
-import com.monkeystomp.spirelands.level.util.LevelFactory;
 import com.monkeystomp.spirelands.view.LevelView;
 import java.util.function.Consumer;
-import org.json.simple.JSONObject;
 
 /**
- *
+ *  The landing screen of the application after the opening brand animation.
  * @author Aaron Michael McNulty
  */
 public class HomeTitleView extends TitleView {
   
+  private final DataLoader loader = new DataLoader();
   private final Sprite buttonBackdrop = new Sprite(120, 100, GameColors.TITLE_SCREEN_MENU_BACKDROP);
   private final PrimaryButton newGameButton,
                               loadGameButton,
@@ -39,18 +33,12 @@ public class HomeTitleView extends TitleView {
   }
 
   private void handleStartButtonClick() {
-    // All required setup for starting a new game...
-    SaveDataManager.getSaveDataManager().initSaveObject();
-    CharacterManager.getCharacterManager().setupCharactersDetails((JSONObject)SaveDataManager.getSaveDataManager().getSaveObject().get(JSONUtil.CHARACTERS));
-    InventoryManager.getInventoryManager().setInventoryData((JSONObject)SaveDataManager.getSaveDataManager().getSaveObject().get(JSONUtil.INVENTORY));
-//    viewManager.setCurrentView(new LevelView(LevelFactory.createLevel("SPAWN_LEVEL", new SpawnCoordinate(550, 250, 2))));
-// left of house
-//    viewManager.changeView(new LevelView(LevelFactory.createLevel("TEST_LEVEL", new SpawnCoordinate(75, 425, 2))));
-// top left corner
-    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel(TestLevel.LEVEL_ID, new SpawnCoordinate(100, 200, 3))));
-//    ILevelViewSetter.accept(new LevelView(LevelFactory.createLevel(SpawnLevel.LEVEL_ID, new SpawnCoordinate(266, 266, 3))));
-// inside house
-//    viewManager.changeView(new LevelView(LevelFactory.createLevel("HOUSE_LEVEL", HouseLevel.FIRST_FLOOR_ENTRANCE)));
+    try {
+      loader.loadGame(SaveGameSlot.NEW_GAME);
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+    }
   }
   
   private void handleLoadClick() {

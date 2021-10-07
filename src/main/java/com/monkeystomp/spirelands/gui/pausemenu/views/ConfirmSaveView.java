@@ -9,11 +9,10 @@ import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.pausemenu.PauseMenu;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
-import java.io.IOException;
 import java.util.function.Consumer;
 
 /**
- *
+ * Confirmation window that pops up when you are trying to overwrite an existing save game.
  * @author Aaron Michael McNulty
  */
 public class ConfirmSaveView extends PauseView {
@@ -49,7 +48,7 @@ public class ConfirmSaveView extends PauseView {
     try {
       SaveDataManager.getSaveDataManager().saveGame();
       IPauseViewSetter.accept(PauseMenu.SAVE_VIEW);
-    } catch (IOException e) {
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
