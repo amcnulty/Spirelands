@@ -12,6 +12,7 @@ import java.util.List;
  */
 public class Recipe {
   
+  private final String name;
   private final List<Item> inputs;
   private final Item output;
   private final int craftingLevel;
@@ -26,11 +27,16 @@ public class Recipe {
    * @param craftingLevel Minimum crafting level required to craft this recipe.
    */
   public Recipe(Item[] inputs, Item output, int craftingLevel) {
+    this.name = output.getTitle();
     this.inputs = Arrays.asList(inputs);
     this.output = output;
     this.craftingLevel = craftingLevel;
     this.id = nextId++;
     RECIPE_INDEX.put(id, this);
+  }
+
+  public String getName() {
+    return name;
   }
 
   public List<Item> getInputs() {

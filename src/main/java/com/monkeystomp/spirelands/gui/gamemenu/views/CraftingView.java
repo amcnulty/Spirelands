@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -8,6 +9,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.components.CraftingItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.ItemsSubView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.RecipesSubView;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -43,13 +45,15 @@ public class CraftingView extends DisplayView {
                     outputItemDisplayY = TOP + 130;
   private boolean showingItemsSubView = false,
                   showingRecipesSubView = false;
+  private ItemSlot currentSlot;
   private UsableInventoryListItem outputItemDisplay;
   private final GameMenuPrimaryButton recipeListButton = new GameMenuPrimaryButton("View Recipes", recipeListButtonX, craftingLevelLabelY, 45, 13, () -> this.handleShowRecipeList());
   private final ArrayList<ItemSlot> itemSlots = new ArrayList<>();
-  private final ItemSlot slot1 = new CraftingItemSlot(slot1X, slot1Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleAddItemToSlot(slot), false);
-  private final ItemSlot slot2 = new CraftingItemSlot(slot2X, slot2Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleAddItemToSlot(slot), false);
-  private final ItemSlot slot3 = new CraftingItemSlot(slot3X, slot3Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleAddItemToSlot(slot), false);
-  private final ItemsSubView itemsSubView = new ItemsSubView();
+  private final ItemSlot slot1 = new CraftingItemSlot(slot1X, slot1Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
+  private final ItemSlot slot2 = new CraftingItemSlot(slot2X, slot2Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
+  private final ItemSlot slot3 = new CraftingItemSlot(slot3X, slot3Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
+  private final ItemsSubView itemsSubView = new ItemsSubView(item -> handleAddItemToSlot(item), () -> showingItemsSubView = false);
+  private final RecipesSubView recipesSubView = new RecipesSubView(recipe -> handleApplyRecipe(recipe), () -> showingRecipesSubView = false);
   
   public CraftingView() {
     craftingLevelLabel.setText("Crafting Level:");
@@ -83,16 +87,24 @@ public class CraftingView extends DisplayView {
   }
   
   private void handleShowRecipeList() {
-    System.out.println("Showing recipe list");
+    showingRecipesSubView = true;
   }
   
   private void handleShowInfo(Item item) {
     
   }
   
-  private void handleAddItemToSlot(ItemSlot slot) {
-    System.out.println("open item view");
+  private void handleOpenItemList(ItemSlot slot) {
+    currentSlot = slot;
     showingItemsSubView = true;
+  }
+  
+  private void handleAddItemToSlot(Item item) {
+    currentSlot.setItem(item);
+  }
+  
+  private void handleApplyRecipe(Recipe recipe) {
+    
   }
 
   @Override
@@ -118,6 +130,9 @@ public class CraftingView extends DisplayView {
     else if (showingItemsSubView) {
       itemsSubView.update();
     }
+    else if (showingRecipesSubView) {
+      recipesSubView.update();
+    }
   }
 
   @Override
@@ -136,6 +151,9 @@ public class CraftingView extends DisplayView {
     }
     else if (showingItemsSubView) {
       itemsSubView.render(screen, gl);
+    }
+    else if (showingRecipesSubView) {
+      recipesSubView.render(screen, gl);
     }
   }
 
