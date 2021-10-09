@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
+import com.monkeystomp.spirelands.gui.gamemenu.components.RecipeDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.RecipeListItem;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
@@ -42,6 +43,7 @@ public class RecipesSubView {
   private final ArrayList<ArrayList<RecipeListItem>> pages = new ArrayList<>();
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);
+  private final RecipeDetailCard recipeDetailCard = new RecipeDetailCard();
   
   public RecipesSubView(Consumer<Recipe> handleApplyRecipe, ICallback exitSubView) {
     this.handleApplyRecipe = handleApplyRecipe;
@@ -53,6 +55,7 @@ public class RecipesSubView {
   
   private void handleBackButtonClick() {
     exitSubView.execute();
+    recipeDetailCard.clearCard();
   }
   
   private void createListItems(Map<Integer, Recipe> recipeMap) {
@@ -95,7 +98,7 @@ public class RecipesSubView {
   }
   
   private void handleInfoClick(Recipe recipe) {
-    
+    recipeDetailCard.setRecipe(recipe);
   }
 
   private void checkRecipeCount() {
@@ -113,7 +116,7 @@ public class RecipesSubView {
         item.update();
       }
     }
-//    itemDetailCard.update();
+    recipeDetailCard.update();
     pagination.update();
   }
   
@@ -126,7 +129,7 @@ public class RecipesSubView {
       }
     }
     screen.renderSprite(gl, 306, 23, border, false);
-//    itemDetailCard.render(screen, gl);
+    recipeDetailCard.render(screen, gl);
     pagination.render(screen, gl);
     
   }

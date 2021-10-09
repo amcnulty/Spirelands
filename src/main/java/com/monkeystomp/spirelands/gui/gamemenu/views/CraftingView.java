@@ -13,6 +13,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.RecipesSubV
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
+import com.monkeystomp.spirelands.util.Helpers;
 import java.util.ArrayList;
 
 /**
@@ -28,7 +29,7 @@ public class CraftingView extends DisplayView {
                           errorText = GameFonts.getWarningText_bold_18();
   private final int craftingLevelLabelX = LEFT + 10,
                     craftingLevelLabelY = TOP + 10,
-                    craftingLevelX = LEFT + 50,
+                    craftingLevelX = LEFT + 54,
                     descriptionX = (LEFT + RIGHT) / 2,
                     descriptionY = TOP + 30,
                     recipeListButtonX = RIGHT - 40,
@@ -61,7 +62,7 @@ public class CraftingView extends DisplayView {
     craftingLevelLabel.setY(craftingLevelLabelY);
     craftingLevel.setText("1");
     craftingLevel.setX(craftingLevelX);
-    craftingLevel.setY(craftingLevelLabelY - 1);
+    craftingLevel.setY(craftingLevelLabelY);
     description.setText("Add crafting materials to the slots below to craft into new items.");
     description.setX(descriptionX);
     description.setY(descriptionY);
@@ -88,6 +89,15 @@ public class CraftingView extends DisplayView {
   
   private void handleShowRecipeList() {
     showingRecipesSubView = true;
+    // Trick to not get the recipe list button to flash when returning to the main view from recipe list.
+    preventButtonFlash();
+  }
+  
+  private void preventButtonFlash() {
+    Helpers.setTimeout(() -> {
+      recipeListButton.update();
+      if (recipeListButton.isHovering()) preventButtonFlash();
+    }, 500);
   }
   
   private void handleShowInfo(Item item) {
