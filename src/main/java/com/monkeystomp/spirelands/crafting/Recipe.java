@@ -104,34 +104,22 @@ public class Recipe {
   /**
    * Medium HP Potion
    */
-    new Recipe(
+    new CompoundRecipe(
       new Item[]{Item.WATER_BOTTLE, Item.LV2_HEALING_POWDER, Item.LV2_HEALING_POWDER},
       Item.MEDIUM_HP_POTION,
       2
-    );
-  /**
-   * Medium HP Potion alt
-   */
-    new Recipe(
-      new Item[]{Item.SMALL_HP_POTION, Item.LV2_HEALING_POWDER},
-      Item.MEDIUM_HP_POTION,
-      2
+    ).addAlternateInputs(
+      new Item[]{Item.SMALL_HP_POTION, Item.LV2_HEALING_POWDER}
     );
   /**
    * Mana Potion
    */
-    new Recipe(
+    new CompoundRecipe(
       new Item[]{Item.ENCHANTED_WATER, Item.LV2_MAGIC_POWDER, Item.LV2_MAGIC_POWDER},
       Item.MANA_POTION,
       2
-    );
-  /**
-   * Mana Potion alt
-   */
-    new Recipe(
-      new Item[]{Item.MANA_VILE, Item.LV2_MAGIC_POWDER},
-      Item.MANA_POTION,
-      2
+    ).addAlternateInputs(
+      new Item[]{Item.MANA_VILE, Item.LV2_MAGIC_POWDER}
     );
   /**
    * Omelette
@@ -151,34 +139,22 @@ public class Recipe {
   /**
    * Health Bottle
    */
-    new Recipe(
+    new CompoundRecipe(
       new Item[]{Item.WATER_BOTTLE, Item.LV3_HEALING_POWDER, Item.LV3_HEALING_POWDER},
       Item.HEALTH_BOTTLE,
       3
-    );
-  /**
-   * Health Bottle alt
-   */
-    new Recipe(
-      new Item[]{Item.MEDIUM_HP_POTION, Item.LV3_HEALING_POWDER},
-      Item.HEALTH_BOTTLE,
-      3
+    ).addAlternateInputs(
+      new Item[]{Item.MEDIUM_HP_POTION, Item.LV3_HEALING_POWDER}
     );
   /**
    * Mana Bottle
    */
-    new Recipe(
+    new CompoundRecipe(
       new Item[]{Item.ENCHANTED_WATER, Item.LV3_MAGIC_POWDER, Item.LV3_MAGIC_POWDER},
       Item.MANA_BOTTLE,
       3
-    );
-  /**
-   * Mana Bottle alt
-   */
-    new Recipe(
-      new Item[]{Item.MANA_POTION, Item.LV3_MAGIC_POWDER},
-      Item.MANA_BOTTLE,
-      3
+    ).addAlternateInputs(
+      new Item[]{Item.MANA_POTION, Item.LV3_MAGIC_POWDER}
     );
   }
   

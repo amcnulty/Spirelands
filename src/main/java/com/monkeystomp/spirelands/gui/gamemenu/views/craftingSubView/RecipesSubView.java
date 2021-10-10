@@ -98,7 +98,7 @@ public class RecipesSubView {
   }
   
   private void handleInfoClick(Recipe recipe) {
-    recipeDetailCard.setRecipe(recipe);
+    recipeDetailCard.showRecipeDetails(recipe);
   }
 
   private void checkRecipeCount() {

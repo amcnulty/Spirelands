@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.crafting.CompoundRecipe;
 import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -9,7 +10,9 @@ import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.gui.util.TextUtil;
+import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Shows all information about a recipe on the right hand side of the game menu.
@@ -22,7 +25,8 @@ public class RecipeDetailCard {
                         times = "\u2A2F";
   private final FontInfo  titleFont = GameFonts.getlightText_bold_23(),
                           descriptionFont = GameFonts.getGAME_MENU_MUTED_TEXT(),
-                          requiredLevelFont = GameFonts.getGAME_MENU_LABEL_TEXT();
+                          requiredLevelFont = GameFonts.getGAME_MENU_LABEL_TEXT(),
+                          alternateRecipeFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private final int price = 0,
                     cardWidth = 89,
                     sidePadding = 5,
@@ -31,13 +35,19 @@ public class RecipeDetailCard {
                     cardCenterVert = 100,
                     cardLeft = 307,
                     cardRight = cardLeft + cardWidth,
-                    inputX = cardLeft + sidePadding,
+                    titleFontY = 30,
+                    requiredLevelFontY = 65,
+                    descriptionFontY = 75,
+                    alternateRecipeFontY = 126,
                     inputFirstRowY = 100,
+                    inputSecondRowY = 136,
                     spaceBetweenInputs = 17;
-  private boolean recipeSet = false;
+  private boolean recipeSet = false,
+                  hasAlternateRecipes = false;
   private final ArrayList<FontInfo> noSelectedInfoList = new ArrayList<>(),
                                     recipeDescriptionList = new ArrayList<>();
   private final ArrayList<RecipeInputListItem> inputs = new ArrayList<>();
+  private final ArrayList<RecipeInputListItem> alternateInputs = new ArrayList<>();
   private final ArrayList<RecipeInputListItem> alternate_inputs = new ArrayList<>();
   private final GameMenuSecondaryButton exitButton = new GameMenuSecondaryButton(
     times,
@@ -67,21 +77,32 @@ public class RecipeDetailCard {
     recipeSet = false;
   }
   
-  public void setRecipe(Recipe recipe) {
+  public void showRecipeDetails(Recipe recipe) {
+    setupFonts(recipe);
+    setupInputs(recipe);
+    recipeSet = true;
+  }
+  
+  private void setupFonts(Recipe recipe) {
     titleFont.setText(recipe.getName());
     titleFont.setX(cardCenterHoriz);
-    titleFont.setY(30);
+    titleFont.setY(titleFontY);
     titleFont.centerText();
     
     requiredLevelFont.setText("Requires crafting Lv: " + Integer.toString(recipe.getCraftingLevel()));
     requiredLevelFont.setX(cardCenterHoriz);
-    requiredLevelFont.setY(65);
+    requiredLevelFont.setY(requiredLevelFontY);
     requiredLevelFont.centerText();
+    
+    alternateRecipeFont.setText("Or");
+    alternateRecipeFont.setX(cardCenterHoriz);
+    alternateRecipeFont.setY(alternateRecipeFontY);
+    alternateRecipeFont.centerText();
     
     descriptionFont.setText("The following items are required to craft this recipe.");
     descriptionFont.setX(cardLeft + sidePadding);
-    descriptionFont.setY(75);
-    
+    descriptionFont.setY(descriptionFontY);
+
     ArrayList<String> lines = TextUtil.createWrappedText(descriptionFont.getText(), descriptionFont.getFont(), cardWidth - 2 * sidePadding);
     recipeDescriptionList.clear();
     for (int i = 0; i < lines.size(); i++) {
@@ -91,8 +112,12 @@ public class RecipeDetailCard {
       info.setY(75 + i * 7);
       recipeDescriptionList.add(info);
     }
-    
+  }
+  
+  private void setupInputs(Recipe recipe) {
     inputs.clear();
+    alternateInputs.clear();
+    hasAlternateRecipes = checkAlternateRecipes(recipe);
     int startingX = recipe.getInputs().size() == 3
                     ?
                     cardCenterHoriz - spaceBetweenInputs / 2 - spaceBetweenInputs
@@ -101,12 +126,29 @@ public class RecipeDetailCard {
     for (int i = 0; i < recipe.getInputs().size(); i++) {
       inputs.add(new RecipeInputListItem(recipe.getInputs().get(i), startingX + spaceBetweenInputs * i, inputFirstRowY));
     }
-    recipeSet = true;
+    if (hasAlternateRecipes) {
+      List<Item> altInputsFromRecipe = ((CompoundRecipe)recipe).getAlternateInputs();
+      int startingXAlt = altInputsFromRecipe.size() == 3
+                    ?
+                    cardCenterHoriz - spaceBetweenInputs / 2 - spaceBetweenInputs
+                    :
+                    cardCenterHoriz - spaceBetweenInputs;
+      for (int i = 0; i < altInputsFromRecipe.size(); i++) {
+        alternateInputs.add(new RecipeInputListItem(altInputsFromRecipe.get(i), startingXAlt + spaceBetweenInputs * i, inputSecondRowY));
+      }
+    }
+  }
+  
+  private boolean checkAlternateRecipes(Recipe recipe) {
+    return recipe.getClass().equals(CompoundRecipe.class) && ((CompoundRecipe)recipe).getAlternateInputs().size() > 0;
   }
   
   public void update() {
     if (recipeSet) exitButton.update();
     for (RecipeInputListItem item: inputs) {
+      item.update();
+    }
+    for (RecipeInputListItem item: alternateInputs) {
       item.update();
     }
   }
@@ -117,10 +159,14 @@ public class RecipeDetailCard {
       screen.renderFonts(titleFont);
       screen.renderSprite(gl, cardCenterHoriz - thumbnail.getWidth() / 2, 40, thumbnail, false);
       screen.renderFonts(requiredLevelFont);
+      if(hasAlternateRecipes) screen.renderFonts(alternateRecipeFont);
       for (FontInfo info: recipeDescriptionList) {
         screen.renderFonts(info);
       }
       for (RecipeInputListItem item: inputs) {
+        item.render(screen, gl);
+      }
+      for (RecipeInputListItem item: alternateInputs) {
         item.render(screen, gl);
       }
     }
