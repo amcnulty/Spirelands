@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.crafting.CraftingManager;
 import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
@@ -27,8 +28,7 @@ public class RecipesSubView {
   private final FontInfo header = GameFonts.getGAME_MENU_HEADLINE_THIN();
   private final Consumer<Recipe> handleApplyRecipe;
   private final ICallback exitSubView;
-    // TODO FIX THIS LINE TO GET THE TOTAL NUMBER OF DISCOVERED RECIPES FROM THE RECIPE MANAGER
-  private final Map<Integer, Recipe> recipes = Recipe.getRECIPE_INDEX();
+  private final Map<Integer, Recipe> recipes = CraftingManager.getCraftingManager().getDiscoveredRecipes();
   private int currentPageIndex = 0;
   private int recipeCount = 0;
   private final int headerX = 135,
@@ -79,8 +79,7 @@ public class RecipesSubView {
       }
       if (newPage.size() > 0) pages.add(newPage);
     }
-    // TODO FIX THIS LINE TO GET THE TOTAL NUMBER OF DISCOVERED RECIPES FROM THE RECIPE MANAGER
-    recipeCount = Recipe.getRECIPE_INDEX().size();
+    recipeCount = recipes.size();
     pagination.setListLength(recipeCount);
     setCurrentPage();
   }

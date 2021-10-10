@@ -463,5 +463,15 @@
       { "ID": 3020 },
       { "ID": 3021 }
     ]
+  },
+  "CRAFTING": {
+    "CRAFTING_LEVEL": 2,
+    "CRAFTING_EXP": 5,
+    "DISCOVERED_RECIPES": [
+      { "ID": 1000 },
+      { "ID": 1001 },
+      { "ID": 1005 },
+      { "ID": 1006 }
+    ]
   }
 }

@@ -11,13 +11,33 @@ import java.util.List;
  * @author Aaron Michael McNulty
  */
 public class Recipe {
-  
+  /**
+   * Recipe name which is equal to the title of the output item.
+   */
   private final String name;
+  /**
+   * List of craftable items that make up the inputs of this recipe.
+   */
   private final List<Item> inputs;
+  /**
+   * Output item that will be created from input item.
+   */
   private final Item output;
+  /**
+   * Minimum crafting level needed to craft this recipe.
+   */
   private final int craftingLevel;
+  /**
+   * Unique id of this recipe.
+   */
   private final int id;
-  private static int nextId = 0;
+  /**
+   * Next id to be given to instance of Recipe.
+   */
+  private static int nextId = 1000;
+  /**
+   * All recipe instances mapped by their id.
+   */
   private static final HashMap<Integer, Recipe> RECIPE_INDEX = new HashMap<>();
   
   /**
@@ -38,23 +58,38 @@ public class Recipe {
   public String getName() {
     return name;
   }
-
+  /**
+   * List of craftable items that make up the inputs of this recipe.
+   * @return List of craftable items that make up the inputs of this recipe.
+   */
   public List<Item> getInputs() {
     return inputs;
   }
-
+  /**
+   * Output item that will be created from input item.
+   * @return Output item that will be created from input item.
+   */
   public Item getOutput() {
     return output;
   }
-
+  /**
+   * Minimum crafting level needed to craft this recipe.
+   * @return Minimum crafting level needed to craft this recipe.
+   */
   public int getCraftingLevel() {
     return craftingLevel;
   }
-
+  /**
+   * Unique id of this recipe.
+   * @return Unique id of this recipe.
+   */
   public int getId() {
     return id;
   }
-
+  /**
+   * All recipe instances mapped by their id.
+   * @return All recipe instances mapped by their id.
+   */
   public static HashMap<Integer, Recipe> getRECIPE_INDEX() {
     return RECIPE_INDEX;
   }

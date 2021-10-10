@@ -239,14 +239,30 @@ public class JSONUtil {
 //  public static final String REFS = "gBmuNMUWDb";
   public static final String REFS = "REFS";
   /**
-   * Key for the array of battle moves in the inventory.
-   */
-  public static final String BATTLE_MOVES = "battleMoves";
-  /**
    * Number value for the amount within each inventory reference.
    */
 //  public static final String AMOUNT = "DoQd94zuo4";
   public static final String AMOUNT = "AMOUNT";
+  /**
+   * Key for the array of battle moves in the inventory.
+   */
+  public static final String BATTLE_MOVES = "battleMoves";
+  /**
+   * Key for the main crafting object.
+   */
+  public static final String CRAFTING = "CRAFTING";
+  /**
+   * Key for current crafting level.
+   */
+  public static final String CRAFTING_LEVEL = "CRAFTING_LEVEL";
+  /**
+   * Key for crafting experience.
+   */
+  public static final String CRAFTING_EXP = "CRAFTING_EXP";
+  /**
+   * Key for array of discovered recipes.
+   */
+  public static final String DISCOVERED_RECIPES = "DISCOVERED_RECIPES";
   
   public JSONObject getNestedObject(JSONObject parent, String[] keys) {
     JSONObject object = parent;

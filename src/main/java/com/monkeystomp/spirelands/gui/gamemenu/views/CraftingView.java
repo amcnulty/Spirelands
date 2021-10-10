@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.crafting.CraftingManager;
 import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
@@ -60,7 +61,7 @@ public class CraftingView extends DisplayView {
     craftingLevelLabel.setText("Crafting Level:");
     craftingLevelLabel.setX(craftingLevelLabelX);
     craftingLevelLabel.setY(craftingLevelLabelY);
-    craftingLevel.setText("1");
+    craftingLevel.setText(Integer.toString(CraftingManager.getCraftingManager().getCraftingLevel()));
     craftingLevel.setX(craftingLevelX);
     craftingLevel.setY(craftingLevelLabelY);
     description.setText("Add crafting materials to the slots below to craft into new items.");
