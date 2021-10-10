@@ -73,7 +73,7 @@ public class RecipesSubView {
           recipesToAdd.get(j),
           listItemX,
           startingY + newPage.size() * spaceBetweenRows,
-          recipe -> handleApplyRecipe(recipe),
+          recipe -> handleApplyRecipe.accept(recipe),
           recipe -> handleInfoClick(recipe)
         ));
       }
@@ -90,10 +90,6 @@ public class RecipesSubView {
       if (currentPageIndex < 0) currentPageIndex = 0;
     }
     pagination.highlightCurrentPage(currentPageIndex);
-  }
-  
-  private void handleApplyRecipe(Recipe recipe) {
-    
   }
   
   private void handleInfoClick(Recipe recipe) {

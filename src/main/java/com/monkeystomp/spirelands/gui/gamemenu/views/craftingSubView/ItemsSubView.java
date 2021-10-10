@@ -81,8 +81,7 @@ public class ItemsSubView {
           startingY + newPage.size() * spaceBetweenRows,
           "Add",
           item -> {
-            EquipmentItem thisItem = (EquipmentItem) item;
-            handleAddItem(thisItem);
+            this.handleAddItem.accept(item);
           },
           item -> showItemDetails(item)
         ));
@@ -100,10 +99,6 @@ public class ItemsSubView {
       if (currentPageIndex < 0) currentPageIndex = 0;
     }
     pagination.highlightCurrentPage(currentPageIndex);
-  }
-  
-  private void handleAddItem(Item item) {
-    
   }
     
   private void checkItemCount() {

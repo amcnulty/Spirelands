@@ -16,6 +16,8 @@ import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.util.Helpers;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The game menu view for when users click on the crafting button.
@@ -46,14 +48,37 @@ public class CraftingView extends DisplayView {
                     outputItemDisplayX = LEFT + 70,
                     outputItemDisplayY = TOP + 130;
   private boolean showingItemsSubView = false,
-                  showingRecipesSubView = false;
+                  showingRecipesSubView = false,
+                  outputItemShowing = false,
+                  errorTextShowing = false;
   private ItemSlot currentSlot;
   private UsableInventoryListItem outputItemDisplay;
   private final GameMenuPrimaryButton recipeListButton = new GameMenuPrimaryButton("View Recipes", recipeListButtonX, craftingLevelLabelY, 45, 13, () -> this.handleShowRecipeList());
   private final ArrayList<ItemSlot> itemSlots = new ArrayList<>();
-  private final ItemSlot slot1 = new CraftingItemSlot(slot1X, slot1Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
-  private final ItemSlot slot2 = new CraftingItemSlot(slot2X, slot2Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
-  private final ItemSlot slot3 = new CraftingItemSlot(slot3X, slot3Y, (item) -> this.handleShowInfo(item), (slot) -> this.handleOpenItemList(slot), false);
+  private final ItemSlot slot1 = new CraftingItemSlot(
+    slot1X,
+    slot1Y,
+    (item) -> this.handleShowInfo(item),
+    false,
+    (slot) -> this.handleOpenItemList(slot),
+    () -> this.handleRemoveItemFromSlot()
+  );
+  private final ItemSlot slot2 = new CraftingItemSlot(
+    slot2X,
+    slot2Y,
+    (item) -> this.handleShowInfo(item),
+    false,
+    (slot) -> this.handleOpenItemList(slot),
+    () -> this.handleRemoveItemFromSlot()
+  );
+  private final ItemSlot slot3 = new CraftingItemSlot(
+    slot3X,
+    slot3Y,
+    (item) -> this.handleShowInfo(item),
+    false,
+    (slot) -> this.handleOpenItemList(slot),
+    () -> this.handleRemoveItemFromSlot()
+  );
   private final ItemsSubView itemsSubView = new ItemsSubView(item -> handleAddItemToSlot(item), () -> showingItemsSubView = false);
   private final RecipesSubView recipesSubView = new RecipesSubView(recipe -> handleApplyRecipe(recipe), () -> showingRecipesSubView = false);
   
@@ -68,24 +93,12 @@ public class CraftingView extends DisplayView {
     description.setX(descriptionX);
     description.setY(descriptionY);
     description.centerText();
-    errorText.setText("This recipe requires a minimum crafting level of 2 to craft!");
-    errorText.setX(descriptionX);
-    errorText.setY(errorTextY);
-    errorText.centerText();
     outputItemLabel.setText("Recipe will create: ");
     outputItemLabel.setX(outputItemLabelX);
     outputItemLabel.setY(outputItemLabelY);
     itemSlots.add(slot1);
     itemSlots.add(slot2);
     itemSlots.add(slot3);
-    outputItemDisplay = new UsableInventoryListItem(
-      new InventoryReference(Item.MEDIUM_HP_POTION, 1),
-      outputItemDisplayX,
-      outputItemDisplayY,
-      "Craft",
-      (Item item) -> System.out.println(item.getTitle()),
-      (Item item) -> System.out.println(item.getTitle())
-    );
   }
   
   private void handleShowRecipeList() {
@@ -112,10 +125,72 @@ public class CraftingView extends DisplayView {
   
   private void handleAddItemToSlot(Item item) {
     currentSlot.setItem(item);
+    showingItemsSubView = false;
+    handleSlotChange();
   }
   
+  private void handleRemoveItemFromSlot() {
+    handleSlotChange();
+  }
+
   private void handleApplyRecipe(Recipe recipe) {
-    
+    clearSlots();
+    for (int i = 0; i < recipe.getInputs().size(); i++) {
+      itemSlots.get(i).setItem(recipe.getInputs().get(i));
+    }
+    showingRecipesSubView = false;
+    handleSlotChange();
+  }
+  
+  private void handleSlotChange() {
+    Recipe recipe = checkForRecipe();
+    if (recipe != null) {
+      outputItemShowing = true;
+      outputItemDisplay = new UsableInventoryListItem(
+        new InventoryReference(recipe.getOutput(), 1),
+        outputItemDisplayX,
+        outputItemDisplayY,
+        "Craft",
+        (Item item) -> System.out.println(item.getTitle()),
+        (Item item) -> System.out.println(item.getTitle())
+      );
+      if (CraftingManager.getCraftingManager().getCraftingLevel() < recipe.getCraftingLevel()) {
+        showErrorText("This recipe requires a minimum crafting level of " + recipe.getCraftingLevel() + " to craft!");
+      }
+    }
+    else {
+      outputItemShowing = false;
+      errorTextShowing = false;
+    }
+  }
+  
+  private Recipe checkForRecipe() {
+    List<ItemSlot> filledSlots = itemSlots.stream()
+                                  .filter(slot -> slot.getItem() != null)
+                                  .collect(Collectors.toList());
+    int numberOfItemsInSlots = filledSlots.size();
+    if (numberOfItemsInSlots > 1) {
+      Item[] inputs = new Item[numberOfItemsInSlots];
+      for (int i = 0; i < numberOfItemsInSlots; i++) {
+        inputs[i] = filledSlots.get(i).getItem();
+      }
+      return CraftingManager.getCraftingManager().checkForRecipe(inputs);
+    }
+    return null;
+  }
+  
+  private void clearSlots() {
+    for (ItemSlot slot: itemSlots) {
+      slot.removeItem();
+    }
+  }
+  
+  private void showErrorText(String errorMsg) {
+    errorText.setText(errorMsg);
+    errorText.setX(descriptionX);
+    errorText.setY(errorTextY);
+    errorText.centerText();
+    errorTextShowing = true;
   }
 
   @Override
@@ -127,6 +202,7 @@ public class CraftingView extends DisplayView {
     itemsSubView.exitingView();
     showingItemsSubView = false;
     showingRecipesSubView = false;
+    clearSlots();
   }
 
   @Override
@@ -136,7 +212,7 @@ public class CraftingView extends DisplayView {
       for (ItemSlot slot: itemSlots) {
         slot.update();
       }
-      outputItemDisplay.update();
+      if (outputItemShowing) outputItemDisplay.update();
     }
     else if (showingItemsSubView) {
       itemsSubView.update();
@@ -152,13 +228,13 @@ public class CraftingView extends DisplayView {
       screen.renderFonts(craftingLevelLabel);
       screen.renderFonts(craftingLevel);
       screen.renderFonts(description);
-      screen.renderFonts(errorText);
+      if (errorTextShowing) screen.renderFonts(errorText);
       screen.renderFonts(outputItemLabel);
       recipeListButton.render(screen, gl);
       for (ItemSlot slot: itemSlots) {
         slot.render(screen, gl);
       }
-      outputItemDisplay.render(screen, gl);
+      if (outputItemShowing) outputItemDisplay.render(screen, gl);
     }
     else if (showingItemsSubView) {
       itemsSubView.render(screen, gl);

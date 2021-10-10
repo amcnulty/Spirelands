@@ -1,9 +1,13 @@
 package com.monkeystomp.spirelands.crafting;
 
-import com.monkeystomp.spirelands.battle.move.BattleMove;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataHydratable;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
+import com.monkeystomp.spirelands.inventory.Item;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -67,6 +71,44 @@ public class CraftingManager implements SaveDataHydratable {
    */
   public HashMap<Integer, Recipe> getDiscoveredRecipes() {
     return recipeMap;
+  }
+  /**
+   * Checks given input items to see if they make up a recipe combination.
+   * @param inputs Array of craftable items to check if they create a recipe.
+   * @return The recipe that is created otherwise returns null.
+   */
+  public Recipe checkForRecipe(Item[] inputs) {
+    Optional<Recipe> possibleRecipe = Recipe.getRECIPE_INDEX().entrySet().stream()
+      .filter(map -> {
+        if (map.getValue().getClass().equals(CompoundRecipe.class)) {
+          if (compareInputsForMatch(((CompoundRecipe)map.getValue()).getAlternateInputs(), inputs)) {
+            return true;
+          }
+        }
+        return compareInputsForMatch(map.getValue().getInputs(), inputs);
+      })
+      .map(entry -> entry.getValue())
+      .findFirst(); 
+    if (possibleRecipe.isPresent()) {
+      return possibleRecipe.get();
+    }
+    return null;
+  }
+  
+  private boolean compareInputsForMatch(List<Item> recipeInputs, Item[] userInputs) {
+    if (recipeInputs.size() == userInputs.length) {
+      return Arrays.asList(userInputs).containsAll(recipeInputs) && recipeInputs.containsAll(Arrays.asList(userInputs));
+    }
+      return false;
+  }
+  /**
+   * Crafts the given inputs with the selected recipe.
+   * This will remove the input items from inventory and create an output item in inventory.
+   * @param inputs Array of craftable items to use in recipe.
+   * @param recipe The recipe that is being crafted.
+   */
+  public void craft(Item[] inputs, Recipe recipe) {
+    System.out.println("Actually removing inputs from inventory and adding newly crafted item.");
   }
   
   private void setCraftingData() {

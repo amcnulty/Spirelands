@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.DangerButton;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
+import com.monkeystomp.spirelands.input.ICallback;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.function.Consumer;
 
@@ -14,6 +15,7 @@ import java.util.function.Consumer;
 public class CraftingItemSlot extends ItemSlot {
   
   private final Consumer<ItemSlot> onAdd;
+  private final ICallback onRemove;
   
   private DangerButton remove = new DangerButton(
     "Remove",
@@ -23,7 +25,7 @@ public class CraftingItemSlot extends ItemSlot {
     11,
     () -> {
       closePopover();
-      removeItem();
+      handleRemoveClick();
     }
   );
   
@@ -39,20 +41,28 @@ public class CraftingItemSlot extends ItemSlot {
     }
   );
   
-  public CraftingItemSlot(int x, int y, Consumer<Item> handleInfo, Consumer<ItemSlot> onAdd, Boolean showPopoverTop) {
+  public CraftingItemSlot(int x, int y, Consumer<Item> handleInfo, Boolean showPopoverTop, Consumer<ItemSlot> onAdd, ICallback onRemove) {
     super(x, y, handleInfo, showPopoverTop);
     this.onAdd = onAdd;
+    this.onRemove = onRemove;
   }
   
   private void handleAddClick() {
     onAdd.accept(this);
   }
   
+  private void handleRemoveClick() {
+    removeItem();
+    onRemove.execute();
+  }
+  
   @Override
   protected void click() {
     super.click();
-    if (item == null) togglePopover();
-    super.click();
+    if (item == null) {
+      togglePopover();
+      super.click();
+    }
   }
   
   @Override
