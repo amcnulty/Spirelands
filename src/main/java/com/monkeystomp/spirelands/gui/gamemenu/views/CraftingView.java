@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.crafting.CraftingManager;
 import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
+import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.components.CraftingItemSlot;
@@ -11,10 +12,12 @@ import com.monkeystomp.spirelands.gui.gamemenu.components.ItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.ItemsSubView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.RecipesSubView;
+import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
 import com.monkeystomp.spirelands.util.Helpers;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,12 +30,20 @@ public class CraftingView extends DisplayView {
   
   private final FontInfo  craftingLevelLabel = GameFonts.getGAME_MENU_LABEL_TEXT(),
                           craftingLevel = GameFonts.getGAME_MENU_PRIMARY_TEXT(),
+                          maxLevel = GameFonts.getDarkText_bold_18(),
+                          craftingExpFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
                           description = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
                           outputItemLabel = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
                           errorText = GameFonts.getWarningText_bold_18();
   private final int craftingLevelLabelX = LEFT + 10,
                     craftingLevelLabelY = TOP + 10,
                     craftingLevelX = LEFT + 54,
+                    expBarWidth = 40,
+                    expBarHeight = 4,
+                    expBarX = LEFT + 65,
+                    expBarY = TOP + 8,
+                    expFontX = expBarX + 45,
+                    expFontY = expBarY + 2,
                     descriptionX = (LEFT + RIGHT) / 2,
                     descriptionY = TOP + 30,
                     recipeListButtonX = RIGHT - 40,
@@ -51,6 +62,12 @@ public class CraftingView extends DisplayView {
                   showingRecipesSubView = false,
                   outputItemShowing = false,
                   errorTextShowing = false;
+  private final Sprite expUnderline = new Sprite(expBarWidth, 1, GameColors.EXP_GAUGE_UNDERLINE);
+  private final Sprite expEmpty = new Sprite(expBarWidth, expBarHeight, GameColors.EXP_GAUGE_EMPTY);
+  private Sprite expFill;
+  private int craftingExpAnimationValue,
+              craftingLevelAnimationValue,
+              tick = 0;
   private ItemSlot currentSlot;
   private UsableInventoryListItem outputItemDisplay;
   private final GameMenuPrimaryButton recipeListButton = new GameMenuPrimaryButton("View Recipes", recipeListButtonX, craftingLevelLabelY, 45, 13, () -> this.handleShowRecipeList());
@@ -99,6 +116,16 @@ public class CraftingView extends DisplayView {
     itemSlots.add(slot1);
     itemSlots.add(slot2);
     itemSlots.add(slot3);
+    craftingExpAnimationValue = CraftingManager.getCraftingManager().getCraftingExp();
+    craftingLevelAnimationValue = CraftingManager.getCraftingManager().getCraftingLevel();
+    craftingExpFont.setText(CraftingManager.getCraftingManager().getCraftingExp() + " / " + CraftingManager.getCraftingManager().getCraftingExpMax());
+    craftingExpFont.setX(expFontX);
+    craftingExpFont.setY(expFontY);
+    maxLevel.setText("MAX");
+    maxLevel.setX(expBarX);
+    maxLevel.setY(expFontY);
+    maxLevel.setColor(new Color(GameColors.GOLD_PARTICLE_COLOR));
+    expFill = new Sprite((int)(craftingExpAnimationValue / (double)CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue) * expBarWidth), expBarHeight, GameColors.EXP_GAUGE_FILL);
   }
   
   private void handleShowRecipeList() {
@@ -192,6 +219,21 @@ public class CraftingView extends DisplayView {
     errorText.centerText();
     errorTextShowing = true;
   }
+  
+  private void updateExpFont() {
+    if (++craftingExpAnimationValue == CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue)) {
+      ++craftingLevelAnimationValue;
+      craftingExpAnimationValue = 0;
+    }
+    craftingLevel.setText(Integer.toString(craftingLevelAnimationValue));
+    if (craftingLevelAnimationValue == 3) return;
+    craftingExpFont.setText(craftingExpAnimationValue + " / " + CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue));
+  }
+  
+  private void updateExpFill() {
+    if (craftingLevelAnimationValue == 3) return;
+    expFill = new Sprite((int)(craftingExpAnimationValue / (double)CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue) * expBarWidth), expBarHeight, GameColors.EXP_GAUGE_FILL);
+  }
 
   @Override
   public void enteringView() {
@@ -209,6 +251,15 @@ public class CraftingView extends DisplayView {
   public void update() {
     if (!showingItemsSubView && !showingRecipesSubView) {
       recipeListButton.update();
+      if ((craftingExpAnimationValue != CraftingManager.getCraftingManager().getCraftingExp()
+          || craftingLevelAnimationValue != CraftingManager.getCraftingManager().getCraftingLevel())
+            && craftingLevelAnimationValue < 3) {
+        if (++tick % 4 == 0) {
+          updateExpFont();
+          updateExpFill();
+        }
+      }
+      else tick = 0;
       for (ItemSlot slot: itemSlots) {
         slot.update();
       }
@@ -227,6 +278,15 @@ public class CraftingView extends DisplayView {
     if (!showingItemsSubView && !showingRecipesSubView) {
       screen.renderFonts(craftingLevelLabel);
       screen.renderFonts(craftingLevel);
+      if (craftingLevelAnimationValue < 3) {
+        screen.renderSprite(gl, expBarX, expBarY, expEmpty, false);
+        screen.renderSprite(gl, expBarX, expBarY + 4, expUnderline, false);
+        if (expFill.getWidth() > 0) screen.renderSprite(gl, expBarX, expBarY, expFill, false);
+        screen.renderFonts(this.craftingExpFont);
+      }
+      else {
+        screen.renderFonts(maxLevel);
+      }
       screen.renderFonts(description);
       if (errorTextShowing) screen.renderFonts(errorText);
       screen.renderFonts(outputItemLabel);

@@ -28,6 +28,10 @@ public class Recipe {
    */
   private final int craftingLevel;
   /**
+   * Flag for if this item has ever been crafted in the current save game.
+   */
+  private boolean crafted = false;
+  /**
    * Unique id of this recipe.
    */
   private final int id;
@@ -78,6 +82,19 @@ public class Recipe {
    */
   public int getCraftingLevel() {
     return craftingLevel;
+  }
+  /**
+   * Flag for if this item has ever been crafted in the current save game.
+   * @return Flag for if this item has ever been crafted in the current save game.
+   */
+  public boolean hasBeenCrafted() {
+    return crafted;
+  }
+  /**
+   * Setting a recipe to crafted means it has been crafted once during the current save game.
+   */
+  public void setCrafted() {
+    this.crafted = true;
   }
   /**
    * Unique id of this recipe.

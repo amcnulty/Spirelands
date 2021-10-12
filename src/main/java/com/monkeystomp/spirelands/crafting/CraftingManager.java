@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -28,9 +27,21 @@ public class CraftingManager implements SaveDataHydratable {
    */
   private int craftingLevel;
   /**
+   * The highest possible crafting level.
+   */
+  private final int maxCraftingLevel = 3;
+  /**
    * Crafting experience points of the save game data.
    */
   private int craftingExp;
+  /**
+   * A map of crafting level to total experience to advance to the next level.
+   */
+  private static final HashMap<Integer, Integer> LEVEL_CRAFTING_EXP_MAP = new HashMap<>();
+  static {
+    LEVEL_CRAFTING_EXP_MAP.put(1, 30);
+    LEVEL_CRAFTING_EXP_MAP.put(2, 50);
+  }
   // A map of all ids to Recipe object which represents disoverd recipes.
   private final HashMap<Integer, Recipe> recipeMap = new HashMap<>();
   // The singleton instance of the class.
@@ -57,6 +68,44 @@ public class CraftingManager implements SaveDataHydratable {
    */
   public int getCraftingExp() {
     return craftingExp;
+  }
+  /**
+   * Gets the total amount of experience in the current level.
+   * @return The total amount of experience in the current level.
+   */
+  public int getCraftingExpMax() {
+    return LEVEL_CRAFTING_EXP_MAP.get(craftingLevel);
+  }
+  /**
+   * Gets the total amount of experience in a given crafting level.
+   * @param level The crafting level to reference.
+   * @return The total amount of experience in a given crafting level.
+   */
+  public int getCraftingExpMax(int level) {
+    return LEVEL_CRAFTING_EXP_MAP.get(level);
+  }
+  /**
+   * Increases the crafting level by one.
+   */
+  private void increaseLevel() {
+    craftingLevel++;
+  }
+  /**
+   * Adds the given amount of experience points to the current crafting experience.
+   * @param amount Amount of crafting points to increase by.
+   */
+  public void addCraftingExp(int amount) {
+    if (craftingLevel < maxCraftingLevel) {
+      if (craftingExp + amount >= getCraftingExpMax()) {
+        int remaining = amount - (getCraftingExpMax() - craftingExp);
+        increaseLevel();
+        craftingExp = 0;
+        addCraftingExp(remaining);
+      }
+      else {
+        craftingExp += amount;
+      }
+    }
   }
   /**
    * Adds a new recipe to the save game state list of discovered recipes.

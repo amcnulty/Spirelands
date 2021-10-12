@@ -465,13 +465,13 @@
     ]
   },
   "CRAFTING": {
-    "CRAFTING_LEVEL": 2,
-    "CRAFTING_EXP": 5,
+    "CRAFTING_LEVEL": 1,
+    "CRAFTING_EXP": 25,
     "DISCOVERED_RECIPES": [
-      { "ID": 1000 },
-      { "ID": 1001 },
-      { "ID": 1005 },
-      { "ID": 1006 }
+      { "ID": 1000, "CRAFTED": true },
+      { "ID": 1001, "CRAFTED": true  },
+      { "ID": 1005, "CRAFTED": false  },
+      { "ID": 1006, "CRAFTED": false  }
     ]
   }
 }
