@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.level.tile.Tile;
 import com.monkeystomp.spirelands.level.tile.TileData;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.dialog.DialogBox;
+import com.monkeystomp.spirelands.gui.dialog.ToastMessage;
 import com.monkeystomp.spirelands.gui.gamemenu.GameMenu;
 import com.monkeystomp.spirelands.input.Keyboard;
 import com.monkeystomp.spirelands.level.entity.Entity;
@@ -108,7 +109,7 @@ public class Level implements Runnable {
   private final ArrayList<Tile> textureData = new ArrayList<>();
   private final ArrayList<Float>  xFloat = new ArrayList<>(),
                                   yFloat = new ArrayList<>();
-
+  private final ToastMessage toastMessage = ToastMessage.getToastMessage();
   private ILevelChanger IChanger;
 
   public Level() {
@@ -414,6 +415,7 @@ public class Level implements Runnable {
   
   public void update(){
     if (!loadingThread.isAlive()) {
+      toastMessage.update();
       if (!battleTransition.isAnimating()) {
         if (!dialogOpen && !gameMenuOpen && !transitionFader.isTransitionRunning()) {
           player.update();
@@ -465,6 +467,7 @@ public class Level implements Runnable {
       // Call the subclass hook for rendering over the light map.
       levelRenderOverLightMap(screen, gl);
       if (gameMenuOpen) GAME_MENU.render(screen, gl);
+      toastMessage.render(screen, gl);
       transitionFader.render(screen, gl);
       if (battleTransition.isAnimating()) battleTransition.render(screen, gl);
     }

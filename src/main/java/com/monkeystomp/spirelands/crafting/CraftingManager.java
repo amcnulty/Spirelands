@@ -2,6 +2,8 @@ package com.monkeystomp.spirelands.crafting;
 
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataHydratable;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
+import com.monkeystomp.spirelands.gui.dialog.ToastLength;
+import com.monkeystomp.spirelands.gui.dialog.ToastMessage;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -30,6 +32,10 @@ public class CraftingManager implements SaveDataHydratable {
    * The highest possible crafting level.
    */
   private final int maxCraftingLevel = 3;
+  /**
+   * The amount of experience gained for discovering a new recipe.
+   */
+  private final int expPerDiscoveredRecipe = 5;
   /**
    * Crafting experience points of the save game data.
    */
@@ -89,6 +95,7 @@ public class CraftingManager implements SaveDataHydratable {
    */
   private void increaseLevel() {
     craftingLevel++;
+    ToastMessage.getToastMessage().addToast("Crafting level increased to level " + craftingLevel +"! You can now craft level " + craftingLevel + " recipes.", ToastLength.LONG);
   }
   /**
    * Adds the given amount of experience points to the current crafting experience.
@@ -96,22 +103,27 @@ public class CraftingManager implements SaveDataHydratable {
    */
   public void addCraftingExp(int amount) {
     if (craftingLevel < maxCraftingLevel) {
-      if (craftingExp + amount >= getCraftingExpMax()) {
-        int remaining = amount - (getCraftingExpMax() - craftingExp);
-        increaseLevel();
-        craftingExp = 0;
-        addCraftingExp(remaining);
-      }
-      else {
-        craftingExp += amount;
-      }
+      ToastMessage.getToastMessage().addToast("+ " + amount + " Crafting Experience!");
+      craftingExpIncrease(amount);
+    }
+  }
+  
+  private void craftingExpIncrease(int amount) {
+    if (craftingExp + amount >= getCraftingExpMax()) {
+      int remaining = amount - (getCraftingExpMax() - craftingExp);
+      increaseLevel();
+      craftingExp = 0;
+      craftingExpIncrease(remaining);
+    }
+    else {
+      craftingExp += amount;
     }
   }
   /**
    * Adds a new recipe to the save game state list of discovered recipes.
-   * @param recipe The recipe that has been discovered to be added to save game state.
+   * @param recipe The recipe to be added to save game state.
    */
-  public void addDiscoveredRecipe(Recipe recipe) {
+  private void addRecipeToMap(Recipe recipe) {
     recipeMap.put(recipe.getId(), recipe);
   }
   /**
@@ -139,6 +151,7 @@ public class CraftingManager implements SaveDataHydratable {
       .map(entry -> entry.getValue())
       .findFirst(); 
     if (possibleRecipe.isPresent()) {
+      handleIfRecipeIsUndiscovered(possibleRecipe.get());
       return possibleRecipe.get();
     }
     return null;
@@ -149,6 +162,17 @@ public class CraftingManager implements SaveDataHydratable {
       return Arrays.asList(userInputs).containsAll(recipeInputs) && recipeInputs.containsAll(Arrays.asList(userInputs));
     }
       return false;
+  }
+  /**
+   * Checks if the given recipe is undiscovered to do the appropriate actions if not.
+   * @param recipe The recipe to check if it is discovered.
+   */
+  private void handleIfRecipeIsUndiscovered(Recipe recipe) {
+    if (!recipeMap.containsValue(recipe)) {
+      ToastMessage.getToastMessage().addToast("New recipe discovered: " + recipe.getName());
+      addRecipeToMap(recipe);
+      addCraftingExp(this.expPerDiscoveredRecipe);
+    }
   }
   /**
    * Crafts the given inputs with the selected recipe.
@@ -165,7 +189,7 @@ public class CraftingManager implements SaveDataHydratable {
     craftingLevel = jsonUtil.getInt(crafting, JSONUtil.CRAFTING_LEVEL);
     craftingExp = jsonUtil.getInt(crafting, JSONUtil.CRAFTING_EXP);
     JSONArray discoveredRecipes = (JSONArray) crafting.get(JSONUtil.DISCOVERED_RECIPES);
-    discoveredRecipes.forEach(recipe -> addDiscoveredRecipe(Recipe.getRECIPE_INDEX().get(jsonUtil.getInt((JSONObject)recipe, JSONUtil.ID))));
+    discoveredRecipes.forEach(recipe -> addRecipeToMap(Recipe.getRECIPE_INDEX().get(jsonUtil.getInt((JSONObject)recipe, JSONUtil.ID))));
   }
 
   @Override
