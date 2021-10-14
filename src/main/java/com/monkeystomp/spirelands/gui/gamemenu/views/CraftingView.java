@@ -32,7 +32,7 @@ public class CraftingView extends DisplayView {
                           craftingLevel = GameFonts.getGAME_MENU_PRIMARY_TEXT(),
                           maxLevel = GameFonts.getDarkText_bold_18(),
                           craftingExpFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
-                          description = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
+                          description = GameFonts.getGAME_MENU_MUTED_TEXT(),
                           outputItemLabel = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
                           errorText = GameFonts.getWarningText_bold_18();
   private final int craftingLevelLabelX = LEFT + 10,
@@ -106,7 +106,7 @@ public class CraftingView extends DisplayView {
     craftingLevel.setText(Integer.toString(CraftingManager.getCraftingManager().getCraftingLevel()));
     craftingLevel.setX(craftingLevelX);
     craftingLevel.setY(craftingLevelLabelY);
-    description.setText("Add crafting materials to the slots below to craft into new items.");
+    description.setText("-- Add crafting materials to the slots below to craft into new items --");
     description.setX(descriptionX);
     description.setY(descriptionY);
     description.centerText();

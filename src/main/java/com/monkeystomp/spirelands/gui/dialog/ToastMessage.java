@@ -59,7 +59,7 @@ public class ToastMessage {
       messages.removeAll(expiredMessages);
       int nextYPosition = toastStartingY;
       for (int i = 0; i < messages.size(); i++) {
-        if (i < 0) {
+        if (i > 0) {
           nextYPosition += messages.get(i - 1).toastHeight + spaceBetweenToasts;
         }
         messages.get(i).setLinesVerticalPosition(nextYPosition);

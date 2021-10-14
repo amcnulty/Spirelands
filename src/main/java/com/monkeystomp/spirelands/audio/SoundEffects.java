@@ -153,6 +153,30 @@ public class SoundEffects {
    */
   public static final File QUICK_EAT = new File("./resources/audio/sfx/items/quick_eat.wav");
   /**
+   * Equip Sword sound.
+   */
+  public static final File EQUIP_SWORD = new File("./resources/audio/sfx/weapons/equip_sword.wav");
+  /**
+   * Equip Bow sound.
+   */
+  public static final File EQUIP_BOW = new File("./resources/audio/sfx/weapons/equip_bow.wav");
+  /**
+   * Equip Dagger sound.
+   */
+  public static final File EQUIP_DAGGER = new File("./resources/audio/sfx/weapons/equip_dagger.wav");
+  /**
+   * Equip Staff sound.
+   */
+  public static final File EQUIP_STAFF = new File("./resources/audio/sfx/weapons/equip_staff.wav");
+  /**
+   * Equip Battle Axe sound.
+   */
+  public static final File EQUIP_BATTLE_AXE = new File("./resources/audio/sfx/weapons/equip_battle_axe.wav");
+  /**
+   * Equip Blunt sound.
+   */
+  public static final File EQUIP_BLUNT = new File("./resources/audio/sfx/weapons/equip_blunt.wav");
+  /**
    * An armor equip sound.
    */
   public static final File EQUIP_ARMOR = new File("./resources/audio/sfx/items/equip_armor.wav");
@@ -203,6 +227,10 @@ public class SoundEffects {
    * UI sound for when the game menu is closed.
    */
   public static final File CLOSE_GAME_MENU = new File("./resources/audio/sfx/ui/close_game_menu.wav");
+  /**
+   * Notification sound. Can be used when showing a toast message.
+   */
+  public static final File NOTIFICATION = new File("./resources/audio/sfx/ui/notification.wav");
   /**
    * Plays a sound effect of the given file.
    * @param file The file for the sound to be played.

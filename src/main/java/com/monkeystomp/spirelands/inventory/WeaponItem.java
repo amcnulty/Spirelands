@@ -1,7 +1,10 @@
 package com.monkeystomp.spirelands.inventory;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.battle.elemental.ElementalEffect;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -42,6 +45,16 @@ public class WeaponItem extends Item {
               magicPower;
   private String weaponType;
   private final ArrayList<ElementalEffect> elementalEffects = new ArrayList<>();
+  private static final HashMap<String, File> EQUIP_SOUND_MAP = new HashMap<>();
+  static {
+    EQUIP_SOUND_MAP.put(SWORD, SoundEffects.EQUIP_SWORD);
+    EQUIP_SOUND_MAP.put(BOW, SoundEffects.EQUIP_BOW);
+    EQUIP_SOUND_MAP.put(DAGGER, SoundEffects.EQUIP_DAGGER);
+    EQUIP_SOUND_MAP.put(STAFF, SoundEffects.EQUIP_STAFF);
+    EQUIP_SOUND_MAP.put(BATTLE_AXE, SoundEffects.EQUIP_BATTLE_AXE);
+    EQUIP_SOUND_MAP.put(WAND, SoundEffects.EQUIP_ARMOR);
+    EQUIP_SOUND_MAP.put(BLUNT, SoundEffects.EQUIP_BLUNT);
+  }
 
   public WeaponItem(ItemBuilder builder) {
     super(builder.type(Item.WEAPON));
@@ -80,6 +93,10 @@ public class WeaponItem extends Item {
 
   public ArrayList<ElementalEffect> getElementalEffects() {
     return elementalEffects;
+  }
+  
+  public File getEquipSound() {
+    return EQUIP_SOUND_MAP.get(weaponType);
   }
   
   @Override

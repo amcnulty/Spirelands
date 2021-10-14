@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.DangerButton;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
@@ -45,6 +46,7 @@ public class CraftingItemSlot extends ItemSlot {
     super(x, y, handleInfo, showPopoverTop);
     this.onAdd = onAdd;
     this.onRemove = onRemove;
+    remove.setClickSound(SoundEffects.UNEQUIP_ARMOR);
   }
   
   private void handleAddClick() {

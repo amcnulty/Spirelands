@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.views;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.character.Character;
@@ -40,6 +41,7 @@ public class WeaponView extends DisplayView {
   });
   private final CharacterWeaponDetailCard weaponDetailCard = new CharacterWeaponDetailCard(item -> showItemDetails(item), nextCharacter -> setCharacter(nextCharacter));
   private boolean showingWeaponDetailCard = true;
+  private final SoundEffects sfx = new SoundEffects();
   
   private void showItemDetails(Item item) {
     itemDetailCard.setItem(item);
@@ -49,6 +51,7 @@ public class WeaponView extends DisplayView {
   private void handleEquipClick(WeaponItem weapon) {
     showingWeaponDetailCard = true;
     character.equipWeapon(weapon);
+    sfx.playSoundEffect(weapon.getEquipSound());
     createListItems(manager.getWeaponsByType(character.getWeaponType()));
   }
   

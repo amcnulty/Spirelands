@@ -7,6 +7,7 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.DangerButton;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
+import com.monkeystomp.spirelands.gui.dialog.ToastMessage;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
@@ -193,7 +194,7 @@ public class PartyMemberCard {
   
   public void handleAddClick() {
     if (!CharacterManager.getCharacterManager().addPartyMemberAtLowestPosition(character)) {
-      System.out.println("Show popup error that the party is full!");
+      ToastMessage.getToastMessage().addToast("Party is already full!");
     }
     else {
       checkParty();

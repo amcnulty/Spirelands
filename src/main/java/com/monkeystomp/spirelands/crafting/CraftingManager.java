@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.crafting;
 
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.gamedata.saves.SaveDataHydratable;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.gui.dialog.ToastLength;
@@ -43,6 +44,7 @@ public class CraftingManager implements SaveDataHydratable {
   /**
    * A map of crafting level to total experience to advance to the next level.
    */
+  private final SoundEffects sfx = new SoundEffects();
   private static final HashMap<Integer, Integer> LEVEL_CRAFTING_EXP_MAP = new HashMap<>();
   static {
     LEVEL_CRAFTING_EXP_MAP.put(1, 30);
@@ -96,6 +98,7 @@ public class CraftingManager implements SaveDataHydratable {
   private void increaseLevel() {
     craftingLevel++;
     ToastMessage.getToastMessage().addToast("Crafting level increased to level " + craftingLevel +"! You can now craft level " + craftingLevel + " recipes.", ToastLength.LONG);
+    sfx.playSoundEffect(SoundEffects.STAT_UP);
   }
   /**
    * Adds the given amount of experience points to the current crafting experience.
@@ -104,6 +107,7 @@ public class CraftingManager implements SaveDataHydratable {
   public void addCraftingExp(int amount) {
     if (craftingLevel < maxCraftingLevel) {
       ToastMessage.getToastMessage().addToast("+ " + amount + " Crafting Experience!");
+      sfx.playSoundEffect(SoundEffects.NOTIFICATION);
       craftingExpIncrease(amount);
     }
   }

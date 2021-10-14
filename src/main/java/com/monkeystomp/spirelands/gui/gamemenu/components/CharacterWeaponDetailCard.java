@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.character.Character;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -13,12 +14,16 @@ import java.util.function.Consumer;
 public class CharacterWeaponDetailCard extends CharacterEquipmentCard {
   
   private final Consumer<Item> IShowItemDetail;
+  private final SoundEffects sfx = new SoundEffects();
   private final EquippedItemSlot equippedWeaponSlot = new EquippedItemSlot(
     cardCenterHoriz,
     140,
     () -> character.getEquippedWeapon(),
     item -> showEquippedItemDetails(item),
-    () -> character.unequipWeapon(),
+    () -> {
+      character.unequipWeapon();
+      sfx.playSoundEffect(SoundEffects.UNEQUIP_ARMOR);
+    },
     false
   );
   
