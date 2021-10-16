@@ -9,6 +9,10 @@ import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
+import com.monkeystomp.spirelands.inventory.Item;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -17,6 +21,7 @@ import java.util.function.Consumer;
  */
 public class RecipeListItem {
   
+  private final Recipe recipe;
   private final Sprite thumbnail = new Sprite(16, 16, 2, 11, SpriteSheet.itemsSheet);
   private final String name;
   protected final int x, y;
@@ -25,6 +30,7 @@ public class RecipeListItem {
   private final GameMenuPrimaryButton infoButton;
   
   public RecipeListItem(Recipe recipe, int x, int y, Consumer<Recipe> onApplyClick, Consumer<Recipe> onInfoClick) {
+    this.recipe = recipe;
     this.name = recipe.getName();
     this.x = x;
     this.y = y;
@@ -33,6 +39,31 @@ public class RecipeListItem {
     label.setText(name);
     label.setX(x + 12);
     label.setY(y);
+  }
+  
+  public void refresh() {
+    boolean disableApply = false;
+    HashMap<Item, Integer> itemToRequiredQuantityMap = new HashMap<>();
+    for (int i = 0; i < recipe.getInputs().size(); i++) {
+      Item key = recipe.getInputs().get(i);
+      Integer replaceValue;
+      if (itemToRequiredQuantityMap.get(key) == null) {
+        replaceValue = 1;
+      }
+      else {
+        replaceValue = itemToRequiredQuantityMap.get(key) + 1;
+      }
+      itemToRequiredQuantityMap.put(key, replaceValue);
+    }
+    Set<Item> keys = itemToRequiredQuantityMap.keySet();
+    for (Item key: keys) {
+      int amountInInventory = InventoryManager.getInventoryManager().getInventoryReferenceById(key.getId()).getAmount();
+      int amountInRecipe = itemToRequiredQuantityMap.get(key);
+      if (amountInInventory < amountInRecipe) {
+        disableApply = true;
+      }
+    }
+    applyButton.setDisabled(disableApply);
   }
   
   public void update() {

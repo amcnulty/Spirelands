@@ -58,6 +58,13 @@ public class PrimaryButton extends Button {
     button = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE);
     buttonHover = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_HOVER);
     buttonDown = new Sprite(width, height, GameColors.PRIMARY_BUTTON_BLUE_DOWN);
+    int[] pixels = new int[width * height];
+    for (int yy = 0; yy < height; yy++) {
+      for(int xx = 0; xx < width; xx++) {
+        pixels[xx + yy * width] = GameColors.PRIMARY_BUTTON_BLUE_DISABLED;
+      }
+    }
+    disabledButton = new Sprite(pixels, width, height);
     currentButton = button;
   }
   

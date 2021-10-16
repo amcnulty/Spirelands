@@ -103,8 +103,17 @@ public class RecipesSubView {
     }
   }
   
-  public void update() {
+  public void enteringView() {
     checkRecipeCount();
+    for (ArrayList<RecipeListItem> page: pages) {
+      for (RecipeListItem recipeItem: page) {
+        recipeItem.refresh();
+      }
+    }
+  }
+  
+  public void update() {
+//    checkRecipeCount();
     backButton.update();
     if (pages.size() > 0) {
       for (RecipeListItem item: pages.get(currentPageIndex)) {

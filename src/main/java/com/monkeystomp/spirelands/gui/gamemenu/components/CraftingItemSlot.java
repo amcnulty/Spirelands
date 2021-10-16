@@ -2,6 +2,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.components;
 
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.audio.SoundEffects;
+import com.monkeystomp.spirelands.crafting.CraftingManager;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.controlls.button.DangerButton;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
@@ -56,6 +57,18 @@ public class CraftingItemSlot extends ItemSlot {
   private void handleRemoveClick() {
     removeItem();
     onRemove.execute();
+  }
+
+  @Override
+  public void removeItem() {
+    CraftingManager.getCraftingManager().removeItemFromTable(this.item);
+    super.removeItem();
+  }
+
+  @Override
+  public void setItem(Item item) {
+    super.setItem(item);
+    CraftingManager.getCraftingManager().addItemToTable(item);
   }
   
   @Override

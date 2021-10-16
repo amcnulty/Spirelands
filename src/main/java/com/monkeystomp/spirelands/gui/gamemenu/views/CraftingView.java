@@ -130,6 +130,7 @@ public class CraftingView extends DisplayView {
   
   private void handleShowRecipeList() {
     showingRecipesSubView = true;
+    recipesSubView.enteringView();
     // Trick to not get the recipe list button to flash when returning to the main view from recipe list.
     preventButtonFlash();
   }
@@ -148,6 +149,7 @@ public class CraftingView extends DisplayView {
   private void handleOpenItemList(ItemSlot slot) {
     currentSlot = slot;
     showingItemsSubView = true;
+    itemsSubView.enteringView();
   }
   
   private void handleAddItemToSlot(Item item) {

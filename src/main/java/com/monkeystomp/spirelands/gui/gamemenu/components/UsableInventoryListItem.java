@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 public class UsableInventoryListItem extends InventoryListItem {
   
   private final String primaryButtonText;
-  private PrimaryButton useButton;
+  protected PrimaryButton useButton;
   private final Consumer<Item> IHandlePrimaryClick;
 
   public UsableInventoryListItem(InventoryReference ref, int x, int y, String primaryButtonText, Consumer<Item> IHandlePrimaryClick, Consumer<Item> IShowItemDetails) {

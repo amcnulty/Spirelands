@@ -6,6 +6,7 @@ import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.gui.dialog.ToastLength;
 import com.monkeystomp.spirelands.gui.dialog.ToastMessage;
 import com.monkeystomp.spirelands.inventory.Item;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -42,9 +43,17 @@ public class CraftingManager implements SaveDataHydratable {
    */
   private int craftingExp;
   /**
-   * A map of crafting level to total experience to advance to the next level.
+   * Instance of sound effects for playing sounds.
    */
   private final SoundEffects sfx = new SoundEffects();
+  /**
+   * Collection of items that are currently on the crafting table.
+   * This is tracked inventory quantity is taken into consideration when crafting.
+   */
+  private final ArrayList<Item> craftingTableItems = new ArrayList<>();
+  /**
+   * A map of crafting level to total experience to advance to the next level.
+   */
   private static final HashMap<Integer, Integer> LEVEL_CRAFTING_EXP_MAP = new HashMap<>();
   static {
     LEVEL_CRAFTING_EXP_MAP.put(1, 30);
@@ -177,6 +186,27 @@ public class CraftingManager implements SaveDataHydratable {
       addRecipeToMap(recipe);
       addCraftingExp(this.expPerDiscoveredRecipe);
     }
+  }
+  /**
+   * A collection of items that are currently on the crafting table.
+   * @return A collection of items that are currently on the crafting table.
+   */
+  public ArrayList<Item> getCraftingTableItems() {
+    return craftingTableItems;
+  }
+  /**
+   * Adds the given item to the collection of items on the crafting table.
+   * @param item Item to be added to the crafting table.
+   */
+  public void addItemToTable(Item item) {
+    craftingTableItems.add(item);
+  }
+  /**
+   * Removes the given item from the collection of items on the crafting table.
+   * @param item Item to be removed from the crafting table.
+   */
+  public void removeItemFromTable(Item item) {
+    craftingTableItems.remove(item);
   }
   /**
    * Crafts the given inputs with the selected recipe.

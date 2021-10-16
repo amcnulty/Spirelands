@@ -5,14 +5,13 @@ import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
+import com.monkeystomp.spirelands.gui.gamemenu.components.CraftingListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.InventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCard;
 import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
-import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.input.ICallback;
-import com.monkeystomp.spirelands.inventory.EquipmentItem;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
@@ -75,7 +74,7 @@ public class ItemsSubView {
       ArrayList<InventoryListItem> newPage = new ArrayList<>();
       for (int j = i * itemsPerPage; j < itemsPerPage + (i * itemsPerPage); j++) {
         if (refs.size() - 1 < j) break;
-        newPage.add(new UsableInventoryListItem(
+        newPage.add(new CraftingListItem(
           refs.get(j),
           listItemX,
           startingY + newPage.size() * spaceBetweenRows,
@@ -105,6 +104,14 @@ public class ItemsSubView {
     if (itemCount != items.size()) {
       createListItems(items);
       itemCount = items.size();
+    }
+  }
+  
+  public void enteringView() {
+    for (ArrayList<InventoryListItem> page: pages) {
+      for (InventoryListItem craftingItem: page) {
+        ((CraftingListItem)craftingItem).refresh();
+      }
     }
   }
   

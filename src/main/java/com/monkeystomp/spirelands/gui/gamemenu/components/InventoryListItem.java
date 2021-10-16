@@ -20,10 +20,10 @@ public abstract class InventoryListItem {
   private final String name;
   private int amount;
   protected final int x, y;
-  private final InventoryReference inventoryReference;
+  protected final InventoryReference inventoryReference;
   protected final Item item;
-  private final FontInfo  label = GameFonts.getGAME_MENU_LABEL_TEXT(),
-                          amountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
+  protected final FontInfo  label = GameFonts.getGAME_MENU_LABEL_TEXT(),
+                            amountFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
   private final GameMenuPrimaryButton infoButton;
   private final Consumer<Item>  IShowItemDetails;
 

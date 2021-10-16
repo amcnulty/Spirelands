@@ -145,6 +145,10 @@ public class GameColors {
    */
   public static final int PRIMARY_BUTTON_BLUE_DOWN = 0xFF001366;
   /**
+   * Primary button disabled color #0xFF93A1AA
+   */
+  public static final int PRIMARY_BUTTON_BLUE_DISABLED = 0xFF93A1AA;
+  /**
    * Danger button default color #0xFFD22233
    */
   public static final int DANGER_BUTTON_RED = 0xFFD22233;
