@@ -6,8 +6,10 @@ import com.monkeystomp.spirelands.crafting.Recipe;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.controlls.button.GameMenuPrimaryButton;
+import com.monkeystomp.spirelands.gui.controlls.button.GameMenuSecondaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.gamemenu.components.CraftingItemSlot;
+import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCardModal;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.ItemsSubView;
@@ -34,7 +36,9 @@ public class CraftingView extends DisplayView {
                           craftingExpFont = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
                           description = GameFonts.getGAME_MENU_MUTED_TEXT(),
                           outputItemLabel = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(),
-                          errorText = GameFonts.getWarningText_bold_18();
+                          errorText = GameFonts.getWarningText_bold_18(),
+                          quantityLabel = GameFonts.getGAME_MENU_LABEL_TEXT(),
+                          quantityValue = GameFonts.getGAME_MENU_PRIMARY_TEXT_THIN();
   private final int craftingLevelLabelX = LEFT + 10,
                     craftingLevelLabelY = TOP + 10,
                     craftingLevelX = LEFT + 54,
@@ -47,13 +51,18 @@ public class CraftingView extends DisplayView {
                     descriptionX = (LEFT + RIGHT) / 2,
                     descriptionY = TOP + 30,
                     recipeListButtonX = RIGHT - 40,
+                    clearSlotsButtonX = RIGHT - 60,
+                    clearSlotsButtonY = TOP + 95,
                     slot1X = LEFT + 60,
                     slot1Y = TOP + 60,
                     slot2X = (LEFT + RIGHT) / 2,
-                    slot2Y = TOP + 80,
+                    slot2Y = TOP + 60,
                     slot3X = RIGHT - 60,
                     slot3Y = TOP + 60,
-                    errorTextY = TOP + 100,
+                    quantityTextY = TOP + 95,
+                    quantityLabelX = LEFT + 80,
+                    quantityValueX = (LEFT + RIGHT) / 2,
+                    errorTextY = TOP + 110,
                     outputItemLabelX = LEFT + 10,
                     outputItemLabelY = TOP + 130,
                     outputItemDisplayX = LEFT + 70,
@@ -61,16 +70,23 @@ public class CraftingView extends DisplayView {
   private boolean showingItemsSubView = false,
                   showingRecipesSubView = false,
                   outputItemShowing = false,
-                  errorTextShowing = false;
+                  errorTextShowing = false,
+                  showingModal = false,
+                  showingClearSlotsButton = false;
   private final Sprite expUnderline = new Sprite(expBarWidth, 1, GameColors.EXP_GAUGE_UNDERLINE);
   private final Sprite expEmpty = new Sprite(expBarWidth, expBarHeight, GameColors.EXP_GAUGE_EMPTY);
   private Sprite expFill;
   private int craftingExpAnimationValue,
               craftingLevelAnimationValue,
-              tick = 0;
+              tick = 0,
+              craftingQuantity = 1,
+              maxCraftingQuantity;
   private ItemSlot currentSlot;
   private UsableInventoryListItem outputItemDisplay;
   private final GameMenuPrimaryButton recipeListButton = new GameMenuPrimaryButton("View Recipes", recipeListButtonX, craftingLevelLabelY, 45, 13, () -> this.handleShowRecipeList());
+  private final GameMenuSecondaryButton minusQuantity = new GameMenuSecondaryButton("-", GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(), quantityValueX - 15, quantityTextY, 10, 11, () ->  setCraftingQuantity(craftingQuantity - 1));
+  private final GameMenuSecondaryButton plusQuantity = new GameMenuSecondaryButton("+", GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(), quantityValueX + 23, quantityTextY, 10, 11, () ->  setCraftingQuantity(craftingQuantity + 1));
+  private final GameMenuSecondaryButton clearSlotsButton = new GameMenuSecondaryButton("Clear Slots", GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL(), clearSlotsButtonX, clearSlotsButtonY, 45, 13, () -> clearSlots());
   private final ArrayList<ItemSlot> itemSlots = new ArrayList<>();
   private final ItemSlot slot1 = new CraftingItemSlot(
     slot1X,
@@ -98,6 +114,7 @@ public class CraftingView extends DisplayView {
   );
   private final ItemsSubView itemsSubView = new ItemsSubView(item -> handleAddItemToSlot(item), () -> showingItemsSubView = false);
   private final RecipesSubView recipesSubView = new RecipesSubView(recipe -> handleApplyRecipe(recipe), () -> showingRecipesSubView = false);
+  private final ItemDetailCardModal itemInfoModal = new ItemDetailCardModal(card -> handleModalClose());
   
   public CraftingView() {
     craftingLevelLabel.setText("Crafting Level:");
@@ -125,6 +142,11 @@ public class CraftingView extends DisplayView {
     maxLevel.setX(expBarX);
     maxLevel.setY(expFontY);
     maxLevel.setColor(new Color(GameColors.GOLD_PARTICLE_COLOR));
+    quantityLabel.setText("Quantity:");
+    quantityLabel.setX(quantityLabelX);
+    quantityLabel.setY(quantityTextY);
+    quantityValue.setX(quantityValueX);
+    quantityValue.setY(quantityTextY);
     expFill = new Sprite((int)(craftingExpAnimationValue / (double)CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue) * expBarWidth), expBarHeight, GameColors.EXP_GAUGE_FILL);
   }
   
@@ -143,7 +165,12 @@ public class CraftingView extends DisplayView {
   }
   
   private void handleShowInfo(Item item) {
-    
+    showingModal = true;
+    itemInfoModal.setItem(item);
+  }
+  
+  private void handleModalClose() {
+    showingModal = false;
   }
   
   private void handleOpenItemList(ItemSlot slot) {
@@ -181,8 +208,10 @@ public class CraftingView extends DisplayView {
         outputItemDisplayY,
         "Craft",
         (Item item) -> System.out.println(item.getTitle()),
-        (Item item) -> System.out.println(item.getTitle())
+        (Item item) -> handleShowInfo(item)
       );
+      outputItemDisplay.hideAmountFont();
+      initCraftingQuantity(recipe);
       if (CraftingManager.getCraftingManager().getCraftingLevel() < recipe.getCraftingLevel()) {
         showErrorText("This recipe requires a minimum crafting level of " + recipe.getCraftingLevel() + " to craft!");
       }
@@ -199,19 +228,24 @@ public class CraftingView extends DisplayView {
                                   .collect(Collectors.toList());
     int numberOfItemsInSlots = filledSlots.size();
     if (numberOfItemsInSlots > 1) {
+      showingClearSlotsButton = true;
       Item[] inputs = new Item[numberOfItemsInSlots];
       for (int i = 0; i < numberOfItemsInSlots; i++) {
         inputs[i] = filledSlots.get(i).getItem();
       }
       return CraftingManager.getCraftingManager().checkForRecipe(inputs);
     }
-    return null;
+    else {
+      showingClearSlotsButton = false;
+      return null;
+    }
   }
   
   private void clearSlots() {
     for (ItemSlot slot: itemSlots) {
       slot.removeItem();
     }
+    handleSlotChange();
   }
   
   private void showErrorText(String errorMsg) {
@@ -236,6 +270,29 @@ public class CraftingView extends DisplayView {
     if (craftingLevelAnimationValue == 3) return;
     expFill = new Sprite((int)(craftingExpAnimationValue / (double)CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue) * expBarWidth), expBarHeight, GameColors.EXP_GAUGE_FILL);
   }
+  
+  private void initCraftingQuantity(Recipe recipe) {
+    maxCraftingQuantity = CraftingManager.getCraftingManager().getMaxCraftableQuantityForRecipe(recipe);
+    setCraftingQuantity(1);
+  }
+  
+  private void setCraftingQuantity(int amount) {
+    craftingQuantity = amount;
+    quantityValue.setText(Integer.toString(amount));
+    if (amount == 1) {
+      minusQuantity.setDisabled(true);
+    }
+    else {
+      minusQuantity.setDisabled(false);
+    }
+    if (amount == maxCraftingQuantity) {
+      plusQuantity.setDisabled(true);
+    }
+    else {
+      plusQuantity.setDisabled(false);
+    }
+  }
+
 
   @Override
   public void enteringView() {
@@ -246,26 +303,37 @@ public class CraftingView extends DisplayView {
     itemsSubView.exitingView();
     showingItemsSubView = false;
     showingRecipesSubView = false;
+    showingModal = false;
     clearSlots();
   }
 
   @Override
   public void update() {
     if (!showingItemsSubView && !showingRecipesSubView) {
-      recipeListButton.update();
-      if ((craftingExpAnimationValue != CraftingManager.getCraftingManager().getCraftingExp()
-          || craftingLevelAnimationValue != CraftingManager.getCraftingManager().getCraftingLevel())
-            && craftingLevelAnimationValue < 3) {
-        if (++tick % 4 == 0) {
-          updateExpFont();
-          updateExpFill();
+      if (!showingModal) {
+        recipeListButton.update();
+        if ((craftingExpAnimationValue != CraftingManager.getCraftingManager().getCraftingExp()
+            || craftingLevelAnimationValue != CraftingManager.getCraftingManager().getCraftingLevel())
+              && craftingLevelAnimationValue < 3) {
+          if (++tick % 4 == 0) {
+            updateExpFont();
+            updateExpFill();
+          }
+        }
+        else tick = 0;
+        for (ItemSlot slot: itemSlots) {
+          slot.update();
+        }
+        if (showingClearSlotsButton) clearSlotsButton.update();
+        if (outputItemShowing) {
+          minusQuantity.update();
+          plusQuantity.update();
+          outputItemDisplay.update();
         }
       }
-      else tick = 0;
-      for (ItemSlot slot: itemSlots) {
-        slot.update();
+      else {
+        itemInfoModal.update();
       }
-      if (outputItemShowing) outputItemDisplay.update();
     }
     else if (showingItemsSubView) {
       itemsSubView.update();
@@ -296,7 +364,15 @@ public class CraftingView extends DisplayView {
       for (ItemSlot slot: itemSlots) {
         slot.render(screen, gl);
       }
-      if (outputItemShowing) outputItemDisplay.render(screen, gl);
+      if (showingClearSlotsButton) clearSlotsButton.render(screen, gl);
+      if (outputItemShowing) {
+        screen.renderFonts(quantityLabel);
+        screen.renderFonts(quantityValue);
+        minusQuantity.render(screen, gl);
+        plusQuantity.render(screen, gl);
+        outputItemDisplay.render(screen, gl);
+      }
+      if (showingModal) itemInfoModal.render(screen, gl);
     }
     else if (showingItemsSubView) {
       itemsSubView.render(screen, gl);

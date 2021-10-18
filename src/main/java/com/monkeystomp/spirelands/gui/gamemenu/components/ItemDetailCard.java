@@ -26,8 +26,9 @@ public class ItemDetailCard {
   private final FontInfo  titleFont = GameFonts.getlightText_bold_23(),
                           descriptionFont = GameFonts.getGAME_MENU_MUTED_TEXT(),
                           typeFont = GameFonts.getGAME_MENU_LABEL_TEXT();
-  private final int price = 0,
+  protected int price = 0,
                     cardWidth = 89,
+                    cardHeight = 155,
                     sidePadding = 5,
                     cardTop = 23,
                     cardCenterHoriz = 351,
@@ -41,7 +42,7 @@ public class ItemDetailCard {
                                     itemDescriptionList = new ArrayList<>(),
                                     attributeLabelList = new ArrayList<>(),
                                     attributeValueList = new ArrayList<>();
-  private final GameMenuSecondaryButton exitButton = new GameMenuSecondaryButton(
+  protected final GameMenuSecondaryButton exitButton = new GameMenuSecondaryButton(
     times,
     cardLeft + sidePadding,
     cardTop + sidePadding,

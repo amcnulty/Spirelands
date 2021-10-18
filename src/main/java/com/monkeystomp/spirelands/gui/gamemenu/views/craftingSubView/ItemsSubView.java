@@ -108,6 +108,7 @@ public class ItemsSubView {
   }
   
   public void enteringView() {
+    checkItemCount();
     for (ArrayList<InventoryListItem> page: pages) {
       for (InventoryListItem craftingItem: page) {
         ((CraftingListItem)craftingItem).refresh();
@@ -122,7 +123,6 @@ public class ItemsSubView {
   }
 
   public void update() {
-    checkItemCount();
     backButton.update();
     if (pages.size() > 0) {
       for (InventoryListItem item: pages.get(currentPageIndex)) {

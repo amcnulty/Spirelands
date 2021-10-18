@@ -55,7 +55,7 @@ public class GameMenuSecondaryButton extends Button {
   }
   
   private void setFontInfo() {
-    Rectangle2D rect = GameFonts.getlightText_bold_23().getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
+    Rectangle2D rect = fontInfo.getFont().getStringBounds(buttonText, new FontRenderContext(null, true, true));
     int textWidth = (int)rect.getWidth();
     int fontX = (int)(x + (this.width - (textWidth / Screen.getScaleX())) / 2);
     int fontY = y + this.height / 2;
@@ -73,6 +73,18 @@ public class GameMenuSecondaryButton extends Button {
   
   private void setButtonSounds() {
     clickSound = SoundEffects.BUTTON_CLICK;
+  }
+
+  @Override
+  public void setLeft(int left) {
+    super.setLeft(left);
+    setFontInfo();
+  }
+
+  @Override
+  public void setTop(int top) {
+    super.setTop(top);
+    setFontInfo();
   }
   
   @Override

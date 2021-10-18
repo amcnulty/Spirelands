@@ -5,12 +5,16 @@ import com.monkeystomp.spirelands.gamedata.saves.SaveDataHydratable;
 import com.monkeystomp.spirelands.gamedata.util.JSONUtil;
 import com.monkeystomp.spirelands.gui.dialog.ToastLength;
 import com.monkeystomp.spirelands.gui.dialog.ToastMessage;
+import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -186,6 +190,21 @@ public class CraftingManager implements SaveDataHydratable {
       addRecipeToMap(recipe);
       addCraftingExp(this.expPerDiscoveredRecipe);
     }
+  }
+  /**
+   * Gets the maximum craftable quantity for the given recipe based on the level of items in the inventory.
+   * @param recipe Recipe to check inputs against inventory levels.
+   * @return The maximum craftable quantity for the given recipe.
+   */
+  public int getMaxCraftableQuantityForRecipe(Recipe recipe) {
+    int maxQuantity = -1;
+    Map<Item, Long> counts = recipe.getInputs().stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+    Set<Item> keys = counts.keySet();
+    for (Item item: keys) {
+      int maxForThisItem = (int)(InventoryManager.getInventoryManager().getInventoryReferenceById(item.getId()).getAmount() / counts.get(item));
+      if (maxForThisItem < maxQuantity || maxQuantity == -1) maxQuantity = maxForThisItem;
+    }
+    return maxQuantity;
   }
   /**
    * A collection of items that are currently on the crafting table.

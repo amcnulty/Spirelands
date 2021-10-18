@@ -29,6 +29,10 @@ public class UsableInventoryListItem extends InventoryListItem {
     useButton.disableButtonClickSound();
   }
   
+  public void hideAmountFont() {
+    amountFont.setText("");
+  }
+  
   @Override
   public void update() {
     super.update();
