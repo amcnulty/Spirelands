@@ -10,6 +10,7 @@ import com.monkeystomp.spirelands.gui.controlls.button.PrimaryButton;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
 import com.monkeystomp.spirelands.gui.styles.GameFonts;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
+import com.monkeystomp.spirelands.inventory.InventoryReference;
 import com.monkeystomp.spirelands.inventory.Item;
 import java.util.HashMap;
 import java.util.Set;
@@ -36,12 +37,13 @@ public class RecipeListItem {
     this.y = y;
     applyButton = new PrimaryButton("Apply", x + 126, y, 19, 11, () -> onApplyClick.accept(recipe));
     infoButton = new GameMenuPrimaryButton("Info", x + 148, y, 19, 11, () -> onInfoClick.accept(recipe));
-    label.setText(name);
+    label.setText(name + (recipe.hasBeenCrafted() ? "" : " - ( new )"));
     label.setX(x + 12);
     label.setY(y);
   }
   
   public void refresh() {
+    label.setText(name + (recipe.hasBeenCrafted() ? "" : " - ( new )"));
     boolean disableApply = false;
     HashMap<Item, Integer> itemToRequiredQuantityMap = new HashMap<>();
     for (int i = 0; i < recipe.getInputs().size(); i++) {
@@ -57,7 +59,11 @@ public class RecipeListItem {
     }
     Set<Item> keys = itemToRequiredQuantityMap.keySet();
     for (Item key: keys) {
-      int amountInInventory = InventoryManager.getInventoryManager().getInventoryReferenceById(key.getId()).getAmount();
+      InventoryReference ref = InventoryManager.getInventoryManager().getInventoryReferenceById(key.getId());
+      int amountInInventory = 0;
+      if (ref != null) {
+        amountInInventory = ref.getAmount();
+      }
       int amountInRecipe = itemToRequiredQuantityMap.get(key);
       if (amountInInventory < amountInRecipe) {
         disableApply = true;

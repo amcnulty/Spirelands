@@ -43,6 +43,10 @@ public class CraftingManager implements SaveDataHydratable {
    */
   private final int expPerDiscoveredRecipe = 5;
   /**
+   * The amount of experience gained for crafting a new recipe.
+   */
+  private final int expPerNewRecipeCrafted = 5;
+  /**
    * Crafting experience points of the save game data.
    */
   private int craftingExp;
@@ -187,18 +191,19 @@ public class CraftingManager implements SaveDataHydratable {
   private void handleIfRecipeIsUndiscovered(Recipe recipe) {
     if (!recipeMap.containsValue(recipe)) {
       ToastMessage.getToastMessage().addToast("New recipe discovered: " + recipe.getName());
+      recipe.setCrafted(false);
       addRecipeToMap(recipe);
       addCraftingExp(this.expPerDiscoveredRecipe);
     }
   }
   /**
    * Gets the maximum craftable quantity for the given recipe based on the level of items in the inventory.
-   * @param recipe Recipe to check inputs against inventory levels.
+   * @param inputs Inputs to check against inventory levels.
    * @return The maximum craftable quantity for the given recipe.
    */
-  public int getMaxCraftableQuantityForRecipe(Recipe recipe) {
+  public int getMaxCraftableQuantityForInputs(Item[] inputs) {
     int maxQuantity = -1;
-    Map<Item, Long> counts = recipe.getInputs().stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
+    Map<Item, Long> counts = Arrays.asList(inputs).stream().collect(Collectors.groupingBy(e -> e, Collectors.counting()));
     Set<Item> keys = counts.keySet();
     for (Item item: keys) {
       int maxForThisItem = (int)(InventoryManager.getInventoryManager().getInventoryReferenceById(item.getId()).getAmount() / counts.get(item));
@@ -230,11 +235,23 @@ public class CraftingManager implements SaveDataHydratable {
   /**
    * Crafts the given inputs with the selected recipe.
    * This will remove the input items from inventory and create an output item in inventory.
-   * @param inputs Array of craftable items to use in recipe.
    * @param recipe The recipe that is being crafted.
+   * @param inputs The inputs used to craft the recipe.
+   * @param quantity The number of output items to craft.
    */
-  public void craft(Item[] inputs, Recipe recipe) {
-    System.out.println("Actually removing inputs from inventory and adding newly crafted item.");
+  public void craftRecipe(Recipe recipe, Item[] inputs, int quantity) {
+    // remove the quantity amount from inventory for each of the input items.
+    Arrays.asList(inputs).forEach(item -> {
+      InventoryManager.getInventoryManager().removeFromInventory(item, quantity);
+    });
+    // add the quantity amount to inventory of the output item.
+    InventoryManager.getInventoryManager().addToInventory(recipe.getOutput(), quantity);
+    // if crafted is false add experience points.
+    if (!recipe.hasBeenCrafted()) {
+      addCraftingExp(expPerNewRecipeCrafted);
+    // set crafted to true for the recipe
+      recipe.setCrafted(true);
+    }
   }
   
   private void setCraftingData() {
@@ -242,7 +259,11 @@ public class CraftingManager implements SaveDataHydratable {
     craftingLevel = jsonUtil.getInt(crafting, JSONUtil.CRAFTING_LEVEL);
     craftingExp = jsonUtil.getInt(crafting, JSONUtil.CRAFTING_EXP);
     JSONArray discoveredRecipes = (JSONArray) crafting.get(JSONUtil.DISCOVERED_RECIPES);
-    discoveredRecipes.forEach(recipe -> addRecipeToMap(Recipe.getRECIPE_INDEX().get(jsonUtil.getInt((JSONObject)recipe, JSONUtil.ID))));
+    discoveredRecipes.forEach(recipe -> {
+      boolean isCrafted = jsonUtil.getBoolean((JSONObject)recipe, JSONUtil.CRAFTED);
+      Recipe.getRECIPE_INDEX().get(jsonUtil.getInt((JSONObject)recipe, JSONUtil.ID)).setCrafted(isCrafted);
+      addRecipeToMap(Recipe.getRECIPE_INDEX().get(jsonUtil.getInt((JSONObject)recipe, JSONUtil.ID)));
+    });
   }
 
   @Override

@@ -35,8 +35,7 @@ public class ItemsView extends DisplayView {
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
   private final ArrayList<String> itemTypes = new ArrayList<>();
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
-  private int itemCount = 0,
-              selectedItemAmount = 0;
+  private int selectedItemAmount = 0;
   private final int startingY = 35,
                     listItemX = 140,
                     spaceBetweenRows = 16,
@@ -77,7 +76,8 @@ public class ItemsView extends DisplayView {
     itemDetailCard.setItem(item);
   }
   
-  private void createListItems(Map<Integer, InventoryReference> itemsMap) {
+  private void createListItems() {
+    Map<Integer, InventoryReference> itemsMap = manager.getItemsByMultipleTypes(itemTypes);
     pages.clear();
     Set<Integer> keys = itemsMap.keySet();
     ArrayList<InventoryReference> refs = new ArrayList<>();
@@ -112,8 +112,7 @@ public class ItemsView extends DisplayView {
       }
       if (newPage.size() > 0) pages.add(newPage);
     }
-    itemCount = manager.getItemsByMultipleTypes(itemTypes).size();
-    pagination.setListLength(itemCount);
+    pagination.setListLength(manager.getItemsByMultipleTypes(itemTypes).size());
     setCurrentPage();
   }
   
@@ -164,7 +163,7 @@ public class ItemsView extends DisplayView {
     }
     selectedItem.setStatModel(targetCharacter);
     selectedItem.useItem();
-    Items = manager.getItemsByMultipleTypes(itemTypes);
+    enteringView();
   }
   
   private void checkAnimations() {
@@ -177,16 +176,10 @@ public class ItemsView extends DisplayView {
     }
     selectingCharacter = isAnimating;
   }
-  
-  private void checkItemCount() {
-    if (itemCount != Items.size()) {
-      createListItems(Items);
-      itemCount = Items.size();
-    }
-  }
 
   @Override
   public void enteringView() {
+    createListItems();
   }
   
   @Override
@@ -199,7 +192,6 @@ public class ItemsView extends DisplayView {
   
   @Override
   public void update() {
-    checkItemCount();
     if (!selectingCharacter) {
       if (pages.size() > 0) {
         for (InventoryListItem item: pages.get(currentPageIndex)) {

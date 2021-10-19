@@ -12,6 +12,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.components.CraftingItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemDetailCardModal;
 import com.monkeystomp.spirelands.gui.gamemenu.components.ItemSlot;
 import com.monkeystomp.spirelands.gui.gamemenu.components.UsableInventoryListItem;
+import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.CraftedItemSubView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.ItemsSubView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.craftingSubView.RecipesSubView;
 import com.monkeystomp.spirelands.gui.styles.GameColors;
@@ -69,6 +70,7 @@ public class CraftingView extends DisplayView {
                     outputItemDisplayY = TOP + 130;
   private boolean showingItemsSubView = false,
                   showingRecipesSubView = false,
+                  craftedItemSubViewShowing = false,
                   outputItemShowing = false,
                   errorTextShowing = false,
                   showingModal = false,
@@ -115,6 +117,7 @@ public class CraftingView extends DisplayView {
   private final ItemsSubView itemsSubView = new ItemsSubView(item -> handleAddItemToSlot(item), () -> showingItemsSubView = false);
   private final RecipesSubView recipesSubView = new RecipesSubView(recipe -> handleApplyRecipe(recipe), () -> showingRecipesSubView = false);
   private final ItemDetailCardModal itemInfoModal = new ItemDetailCardModal(card -> handleModalClose());
+  private final CraftedItemSubView craftedItemSubView = new CraftedItemSubView(() -> handleCraftedItemSubViewClose());
   
   public CraftingView() {
     craftingLevelLabel.setText("Crafting Level:");
@@ -198,6 +201,10 @@ public class CraftingView extends DisplayView {
     handleSlotChange();
   }
   
+  private void handleCraftedItemSubViewClose() {
+    craftedItemSubViewShowing = false;
+  }
+  
   private void handleSlotChange() {
     Recipe recipe = checkForRecipe();
     if (recipe != null) {
@@ -207,13 +214,14 @@ public class CraftingView extends DisplayView {
         outputItemDisplayX,
         outputItemDisplayY,
         "Craft",
-        (Item item) -> System.out.println(item.getTitle()),
+        (Item item) -> handleCraftClick(recipe),
         (Item item) -> handleShowInfo(item)
       );
       outputItemDisplay.hideAmountFont();
-      initCraftingQuantity(recipe);
+      initCraftingQuantity(getInputsFromSlots());
       if (CraftingManager.getCraftingManager().getCraftingLevel() < recipe.getCraftingLevel()) {
         showErrorText("This recipe requires a minimum crafting level of " + recipe.getCraftingLevel() + " to craft!");
+        outputItemDisplay.setPrimaryButtonDisabled(true);
       }
     }
     else {
@@ -229,16 +237,31 @@ public class CraftingView extends DisplayView {
     int numberOfItemsInSlots = filledSlots.size();
     if (numberOfItemsInSlots > 1) {
       showingClearSlotsButton = true;
-      Item[] inputs = new Item[numberOfItemsInSlots];
-      for (int i = 0; i < numberOfItemsInSlots; i++) {
-        inputs[i] = filledSlots.get(i).getItem();
-      }
-      return CraftingManager.getCraftingManager().checkForRecipe(inputs);
+      return CraftingManager.getCraftingManager().checkForRecipe(getInputsFromSlots());
     }
     else {
       showingClearSlotsButton = false;
       return null;
     }
+  }
+  
+  private Item[] getInputsFromSlots() {
+    List<ItemSlot> filledSlots = itemSlots.stream()
+                                  .filter(slot -> slot.getItem() != null)
+                                  .collect(Collectors.toList());
+    int numberOfItemsInSlots = filledSlots.size();
+    Item[] inputs = new Item[numberOfItemsInSlots];
+    for (int i = 0; i < numberOfItemsInSlots; i++) {
+      inputs[i] = filledSlots.get(i).getItem();
+    }
+    return inputs;
+  }
+  
+  private void handleCraftClick(Recipe recipe) {
+    CraftingManager.getCraftingManager().craftRecipe(recipe, getInputsFromSlots(), craftingQuantity);
+    craftedItemSubView.setItem(recipe.getOutput());
+    craftedItemSubViewShowing = true;
+    clearSlots();
   }
   
   private void clearSlots() {
@@ -271,8 +294,8 @@ public class CraftingView extends DisplayView {
     expFill = new Sprite((int)(craftingExpAnimationValue / (double)CraftingManager.getCraftingManager().getCraftingExpMax(craftingLevelAnimationValue) * expBarWidth), expBarHeight, GameColors.EXP_GAUGE_FILL);
   }
   
-  private void initCraftingQuantity(Recipe recipe) {
-    maxCraftingQuantity = CraftingManager.getCraftingManager().getMaxCraftableQuantityForRecipe(recipe);
+  private void initCraftingQuantity(Item[] inputs) {
+    maxCraftingQuantity = CraftingManager.getCraftingManager().getMaxCraftableQuantityForInputs(inputs);
     setCraftingQuantity(1);
   }
   
@@ -303,13 +326,15 @@ public class CraftingView extends DisplayView {
     itemsSubView.exitingView();
     showingItemsSubView = false;
     showingRecipesSubView = false;
+    craftedItemSubViewShowing = false;
+    craftedItemSubView.exitingView();
     showingModal = false;
     clearSlots();
   }
 
   @Override
   public void update() {
-    if (!showingItemsSubView && !showingRecipesSubView) {
+    if (!showingItemsSubView && !showingRecipesSubView && !craftedItemSubViewShowing) {
       if (!showingModal) {
         recipeListButton.update();
         if ((craftingExpAnimationValue != CraftingManager.getCraftingManager().getCraftingExp()
@@ -341,11 +366,14 @@ public class CraftingView extends DisplayView {
     else if (showingRecipesSubView) {
       recipesSubView.update();
     }
+    else if (craftedItemSubViewShowing) {
+      craftedItemSubView.update();
+    }
   }
 
   @Override
   public void render(Screen screen, GL2 gl) {
-    if (!showingItemsSubView && !showingRecipesSubView) {
+    if (!showingItemsSubView && !showingRecipesSubView && !craftedItemSubViewShowing) {
       screen.renderFonts(craftingLevelLabel);
       screen.renderFonts(craftingLevel);
       if (craftingLevelAnimationValue < 3) {
@@ -379,6 +407,9 @@ public class CraftingView extends DisplayView {
     }
     else if (showingRecipesSubView) {
       recipesSubView.render(screen, gl);
+    }
+    else if (craftedItemSubViewShowing) {
+      craftedItemSubView.render(screen, gl);
     }
   }
 

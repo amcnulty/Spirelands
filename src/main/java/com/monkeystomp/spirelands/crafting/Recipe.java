@@ -93,8 +93,8 @@ public class Recipe {
   /**
    * Setting a recipe to crafted means it has been crafted once during the current save game.
    */
-  public void setCrafted() {
-    this.crafted = true;
+  public void setCrafted(boolean crafted) {
+    this.crafted = crafted;
   }
   /**
    * Unique id of this recipe.

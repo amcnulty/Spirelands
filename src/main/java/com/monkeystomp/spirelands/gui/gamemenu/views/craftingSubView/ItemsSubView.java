@@ -30,10 +30,8 @@ public class ItemsSubView {
   private final Consumer<Item> handleAddItem;
   private final ICallback exitSubView;
   private final InventoryManager manager = InventoryManager.getInventoryManager();
-  private final Map<Integer, InventoryReference> items = manager.getCraftableItems();
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
   private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
-  private int itemCount = 0;
   private final int headerX = 135,
                     headerY = 34,
                     backButtonX = 273,
@@ -63,7 +61,8 @@ public class ItemsSubView {
     itemDetailCard.setItem(item);
   }
 
-  private void createListItems(Map<Integer, InventoryReference> itemsMap) {
+  private void createListItems() {
+    Map<Integer, InventoryReference> itemsMap = manager.getCraftableItems();
     pages.clear();
     Set<Integer> keys = itemsMap.keySet();
     ArrayList<InventoryReference> refs = new ArrayList<>();
@@ -87,8 +86,7 @@ public class ItemsSubView {
       }
       if (newPage.size() > 0) pages.add(newPage);
     }
-    itemCount = manager.getCraftableItems().size();
-    pagination.setListLength(itemCount);
+    pagination.setListLength(manager.getCraftableItems().size());
     setCurrentPage();
   }
   
@@ -99,16 +97,9 @@ public class ItemsSubView {
     }
     pagination.highlightCurrentPage(currentPageIndex);
   }
-    
-  private void checkItemCount() {
-    if (itemCount != items.size()) {
-      createListItems(items);
-      itemCount = items.size();
-    }
-  }
   
   public void enteringView() {
-    checkItemCount();
+    createListItems();
     for (ArrayList<InventoryListItem> page: pages) {
       for (InventoryListItem craftingItem: page) {
         ((CraftingListItem)craftingItem).refresh();

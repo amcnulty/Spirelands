@@ -33,6 +33,10 @@ public class UsableInventoryListItem extends InventoryListItem {
     amountFont.setText("");
   }
   
+  public void setPrimaryButtonDisabled(boolean disabled) {
+    useButton.setDisabled(disabled);
+  }
+  
   @Override
   public void update() {
     super.update();

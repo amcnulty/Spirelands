@@ -263,6 +263,10 @@ public class JSONUtil {
    * Key for array of discovered recipes.
    */
   public static final String DISCOVERED_RECIPES = "DISCOVERED_RECIPES";
+  /**
+   * Key for crafted boolean attribute.
+   */
+  public static final String CRAFTED = "CRAFTED";
   
   public JSONObject getNestedObject(JSONObject parent, String[] keys) {
     JSONObject object = parent;

@@ -1871,6 +1871,7 @@ public class Item {
           .title("Leather")
           .description("A piece of leather that can be used in crafting.")
           .price(20)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 6, 9, SpriteSheet.itemsSheet))
           .build(JunkItem.class);
   /**
@@ -1881,6 +1882,7 @@ public class Item {
           .title("Cloth")
           .description("A piece of cloth that can be used in crafting.")
           .price(12)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 7, 9, SpriteSheet.itemsSheet))
           .build(JunkItem.class);
   /**
@@ -1891,6 +1893,7 @@ public class Item {
           .title("Slime")
           .description("Goopy slime that can be rolled up into a ball. Do not leave unattended around children. May be used for crafting.")
           .price(5)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 9, SpriteSheet.itemsSheet))
           .build(JunkItem.class);
   /**
@@ -1901,6 +1904,7 @@ public class Item {
           .title("Log")
           .description("Wooden log that can be used in crafting.")
           .price(12)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 8, 10, SpriteSheet.itemsSheet))
           .build(JunkItem.class);
   /**
@@ -1911,6 +1915,7 @@ public class Item {
           .title("Board")
           .description("A common milled wooden board that would be used in construction or other building projects. Can be used for crafting.")
           .price(5)
+          .craftable()
           .thumbnail(new Sprite(SPRITE_SIZE, SPRITE_SIZE, 9, 10, SpriteSheet.itemsSheet))
           .build(JunkItem.class);
   /**

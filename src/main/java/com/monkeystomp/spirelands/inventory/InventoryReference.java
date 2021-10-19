@@ -29,6 +29,20 @@ public class InventoryReference {
   public void decreaseAmount() {
     amount--;
   }
+  /**
+   * Increase the amount by the given quantity.
+   * @param quantity Amount to increase inventory by.
+   */
+  public void increaseByQuantity(int quantity) {
+    amount += quantity;
+  }
+  /**
+   * Decrease the amount by the given quantity.
+   * @param quantity Amount to reduce inventory by.
+   */
+  public void decreaseByQuantity(int quantity) {
+    amount -= quantity;
+  }
   
   public int getAmount() {
     return amount;

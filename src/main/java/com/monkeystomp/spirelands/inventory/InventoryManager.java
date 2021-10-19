@@ -62,8 +62,16 @@ public class InventoryManager implements SaveDataHydratable {
    */
   public void addToInventory(Item item) {
     if (itemMap.containsKey(item.getId())) itemMap.get(item.getId()).increaseAmount();
-//    else itemMap.put(item.getId(), new InventoryReference(item, 1));
     else setInventoryReference(item, 1);
+  }
+  /**
+   * Adds an item to inventory by the given quantity.
+   * @param item Item to add to inventory.
+   * @param quantity Amount of items to add.
+   */
+  public void addToInventory(Item item, int quantity) {
+    if (itemMap.containsKey(item.getId())) itemMap.get(item.getId()).increaseByQuantity(quantity);
+    else setInventoryReference(item, quantity);
   }
   /**
    * <p>Adds an inventory reference entry for the given item set at the given amount.</p>
@@ -80,6 +88,15 @@ public class InventoryManager implements SaveDataHydratable {
    */
   public void removeFromInventory(Item item) {
     itemMap.get(item.getId()).decreaseAmount();
+    if (itemMap.get(item.getId()).getAmount() == 0) itemMap.remove(item.getId());
+  }
+  /**
+   * Removes an item from the inventory by the given quantity.
+   * @param item Item to be removed from inventory.
+   * @param quantity Amount of items to remove.
+   */
+  public void removeFromInventory(Item item, int quantity) {
+    itemMap.get(item.getId()).decreaseByQuantity(quantity);
     if (itemMap.get(item.getId()).getAmount() == 0) itemMap.remove(item.getId());
   }
   /**
