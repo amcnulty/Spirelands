@@ -217,8 +217,8 @@ public class StatModel {
   }
   
   private void increaseHealthMax(int amount) {
-    increaseHealth(amount);
     setHealthMax(healthMax + amount);
+    increaseHealth(amount);
   }
   
   public void setHealthWeight(String weight) {
@@ -234,8 +234,8 @@ public class StatModel {
   }
   
   private void increaseManaMax(int amount) {
-    increaseMana(amount);
     setManaMax(manaMax + amount);
+    increaseMana(amount);
   }
   
   public void setManaWeight(String weight) {
