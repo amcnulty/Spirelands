@@ -31,7 +31,6 @@ public class ItemsSubView {
   private final ICallback exitSubView;
   private final InventoryManager manager = InventoryManager.getInventoryManager();
   private final ArrayList<ArrayList<InventoryListItem>> pages = new ArrayList<>();
-  private final Pagination pagination = new Pagination(8, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private final int headerX = 135,
                     headerY = 34,
                     backButtonX = 273,
@@ -40,6 +39,7 @@ public class ItemsSubView {
                     listItemX = 140,
                     spaceBetweenRows = 16,
                     itemsPerPage = 7;
+  private final Pagination pagination = new Pagination(itemsPerPage, 214, 169, pageIndex -> currentPageIndex = pageIndex);
   private int currentPageIndex = 0;
   private final PrimaryButton backButton = new PrimaryButton("Back To Crafting", backButtonX, backButtonY, 50, 11, () -> handleBackButtonClick());
   private final Sprite border = new Sprite(1, 156, GameColors.GAME_MENU_BORDER);

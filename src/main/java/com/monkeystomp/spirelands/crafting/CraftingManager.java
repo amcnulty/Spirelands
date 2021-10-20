@@ -274,7 +274,21 @@ public class CraftingManager implements SaveDataHydratable {
 
   @Override
   public void populateSaveData(JSONObject saveObject) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    saveObject.put(JSONUtil.CRAFTING, crafting);
+    JSONObject craftingToSave = (JSONObject) saveObject.get(JSONUtil.CRAFTING);
+    // Crafting Experience
+    craftingToSave.put(JSONUtil.CRAFTING_EXP, craftingExp);
+    // Crafting Level
+    craftingToSave.put(JSONUtil.CRAFTING_LEVEL, craftingLevel);
+    // Discovered Recipes
+    JSONArray discoveredRecipes = (JSONArray) craftingToSave.get(JSONUtil.DISCOVERED_RECIPES);
+    discoveredRecipes.clear();
+    recipeMap.forEach((id, recipe) -> {
+      JSONObject recipeJSON = new JSONObject();
+      recipeJSON.put(JSONUtil.ID, id);
+      recipeJSON.put(JSONUtil.CRAFTED, recipe.hasBeenCrafted());
+      discoveredRecipes.add(recipeJSON);
+    });
   }
 
 }
