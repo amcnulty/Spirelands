@@ -175,6 +175,7 @@ public class ItemsView extends DisplayView {
       }
     }
     selectingCharacter = isAnimating;
+    checkAnimationsBeforeClose = isAnimating;
   }
 
   @Override
