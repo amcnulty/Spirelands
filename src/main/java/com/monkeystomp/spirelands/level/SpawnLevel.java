@@ -29,7 +29,7 @@ public class SpawnLevel extends Level {
   private final boolean HAS_BATTLES = true;
   private final Battle BATTLE = new SpawnLevelBattle();
   private int time = 0;
-  private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi Steph! How are you doing? I think the laundry is almost done. I've been programing this whole time working on adding dialog boxes to the game. Love You! <3"};
+  private String[] welcomeText = {"This is the first message, it will fit on one line.", "And here is the second message!! Hope this works well because I know this one will have to go down to the second line.", "Hi! How are you doing? This game is getting pretty sweet. I've been programing this whole time working on adding dialog boxes to the game. ROCK ON!!"};
   public static final SpawnCoordinate eastEntrance = new SpawnCoordinate(608, 272, 3);
   
   public SpawnLevel(SpawnCoordinate coordinate) {

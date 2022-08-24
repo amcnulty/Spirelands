@@ -56,7 +56,11 @@ public class DialogBox {
    */
   public void handleSpaceKey() {
     if (dialogReady) {
-      if (++messageIndex < messages.length) {
+      // Check if dialog is still printing and if so fill out all the text instead of advancing the dialog.
+      if (messageBuilding) {
+        buildFullMessage();
+      }
+      else if (++messageIndex < messages.length) {
         advanceDialog();
       }
       else closeDialog();
@@ -151,6 +155,14 @@ public class DialogBox {
       }
     }
     timer++;
+  }
+  
+  private void buildFullMessage() {
+    for (int i = 0; i < lines.size(); i++) {
+      lines.get(i).setText(lineMessages.get(i));
+    }
+    substringIndex = lineMessages.get(renderLineIndex).length();
+    renderLineIndex = lineMessages.size() - 1;
   }
   
   private void animateSymbol() {

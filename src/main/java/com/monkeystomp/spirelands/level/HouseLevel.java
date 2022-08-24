@@ -64,10 +64,10 @@ public class HouseLevel extends Level {
   @Override
   protected void addNpcs() {
     NPC npc;
-    // Steph npc
+    // Ara npc
     npcConfig.setX(55);
     npcConfig.setY(64);
-    npcConfig.setMessages(new String[] {"Hi I'm Steph nice to meet you!!", "Welcome to Aaron's awesome video game. This house is something of an improvement over the last game.", "I think I saw Aaron upstairs if you want to talk to him."});
+    npcConfig.setMessages(new String[] {"Hi I'm Ara nice to meet you!!", "Welcome to Aaron's awesome video game. This house is something of an improvement over the last game.", "I think I saw Aaron upstairs if you want to talk to him."});
     npc = new BasicNPC(npcConfig, BasicNPC.FEMALE_ELF);
     solidEntities.add(npc);
     npc.initLevel(this);
