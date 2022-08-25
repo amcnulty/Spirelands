@@ -41,7 +41,7 @@ public class ButtonPanel {
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Quests", 70, 108, () -> {
-      System.out.println("Quests Button Clicked");
+      viewChanger.accept(DisplayView.QUESTS);
       resetNavButtons();
     }));
     navButtons.add(new GameMenuNavButton("Crafting", 70, 125, () -> {

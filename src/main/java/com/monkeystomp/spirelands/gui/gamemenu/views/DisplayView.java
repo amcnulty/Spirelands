@@ -15,10 +15,6 @@ public abstract class DisplayView implements Viewable {
    */
   public static final String DEFAULT = "default";
   /**
-   * The items view.
-   */
-  public static final String ITEMS = "items";
-  /**
    * The weapon view.
    */
   public static final String WEAPON = "weapon";
@@ -30,6 +26,14 @@ public abstract class DisplayView implements Viewable {
    * The abilities view.
    */
   public static final String ABILITIES = "abilities";
+  /**
+   * The items view.
+   */
+  public static final String ITEMS = "items";
+  /**
+   * The quests view.
+   */
+  public static final String QUESTS = "quests";
   /**
    * The crafting view.
    */

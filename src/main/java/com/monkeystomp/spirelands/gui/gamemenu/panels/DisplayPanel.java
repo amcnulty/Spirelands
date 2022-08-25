@@ -9,6 +9,7 @@ import com.monkeystomp.spirelands.gui.gamemenu.views.DefaultView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.DisplayView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.ItemsView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.PartyView;
+import com.monkeystomp.spirelands.gui.gamemenu.views.QuestsView;
 import com.monkeystomp.spirelands.gui.gamemenu.views.WeaponView;
 import com.monkeystomp.spirelands.input.ICallback;
 import java.util.HashMap;
@@ -20,10 +21,11 @@ import java.util.HashMap;
 public class DisplayPanel {
   
   private final DisplayView defaultView = new DefaultView();
-  private final DisplayView itemsView = new ItemsView();
   private final DisplayView weaponView = new WeaponView();
   private final DisplayView armorView = new ArmorView();
   private final DisplayView abilitiesView = new AbilitiesView();
+  private final DisplayView itemsView = new ItemsView();
+  private final DisplayView questsView = new QuestsView();
   private final DisplayView craftingView = new CraftingView();
   private final DisplayView partyView = new PartyView();
   private DisplayView currentView;
@@ -46,10 +48,11 @@ public class DisplayPanel {
   
   private void createMap() {
     viewMap.put(DisplayView.DEFAULT, defaultView);
-    viewMap.put(DisplayView.ITEMS, itemsView);
     viewMap.put(DisplayView.WEAPON, weaponView);
     viewMap.put(DisplayView.ARMOR, armorView);
     viewMap.put(DisplayView.ABILITIES, abilitiesView);
+    viewMap.put(DisplayView.ITEMS, itemsView);
+    viewMap.put(DisplayView.QUESTS, questsView);
     viewMap.put(DisplayView.CRAFTING, craftingView);
     viewMap.put(DisplayView.PARTY, partyView);
   }

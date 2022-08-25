@@ -42,6 +42,18 @@ public class GameColors {
    */
   public static final int BLUE = 0xFF0000FF;
   /**
+   * Primary Blue #0xFF0079CC
+   */
+  public static final int PRIMARY_BLUE = 0xFF0079CC;
+  /**
+   * Pastel Green #0xFF6BB46B
+   */
+  public static final int PASTEL_GREEN = 0xFF6BB46B;
+  /**
+   * Bright Gold #0xFFFCC201
+   */
+  public static final int BRIGHT_GOLD = 0xFFFCC201;
+  /**
    *        !!##################################################!!
    *        !!                                                  !!
    *        !!      UI, Menu, light map, particles colors       !!
@@ -91,7 +103,7 @@ public class GameColors {
   /**
    * Experience gauge empty color #0xFF6BB46B;
    */
-  public static final int EXP_GAUGE_EMPTY = 0xFF6BB46B;
+  public static final int EXP_GAUGE_EMPTY = PASTEL_GREEN;
   /**
    * Dark gray used for hovering game menu buttons #0xFF2C2C2C.
    */
@@ -131,11 +143,11 @@ public class GameColors {
   /**
    * Gold particle color #0xFFFCC201
    */
-  public static final int GOLD_PARTICLE_COLOR = 0xFFFCC201;
+  public static final int GOLD_PARTICLE_COLOR = BRIGHT_GOLD;
   /**
    * Primary button blue color #0x0079CC
    */
-  public static final int PRIMARY_BUTTON_BLUE = 0xFF0079CC;
+  public static final int PRIMARY_BUTTON_BLUE = PRIMARY_BLUE;
   /**
    * Primary button blue hover color #0xFF004E9A
    */
@@ -184,6 +196,18 @@ public class GameColors {
    * Battle move slot color for buff moves #0xFF0ABB1E
    */
   public static final int BATTLE_MOVE_SLOT_ITEM = 0xFF0ABB1E;
+  /**
+   * Main quest color
+   */
+  public static final int MAIN_QUEST_COLOR = PRIMARY_BLUE;
+  /**
+   * Secondary quest color
+   */
+  public static final int SECONDARY_QUEST_COLOR = PASTEL_GREEN;
+  /**
+   * Collectibles quest color
+   */
+  public static final int COLLECTIBLES_QUEST_COLOR = BRIGHT_GOLD;
   /**
    *        !!########################################!!
    *        !!                                        !!
