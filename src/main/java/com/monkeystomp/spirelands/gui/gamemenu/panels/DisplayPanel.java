@@ -40,6 +40,7 @@ public class DisplayPanel {
     this.IViewChanged = IViewChanged;
     createMap();
     setCurrentView(defaultView);
+    currentView.enteringView();
     defaultView.setPartyMemberButtonPressHandler(character -> {
       viewMap.get(nextViewKey).setCharacter(character);
       changeView(nextViewKey);
@@ -62,7 +63,6 @@ public class DisplayPanel {
    */
   private void setCurrentView(DisplayView view) {
     currentView = view;
-    currentView.enteringView();
     IViewChanged.execute();
   }
   

@@ -267,6 +267,14 @@ public class JSONUtil {
    * Key for crafted boolean attribute.
    */
   public static final String CRAFTED = "CRAFTED";
+  /**
+   * Key for quests array.
+   */
+  public static final String QUESTS = "QUESTS";
+  /**
+   * Key for quest status.
+   */
+  public static final String STATUS = "STATUS";
   
   public JSONObject getNestedObject(JSONObject parent, String[] keys) {
     JSONObject object = parent;

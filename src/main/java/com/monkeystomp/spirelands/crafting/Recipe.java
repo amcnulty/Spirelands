@@ -92,6 +92,7 @@ public class Recipe {
   }
   /**
    * Setting a recipe to crafted means it has been crafted once during the current save game.
+   * @param crafted Flag for setting this recipe as crafted or not.
    */
   public void setCrafted(boolean crafted) {
     this.crafted = crafted;
@@ -112,7 +113,7 @@ public class Recipe {
   }
   
   /**
-   * Put list of recipes starts here.
+   * List of recipes starts here.
    */
   static {
   /**
@@ -184,7 +185,7 @@ public class Recipe {
   /**
    *          !!################################!!
    *          !!                                !!
-   *          !!          LV 2 Recipes          !!
+   *          !!          LV 3 Recipes          !!
    *          !!                                !!
    *          !!################################!!
    */

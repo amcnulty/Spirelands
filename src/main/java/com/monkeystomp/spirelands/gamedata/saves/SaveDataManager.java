@@ -5,6 +5,7 @@ import com.monkeystomp.spirelands.crafting.CraftingManager;
 import com.monkeystomp.spirelands.level.util.LocationManager;
 import com.monkeystomp.spirelands.inventory.InventoryManager;
 import com.monkeystomp.spirelands.level.util.LevelStateManager;
+import com.monkeystomp.spirelands.quest.QuestManager;
 import java.util.ArrayList;
 import org.json.simple.JSONObject;
 
@@ -28,6 +29,7 @@ public class SaveDataManager {
       SAVE_DATA_MANAGERS.add(LocationManager.getLocationManager());
       SAVE_DATA_MANAGERS.add(InventoryManager.getInventoryManager());
       SAVE_DATA_MANAGERS.add(CraftingManager.getCraftingManager());
+      SAVE_DATA_MANAGERS.add(QuestManager.getQuestManager());
     }
     return INSTANCE;
   }

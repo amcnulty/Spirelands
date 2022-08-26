@@ -66,6 +66,9 @@ public class QuestTabs {
    */
   public void resetTabs() {
     mainButton.selectButton();
+    secondaryButton.resetButton();
+    collectiblesButton.resetButton();
+    completeButton.resetButton();
   }
   
   private void handleTabButtonClick(TabButton button) {

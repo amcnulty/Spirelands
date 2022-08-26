@@ -473,5 +473,11 @@
       { "ID": 1005, "CRAFTED": false  },
       { "ID": 1006, "CRAFTED": false  }
     ]
-  }
+  },
+  "QUESTS": [
+    { "ID": 1000, "STATUS": "Complete" },
+    { "ID": 1001, "STATUS": "Incomplete" },
+    { "ID": 1002, "STATUS": "New" },
+    { "ID": 1003, "STATUS": "Incomplete" }
+  ]
 }
