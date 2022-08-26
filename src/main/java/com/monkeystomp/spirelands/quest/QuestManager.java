@@ -27,7 +27,6 @@ public class QuestManager implements SaveDataHydratable {
     SAVE_VALUE_TO_QUEST_STATUS_MAP.put(QuestStatus.New.toString(), QuestStatus.New);
     SAVE_VALUE_TO_QUEST_STATUS_MAP.put(QuestStatus.Incomplete.toString(), QuestStatus.Incomplete);
     SAVE_VALUE_TO_QUEST_STATUS_MAP.put(QuestStatus.Complete.toString(), QuestStatus.Complete);
-    System.out.println(QuestStatus.New.toString());
   }
   
   // The singleton instance of the class.
@@ -64,7 +63,6 @@ public class QuestManager implements SaveDataHydratable {
         quest
       );
     });
-    System.out.println(acceptedQuests);
   }
 
   @Override
