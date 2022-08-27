@@ -1,6 +1,7 @@
 package com.monkeystomp.spirelands.gui.controlls.button;
 
 import com.jogamp.opengl.GL2;
+import com.monkeystomp.spirelands.audio.SoundEffects;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.graphics.Sprite;
 import com.monkeystomp.spirelands.gui.fonts.FontInfo;
@@ -35,6 +36,7 @@ public class TabButton extends Button {
     this.buttonText = text;
     this.selectedBackground = selected;
     this.selectedTextColor = selectedTextColor;
+    clickSound = SoundEffects.BUTTON_CLICK;
     fontInfo = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
     setFontInfo();
   }

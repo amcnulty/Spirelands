@@ -3,6 +3,7 @@ package com.monkeystomp.spirelands.gui.gamemenu.views;
 import com.jogamp.opengl.GL2;
 import com.monkeystomp.spirelands.graphics.Screen;
 import com.monkeystomp.spirelands.gui.gamemenu.components.Pagination;
+import com.monkeystomp.spirelands.gui.gamemenu.components.QuestDetailModal;
 import com.monkeystomp.spirelands.gui.gamemenu.components.QuestListItem;
 import com.monkeystomp.spirelands.gui.gamemenu.components.QuestTabs;
 import com.monkeystomp.spirelands.input.ICallback;
@@ -13,6 +14,7 @@ import com.monkeystomp.spirelands.quest.QuestType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 /**
@@ -26,6 +28,7 @@ public class QuestsView extends DisplayView {
                     spaceBetweenItems = 20,
                     itemsPerPage = 6;
   private int currentPageIndex = 0;
+  private boolean isShowingQuestDetails = false;
   private static final HashMap<String, ICallback> TAB_CLICK_HANDLERS = new HashMap<>();
   private final QuestTabs questTabs = new QuestTabs((clickedTab) -> TAB_CLICK_HANDLERS.get(clickedTab).execute());
   private final ArrayList<ArrayList<QuestListItem>> mainPages = new ArrayList<>();
@@ -34,6 +37,8 @@ public class QuestsView extends DisplayView {
   private final ArrayList<ArrayList<QuestListItem>> completedPages = new ArrayList<>();
   private ArrayList<ArrayList<QuestListItem>> activePages = mainPages;
   private final Pagination pagination = new Pagination(itemsPerPage, 260, 169, pageIndex -> currentPageIndex = pageIndex);
+  private final Consumer<Quest> handleListItemClick = (quest) -> showQuestDetails(quest);
+  private final QuestDetailModal questDetailModal = new QuestDetailModal(() -> isShowingQuestDetails = false);
   private final HashMap<Integer, Quest> acceptedQuestsMap = QuestManager.getQuestManager().getAcceptedQuests();
   
   public QuestsView() {
@@ -81,7 +86,8 @@ public class QuestsView extends DisplayView {
         newPage.add(new QuestListItem(
           questListItemX,
           questListItemStartingY + newPage.size() * spaceBetweenItems,
-          (Quest)mainQuests.get(j)
+          (Quest)mainQuests.get(j),
+          handleListItemClick
         ));
       }
       if (newPage.size() > 0) mainPages.add(newPage);
@@ -93,7 +99,8 @@ public class QuestsView extends DisplayView {
         newPage.add(new QuestListItem(
           questListItemX,
           questListItemStartingY + newPage.size() * spaceBetweenItems,
-          (Quest)secondaryQuests.get(j)
+          (Quest)secondaryQuests.get(j),
+          handleListItemClick
         ));
       }
       if (newPage.size() > 0) secondaryPages.add(newPage);
@@ -105,7 +112,8 @@ public class QuestsView extends DisplayView {
         newPage.add(new QuestListItem(
           questListItemX,
           questListItemStartingY + newPage.size() * spaceBetweenItems,
-          (Quest)collectiblesQuests.get(j)
+          (Quest)collectiblesQuests.get(j),
+          handleListItemClick
         ));
       }
       if (newPage.size() > 0) collectiblesPages.add(newPage);
@@ -117,7 +125,8 @@ public class QuestsView extends DisplayView {
         newPage.add(new QuestListItem(
           questListItemX,
           questListItemStartingY + newPage.size() * spaceBetweenItems,
-          (Quest)completedQuests.get(j)
+          (Quest)completedQuests.get(j),
+          handleListItemClick
         ));
       }
       if (newPage.size() > 0) completedPages.add(newPage);
@@ -135,10 +144,16 @@ public class QuestsView extends DisplayView {
     return itemsPerPage * (activePages.size() - 1) + activePages.get(activePages.size() - 1).size();
   }
   
+  private void showQuestDetails(Quest quest) {
+    questDetailModal.setQuest(quest);
+    isShowingQuestDetails = true;
+  }
+  
   @Override
   public void enteringView() {
     createListItems();
     questTabs.resetTabs();
+    isShowingQuestDetails = false;
   }
 
   @Override
@@ -147,11 +162,16 @@ public class QuestsView extends DisplayView {
 
   @Override
   public void update() {
-    questTabs.update();
-    for (QuestListItem questListItem: activePages.get(currentPageIndex)) {
-      questListItem.update();
+    if (isShowingQuestDetails) {
+      questDetailModal.update();
     }
-    pagination.update();
+    else {
+      questTabs.update();
+      for (QuestListItem questListItem: activePages.get(currentPageIndex)) {
+        questListItem.update();
+      }
+      pagination.update();
+    }
   }
 
   @Override
@@ -161,6 +181,9 @@ public class QuestsView extends DisplayView {
       questListItem.render(screen, gl);
     }
     pagination.render(screen, gl);
+    if (isShowingQuestDetails) {
+      questDetailModal.render(screen, gl);
+    }
   }
 
 }
