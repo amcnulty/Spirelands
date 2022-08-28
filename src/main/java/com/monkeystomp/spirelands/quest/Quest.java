@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.quest;
 
+import com.monkeystomp.spirelands.inventory.Item;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,6 +40,10 @@ public class Quest {
    */
   private QuestStatus status;
   /**
+   * Rewards for completion of this quest.
+   */
+  private final ArrayList<QuestReward> questRewards = new ArrayList<>();
+  /**
    * All quest instances mapped by their id.
    */
   private static final HashMap<Integer, Quest> QUEST_INDEX = new HashMap<>();
@@ -58,8 +63,14 @@ public class Quest {
     QUEST_INDEX.put(id, this);
   }
   
-  private void addParagraph(String text) {
+  private Quest addParagraph(String text) {
     paragraphs.add(text);
+    return this;
+  }
+  
+  private Quest addReward(QuestReward questReward) {
+    questRewards.add(questReward);
+    return this;
   }
 
   /**
@@ -118,6 +129,14 @@ public class Quest {
     this.status = status;
   }
 
+  /**
+   * Rewards for completion of this quest.
+   * @return Rewards for completion of this quest.
+   */
+  public ArrayList<QuestReward> getQuestRewards() {
+    return questRewards;
+  }
+
  /**
   * All quest instances mapped by their id.
   * @return All quest instances mapped by their id.
@@ -147,7 +166,10 @@ public class Quest {
       QuestType.Main,
       "Save The Princess",
       "It is of vital importance that you save the princess from the evildoers in the far lands of Kathertal where they have taken her. You have heard rumors that she may be sentenced to death by the end of the month for reasons yet unknown. What is known is that your home land will never be the same if the princess is allowed to be executed by these evil tyrants. You have been instructed by the king to set out immediately and have the royal guard at your side should you need them."
-    ).addParagraph("Best of luck traveler! Remember, you will be rewarded handsomely for your good deeds upon return with the beloved princess.");
+    ).addParagraph("Best of luck traveler! Remember, you will be rewarded handsomely for your good deeds upon return with the beloved princess.")
+      .addReward(QuestReward.goldReward("200"))
+      .addReward(QuestReward.itemReward(Item.RIBS))
+      .addReward(QuestReward.itemReward(Item.DARK_SWORD));
     
     new Quest(
       QuestType.Main,
