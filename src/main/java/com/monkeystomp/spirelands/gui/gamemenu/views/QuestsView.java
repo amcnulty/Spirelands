@@ -37,9 +37,14 @@ public class QuestsView extends DisplayView {
   private final ArrayList<ArrayList<QuestListItem>> completedPages = new ArrayList<>();
   private ArrayList<ArrayList<QuestListItem>> activePages = mainPages;
   private final Pagination pagination = new Pagination(itemsPerPage, 260, 169, pageIndex -> currentPageIndex = pageIndex);
-  private final Consumer<Quest> handleListItemClick = (quest) -> showQuestDetails(quest);
   private final QuestDetailModal questDetailModal = new QuestDetailModal(() -> isShowingQuestDetails = false);
   private final HashMap<Integer, Quest> acceptedQuestsMap = QuestManager.getQuestManager().getAcceptedQuests();
+  private final Consumer<Quest> handleListItemClick = (quest) -> {
+    if (quest.getStatus().equals(QuestStatus.New)) {
+      quest.setStatus(QuestStatus.Incomplete);
+    }
+    showQuestDetails(quest);
+  };
   
   public QuestsView() {
     TAB_CLICK_HANDLERS.put(QuestTabs.MAIN_TAB, () -> {

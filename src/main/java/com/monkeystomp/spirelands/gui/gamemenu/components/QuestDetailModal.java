@@ -101,6 +101,22 @@ public class QuestDetailModal {
         newLine.setY(descriptionY + (description.size() % maxNumberOfLines) * spaceBetweenLines);
         description.add(newLine);
       });
+    for (String paragraph: quest.getParagraphs()) {
+      // Only add blank line if it is not going to be at the top of the next page.
+      if (description.size() % maxNumberOfLines != 0) {
+        FontInfo blankLine = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
+        blankLine.setText("");
+        description.add(blankLine);
+      }
+      TextUtil.createWrappedText(paragraph, GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL().getFont(), descriptionWidth)
+        .forEach(line -> {
+          FontInfo newLine = GameFonts.getGAME_MENU_PRIMARY_TEXT_SMALL();
+          newLine.setText(line);
+          newLine.setX(descriptionX);
+          newLine.setY(descriptionY + (description.size() % maxNumberOfLines) * spaceBetweenLines);
+          description.add(newLine);
+        });
+    }
   }
 
   /**

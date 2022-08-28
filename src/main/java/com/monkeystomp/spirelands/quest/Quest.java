@@ -1,5 +1,6 @@
 package com.monkeystomp.spirelands.quest;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -30,6 +31,10 @@ public class Quest {
    */
   private final String description;
   /**
+   * Additional text to show along with the description.
+   */
+  private final ArrayList<String> paragraphs = new ArrayList<>();
+  /**
    * The current status of this quest.
    */
   private QuestStatus status;
@@ -51,6 +56,10 @@ public class Quest {
     this.description = description;
     this.status = QuestStatus.New;
     QUEST_INDEX.put(id, this);
+  }
+  
+  private void addParagraph(String text) {
+    paragraphs.add(text);
   }
 
   /**
@@ -83,6 +92,14 @@ public class Quest {
    */
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Additional text to show along with the description.
+   * @return Additional text to show along with the description.
+   */
+  public ArrayList<String> getParagraphs() {
+    return paragraphs;
   }
 
   /**
@@ -129,8 +146,8 @@ public class Quest {
     new Quest(
       QuestType.Main,
       "Save The Princess",
-      "It is of vital importance that you save the princess from the evildoers in the far lands of Kathertal where they have taken her. You have heard rumors that she may be sentenced to death by the end of the month for reasons yet unknown. What is known is that your home land will never be the same if the princess is allowed to be executed by these evil tyrants. You have been instructed by the king to set out immediately and have the royal guard at your side should you need them. Best of luck traveler! Remember, you will be rewarded handsomely for your good deeds upon return with the beloved princess."
-    );
+      "It is of vital importance that you save the princess from the evildoers in the far lands of Kathertal where they have taken her. You have heard rumors that she may be sentenced to death by the end of the month for reasons yet unknown. What is known is that your home land will never be the same if the princess is allowed to be executed by these evil tyrants. You have been instructed by the king to set out immediately and have the royal guard at your side should you need them."
+    ).addParagraph("Best of luck traveler! Remember, you will be rewarded handsomely for your good deeds upon return with the beloved princess.");
     
     new Quest(
       QuestType.Main,
